@@ -34,7 +34,7 @@ config.font = wezterm.font_with_fallback({
 	"Liga SFMono Nerd Font",
 	"Apple Color Emoji",
 })
-config.font_size = 13
+config.font_size = {{ .terminalFontSize }}
 config.line_height = 1.1
 config.window_background_opacity = 0.9
 config.window_decorations = "TITLE | RESIZE" -- INTEGRATED_BUTTONS, RESIZE, TITLE, NONE

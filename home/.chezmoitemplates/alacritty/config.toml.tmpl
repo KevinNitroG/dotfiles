@@ -8,7 +8,7 @@
 {{- end }}
 
 {{- $catppuccinFlavor := "" }}
-{{- if eq .settings.theme "dark" }}
+{{- if eq .theme "dark" }}
   {{- $catppuccinFlavor = .catppuccin.darkFlavour }}
 {{- else }}
   {{- $catppuccinFlavor = .catppuccin.lightFlavour }}
@@ -52,7 +52,7 @@ normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
 bold = { family = "JetBrainsMono Nerd Font", style = "Bold" }
 italic = { family = "JetBrainsMono Nerd Font", style = "Italic" }
 bold_italic = { family = "JetBrainsMono Nerd Font", style = "Bold Italic" }
-size = 13
+size = {{ .terminalFontSize }}
 
 [colors]
 transparent_background_colors = false

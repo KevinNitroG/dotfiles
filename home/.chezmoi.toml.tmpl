@@ -2,6 +2,11 @@ encryption = "gpg"
 mode = "file" # file, symlink
 progress = true
 
+[data]
+terminalFontSize = {{ promptIntOnce . "terminalFontSize" "Enter terminal font size" }}
+{{ $themes := list "dark" "light" }}
+theme = {{ promptChoiceOnce . "theme" "Theme of apps" $themes | quote }}
+
 [git]
 autoAdd = true # Add changes to the source state after any change
 autoCommit = false
