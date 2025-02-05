@@ -5,10 +5,21 @@
 ##########################################
 
 # NOTE: cannot, because Microsoft call it x64, but it should be amd64 that chezmoi cannot ...
-# ["Appdata/Local/TrafficMonitor"]
+# ["AppData/Local/TrafficMonitor"]
 # type = "archive"
 # url = {{/* gitHubLatestReleaseAssetURL "zhongyang219/TrafficMonitor" (printf "TrafficMonitor_V*_%s.zip" .chezmoi.arch) | quote */}}
 # include = ["**/*"]
+
+["AppData/Local/EVKey"]
+type = "archive"
+url = {{ gitHubLatestReleaseAssetURL "lamquangminh/EVKey" "EVKey.zip" | quote }}
+include = ["EVKey*.exe"]
+
+["AppData/Local/UniKey"]
+type = "archive"
+# NOTE: The version is fixed
+url = "https://www.unikey.org/assets/release/unikey46RC2-230919-win64.zip"
+include = ["UniKeyNT.exe"]
 
 [".config/cursor/Windows-11-Cursor-by-rosea92"]
 type = "git-repo"
