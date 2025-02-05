@@ -97,13 +97,7 @@
   diffFilter = delta --color-only
 
 [delta]
-  {{- $catppuccinFlavor := "" }}
-  {{- if eq .theme "dark" }}
-  {{-   $catppuccinFlavor = .catppuccin.darkFlavour }}
-  {{- else }}
-  {{-   $catppuccinFlavor = .catppuccin.lightFlavour }}
-  {{- end }}
-  features = catppuccin-{{ $catppuccinFlavor }}
+  features = catppuccin-{{ .catppuccinFlavor }}
   navigate = true
   dark = true
   ; light = true

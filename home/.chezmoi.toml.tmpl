@@ -2,10 +2,32 @@ encryption = "gpg"
 mode = "file" # file, symlink
 progress = true
 
-[data]
-terminalFontSize = {{ promptIntOnce . "terminalFontSize" "Enter terminal font size" }}
+{{ $terminalFontSize := promptIntOnce . "terminalFontSize" "Enter terminal font size" }}
+
 {{ $themes := list "dark" "light" }}
-theme = {{ promptChoiceOnce . "theme" "Theme of apps" $themes | quote }}
+{{ $theme := promptChoiceOnce . "theme" "Theme of apps" $themes }}
+
+{{ $catppuccinFlavors := list "latte" "frappe" "macchiato" "mocha" }}
+{{ $catppuccinLightFlavour := promptChoiceOnce . "catppuccinLightFlavour" "Catppuccin flavor for light mode" $catppuccinFlavors }}
+{{ $catppuccinDarkFlavour := promptChoiceOnce . "catppuccinDarkFlavour" "Catppuccin flavor for dark mode" $catppuccinFlavors }}
+
+{{ $catppuccinAccentColors := list "blue" "flamingo" "green" "lavender" "maroon" "mauve" "peach" "pink" "red" "rosewater" "sapphire" "sky" "teal" "yellow" }}
+{{ $catppuccinAccentColor := promptChoiceOnce . "catppuccinAccentColor" "Catppuccin accent color" $catppuccinAccentColors }}
+
+{{ $catppuccinFlavor := "" }}
+{{ if eq $theme "dark" }}
+  {{ $catppuccinFlavor = $catppuccinDarkFlavour }}
+{{ else }}
+  {{ $catppuccinFlavor = $catppuccinLightFlavour }}
+{{ end }}
+  
+[data]
+terminalFontSize = {{ $terminalFontSize }}
+theme = {{ $theme | quote }}
+catppuccinLightFlavour = {{ $catppuccinLightFlavour | quote }}
+catppuccinDarkFlavour = {{ $catppuccinDarkFlavour | quote }}
+catppuccinFlavor = {{ $catppuccinFlavor | quote }}
+catppuccinAccentColor = {{ $catppuccinAccentColor | quote }}
 
 [git]
 autoAdd = true # Add changes to the source state after any change

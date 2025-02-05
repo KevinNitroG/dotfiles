@@ -4,11 +4,11 @@
 
 [".config/yazi/theme.toml"]
 type = "file"
-url = "https://raw.githubusercontent.com/catppuccin/yazi/refs/heads/main/themes/mocha/catppuccin-mocha-lavender.toml"
+url = "https://raw.githubusercontent.com/catppuccin/yazi/refs/heads/main/themes/mocha/catppuccin-{{ .catppuccinFlavor }}-{{ .catppuccinAccentColor }}.toml"
 
-[".config/yazi/Catppuccin-mocha.tmTheme"]
+[".config/yazi/Catppuccin-{{ .catppuccinFlavor }}.tmTheme"]
 type = "file"
-url = "https://raw.githubusercontent.com/catppuccin/bat/main/themes/Catppuccin%20Mocha.tmTheme"
+url = "https://raw.githubusercontent.com/catppuccin/bat/main/themes/Catppuccin%20{{ .catppuccinFlavor | title }}.tmTheme"
 
 [".config/yazi/plugins/toggle-view.yazi"]
 type = "git-repo"

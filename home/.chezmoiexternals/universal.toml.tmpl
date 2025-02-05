@@ -1,4 +1,5 @@
 {{ $gitArgs := "clone.args = ['--depth', '1']\n    pull.args = ['--ff-only']" }}
+{{ $catppuccinFlavorTitle := .catppuccinFlavor | title }}
 
 ##########################################
 
@@ -21,12 +22,12 @@ url = "https://github.com/catppuccin/alacritty.git"
 {{ $gitArgs }}
 
 {{ if eq .chezmoi.os "windows" }}
-["AppData/Roaming/bat/themes/Catppuccin Mocha.tmTheme"]
+["AppData/Roaming/bat/themes/Catppuccin {{ $catppuccinFlavorTitle }}.tmTheme"]
 {{ else }}
-[".config/bat/themes/Catppuccin Mocha.tmTheme"]
+[".config/bat/themes/Catppuccin {{ $catppuccinFlavorTitle }}.tmTheme"]
 {{ end }}
 type = "file"
-url = "https://raw.githubusercontent.com/catppuccin/bat/main/themes/Catppuccin%20Mocha.tmTheme"
+url = "https://raw.githubusercontent.com/catppuccin/bat/main/themes/Catppuccin%20{{ $catppuccinFlavorTitle }}.tmTheme"
 
 [".config/delta/themes/catppuccin"]
 type = "git-repo"
@@ -34,12 +35,12 @@ url = "https://github.com/catppuccin/delta.git"
 {{ $gitArgs }}
 
 {{ if eq .chezmoi.os "windows" }}
-["AppData/Local/glow/Config/themes/catppuccin-mocha.json"]
+["AppData/Local/glow/Config/themes/catppuccin-{{ .catppuccinFlavor }}.json"]
 {{ else }}
-[".config/glow/themes/catppuccin-mocha.json"]
+[".config/glow/themes/catppuccin-{{ .catppuccinFlavor }}.json"]
 {{ end }}
 type = "file"
-url = "https://raw.githubusercontent.com/catppuccin/glamour/main/themes/catppuccin-mocha.json"
+url = "https://raw.githubusercontent.com/catppuccin/glamour/main/themes/catppuccin-{{ .catppuccinFlavor }}.json"
 
 [".config/atac/key_bindings.toml"]
 type = "file"

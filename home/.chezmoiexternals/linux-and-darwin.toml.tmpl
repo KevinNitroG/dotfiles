@@ -9,9 +9,9 @@ type = "git-repo"
 url = "https://github.com/tmux-plugins/tpm"
 {{ $gitArgs }}
 
-[".config/zathura/catppuccin-mocha"]
+[".config/zathura/catppuccin-{{ .catppuccinFlavor }}"]
 type = "file"
-url = "https://raw.githubusercontent.com/catppuccin/zathura/main/src/catppuccin-mocha"
+url = "https://raw.githubusercontent.com/catppuccin/zathura/main/src/catppuccin-{{ .catppuccinFlavor }}"
 
 [".config/kitty"]
 type = "archive"
