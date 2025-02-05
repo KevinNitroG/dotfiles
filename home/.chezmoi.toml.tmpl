@@ -11,7 +11,13 @@ autoPush = false
 recipient = "KevinNitroG"
 
 [cd]
-command = "cmd" # Change to pwsh later
+{{ $shell := "" }}
+{{- if eq .chezmoi.os "windows" -}}
+{{-  $shell = "pwsh" -}}
+{{- else -}}
+{{-   $shell = "zsh" -}}
+{{- end -}}
+command = {{ $shell | quote }}
 
 [completion]
 custom = true

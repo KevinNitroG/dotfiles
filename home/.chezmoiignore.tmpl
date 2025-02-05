@@ -2,6 +2,20 @@
 
 ##########################################
 
+# For chezmoi stuff
+
+{{ if ne .chezmoi.os "linux" }}
+.chezmoiscripts/linux/**
+{{ end }}
+{{ if ne .chezmoi.os "windows" }}
+.chezmoiscripts/windows/**
+{{ end }}
+{{ if ne .chezmoi.os "darwin" }}
+.chezmoiscripts/darwin/**
+{{ end }}
+
+##########################################
+
 {{ if eq .chezmoi.os "windows" }}
 
 .config/Code/**
@@ -32,6 +46,8 @@
 .config/private_ktrashrc
 .config/private_trashrc
 .config/spotify-flags.conf
+
+.scripts/shell/
 
 .font
 .npm-global

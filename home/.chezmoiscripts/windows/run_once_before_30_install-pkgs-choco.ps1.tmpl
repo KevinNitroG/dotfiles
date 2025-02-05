@@ -7,4 +7,6 @@ if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
   }
 }
 
-choco install {{ .pkgsChoco | quoteList }} -y
+{{ range $pkg := .pkgs.windows.choco }}
+choco install '{{ $pkg }}' -y
+{{ end }}

@@ -29,14 +29,14 @@ fi
 
 # INSTALL PACKAGES
 echo 'INSTALLING PACKAGES...'
-yay -S {{ .pkgsYay.universal | quoteList }} --needed
+yay -S {{ .pkgs.archBased.universal | quoteList }} --needed
 
 # INSTALL LAPTOP STUFF
 read -rp 'INSTALL LAPTOP STUFF? [y/N]: ' yn
 case "$yn" in
 [yY])
   echo 'INSTALLING LAPTOP STUFF...'
-  yay -S {{ .pkgsYay.laptop | quoteList }} --needed
+  yay -S {{ .pkgs.archBased.laptop | quoteList }} --needed
   ;;
 esac
 

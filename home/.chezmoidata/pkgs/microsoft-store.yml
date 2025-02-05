@@ -1,3 +1,0 @@
-pkgsMicrosoftStore:
-  # NOTE: Currently the keys of the apps aren't neccessary. We only need the ID in the value
-  Brave: 'XP8C9QZMS2PC1T'

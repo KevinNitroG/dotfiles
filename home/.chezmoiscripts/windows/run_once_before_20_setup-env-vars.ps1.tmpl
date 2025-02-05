@@ -7,19 +7,21 @@ if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
   }
 }
 
+Write-Host 'SETTING UP ENV...'
+
 # Allow long path
 Set-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem' -Name 'LongPathsEnabled' -Value 1
 
 # Get existing paths and merge unique paths
 $ExistingPaths = [System.Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::User) -split ";"
-$NewPaths = @({{- .windowsConfig.envs.path | quoteList | join ", " -}}) | Where-Object { $_ -notin $ExistingPaths }
+$NewPaths = @({{- .config.windows.envs.path | quoteList | join ", " | replace "/" "\\" -}}) | Where-Object { $_ -notin $ExistingPaths }
 $UpdatedPath = ($NewPaths + $ExistingPaths) -join ";"
 
 # Hashtable of environment variables
 $SetupEnv = @{
-  {{ range $k, $v := .windowsConfig.envs.others }}
-  {{ $k }} = {{ $v | quote }};
-  {{ end }}
+  {{- range $k, $v := .config.windows.envs.others -}}
+  {{- $k -}} = '{{- $v | replace "/" "\\" -}}';
+  {{- end -}}
   Path = $UpdatedPath
 }
 

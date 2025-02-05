@@ -7,16 +7,16 @@
   {{- $catppuccinThemePath = "~/.config/alacritty/themes/catppuccin" }}
 {{- end }}
 
-{{- $catppuccinTheme := "" }}
+{{- $catppuccinFlavor := "" }}
 {{- if eq .settings.theme "dark" }}
-  {{- $catppuccinTheme = .catppuccin.darkFlavour }}
+  {{- $catppuccinFlavor = .catppuccin.darkFlavour }}
 {{- else }}
-  {{- $catppuccinTheme = .catppuccin.lightFlavour }}
+  {{- $catppuccinFlavor = .catppuccin.lightFlavour }}
 {{- end }}
 
 [general]
 import = [
-"{{ $catppuccinThemePath }}/catppuccin-{{ $catppuccinTheme }}.toml"
+"{{ $catppuccinThemePath }}/catppuccin-{{ $catppuccinFlavor }}.toml"
 ]
 live_config_reload = true
 

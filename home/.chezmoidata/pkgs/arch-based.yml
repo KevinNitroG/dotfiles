@@ -1,0 +1,120 @@
+pkgs:
+  archBased:
+    universal:
+      # Essentials
+      # - 'google-chrome'
+      - 'brave-bin'
+      - 'chezmoi'
+      - 'git'
+      - 'kanata-bin' # Change keyboard func
+      - 'lazygit'
+      - 'tmux'
+      - 'wget'
+      - 'zsh'
+
+      # Terminal
+      - 'alacritty'
+
+      # Text / Code Editor, IDE
+      - 'mysql-workbench'
+      - 'neovim'
+      - 'visual-studio-code-bin'
+      # - 'zed'
+
+      # CLI Power Basics
+      # - 'aria2'
+      # - 'thefuck'
+      # - 'tokei'
+      # - 'trash-cli'
+      # - 'xsel'
+      - 'atac'
+      - 'bat'
+      - 'doggo'
+      - 'exa'
+      - 'fd'
+      - 'fzf'
+      - 'gh'
+      - 'git-delta'
+      - 'github-cli'
+      - 'glow'
+      - 'jq'
+      - 'lazydocker'
+      - 'rclone'
+      - 'ripgrep'
+      - 'rsync'
+      - 'sd'
+      - 'tree'
+      - 'unzip'
+      - 'wget'
+      - 'xh'
+      - 'yazi'
+      - 'zip'
+      - 'zoxide'
+
+      # Development, languages, interpreters, compilers, etc
+      # - 'docker-desktop' # Docker desktop on Arch is not stable
+      # - 'go'
+      # - 'pnpm'
+      # - 'pyenv'
+      # - 'yarn'
+      - 'clang'
+      - 'cmake'
+      - 'docker'
+      - 'docker-compose'
+      - 'gdb'
+      - 'nodejs'
+      - 'npm'
+      - 'python-pip'
+      - 'rustup'
+
+      # Formatter, Linter
+      # - 'actionlint'
+      # - 'eslint'
+      # - 'prettier'
+      # - 'ruff'
+
+      # Security Utilities
+      - 'gnupg'
+      - 'openssl'
+
+      # Monitoring, management and stats
+      # - 'speedtest-cli'
+      - 'btop'
+      - 'cronie'
+
+      # CLI Fun
+      - 'cowsay'
+      - 'fastfetch'
+      - 'figlet' # A program for making large letters out of ordinary text
+      - 'lolcat'
+
+      # Apps / Tools
+      # - 'authy-desktop-win32-bin'
+      # - 'screenkey'
+      - 'gammastep'
+      - 'obs-studio'
+      - 'qbittorrent-enhanced'
+      - 'rclone'
+      - 'spotify'
+      - 'vlc'
+
+      # Fonts
+      - 'noto-fonts-emoji'
+      - 'ttf-google-sans'
+      - 'ttf-jetbrains-mono-nerd'
+      - 'ttf-nerd-fonts-symbols'
+
+      # Other but IDK what it is
+      # - 'pacman-contrib' # For paccache
+      - 'fuse3' # For rclone mount --daemon
+      - 'gnome-keyring' # For MySQL Workbench
+      - 'gtk4'
+      - 'lsb-release'
+      - 'tree'
+      - 'wtype'
+    laptop:
+      # - 'gestures'
+      # - 'libinput-gestures'
+      - 'tlp'
+      - 'tlp-rdw'
+      - 'tlpui'

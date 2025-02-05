@@ -1,5 +1,7 @@
-scoop install {{ .pkgsScoop.pkgs | quoteList }}
+{{ range $pkg := .pkgs.windows.scoop.pkgs }}
+scoop install '{{ $pkg }}'
+{{ end }}
 
-{{ range $reg := .pkgsScoop.importRegistry }}
-reg import {{ $reg | quote }}
+{{ range $reg := .pkgs.windows.scoop.importRegistry }}
+reg import '{{ $reg }}'
 {{ end }}

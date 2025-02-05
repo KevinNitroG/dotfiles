@@ -1,6 +1,0 @@
-{{ $pkgIds := list }}
-{{ range $key, $value := .pkgsMicrosoftStore }}
-    {{ $values = append $values $value }}
-{{ end -}}
-
-winget install {{ $pkgsIds | quoteList }} --accept-source-agreements --accept-package-agreements
