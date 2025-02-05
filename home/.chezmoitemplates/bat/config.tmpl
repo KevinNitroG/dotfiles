@@ -1,7 +1,7 @@
-{{ $catppuccinFlavor := "" }}
-{{ if eq .settings.theme "dark" }}
-{{   $catppuccinFlavor = .catppuccin.darkFlavour }}
-{{ else }}
-{{   $catppuccinFlavor = .catppuccin.lightFlavour }}
-{{ end }}
+{{- $catppuccinFlavor := "" }}
+{{- if eq .settings.theme "dark" }}
+{{-   $catppuccinFlavor = .catppuccin.darkFlavour }}
+{{- else }}
+{{-   $catppuccinFlavor = .catppuccin.lightFlavour }}
+{{- end }}
 --theme="Catppuccin {{ $catppuccinFlavor | title }}"
