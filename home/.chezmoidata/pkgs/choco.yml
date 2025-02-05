@@ -1,0 +1,6 @@
+pkgsChoco:
+  - 'internet-download-manager'
+  - 'itunes'
+  - 'warp'
+  # - 'everythingpowertoys'
+  # - 'ultraviewer'

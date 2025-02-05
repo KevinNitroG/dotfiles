@@ -1,0 +1,6 @@
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
+
+{{ range $bucket := .pkgsScoop.buckets }}
+scoop bucket add {{ $bucket }}
+{{ end }}

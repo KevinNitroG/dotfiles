@@ -8,6 +8,7 @@
 - [😎 SHOWCASE](#-showcase)
   - [App Manage](#app-manage)
 - [🪴 INSTALL](#-install)
+  - [1️⃣ Install Chezmoi](#-install-chezmoi)
   - [1️⃣ Add Keys](#-add-keys)
   - [2️⃣ Install prerequisite](#-install-prerequisite)
   - [3️⃣ Chezmoi](#-chezmoi)
@@ -59,6 +60,15 @@
 ---
 
 ## 🪴 INSTALL
+
+### 1️⃣ Install Chezmoi
+
+```sh
+iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~/bin'"
+```
+
+> [!NOTE]
+> Remove chezmoi from `~/bin` later. Because it should be managed by scoop
 
 ### 1️⃣ Add Keys
 

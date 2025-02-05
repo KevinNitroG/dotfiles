@@ -1,0 +1,5 @@
+scoop install {{ .pkgsScoop.pkgs | quoteList }}
+
+{{ range $reg := .pkgsScoop.importRegistry }}
+reg import {{ $reg | quote }}
+{{ end }}
