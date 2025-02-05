@@ -4,6 +4,12 @@
 
 ##########################################
 
+# NOTE: cannot, because Microsoft call it x64, but it should be amd64 that chezmoi cannot ...
+# ["Appdata/Local/TrafficMonitor"]
+# type = "archive"
+# url = {{/* gitHubLatestReleaseAssetURL "zhongyang219/TrafficMonitor" (printf "TrafficMonitor_V*_%s.zip" .chezmoi.arch) | quote */}}
+# include = ["**/*"]
+
 [".config/cursor/Windows-11-Cursor-by-rosea92"]
 type = "git-repo"
 url = "https://github.com/YT-Advanced/Windows-11-Cursor-by-rosea92.git"
