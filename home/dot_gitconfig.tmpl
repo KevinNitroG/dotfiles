@@ -1,4 +1,4 @@
-; vim:ft=gitconfig
+; vim:ft=gitconfig.template.chezmoitmpl
 ; Ref: https://github.com/garybernhardt/dotfiles/blob/main/.gitconfig
 
 [include]
@@ -97,13 +97,13 @@
 [interactive]
   diffFilter = delta --color-only
 
-{{ $catppuccinFlavor := "" }}
-{{ if eq .settings.theme "dark" }}
-{{   $catppuccinFlavor = .catppuccin.darkFlavour }}
-{{ else }}
-{{   $catppuccinFlavor = .catppuccin.lightFlavour }}
-{{ end }}
 [delta]
+  {{- $catppuccinFlavor := "" }}
+  {{- if eq .settings.theme "dark" }}
+  {{-   $catppuccinFlavor = .catppuccin.darkFlavour }}
+  {{- else }}
+  {{-   $catppuccinFlavor = .catppuccin.lightFlavour }}
+  {{- end }}
   features = catppuccin-{{ $catppuccinFlavor }}
   navigate = true
   dark = true
