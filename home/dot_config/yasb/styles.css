@@ -70,29 +70,25 @@
 .komorebi-workspaces .ws-btn {
   border: none;
   background-color: var(--surface1);
-  margin: 0 3px;
-  width: 10px;
-  height: 10px;
-  border-radius: 4px;
-  color: rgba(0, 0, 0, 0);
+  margin: 0 5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 10px;
+  color: var(--subtext1);
 }
 .komorebi-workspaces .ws-btn:hover {
-  color: rgba(0, 0, 0, 0);
   background-color: var(--surface2);
 }
 .komorebi-workspaces .ws-btn.populated:hover {
-  color: rgba(0, 0, 0, 0);
   background-color: var(--overlay1);
 }
 .komorebi-workspaces .ws-btn.populated {
-  color: rgba(0, 0, 0, 0);
   background-color: var(--overlay0);
 }
 .komorebi-workspaces .ws-btn.active {
-  color: rgba(0, 0, 0, 0);
   background-color: var(--subtext0);
-  width: 28px;
-  height: 10px;
+  color: var(--surface0);
+  width: 40px;
 }
 .komorebi-active-layout {
   padding: 0 0px 0 0;
@@ -202,7 +198,7 @@
   margin: 0;
 }
 .media-widget .label {
-  color: var(--lavender);
+  color: var(--subtext0);
   padding: 0px;
   padding-right: 16px;
 }
@@ -320,5 +316,5 @@
 }
 
 .active-window-widget .widget-container .label {
-  color: var(--overlay0);
+  color: var(--lavender);
 }

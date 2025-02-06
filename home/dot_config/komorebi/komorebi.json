@@ -4,11 +4,11 @@
   "cross_monitor_move_behaviour": "Insert",
   "border_padding": 0,
   "border_offset": -2,
-  "border_width": 8,
+  "border_width": 6,
   "transparency": true,
   "transparency_alpha": 240,
   "default_container_padding": 0,
-  "default_workspace_padding": 0,
+  "default_workspace_padding": 2,
   "manage_rules": [
     {
       "id": "Messenger.exe",
