@@ -3,10 +3,16 @@
 [![GitHub last commit (by committer)](https://img.shields.io/github/last-commit/KevinNitroG/dotfiles?style=for-the-badge&color=FAB387)](../../commits/main)
 ![GitHub repo size](https://img.shields.io/github/repo-size/KevinNitroG/dotfiles?style=for-the-badge&color=B4BEFE)
 
-My Windows and Arch linux (hyprdots) managed by chezmoi
+Dotfiles managed with [chezmoi](https://www.chezmoi.io/):
+
+- Windows
+- Arch linux **([hyprdots](https://github.com/prasanthrangan/hyprdots/))**
 
 > [!NOTE]
 > Haven't enough money to buy Mac yet
+
+> [!WARNING]
+> This is for my personal use, because it has encrypted file. If you want to use this, run chezmoi init with `--exclude=encrypted` arg.
 
 ---
 
@@ -20,17 +26,14 @@ My Windows and Arch linux (hyprdots) managed by chezmoi
 
 ### Neovim
 
-> [!NOTE]
-> Neovim config <https://github.com/KevinNitroG/nvim>
-
 | **Linux**                                         | **Windows**                                           |
 | ------------------------------------------------- | ----------------------------------------------------- |
 | ![Linux Neovim](./assets/images/linux/neovim.png) | ![Windows Neovim](./assets/images/windows/neovim.png) |
 
-### Find files / directories / file content
-
 > [!NOTE]
-> Both pwsh and zsh have been configured
+> Neovim config <https://github.com/KevinNitroG/nvim>
+
+### Find files / directories / file content
 
 | **Files**                                            | **Directories**                                             |
 | ---------------------------------------------------- | ----------------------------------------------------------- |
@@ -39,6 +42,9 @@ My Windows and Arch linux (hyprdots) managed by chezmoi
 | **Ripgrep**                                                    | **Fzf**                                                        |
 | -------------------------------------------------------------- | -------------------------------------------------------------- |
 | ![Find file ripgrep](./assets/images/windows/find-ripgrep.png) | ![Find file fzf](./assets/images/windows/find-ripgrep_fzf.png) |
+
+> [!NOTE]
+> Both pwsh and zsh have been configured
 
 ### Get wifi password
 
@@ -73,7 +79,6 @@ My Windows and Arch linux (hyprdots) managed by chezmoi
 - <https://github.com/D3Ext/aesthetic-wallpapers>
 - <https://github.com/DenverCoder1/minimalistic-wallpaper-collection>
 - <https://github.com/Gingeh/wallpapers>
-- <https://github.com/lildude/dotfiles/> (Have config for codespace)
 
 ### Other dotfiles
 
@@ -112,6 +117,7 @@ My Windows and Arch linux (hyprdots) managed by chezmoi
 - <https://github.com/stevearc/dotfiles>
 - <https://github.com/wincent/wincent> (Old dotfiles 😱)
 
-### Chezmoi
+#### Chezmoi
 
 - <https://github.com/megabyte-labs/install.doctor>
+- <https://github.com/lildude/dotfiles/> (Have config for codespace)
