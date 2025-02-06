@@ -38,23 +38,33 @@ pkgs:
         - 'extras/scoop-completion'
 
         # Neccessary
+        # - 'extras/windows-terminal'
+        # - 'main/openssh'
+        # - 'main/winget'
+        # - 'neorocks-scoop/luarocks' # For nvim lazy, rest.nvim
         - 'extras/winrar'
         - 'main/7zip'
-        - 'main/openssh'
         - 'main/unrar'
         - 'main/wget'
-        # - 'main/winget'
-        # - 'extras/windows-terminal'
-        # - 'neorocks-scoop/luarocks' # For nvim lazy, rest.nvim
 
         # Editors
-        - 'extras/vscode'
-        - 'extras/windows-terminal'
-        - 'extras/alacritty'
-        - 'main/neovim'
         # - 'extra/sublime-text'
+        # - 'extras/alacritty'
+        # - 'extras/windows-terminal'
+        - 'extras/vscode'
+        - 'main/neovim'
 
         # CLI tools
+        # - 'extras/terminal-icons'
+        # - 'main/actionlint'
+        # - 'main/file' # for yazi, but use in git instead
+        # - 'main/gnupg'
+        # - 'main/gpg' # Use default builtin gpg of git
+        # - 'main/grep'
+        # - 'main/lf'
+        # - 'main/oh-my-posh'
+        # - 'main/sed'
+        # - 'main/touch'
         - 'extra/jqp'
         - 'extras/autohotkey'
         - 'extras/keyviz'
@@ -63,7 +73,6 @@ pkgs:
         - 'extras/posh-git'
         - 'extras/psfzf'
         - 'extras/psreadline'
-        - 'extras/terminal-icons'
         - 'main/adb'
         - 'main/bat'
         - 'main/bottom'
@@ -95,38 +104,30 @@ pkgs:
         - 'main/yt-dlp'
         - 'main/zoxide'
         - 'sysinternals/whois'
-        # - 'main/actionlint'
-        # - 'main/file' # for yazi, but use in git instead
-        # - 'main/lf'
-        # - 'main/oh-my-posh'
-        # - 'main/gnupg'
-        # - 'main/gpg' # Use default builtin gpg of git
-        # - 'main/grep'
-        # - 'main/sed'
-        # - 'main/touch'
 
         # Others
+        # - 'extra/spotify'
+        # - 'extras/everything'
+        # - 'extras/spicetify-themes'
+        # - 'main/spicetify-cli'
+        # - 'nonportable/parsec-np'
         - 'extras/anydesk'
+        - 'extras/hoppscotch'
         - 'extras/obs-studio'
         - 'extras/powertoys'
         - 'extras/silentcmd'
         - 'extras/vlc'
         - 'extras/winaero-tweaker'
-        - 'nonportable/parsec-np'
-        # - 'extra/spotify'
-        # - 'extras/everything'
-        # - 'extras/spicetify-themes'
-        # - 'main/spicetify-cli'
 
         # Other for...
-        - 'extras/winscp'
-        - 'main/openssl'
-        - 'nonportable/k-lite-codec-pack-standard-np'
-        - 'nonportable/winfsp-np' # For rclone
         # - 'extras/putty'
         # - 'extras/qbittorrent-enhanced'
         # - 'extras/v2rayn'
         # - 'main/uutils-coreutils'
+        # - 'extras/winscp'
+        - 'main/openssl'
+        - 'nonportable/k-lite-codec-pack-standard-np'
+        - 'nonportable/winfsp-np' # For rclone
       importRegistry:
         # - "$env:USERPROFILE/scoop/apps/windows-terminal/current/install-context.reg"
         - '$env:USERPROFILE/scoop/apps/pwsh/current/install-explorer-context.reg'
@@ -142,9 +143,9 @@ pkgs:
       - 'XP8C9QZMS2PC1T' # Brave
     psGallery:
       # - 'DockerCompletion'
+      # - 'PsReadLine'
       # - 'Terminal-Icons'
+      # - 'posh-git'
       # - 'posh-wakatime'
       - 'Catppuccin'
       - 'CompletionPredictor'
-      - 'PsReadLine'
-      - 'posh-git'

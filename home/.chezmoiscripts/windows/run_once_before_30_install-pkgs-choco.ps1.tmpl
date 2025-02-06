@@ -7,14 +7,16 @@ if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
   }
 }
 
-{{ $choco := lookPath "choco" }}
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 
-{{ if $choco }}
+if (-not (Get-Command "choco" -ErrorAction SilentlyContinue))
+{
+  Write-Error "Choco hasn't been installed!"
+  exit
+}
 
 Write-Host "INSTALLING CHOCO PACKAGES..."
 
 {{ range $pkg := .pkgs.windows.choco }}
-{{ $choco }} install '{{ $pkg }}' -y
-{{ end }}
-
+choco install '{{ $pkg }}' -y
 {{ end }}

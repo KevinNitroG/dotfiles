@@ -1,11 +1,13 @@
-{{ $winget := lookPath "winget" }}
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 
-{{ if $winget }}
+if (-not (Get-Command "winget" -ErrorAction SilentlyContinue))
+{
+  Write-Error "Winget hasn't been installed!"
+  exit
+}
 
 Write-Host "INSTALLING WINGET PACKAGES..."
 
-{{ range $pkgId := .pkgs.windows.microsoftStore }}
-{{ $winget }} install '{{ $pkgId }}' --accept-source-agreements --accept-package-agreements
-{{ end }}
-
+{{ range $pkgId := .pkgs.windows.winget }}
+winget install '{{ $pkgId }}' --accept-source-agreements --accept-package-agreements
 {{ end }}

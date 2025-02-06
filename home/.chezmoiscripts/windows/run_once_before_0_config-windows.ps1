@@ -12,6 +12,9 @@ if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
   }
 }
 
+# Allow long path
+Set-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem' -Name 'LongPathsEnabled' -Value 1
+
 # Show hiddent files and folders
 Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name Hidden -Value 1
 # Unhide file ext
