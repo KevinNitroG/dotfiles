@@ -6,6 +6,7 @@
 
 **/*chezmoiignore* linguist-language=gitignore linguist-detectable
 **/*chezmoiremove* linguist-language=gitignore linguist-detectable
+**/*gitignore* linguist-language=gitignore linguist-detectable
 **/*rgignore* linguist-language=gitignore linguist-detectable
 
 **/dot_?(vs)vimrc linguist-language=vim linguist-detectable

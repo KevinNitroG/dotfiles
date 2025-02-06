@@ -73,6 +73,7 @@ My Windows and Arch linux (hyprdots) managed by chezmoi
 - <https://github.com/D3Ext/aesthetic-wallpapers>
 - <https://github.com/DenverCoder1/minimalistic-wallpaper-collection>
 - <https://github.com/Gingeh/wallpapers>
+- <https://github.com/lildude/dotfiles/> (Have config for codespace)
 
 ### Other dotfiles
 

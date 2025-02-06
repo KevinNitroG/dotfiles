@@ -1,6 +1,6 @@
 Write-Host "IMPORTING TASK SCHEDULES..."
 
-$pass = Read-Host 'Enter username password to import task schedules' -AsSecureString
+$pass = Read-Host "Enter `"$env:USERNAME`" password to import task schedules" -AsSecureString
 
 $gettasks = Get-ChildItem -Path "$HOME\.config\windows-tasks-scheduler" -Filter "*.xml"
 

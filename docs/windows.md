@@ -10,7 +10,6 @@
 - [🪴 INSTALL](#-install)
   - [1️⃣ Install Chezmoi](#-install-chezmoi)
   - [1️⃣ Add Keys](#-add-keys)
-  - [2️⃣ Install prerequisite](#-install-prerequisite)
   - [3️⃣ Chezmoi](#-chezmoi)
   - [6️⃣ Install fonts](#-install-fonts)
 - [🎈 EXTRAS](#-extras)
@@ -92,22 +91,8 @@ iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~/bin'"
 
 > In order to encrypt / decrypt chezmoi
 
----
-
-### 2️⃣ Install prerequisite
-
-- Set execution policy to run script from URL _(non-admin)_
-  ```ps1
-  Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser
-  ```
-- Install perquisite scoop _(non-admin)_
-  ```ps1
-  iwr "https://raw.githubusercontent.com/KevinNitroG/windows-dotfiles/main/install/prerequisiteScoop.ps1" | iex
-  ```
-- Install perquisite choco _(admin)_
-  ```ps1
-  iwr "https://raw.githubusercontent.com/KevinNitroG/windows-dotfiles/main/install/prerequisiteChoco.ps1" | iex
-  ```
+> [!NOTE]
+> Maybe we don't need gpg trust because config has chezmoi
 
 ---
 

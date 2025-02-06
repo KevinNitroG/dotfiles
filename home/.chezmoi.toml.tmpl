@@ -1,4 +1,5 @@
 {{ $gpgId := "780EDBE72B368638D3DA4691071E9CD8A2D41057" }}
+{{ $sshId := "071E9CD8A2D41057" }}
 
 {{ $terminalFontSize := promptIntOnce . "terminalFontSize" "Enter terminal font size" }}
 
@@ -30,7 +31,8 @@ catppuccinLightFlavour = {{ $catppuccinLightFlavour | quote }}
 catppuccinDarkFlavour = {{ $catppuccinDarkFlavour | quote }}
 catppuccinFlavor = {{ $catppuccinFlavor | quote }}
 catppuccinAccentColor = {{ $catppuccinAccentColor | quote }}
-gpgId = {{ $gpgId }}
+gpgId = {{ $gpgId | quote }}
+sshId = {{ $sshId | quote }}
 
 [git]
 autoAdd = true # Add changes to the source state after any change

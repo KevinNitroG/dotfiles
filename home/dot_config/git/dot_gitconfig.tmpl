@@ -7,12 +7,20 @@
 [user]
   name = Kevin Nitro
   email = trannguyenthaibinh46@gmail.com
-  signingkey = 071E9CD8A2D41057
+  signingkey = {{ .sshId }}
+
+[github]
+  user = KevinNitroG
 
 [core]
   editor = nvim
   longpaths = true
   pager = delta
+  excludesFile = ~/.config/git/global.gitignore
+
+[color]
+  ui = always
+  interactive = always
 
 [safe]
   directory = ~/gits
@@ -99,8 +107,7 @@
 [delta]
   features = catppuccin-{{ .catppuccinFlavor }}
   navigate = true
-  dark = true
-  ; light = true
+  {{- .theme -}} = true
   side-by-side = true
   line-numbers = true
   show-syntax-themes = true
@@ -112,6 +119,12 @@
 
 [diff]
   colorMoved = default
+
+[submodule]
+  fetchJobs = 8
+
+[remote]
+  pushDefault = origin
 
 [filter "lfs"]
   required = true

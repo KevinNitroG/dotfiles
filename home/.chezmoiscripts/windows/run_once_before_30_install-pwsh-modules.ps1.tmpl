@@ -1,3 +1,5 @@
+Import-Module PowerShellGet
+
 {{ range $module := .pkgs.windows.psGallery }}
 Install-Module -Name '{{ $module }}' -Repository PSGallery -Force -AcceptLicense -SkipPublisherCheck
 {{ end }}
