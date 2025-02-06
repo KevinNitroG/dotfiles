@@ -5,16 +5,16 @@
 # For chezmoi stuff
 
 {{ if ne .chezmoi.os "linux" }}
-.chezmoiscripts/
+.chezmoiscripts/linux/**/*
 {{ end }}
 {{ if ne .chezmoi.os "windows" }}
-.chezmoiscripts/windows/
+.chezmoiscripts/windows/**/*
 .local/bin/*.bat
 .local/bin/*.reg
 .local/bin/*.ps1
 {{ end }}
 {{ if ne .chezmoi.os "darwin" }}
-.chezmoiscripts/darwin/
+.chezmoiscripts/darwin/**/*
 {{ end }}
 {{ if eq .chezmoi.os "windows" }}
 .local/bin/*.sh
