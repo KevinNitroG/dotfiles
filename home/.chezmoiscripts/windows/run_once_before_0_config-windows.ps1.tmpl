@@ -12,7 +12,14 @@ if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
   }
 }
 
-# Allow long path
+Import-Module Microsoft.PowerShell.Security
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser
+Set-ExecutionPolicy Bypass -Scope Process -Force
+
+Write-Host "Enabling Dev mode..."
+Add-WindowsCapability -Online -Name DeveloperMode~~~~0.0.1.0
+
+Write-Host 'Allowing long path...'
 Set-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem' -Name 'LongPathsEnabled' -Value 1
 
 # Show hiddent files and folders
