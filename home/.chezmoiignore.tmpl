@@ -5,16 +5,16 @@
 # For chezmoi stuff
 
 {{ if ne .chezmoi.os "linux" }}
-.chezmoiscripts/**
+.chezmoiscripts/
 {{ end }}
 {{ if ne .chezmoi.os "windows" }}
-.chezmoiscripts/windows/**
+.chezmoiscripts/windows/
 .local/bin/*.bat
 .local/bin/*.reg
 .local/bin/*.ps1
 {{ end }}
 {{ if ne .chezmoi.os "darwin" }}
-.chezmoiscripts/darwin/**
+.chezmoiscripts/darwin/
 {{ end }}
 {{ if eq .chezmoi.os "windows" }}
 .local/bin/*.sh
@@ -57,20 +57,13 @@
 .npm-global
 mount
 
-gtk_rc-2.0.mine
+.gtkrc-2.0.mine
 .tmux.conf
 .zprofile
 .zshenv
 .zshrc
 .zshenv_private
 .zsh_history
-
-AppData/Local/TrafficMonitor/history_traffic.dat
-AppData/Local/TrafficMonitor/history_traffic.dat.bak
-AppData/Local/TrafficMonitor/error.log
-AppData/Local/EVKey/_setting.ini
-AppData/Local/UniKey/_uk_process_state.txt
-
 {{ else }}
 
 AppData

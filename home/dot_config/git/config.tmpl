@@ -56,19 +56,19 @@
   editconfig = config --global --edit
 
   ; ref: https://github.com/stevearc/dotfiles/blob/master/.gitconfig
-  po = !bash ~/.githelpers push_current_branch
-  pof = !bash ~/.githelpers push_current_branch --force-with-lease
-  dopr = !bash ~/.githelpers create_pull_request
+  po = !bash ~/.config/git/githelpers.sh push_current_branch
+  pof = !bash ~/.config/git/githelpers.sh push_current_branch --force-with-lease
+  dopr = !bash ~/.config/git/githelpers.sh create_pull_request
   popr = !git po && sleep 1 && git dopr
-  findpr = !bash ~/.githelpers find_pull_request
-  fix = !bash ~/.githelpers commit_fix
-  uu = !bash ~/.githelpers update_master
-  l = !bash ~/.githelpers pretty_git_log_paged
+  findpr = !bash ~/.config/git/githelpers.sh find_pull_request
+  fix = !bash ~/.config/git/githelpers.sh commit_fix
+  uu = !bash ~/.config/git/githelpers.sh update_master
+  l = !bash ~/.config/git/githelpers.sh pretty_git_log_paged
   la = !git l --all
   r = !git rcp -20
   ra = !git la -20
-  rc = !bash ~/.githelpers contextual_git_log
-  rcp = !bash ~/.githelpers contextual_git_log_paged
+  rc = !bash ~/.config/git/githelpers.sh contextual_git_log
+  rcp = !bash ~/.config/git/githelpers.sh contextual_git_log_paged
 
   prev = checkout @^
   next = !git checkout $(git rev-list --children --all | grep ^$(git rev-parse HEAD) | cut -f 2 -d ' ')
