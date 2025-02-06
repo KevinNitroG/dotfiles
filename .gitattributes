@@ -35,7 +35,8 @@
 **/dot_config/git/global.gitignore linguist-language=ignore linguist-detectable
 
 **/dot_config/obs/**/*.json linguist-generated
-**/dot_config/obs/**/*.ini linguist-generatedhome/AppData/Local/Microsoft/PowerToys/**/* linguist-generated
+**/dot_config/obs/**/*.ini linguist-generated
+**/AppData/Local/Microsoft/PowerToys/**/* linguist-generated
 **/dot_config/bonjourr/config.json linguist-generated
 **/dot_config/browser-data/vimium/vimium-options.json linguist-generated
 **/TrafficMonitor/config.ini linguist-generated
