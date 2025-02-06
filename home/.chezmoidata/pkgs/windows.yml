@@ -109,6 +109,7 @@ pkgs:
         - 'extras/anydesk'
         - 'extras/obs-studio'
         - 'extras/powertoys'
+        - 'extras/silentcmd'
         - 'extras/vlc'
         - 'extras/winaero-tweaker'
         - 'nonportable/parsec-np'
@@ -127,10 +128,10 @@ pkgs:
         # - 'extras/v2rayn'
         # - 'main/uutils-coreutils'
       importRegistry:
-        # - "$env:USERPROFILE\\scoop\\apps\\windows-terminal\\current\\install-context.reg"
-        - "$env:USERPROFILE\\scoop\\apps\\pwsh\\current\\install-explorer-context.reg"
-        - "$env:USERPROFILE\\scoop\\apps\\pwsh\\current\\install-file-context.reg"
-        - "$env:USERPROFILE\\scoop\\apps\\7zip\\current\\install-context.reg"
+        # - "$env:USERPROFILE/scoop/apps/windows-terminal/current/install-context.reg"
+        - '$env:USERPROFILE/scoop/apps/pwsh/current/install-explorer-context.reg'
+        - '$env:USERPROFILE/scoop/apps/pwsh/current/install-file-context.reg'
+        - '$env:USERPROFILE/scoop/apps/7zip/current/install-context.reg'
     choco:
       - 'internet-download-manager'
       - 'itunes'
