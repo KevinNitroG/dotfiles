@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-if ! command -v bat &>/dev/null; then
-  exit
-fi
+{{ $bat := lookPath "bat" }}
+
+{{ if $bat }}
 
 echo "BUILDING BAT CACHE..."
 bat cache --build
+
+{{ end }}

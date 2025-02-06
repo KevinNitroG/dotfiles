@@ -1,3 +1,7 @@
-{{ if lookPath "gpg" }}
-curl https://github.com/web-flow.gpg | gpg --import
+{{ $gpg := lookPath "gpg" }}
+
+{{ if $gpg }}
+
+curl 'https://github.com/web-flow.gpg' | {{ $gpg }} --import
+
 {{ end }}

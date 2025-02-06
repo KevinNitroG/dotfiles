@@ -165,10 +165,10 @@
     "unfocused_border": "Surface2"
   },
   "animation": {
-    "fps": 30,
-    "enabled": false,
-    "duration": 100,
-    "style": "EaseInOutQuad"
+    "fps": 60,
+    "enabled": true,
+    "duration": 300,
+    "style": "EaseInOutBounce"
   },
   "mouse_follows_focus": false,
   "resize_delta": 10,

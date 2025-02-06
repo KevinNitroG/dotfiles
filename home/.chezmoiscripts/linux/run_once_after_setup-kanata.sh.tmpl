@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
-set -eufo pipefail
+{{ $kanata := lookPath "kanata" }}
 
-if ! command -v kanata &>/dev/null; then
-  exit
-fi
+{{ if $kanata }}
+
+set -eufo pipefail
 
 echo "SETTING UP KANATA..."
 sudo groupadd uinput || true
@@ -18,3 +18,5 @@ fi
 sudo udevadm control --reload-rules && sudo udevadm trigger
 sudo modprobe uinput || echo 'please run "sudo modprobe uinput" for the first time run kanata'
 systemctl --user enable kanata.service || echo 'Cannot enable kanata service. Try to enable manually :)'
+
+{{ end }}

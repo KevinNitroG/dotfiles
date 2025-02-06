@@ -1,6 +1,5 @@
 if (Get-Command 'scoop')
 {
-  Write-Host 'SCOOP ALREADY INSTALLED'
   exit
 }
 

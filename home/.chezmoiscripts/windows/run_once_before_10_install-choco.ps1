@@ -1,6 +1,5 @@
 if (Get-Command 'choco')
 {
-  Write-Host 'CHOCO ALREADY INSTALLED'
   exit
 }
 

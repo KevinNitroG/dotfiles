@@ -6,7 +6,7 @@ if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 {
   if ([int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber) -ge 6000)
   {
-    $CommandLine = "-NoExit -File `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments
+    $CommandLine = "-File `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments
     Start-Process -Wait -FilePath PowerShell.exe -Verb Runas -ArgumentList $CommandLine
     Exit
   }
@@ -19,18 +19,25 @@ Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer
 Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name ShowSuperHidden -Value 0
 
 # Enable Hyper-V/WSL.
-if (!(Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-All).State)
-{
-  Write-Host 'Enabling Hyper-V...'
-  Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-All
-}
+# if (!(Get-WindowsOptionalFeature -Online -FeatureName HypervisorPlatform).State)
+# {
+#   Write-Host 'Enabling Hyper-V...'
+#   # Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-All
+#   Enable-WindowsOptionalFeature -Online -FeatureName HypervisorPlatform
+# }
+
 if (!(Get-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform).State)
 {
   Write-Host 'Enabling Virtual Machine Platform...'
   Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform
 }
+
 if (!(Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux).State)
 {
   Write-Host 'Enabling WSL...'
   Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
 }
+
+# TODO: later
+
+NetFx4-AdvSrvs

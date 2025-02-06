@@ -1,14 +1,20 @@
 # Self-elevate the script if required
 if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
   if ([int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber) -ge 6000) {
-    $CommandLine = "-NoExit -File `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments
+    $CommandLine = "-File `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments
     Start-Process -Wait -FilePath PowerShell.exe -Verb Runas -ArgumentList $CommandLine
     Exit
   }
 }
 
+{{ $choco := lookPath "choco" }}
+
+{{ if $choco }}
+
 Write-Host "INSTALLING CHOCO PACKAGES..."
 
 {{ range $pkg := .pkgs.windows.choco }}
-choco install '{{ $pkg }}' -y
+{{ $choco }} install '{{ $pkg }}' -y
+{{ end }}
+
 {{ end }}

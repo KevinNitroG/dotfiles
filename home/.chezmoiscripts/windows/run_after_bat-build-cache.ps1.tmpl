@@ -1,0 +1,8 @@
+{{ $bat := lookPath "bat" }}
+
+{{ if $bat }}
+
+Write-Host 'BUILDING BAT CACHE...'
+{{ $bat }} cache --build
+
+{{ end }}

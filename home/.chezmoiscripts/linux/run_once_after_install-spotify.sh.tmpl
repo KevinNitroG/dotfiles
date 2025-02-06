@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-if ! command -v spotify &>/dev/null; then
-  exit
-fi
+{{ $spotify := lookPath "spotify" }}
+
+{{ if $spotify }}
 
 echo 'PATCHING SPOTIFY USING SPOTX...'
 bash <(curl -sSL https://spotx-official.github.io/run.sh)
+
+{{ end }}
