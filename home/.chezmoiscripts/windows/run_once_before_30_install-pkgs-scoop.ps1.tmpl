@@ -1,7 +1,15 @@
+Write-Host 'ADDING SCOOP BUCKETS...'
+
+{{ range $bucket := .pkgs.windows.scoop.buckets }}
+scoop bucket add '{{ $bucket }}'
+{{ end }}
+
+Write-Host 'INSTALLING SCOOP PACKAGES...'
 {{ range $pkg := .pkgs.windows.scoop.pkgs }}
 scoop install '{{ $pkg }}'
 {{ end }}
 
+Write-Host 'IMPORTING SCOOP REGISTRY...'
 {{ range $reg := .pkgs.windows.scoop.importRegistry }}
 reg import '{{ $reg }}'
 {{ end }}

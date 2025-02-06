@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+{{ if lookPath "gpg" }}
+curl 'https://github.com/web-flow.gpg' | gpg --import
+{{ end }}

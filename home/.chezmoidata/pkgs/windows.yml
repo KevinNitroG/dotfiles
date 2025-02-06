@@ -139,3 +139,11 @@ pkgs:
       # - 'ultraviewer'
     microsoftStore:
       - 'XP8C9QZMS2PC1T' # Brave
+    psGallery:
+      # - 'DockerCompletion'
+      # - 'Terminal-Icons'
+      # - 'posh-wakatime'
+      - 'Catppuccin'
+      - 'CompletionPredictor'
+      - 'PsReadLine'
+      - 'posh-git'

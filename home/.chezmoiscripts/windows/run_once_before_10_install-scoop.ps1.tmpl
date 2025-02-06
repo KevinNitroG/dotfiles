@@ -9,9 +9,3 @@ Write-Host 'INSTALLING SCOOP...'
 Import-Module Microsoft.PowerShell.Security
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 Invoke-RestMethod -Uri https://get.scoop.sh | Invoke-Expression
-
-Write-Host 'ADDING SCOOP BUCKETS...'
-
-{{ range $bucket := .pkgs.windows.scoop.buckets }}
-scoop bucket add '{{ $bucket }}'
-{{ end }}
