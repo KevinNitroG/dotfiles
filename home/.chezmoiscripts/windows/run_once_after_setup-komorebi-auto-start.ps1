@@ -1,6 +1,12 @@
+Write-Host "SETTING UP KOMOREBI AUTO START"
+
 $Path = [System.IO.Path]::Combine($env:APPDATA, "Microsoft\Windows\Start Menu\Programs\Startup", "komorerbi.lnk")
 
-Test-Path $Path -PathType Leaf
+if (Test-Path $Path -PathType Leaf)
+{
+  Write-Host "komorerbi shortcut is already created"
+  exit
+}
 
 $WScriptShell = New-Object -ComObject WScript.Shell
 $Shortcut = $WScriptShell.CreateShortcut($Path)

@@ -1,3 +1,5 @@
+Write-Host "INSTALLING WINGET PACKAGES..."
+
 {{ range $pkgId := .pkgs.windows.microsoftStore }}
 winget install '{{ $pkgId }}' --accept-source-agreements --accept-package-agreements
 {{ end }}

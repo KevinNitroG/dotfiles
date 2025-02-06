@@ -7,6 +7,8 @@ if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
   }
 }
 
+Write-Host "INSTALLING CHOCO PACKAGES..."
+
 {{ range $pkg := .pkgs.windows.choco }}
 choco install '{{ $pkg }}' -y
 {{ end }}

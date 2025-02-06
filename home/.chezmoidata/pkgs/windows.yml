@@ -138,7 +138,7 @@ pkgs:
       - 'warp'
       # - 'everythingpowertoys'
       # - 'ultraviewer'
-    microsoftStore:
+    winget:
       - 'XP8C9QZMS2PC1T' # Brave
     psGallery:
       # - 'DockerCompletion'
