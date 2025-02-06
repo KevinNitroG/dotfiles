@@ -1,7 +1,13 @@
-*.json* linguist-language=json linguist-detectable
-*.toml* linguist-language=toml linguist-detectable
-*.yaml* linguist-language=yml linguist-detectable
-*.yml* linguist-language=yml linguist-detectable
+*.json linguist-language=json linguist-detectable
+*.json.tmpl linguist-language=json linguist-detectable
+*.toml linguist-language=toml linguist-detectable
+*.toml.tmpl linguist-language=toml linguist-detectable
+*.yaml linguist-language=yml linguist-detectable
+*.yaml.tmpl linguist-language=yml linguist-detectable
+*.yml linguist-language=yml linguist-detectable
+*.yml.tmpl linguist-language=yml linguist-detectable
+
+*.lua.tmpl linguist-language=lua linguist-detectable
 
 *config* linguist-language=ini linguist-detectable
 
