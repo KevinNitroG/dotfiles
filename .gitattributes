@@ -19,7 +19,7 @@
 *vimrc linguist-language=vim linguist-detectable
 *vsvimrc linguist-language=vim linguist-detectable
 
-*.ps1.tmpl linguist-language=powershell linguist-detectable
+*.ps1.tmpl linguist-language=pwsh linguist-detectable
 
 *.sh.tmpl linguist-language=sh linguist-detectable
 *tmux.conf linguist-language=sh linguist-detectable
