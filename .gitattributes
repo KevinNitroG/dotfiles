@@ -1,20 +1,22 @@
-**/*.json.tmpl linguist-language=json linguist-detectable
-**/*.toml.tmpl linguist-language=toml linguist-detectable
-**/*.y?(a)ml.tmpl linguist-language=yaml linguist-detectable
+*.json* linguist-language=json linguist-detectable
+*.toml* linguist-language=toml linguist-detectable
+*.yaml* linguist-language=yaml linguist-detectable
+*.yml* linguist-language=yaml linguist-detectable
 
-**/*.gitconfig(?.tmpl)* linguist-language=ini linguist-detectable
+*config* linguist-language=ini linguist-detectable
 
-**/*chezmoiignore* linguist-language=gitignore linguist-detectable
-**/*chezmoiremove* linguist-language=gitignore linguist-detectable
-**/*gitignore* linguist-language=gitignore linguist-detectable
-**/*rgignore* linguist-language=gitignore linguist-detectable
+*chezmoiignore* linguist-language=gitignore linguist-detectable
+*chezmoiremove* linguist-language=gitignore linguist-detectable
+*gitignore* linguist-language=gitignore linguist-detectable
+*rgignore* linguist-language=gitignore linguist-detectable
 
-**/dot_?(vs)vimrc linguist-language=vim linguist-detectable
+*vimrc linguist-language=vim linguist-detectable
+*vsvimrc linguist-language=vim linguist-detectable
 
-**/*.ps1.tmpl linguist-language=powershell linguist-detectable
+*.ps1.tmpl linguist-language=powershell linguist-detectable
 
-**/*.sh.tmpl linguist-language=sh linguist-detectable
-**/*dot_tmux.conf linguist-language=sh linguist-detectable
-**/*zprofile* linguist-language=sh linguist-detectable
-**/*zshenv* linguist-language=sh linguist-detectable
-**/*zshrc* linguist-language=sh linguist-detectable
+*.sh.tmpl linguist-language=sh linguist-detectable
+*tmux.conf linguist-language=sh linguist-detectable
+*zprofile* linguist-language=sh linguist-detectable
+*zshenv* linguist-language=sh linguist-detectable
+*zshrc* linguist-language=sh linguist-detectable
