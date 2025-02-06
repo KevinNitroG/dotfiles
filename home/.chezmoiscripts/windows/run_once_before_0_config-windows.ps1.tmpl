@@ -21,26 +21,12 @@ Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer
 Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name HideFileExt -Value 0
 Set-ItemProperty -Path 'HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name ShowSuperHidden -Value 0
 
-# Enable Hyper-V/WSL.
-# if (!(Get-WindowsOptionalFeature -Online -FeatureName HypervisorPlatform).State)
-# {
-#   Write-Host 'Enabling Hyper-V...'
-#   # Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Hyper-V-All
-#   Enable-WindowsOptionalFeature -Online -FeatureName HypervisorPlatform
-# }
+{{ range $feature := .config.windows.features.enable }}
+Write-Host 'Enable {{ $feature }}...'
+Enable-WindowsOptionalFeature -Online -FeatureName '{{ $feature }}'
+{{ end }}
 
-if (!(Get-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform).State)
-{
-  Write-Host 'Enabling Virtual Machine Platform...'
-  Enable-WindowsOptionalFeature -Online -FeatureName VirtualMachinePlatform
-}
-
-if (!(Get-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux).State)
-{
-  Write-Host 'Enabling WSL...'
-  Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
-}
-
-# TODO: later
-
-NetFx4-AdvSrvs
+{{ range $feature := .config.windows.features.disable }}
+Write-Host 'Disable {{ $feature }}...'
+Disable-WindowsOptionalFeature -Online -FeatureName '{{ $feature }}'
+{{ end }}
