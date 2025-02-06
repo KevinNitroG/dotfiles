@@ -8,4 +8,4 @@
 # NOTE: It doesn't work either
 #
 # Mute and unmute
-# @reboot /home/kevinnitro/.scripts/pactl-mute-twice.sh
+# @reboot /home/kevinnitro/.local/bin/pactl-mute-twice.sh

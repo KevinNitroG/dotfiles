@@ -6,7 +6,6 @@ config:
         - '%LOCALAPPDATA%/nvim-data/mason/bin'
         - '%USERPROFILE%/scoop/apps/git/current/usr/bin'
         - '%USERPROFILE%/.local/bin'
-        - '%USERPROFILE%/.script/powershell'
       others:
         YAZI_CONFIG_HOME: '%USERPROFILE%/.config/yazi'
         YAZI_FILE_ONE: '%USERPROFILE%/scoop/apps/git/current/usr/bin/file.exe'

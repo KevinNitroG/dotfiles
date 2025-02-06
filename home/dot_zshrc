@@ -24,7 +24,7 @@ export path=(
   $HOME/.local/share/nvim/mason/bin
   $HOME/.npm-global/bin
   $PNPM_HOME
-  $HOME/.scripts/shell
+  $HOME/.local/bin
   $path
 )
 
@@ -178,10 +178,10 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always --icons=alway
 # ALIAS / FUNCTION
 
 # Apps
-if [[ -e "$HOME/.scripts/shell/appx.sh" ]]; then
-  alias ia="$HOME/.scripts/shell/appx.sh -i"
-  alias ua="$HOME/.scripts/shell/appx.sh -u -f"
-  alias uaa="$HOME/.scripts/shell/appx.sh -U"
+if [[ -e "$HOME/.local/bin/appx.sh" ]]; then
+  alias ia="$HOME/.local/bin/appx.sh -i"
+  alias ua="$HOME/.local/bin/appx.sh -u -f"
+  alias uaa="$HOME/.local/bin/appx.sh -U"
 fi
 
 # Ls

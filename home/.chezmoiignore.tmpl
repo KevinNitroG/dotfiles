@@ -5,13 +5,19 @@
 # For chezmoi stuff
 
 {{ if ne .chezmoi.os "linux" }}
-.chezmoiscripts/linux/**
+.chezmoiscripts/**
 {{ end }}
 {{ if ne .chezmoi.os "windows" }}
 .chezmoiscripts/windows/**
+.local/bin/*.bat
+.local/bin/*.reg
+.local/bin/*.ps1
 {{ end }}
 {{ if ne .chezmoi.os "darwin" }}
 .chezmoiscripts/darwin/**
+{{ end }}
+{{ if eq .chezmoi.os "windows" }}
+.local/bin/*.sh
 {{ end }}
 
 ##########################################
@@ -47,8 +53,6 @@
 .config/private_trashrc
 .config/spotify-flags.conf
 
-.scripts/shell/
-
 .font
 .npm-global
 mount
@@ -81,9 +85,6 @@ inshellisense
 .config/xinmeng
 .config/whkdrc
 .vsvimrc
-
-.scripts/batch/
-.scripts/registry/
 
 {{ end }}
 
