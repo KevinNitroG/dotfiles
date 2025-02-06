@@ -344,8 +344,8 @@ Set-Alias -Name lg -Value lazygit
 
 if (Get-Command scoop)
 {
-  Set-Alias -Name gitbash -Value "$env:USERPROFILE\scoop\app\git\current\bin\bash.exe"
-  Set-Alias -Name curl -Value "$env:USERPROFILE\scoop\app\curl\current\bin\curl.exe"
+  Set-Alias -Name gitbash -Value "$env:USERPROFILE\scoop\apps\git\current\usr\bin\bash.exe"
+  Set-Alias -Name curl -Value "$env:USERPROFILE\scoop\apps\curl\current\usr\bin\curl.exe"
 }
 
 

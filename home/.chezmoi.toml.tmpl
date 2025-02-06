@@ -1,6 +1,4 @@
-encryption = "gpg"
-mode = "file" # file, symlink
-progress = true
+{{ $gpgId := "780EDBE72B368638D3DA4691071E9CD8A2D41057" }}
 
 {{ $terminalFontSize := promptIntOnce . "terminalFontSize" "Enter terminal font size" }}
 
@@ -20,6 +18,10 @@ progress = true
 {{ else }}
   {{ $catppuccinFlavor = $catppuccinLightFlavour }}
 {{ end }}
+
+encryption = "gpg"
+mode = "file" # file, symlink
+progress = true
   
 [data]
 terminalFontSize = {{ $terminalFontSize }}
@@ -28,6 +30,7 @@ catppuccinLightFlavour = {{ $catppuccinLightFlavour | quote }}
 catppuccinDarkFlavour = {{ $catppuccinDarkFlavour | quote }}
 catppuccinFlavor = {{ $catppuccinFlavor | quote }}
 catppuccinAccentColor = {{ $catppuccinAccentColor | quote }}
+gpgId = {{ $gpgId }}
 
 [git]
 autoAdd = true # Add changes to the source state after any change
@@ -35,7 +38,8 @@ autoCommit = false
 autoPush = false
 
 [gpg]
-recipient = "KevinNitroG"
+recipient = {{ $gpgId | quote }}
+args = ["--quiet"]
 
 [cd]
 {{ $shell := "" }}
@@ -59,4 +63,3 @@ pager = "delta"
 [merge]
 command = "nvim"
 args = ["-d", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Source {{ "}}" }}", "{{ "{{" }} .Target {{ "}}" }}"]
-
