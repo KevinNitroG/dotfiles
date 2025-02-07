@@ -7,7 +7,22 @@ on:
 
 env:
   BIN_PATH: ${{ github.workspace }}/bin
-  INIT_ARGS: --depth 1 --apply --exclude=encrypted --exclude=externals --exclude=scripts --promptDefaults
+  INIT_ARGS: >
+    --destination ${{ github.workspace }}/chezmoi
+    --apply
+    --depth 1
+    --exclude=encrypted
+    --exclude=externals
+    --exclude=scripts
+    --promptDefaults
+    --no-tty
+    --color=false
+    --verbose
+  DOCTOR_ARGS: >
+    --keep-going 
+    --no-tty
+    --color=false
+    --verbose
 
 jobs:
   test:
@@ -27,3 +42,6 @@ jobs:
       - name: Init chezmoi
         shell: bash
         run: ${{ env.BIN_PATH }}/chezmoi init ${{ github.repository_owner }} ${{ env.INIT_ARGS }}
+      - name: Chezmoi doctor
+        shell: bash
+        run: ${{ env.BIN_PATH }}/chezmoi doctor ${{ env.DOCTOR_ARGS }}
