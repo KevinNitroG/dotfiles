@@ -9,19 +9,15 @@ env:
   BIN_PATH: ${{ github.workspace }}/bin
   INIT_ARGS: >
     --apply
-    --depth 1
-    --exclude=encrypted
-    --exclude=externals
-    --exclude=scripts
+    --depth=1
+    --exclude='encrypted,externals,scripts'
     --promptDefaults
     --no-tty
     --color=false
-    --verbose
   DOCTOR_ARGS: >
     --keep-going 
     --no-tty
     --color=false
-    --verbose
 
 jobs:
   test:
