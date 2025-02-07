@@ -1,10 +1,17 @@
 {{ $gpgId := "780EDBE72B368638D3DA4691071E9CD8A2D41057" }}
 {{ $sshId := "071E9CD8A2D41057" }}
 
-{{ $terminalFontSize := promptIntOnce . "terminalFontSize" "Enter terminal font size" }}
+{{ $shell := "" }}
+{{- if eq .chezmoi.os "windows" -}}
+  {{- $shell = "pwsh" -}}
+{{- else -}}
+  {{- $shell = "zsh" -}}
+{{- end -}}
+
+{{ $terminalFontSize := promptInt "Enter terminal font size" }}
 
 {{ $themes := list "dark" "light" }}
-{{ $theme := promptChoiceOnce . "theme" "Theme of apps" $themes }}
+{{ $theme := promptChoice "Theme" $themes }}
 
 {{ $catppuccinFlavors := list "latte" "frappe" "macchiato" "mocha" }}
 {{ $catppuccinLightFlavour := promptChoiceOnce . "catppuccinLightFlavour" "Catppuccin flavor for light mode" $catppuccinFlavors }}
@@ -23,7 +30,7 @@
 encryption = "gpg"
 mode = "file" # file, symlink
 progress = true
-  
+
 [data]
 terminalFontSize = {{ $terminalFontSize }}
 theme = {{ $theme | quote }}
@@ -44,12 +51,6 @@ recipient = {{ $gpgId | quote }}
 args = ["--quiet"]
 
 [cd]
-{{ $shell := "" }}
-{{- if eq .chezmoi.os "windows" -}}
-{{-  $shell = "pwsh" -}}
-{{- else -}}
-{{-   $shell = "zsh" -}}
-{{- end -}}
 command = {{ $shell | quote }}
 
 [completion]
