@@ -1,0 +1,24 @@
+name: Test Install
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    strategy:
+      fail-fast: true
+      matrix:
+        os:
+          - windows
+          - ubuntu
+          - macos
+    runs-on: ${{ matrix.os }}-latest
+    name: Test on ${{ matrix.os }}
+    steps:
+      - name: Install chezmoi
+        shell: bash
+        run: bash <(curl -fsLS get.chezmoi.io)
+      - name: Init chezmoi
+        run: chezmoi init ${{ github.repository_owner }} --depth 1 --exclude=encrypted --exclude=externals --exclude=scripts --promptDefaults
