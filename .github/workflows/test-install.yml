@@ -8,10 +8,12 @@ on:
 env:
   BIN_PATH: ${{ github.workspace }}/bin
   INIT_ARGS: >
-    --apply
     --depth=1
-    --exclude='encrypted,externals,scripts'
     --promptDefaults
+    --no-tty
+    --color=false
+  APPLY_ARGS: >
+    --exclude='encrypted,externals,scripts'
     --no-tty
     --color=false
   DOCTOR_ARGS: >
@@ -37,15 +39,19 @@ jobs:
       - name: Init chezmoi
         shell: bash
         run: ${{ env.BIN_PATH }}/chezmoi init ${{ github.repository_owner }} ${{ env.INIT_ARGS }}
+      - name: Chezmoi apply
+        shell: bash
+        run: ${{ env.BIN_PATH }}/chezmoi apply ${{ env.APPLY_ARGS }}
       - name: Chezmoi doctor
         shell: bash
         run: ${{ env.BIN_PATH }}/chezmoi doctor ${{ env.DOCTOR_ARGS }}
       - name: Check all template
         shell: bash
         run: |
-          for tmpl in $(find . -name '*.tmpl'); do
-            chezmoi execute-template < "$tmpl" > /dev/null
+          tmpls=$(find . -type f -name "*.tmpl" ! -name ".chezmoi.toml.tmpl")
+          for tmpl in "${tmpls[@]}"; do
+            chezmoi execute-template < "$tmpl" &> /dev/null
             if [ $? -ne 0 ]; then
-              echo "$tmpl: Syntax Error"
+              echo "$tmpl: Tmpl error" 1>&2
             fi
           done
