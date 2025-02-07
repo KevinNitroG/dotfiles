@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+env:
+  BIN_PATH: ${{ github.workspace }}/bin
+  INIT_ARGS: --depth 1 --exclude=encrypted --exclude=externals --exclude=scripts --promptDefaults
+
 jobs:
   test:
     strategy:
@@ -19,6 +23,6 @@ jobs:
     steps:
       - name: Install chezmoi
         shell: bash
-        run: bash <(curl -fsLS get.chezmoi.io)
+        run: bash <(curl -fsLS get.chezmoi.io) -b ${{ env.BIN_PATH }}
       - name: Init chezmoi
-        run: chezmoi init ${{ github.repository_owner }} --depth 1 --exclude=encrypted --exclude=externals --exclude=scripts --promptDefaults
+        run: ${{ env.BIN_PATH }}/chezmoi init ${{ github.repository_owner }} ${{ env.INIT_ARGS }}
