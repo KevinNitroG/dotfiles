@@ -29,7 +29,7 @@ jobs:
           - ubuntu
           - macos
     runs-on: ${{ matrix.os }}-latest
-    name: Test on ${{ matrix.os }}
+    name: ${{ matrix.os }}
     steps:
       - name: Install chezmoi
         shell: bash
@@ -40,3 +40,12 @@ jobs:
       - name: Chezmoi doctor
         shell: bash
         run: ${{ env.BIN_PATH }}/chezmoi doctor ${{ env.DOCTOR_ARGS }}
+      - name: Check all template
+        shell: bash
+        run: |
+          for tmpl in $(find . -name '*.tmpl'); do
+            chezmoi execute-template < "$tmpl" > /dev/null
+            if [ $? -ne 0 ]; then
+              echo "$tmpl: Syntax Error"
+            fi
+          done
