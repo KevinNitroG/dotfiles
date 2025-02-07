@@ -27,16 +27,15 @@
 *zshenv* linguist-language=sh linguist-detectable
 *zshrc* linguist-language=sh linguist-detectable
 
-**/VSCode/keybindings.json linguist-language=jsonc linguist-detectable
+home/dot_wslconfig linguist-language=toml linguist-generated
+home/VSCode/keybindings.json linguist-language=jsonc linguist-detectable
 
-**/dot_ssh/config linguist-language=sshconfig linguist-detectable
-**/dot_config/git/config.tmpl linguist-language=gitconfig linguist-detectable
-**/dot_config/git/os.config.tmpl linguist-language=gitconfig linguist-detectable
-**/dot_config/git/global.gitignore linguist-language=ignore linguist-detectable
+home/dot_ssh/config linguist-language=sshconfig linguist-detectable
+home/dot_config/git/config.tmpl linguist-language=gitconfig linguist-detectable
+home/dot_config/git/os.config.tmpl linguist-language=gitconfig linguist-detectable
+home/dot_config/git/global.gitignore linguist-language=ignore linguist-detectable
 
-**/dot_config/obs/**/*.json linguist-generated
-**/dot_config/obs/**/*.ini linguist-generated
-**/AppData/Local/Microsoft/PowerToys/**/* linguist-generated
-**/dot_config/bonjourr/config.json linguist-generated
-**/dot_config/browser-data/vimium/vimium-options.json linguist-generated
-**/TrafficMonitor/config.ini linguist-generated
+home/dot_config/obs/** linguist-generated
+home/AppData/Local/Microsoft/PowerToys/** linguist-generated
+home/dot_config/browser-data/vimium/** linguist-generated
+home/TrafficMonitor/** linguist-generated
