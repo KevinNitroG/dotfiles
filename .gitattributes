@@ -27,7 +27,7 @@
 *zshenv* linguist-language=sh linguist-detectable
 *zshrc* linguist-language=sh linguist-detectable
 
-home/VSCode/keybindings.json linguist-language=jsonc linguist-detectable
+home/.chezmoitemplates/VSCode/keybindings.json linguist-language=jsonc linguist-detectable
 
 home/dot_ssh/config linguist-language=sshconfig linguist-detectable
 home/dot_config/git/config.tmpl linguist-language=gitconfig linguist-detectable
