@@ -66,9 +66,14 @@ Dotfiles managed with [chezmoi](https://www.chezmoi.io/):
 
 - Install chezmoi: <https://www.chezmoi.io/install>
 - Config SSH key and GPG key: Read in docs below
+- Chezmoi init
+  ```sh
+  chezmoi init KevinNitroG --ssh --apply
+  ```
 
-- [Windows](./docs/windows.md)
-- [Linux](./docs/linux.md)
+> - If running chezmoi with binary, can remove it later by passing `--purge-binary` arg to `chezmoi init`
+> - [Windows](./docs/windows.md)
+> - [Linux](./docs/linux.md)
 
 ---
 

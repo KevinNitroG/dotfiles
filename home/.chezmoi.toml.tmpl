@@ -8,17 +8,17 @@
   {{- $shell = "zsh" -}}
 {{- end -}}
 
-{{ $terminalFontSize := promptInt "Enter terminal font size" }}
+{{ $terminalFontSize := promptInt "Enter terminal font size" 13 }}
 
 {{ $themes := list "dark" "light" }}
-{{ $theme := promptChoice "Theme" $themes }}
+{{ $theme := promptChoice "Theme" $themes "dark" }}
 
 {{ $catppuccinFlavors := list "latte" "frappe" "macchiato" "mocha" }}
-{{ $catppuccinLightFlavour := promptChoiceOnce . "catppuccinLightFlavour" "Catppuccin flavor for light mode" $catppuccinFlavors }}
-{{ $catppuccinDarkFlavour := promptChoiceOnce . "catppuccinDarkFlavour" "Catppuccin flavor for dark mode" $catppuccinFlavors }}
+{{ $catppuccinLightFlavour := promptChoiceOnce . "catppuccinLightFlavour" "Catppuccin flavor for light mode" $catppuccinFlavors "latte" }}
+{{ $catppuccinDarkFlavour := promptChoiceOnce . "catppuccinDarkFlavour" "Catppuccin flavor for dark mode" $catppuccinFlavors "mocha" }}
 
 {{ $catppuccinAccentColors := list "blue" "flamingo" "green" "lavender" "maroon" "mauve" "peach" "pink" "red" "rosewater" "sapphire" "sky" "teal" "yellow" }}
-{{ $catppuccinAccentColor := promptChoiceOnce . "catppuccinAccentColor" "Catppuccin accent color" $catppuccinAccentColors }}
+{{ $catppuccinAccentColor := promptChoiceOnce . "catppuccinAccentColor" "Catppuccin accent color" $catppuccinAccentColors "lavender" }}
 
 {{ $catppuccinFlavor := "" }}
 {{ if eq $theme "dark" }}
