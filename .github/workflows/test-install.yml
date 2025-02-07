@@ -7,7 +7,7 @@ on:
 
 env:
   BIN_PATH: ${{ github.workspace }}/bin
-  INIT_ARGS: --depth 1 --exclude=encrypted --exclude=externals --exclude=scripts --promptDefaults
+  INIT_ARGS: --depth 1 --apply --exclude=encrypted --exclude=externals --exclude=scripts --promptDefaults
 
 jobs:
   test:
@@ -25,4 +25,5 @@ jobs:
         shell: bash
         run: bash <(curl -fsLS get.chezmoi.io) -b ${{ env.BIN_PATH }}
       - name: Init chezmoi
+        shell: bash
         run: ${{ env.BIN_PATH }}/chezmoi init ${{ github.repository_owner }} ${{ env.INIT_ARGS }}
