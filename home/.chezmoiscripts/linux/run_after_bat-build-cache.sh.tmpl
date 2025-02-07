@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
-# config hash: {{ include ".config/bat/config" | sha256sum }}
-# themeFile hash: {{ include (printf ".config/bat/%s" .catppuccinFlavor) | sha256sum }}
+# color hash: {{ .catppuccinFlavor }}
 
 if ! command -v bat &>/dev/null; then
   exit
