@@ -8,8 +8,6 @@ on:
 env:
   BIN_PATH: ${{ github.workspace }}/bin
   INIT_ARGS: >
-    --source ${{ github.workspace }}/chezmoi
-    --destination ${{ github.workspace }}/dotfiles
     --apply
     --depth 1
     --exclude=encrypted
@@ -20,8 +18,6 @@ env:
     --color=false
     --verbose
   DOCTOR_ARGS: >
-    --source ${{ github.workspace }}/chezmoi
-    --destination ${{ github.workspace }}/dotfiles
     --keep-going 
     --no-tty
     --color=false
