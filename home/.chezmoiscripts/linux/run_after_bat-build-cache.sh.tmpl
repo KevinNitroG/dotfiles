@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
-{{ $bat := lookPath "bat" }}
+# config hash: {{ include ".config/bat/config" | sha256sum }}
+# themeFile hash: {{ include (printf ".config/bat/%s" .catppuccinFlavor) | sha256sum }}
 
-{{ if $bat }}
+if ! command -v bat &>/dev/null; then
+  exit
+fi
 
 echo "BUILDING BAT CACHE..."
 bat cache --build
-
-{{ end }}
