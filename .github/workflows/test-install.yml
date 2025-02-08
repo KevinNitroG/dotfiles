@@ -49,9 +49,9 @@ jobs:
         shell: bash
         run: chezmoi init ${{ github.repository_owner }} ${{ env.INIT_ARGS }}
 
-      - name: Chezmoi apply
-        shell: bash
-        run: chezmoi apply ${{ env.APPLY_ARGS }}
+      # - name: Chezmoi apply
+      #   shell: bash
+      #   run: chezmoi apply ${{ env.APPLY_ARGS }}
 
       - name: Chezmoi doctor
         shell: bash
@@ -61,7 +61,7 @@ jobs:
         working-directory: ${{ env.HOME }}/.local/share/chezmoi
         shell: bash
         run: |
-          tmpls=$(find . -type f -name "*.tmpl" ! -name ".chezmoi.toml.tmpl")
+          tmpls=$(find . -type f -name "*.tmpl" ! -name ".chezmoi.toml.tmpl" ! -name "rclone.conf.tmpl")
           for tmpl in "${tmpls[@]}"; do
             chezmoi execute-template < "$tmpl" &>/dev/null
             if [ $? -ne 0 ]; then
