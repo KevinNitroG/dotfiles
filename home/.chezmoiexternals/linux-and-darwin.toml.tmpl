@@ -1,0 +1,29 @@
+{{ if or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") }}
+
+{{ $gitArgs := "clone.args = ['--depth', '1']\n    pull.args = ['--ff-only']" }}
+
+##########################################
+
+[".tmux/plugins/tpm"]
+type = "git-repo"
+url = "https://github.com/tmux-plugins/tpm"
+{{ $gitArgs }}
+
+[".config/zathura/catppuccin-{{ .catppuccinFlavor }}"]
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/zathura/main/src/catppuccin-{{ .catppuccinFlavor }}"
+
+[".config/kitty"]
+type = "archive"
+url = "https://github.com/catppuccin/kitty/archive/refs/heads/main.zip"
+stripComponents = 1
+include = ["*/themes/**"]
+
+[".config/sddm/themes/"]
+type = "archive"
+url = "https://github.com/catppuccin/sddm/releases/latest/download/catppuccin-mocha.zip"
+include = ["**/*"]
+
+##########################################
+
+{{ end }}

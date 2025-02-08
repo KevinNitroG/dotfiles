@@ -1,0 +1,56 @@
+#!/usr/bin/env bash
+
+set -eufo pipefail
+
+DISTRO=$(lsb_release -i | awk '{print $NF}')
+
+case "$DISTRO" in
+"Arch") ;;
+*)
+  exit 0
+  ;;
+esac
+
+##########################################
+
+# UPDATE SOURCES
+echo 'UPDATE SOURCES...'
+sudo pacman -Sy
+
+# INSTALL YAY
+if ! command -v yay &>/dev/null; then
+  echo 'INSTALLING YAY...'
+  sudo pacman -S --needed git base-devel
+  git clone https://aur.archlinux.org/yay-bin.git
+  cd yay-bin
+  makepkg -si
+  cd ..
+fi
+
+# INSTALL PACKAGES
+echo 'INSTALLING PACKAGES...'
+yay -S {{ .pkgs.archBased.universal | quoteList }} --needed
+
+# INSTALL LAPTOP STUFF
+read -rp 'INSTALL LAPTOP STUFF? [y/N]: ' yn
+case "$yn" in
+[yY])
+  echo 'INSTALLING LAPTOP STUFF...'
+  yay -S {{ .pkgs.archBased.laptop | quoteList }} --needed
+  ;;
+esac
+
+# INSTALL HYPRDOTS
+if ! command -v Hyde &>/dev/null; then
+  read -rp 'INSTALL HYPRDOTS? [Y/n]: ' yn
+  case "$yn" in
+  [nN]) ;;
+  *)
+    git clone --depth 1 https://github.com/prasanthrangan/hyprdots ~/Hyde
+    chmod +x ~/Hyde/Scripts/install.sh
+    ~/Hyde/Scripts/install.sh
+    ;;
+  esac
+fi
+
+systemctl list-unit-files "cronie.service" &>/dev/null && sudo systemctl enable --now cronie.service

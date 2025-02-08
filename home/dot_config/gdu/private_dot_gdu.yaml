@@ -1,0 +1,6 @@
+ignore-dirs:
+  - /proc
+  - /dev
+  - /sys
+  - /run
+  - ~/mount/rclone-drives/

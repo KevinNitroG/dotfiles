@@ -1,0 +1,62 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  "logo": {
+    "type": "small",
+    "padding": {
+      "top": 1,
+      "left": 2
+    }
+  },
+  "display": {
+    "separator": "",
+    "key": {
+      "width": 16
+    }
+  },
+  "modules": [
+    {
+      "key": "╭───────────╮",
+      "type": "custom"
+    },
+    {
+      // draw borders first to make colors of left and right border consistant
+      "key": "│           │\u001b[11D\u001b[31m user",
+      "type": "title",
+      "format": "{1}"
+    },
+    {
+      "key": "│           │\u001b[11D\u001b[32m󰇅 hname",
+      "type": "title",
+      "format": "{2}"
+    },
+    {
+      "key": "│           │\u001b[11D\u001b[33m󰅐 uptime",
+      "type": "uptime"
+    },
+    {
+      "key": "│           │\u001b[11D\u001b[34m term",
+      "type": "terminal"
+    },
+    {
+      "key": "│           │\u001b[11D\u001b[35m shell",
+      "type": "shell"
+    },
+    {
+      "key": "│           │\u001b[11D\u001b[36m apps",
+      "type": "packages"
+    },
+    {
+      "key": "├───────────┤",
+      "type": "custom"
+    },
+    {
+      "key": "│           │\u001b[11D\u001b[m colors",
+      "type": "colors",
+      "symbol": "circle"
+    },
+    {
+      "key": "╰───────────╯",
+      "type": "custom"
+    }
+  ]
+}

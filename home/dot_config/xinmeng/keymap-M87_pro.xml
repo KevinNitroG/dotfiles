@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<profile>
+<profileinfo name="Kevin Nitro"/>
+<keyitems>
+<item fn_layer="0" key_code="72" layout_value="0" layout_desc="" macro_type="12" macro_value="504" macro_value2="0" macro_value3="0" macro_desc="Play/Pause"/>
+<item fn_layer="0" key_code="71" layout_value="0" layout_desc="" macro_type="12" macro_value="510" macro_value2="0" macro_value3="0" macro_desc="Mute"/>
+</keyitems>
+</profile>

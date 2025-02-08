@@ -1,0 +1,7 @@
+export XMODIFIERS=@im='fcitx'
+export QT_IM_MODULE='fcitx'
+# export GTK_IM_MODULE='fcitx'
+# export GTK_IM_MODULE='wayland' # instead of 'fcitx' due to complainant, but clear this because some apps cannot open
+export SDL_IM_MODULE='fcitx'
+export XMODIFIERS='@im=fcitx'
+# export GLFW_IM_MODULE='ibus'

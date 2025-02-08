@@ -1,0 +1,16 @@
+# https://clangd.llvm.org/config
+
+CompileFlags:
+  Add:
+    - "--include-directory=C:/ProgramData/mingw64/mingw64/lib/gcc/x86_64-w64-mingw32/13.2.0/include/c++/x86_64-w64-mingw32/"
+  Compiler: g++ # Change to g++ bcs clangd neovim gets fuck
+Index:
+  Background: Build
+  StandardLibrary: No
+InlayHints:
+  BlockEnd: False
+  Designators: True
+  Enabled: True
+  ParameterNames: True
+  DeducedTypes: True
+  TypeNameLimit: 24

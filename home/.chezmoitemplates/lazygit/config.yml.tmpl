@@ -1,0 +1,95 @@
+#reference from https://github.com/scottmckendry/Windots/blob/main/lazygit/config.yml
+
+notARepository: skip
+disableStartupPopups: true
+
+update:
+  method: never
+  days: 14
+
+gui:
+  nerdFontsVersion: '3'
+  border: rounded
+  mouseEvents: true
+  # use catppuccin macchiato yellow - https://github.com/catppuccin/lazygit/blob/main/themes/macchiato/yellow.yml
+  theme:
+    activeBorderColor:
+      - '#eed49f'
+      - bold
+    inactiveBorderColor:
+      - '#a5adcb'
+    optionsTextColor:
+      - '#8aadf4'
+    selectedLineBgColor:
+      - '#363a4f'
+    cherryPickedCommitBgColor:
+      - '#494d64'
+    cherryPickedCommitFgColor:
+      - '#eed49f'
+    unstagedChangesColor:
+      - '#ed8796'
+    defaultFgColor:
+      - '#cad3f5'
+    searchingActiveBorderColor:
+      - '#eed49f'
+  authorColors:
+    '*': '#b7bdf8'
+
+git:
+  parseEmoji: true
+{{ if ne .chezmoi.os "windows" }}
+  paging:
+    pager: delta --paging=never
+    colorArg: always
+{{ end }}
+
+customCommands:
+  - key: 'F'
+    context: 'files'
+    command: 'git f' # require alias f = git add -A && git commit -m \"chore(save): $(curl -s -f https://whatthecommit.com/index.txt || \"save point\")\" && push origin HEAD
+    description: 'Auto add all, commit, push (finish)'
+    loadingText: 'Finishing'
+
+  - key: 'F'
+    context: 'localBranches, remoteBranches, remotes'
+    command: 'git fetch --prune'
+    description: 'Fetch prune branches'
+    loadingText: 'Pruning branches'
+
+  - key: 'F'
+    context: 'tags'
+    command: 'git fetch --prune-tags'
+    description: 'Fetch prune tags'
+    loadingText: 'Pruning tags'
+
+  - key: 'G'
+    context: 'global'
+    # command: 'git gcc' # set alias for git gcc = "git reflog expire --all --expire=now && git gc --prune=now --aggressive"
+    command: 'git reflog expire --all --expire=now && git gc --prune=now --aggressive'
+    description: 'clean up unnecessary files, reflog, optimize'
+    prompts:
+      - type: 'confirm'
+        title: 'Cleanup'
+        body: 'Are you sure you want to unnecessary files, reflog, optimize the repo?'
+    loadingText: 'Cleaning up'
+    stream: true
+
+  - key: 'u'
+    context: 'files'
+    command: 'git rm --cached {{ "{{" }}.SelectedFile.Name | quote{{ "}}" }}'
+    description: 'Untrack a file'
+    prompts:
+      - type: 'confirm'
+        title: 'Untrack'
+        body: 'Are you sure you want to untrack {{ "{{" }}.SelectedFile.Name | quote{{ "}}" }}?'
+    loadingText: 'Untracking file'
+
+  - key: '<c-r>'
+    context:  'files'
+    command: 'git read-tree --empty && git rm --cached -r . && git add .'
+    description: 'normalise follow git attributes'
+    prompts:
+      - type: 'confirm'
+        title: 'Normalise'
+        body: 'Are you sure you want to normalise follow git attributes?'
+    loadingText: 'Normalising files'

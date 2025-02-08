@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+{{ $crontab := lookPath "crontab" }}
+
+set -eufo pipefail
+
+{{ if $crontab }}
+
+echo "SETTING UP CRONTAB..."
+{{ $crontab }} ~/.config/crontab/kevinnitro
+
+{{ end }}

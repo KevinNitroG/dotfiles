@@ -1,0 +1,10 @@
+- brave://flags/#smooth-scrolling
+- brave://flags/#overlay-scrollbars
+- brave://flags/#enable-quic
+- brave://flags/#fluent-overlay-scrollbars
+- brave://flags/#fluent-scrollbars
+- brave://flags/#enable-tls13-early-data
+- brave://flags/#enable-tls13-kyber
+- brave://flags/#tab-groups-save-v2
+- brave://flags/#omit-cors-client-cert
+- brave://flags/#linked-services-setting

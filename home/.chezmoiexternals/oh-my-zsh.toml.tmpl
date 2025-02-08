@@ -1,0 +1,44 @@
+{{ if or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") }}
+
+{{ $gitArgs := "clone.args = ['--depth', '1']\n    pull.args = ['--ff-only']" }}
+
+##########################################
+
+[".oh-my-zsh"]
+type = "git-repo"
+url = "https://github.com/ohmyzsh/ohmyzsh.git"
+{{ $gitArgs }}
+
+[".oh-my-zsh/custom/plugins/fzf-tab"]
+type = "git-repo"
+url = "https://github.com/Aloxaf/fzf-tab.git"
+{{ $gitArgs }}
+
+[".oh-my-zsh/custom/plugins/wakatime"]
+type = "git-repo"
+url = "https://github.com/sobolevn/wakatime-zsh-plugin.git"
+{{ $gitArgs }}
+
+[".oh-my-zsh/custom/plugins/zsh-256color"]
+type = "git-repo"
+url = "https://github.com/chrissicool/zsh-256color.git"
+{{ $gitArgs }}
+
+[".oh-my-zsh/custom/plugins/zsh-autosuggestions"]
+type = "git-repo"
+url = "https://github.com/zsh-users/zsh-autosuggestions.git"
+{{ $gitArgs }}
+
+[".oh-my-zsh/custom/plugins/zsh-syntax-highlighting"]
+type = "git-repo"
+url = "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+{{ $gitArgs }}
+
+[".oh-my-zsh/custom/plugins/zsh-autocomplete"]
+type = "git-repo"
+url = "https://github.com/marlonrichert/zsh-autocomplete.git"
+{{ $gitArgs }}
+
+##########################################
+
+{{ end }}

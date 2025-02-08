@@ -1,0 +1,11 @@
+# {{ div now.YearDay 7 }}
+
+exit 0 # Powershell still... not work. Maybe chezmoi running with old powershell
+
+$accent_color='{{- .catppuccinAccentColor -}}'
+$light_flavor='{{- .catppuccinLightFlavour -}}'
+$dark_flavor='{{- .catppuccinDarkFlavour -}}'
+
+Write-Host 'UPDATING STYLUS CATPPUCCIN'
+
+~/.local/bin/stylus-catppuccin.ps1 -accent_color $accent_color -light_flavor $light_flavor -dark_flavor $dark_flavor

@@ -1,0 +1,81 @@
+# Ref: https://github.com/joshmedeski/dotfiles/blob/main/.config/lf/lfrc
+# Ref: https://github.com/ericmurphyxyz/dotfiles/blob/master/.config/lf/lfrc
+
+set hidden true
+set icons true
+set ignorecase true
+set number false
+set relativenumber false
+set shell pwsh
+
+cmd mkdir ${{
+  @echo off
+  setlocal enabledelayedexpansion
+  set /p ans="Directory Name: "
+  mkdir %ans%
+  setlocal disabledelayedexpansion
+}}
+
+cmd mkfile ${{
+  @echo off
+  setlocal enabledelayedexpansion
+  set /p ans="File Name: "
+  echo. > %ans%
+  setlocal disabledelayedexpansion
+}}
+
+# Hey idk wtf I'm pasting
+cmd unarchive ${{
+  if "%f:~-4%"==".zip" (
+    "C:\Program Files\7-Zip\7z.exe" x "%f%"
+  ) elseif "%f:~-7%"==".tar.gz" (
+    "C:\Program Files\7-Zip\7z.exe" x "%f%"
+  ) elseif "%f:~-8%"==".tar.bz2" (
+    "C:\Program Files\7-Zip\7z.exe" x "%f%"
+  ) elseif "%f:~-4%"==".tar" (
+    "C:\Program Files\7-Zip\7z.exe" x "%f%"
+  ) else (
+    echo Unsupported format
+  )
+}}
+
+# zoxide: https://github.com/gokcehan/lf/wiki/Integrations#zoxide
+
+set shellflag "-cwa"
+
+cmd cd ${{
+	[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("UTF-8")
+	$result = ((zoxide query --exclude $PWD $args[0]) -replace "/", "//")
+	lf -remote "send $env:id cd '$result'"
+}}
+
+cmd cdi ${{
+	[Console]::OutputEncoding = [System.Text.Encoding]::GetEncoding("UTF-8")
+	$result=((zoxide query -i) -replace "/", "//")
+	lf -remote "send $id cd '$result'"
+}}
+
+cmd on-cd &{{
+  zoxide add "$PWD"
+}}
+
+# mapping
+
+map <enter> open
+map au unarchive
+map c $code "$f"
+map C clear
+map mf mkfile
+map md mkdir
+map p paste
+map R reload
+map x cut
+map y copy
+
+# Goto
+map gD cd "%HOMEDRIVE%%HOMEPATH%\Documents"
+map gd cd "D:\Kevostro User Data\Downloads"
+map gp cd "D:\Kevostro User Data\Pictures"
+map gc cd "%HOMEDRIVE%%HOMEPATH%\.config"
+map gG cd "E:\Git-Repo"
+map gv cd "D:\Kevostro User Data\Videos" 

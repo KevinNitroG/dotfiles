@@ -1,0 +1,99 @@
+# vim:ft=gitignore.chezmoitmpl
+
+.config/browser-data/stylus/catppuccin.json
+
+##########################################
+
+# For chezmoi stuff
+
+{{ if ne .chezmoi.os "linux" }}
+.chezmoiscripts/linux/**/*
+{{ end }}
+{{ if ne .chezmoi.os "windows" }}
+.chezmoiscripts/windows/**/*
+.local/bin/*.bat
+.local/bin/*.reg
+.local/bin/*.ps1
+{{ end }}
+{{ if ne .chezmoi.os "darwin" }}
+.chezmoiscripts/darwin/**/*
+{{ end }}
+{{ if eq .chezmoi.os "windows" }}
+.local/bin/*.sh
+{{ end }}
+
+##########################################
+
+{{ if eq .chezmoi.os "windows" }}
+
+.config/Code/**/*
+.config/lazygit/**/*
+.config/rclone/**/*
+.config/bat/**/*
+.config/vlc/**/*
+.config/sddm/**/*
+.config/systemd/**/*
+.config/tlp/**/*
+.config/tlpui/**/*
+.config/fcitx5/**/*
+.config/crontab/**/*
+.config/gammastep/**/*
+.config/hypr/**/*
+.config/kanata/**/*
+.config/kitty/**/*
+
+.config/brave-flags.conf
+.config/chrome-flags.conf
+.config/chromium-flags.conf
+.config/code-flags.conf
+.config/dolphinrc
+.config/electron-flags.conf
+.config/kdeglobals
+.config/libinput-gestures.conf
+.config/mimeapps.list
+.config/private_ktrashrc
+.config/private_trashrc
+.config/spotify-flags.conf
+
+.font/**/*
+.npm-global/**/*
+mount/**/*
+
+.gtkrc-2.0.mine
+.tmux.conf
+.zprofile
+.zshenv
+.zshrc
+.zshenv_private
+.zsh_history
+
+{{ else }}
+
+AppData/**/*
+Documents/**/*
+.config/autohotkey/**/*
+.config/komorebi/**/*
+.config/microsoft-office/**/*
+.config/scoop/**/*
+.config/windows-tasks-scheduler/**/*
+.config/xinmeng/**/*
+.config/whkdrc/**/*
+.config/yasb/**/*
+
+.vsvimrc
+.wslconfig
+
+{{ end }}
+
+##########################################
+
+{{ if not (lookPath "sddm") }}
+.config/sddm/themes/**/*
+{{ end }}
+
+##########################################
+
+{{ if not (lookPath "hyprland") }}
+.config/hypr/**/*
+!.config/hypr/userprefs.conf
+{{ end }}

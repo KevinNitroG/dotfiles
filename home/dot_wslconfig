@@ -1,0 +1,36 @@
+[wsl2]
+memory=6GB
+processors=4
+localhostForwarding = true
+safeMode = false
+swap = 5242880000
+swapFile = %USERPROFILE%\\AppData\\Local\\Temp\\swap.vhdx
+# pageReporting = true
+guiApplications = true
+debugConsole = false
+vmIdleTimeout = 60000
+networkingMode = NAT
+firewall = true
+dnsTunneling = false
+autoProxy = false
+# useWindowsDnsCache = false # require experimental.dnsTunneling
+
+# [automount]
+# enabled = true
+# mountFsTab = true
+# root = /mnt/
+
+# [interop]
+# enabled = true
+# appendWindowsPath = true
+
+# [user]
+# default = kevinnitro
+
+# [boot]
+# command = ""
+
+[experimental]
+autoMemoryReclaim = gradual
+sparseVhd = false
+# dnsTunneling = false
