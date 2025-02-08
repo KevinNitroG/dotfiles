@@ -5,11 +5,9 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [🪴 INSTALL](#-install)
-  - [1️⃣ Add Keys](#-add-keys)
-  - [2️⃣TODO](#todo)
-    - [Browser](#browser)
-      - [Brave](#brave)
+- [TODO](#todo)
+  - [Browser](#browser)
+    - [Brave](#brave)
 - [UTILS](#utils)
   - [Arch installation](#arch-installation)
   - [Rclone mount](#rclone-mount)
@@ -22,36 +20,9 @@
 
 ---
 
-## 🪴 INSTALL
+## TODO
 
-### 1️⃣ Add Keys
-
-- SSH
-  ```sh
-  eval "$(ssh-agent -s)"
-  chmod 700 ~/.ssh/
-  chmod 644 ~/.ssh/id_ed25519.pub
-  chmod 600 ~/.ssh/id_ed25519
-  ```
-  > Also make sure to start ssh agent every time login!
-- GPG
-  ```sh
-  gpg --import public.gpg
-  gpg --import secret.gpg
-  gpg --edit-key KevinNitroG
-  trust
-  5
-  y
-  quit
-  ```
-
-> [!NOTE]
->
-> In order to encrypt / decrypt chezmoi
-
-### 2️⃣TODO
-
-#### Browser
+### Browser
 
 - Memory Saver
   ```
@@ -59,7 +30,7 @@
   www.messenger.com
   ```
 
-##### Brave
+#### Brave
 
 - Shield
   - Custom lists

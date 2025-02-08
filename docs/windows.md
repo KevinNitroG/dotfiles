@@ -5,13 +5,7 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [😎 SHOWCASE](#-showcase)
-  - [App Manage](#app-manage)
-- [🪴 INSTALL](#-install)
-  - [1️⃣ Install Chezmoi](#-install-chezmoi)
-  - [1️⃣ Add Keys](#-add-keys)
-  - [3️⃣ Chezmoi](#-chezmoi)
-  - [6️⃣ Install fonts](#-install-fonts)
+  - [Install fonts](#install-fonts)
 - [🎈 EXTRAS](#-extras)
   - [Crack Winrar _(Admin)_](#crack-winrar-_admin_)
   - [Patch IDM](#patch-idm)
@@ -39,89 +33,9 @@
 
 ---
 
-## 😎 SHOWCASE
-
-### App Manage
-
-|  **PM**   |                               **UPGRADE**                               |                                **UNINSTALL**                                |
-| :-------: | :---------------------------------------------------------------------: | :-------------------------------------------------------------------------: |
-| **SCOOP** | ![Scoop upgrade](../assets/images/windows/app_manage-scoop-upgrade.png) | ![Scoop uninstall](../assets/images/windows/app_manage-scoop-uninstall.png) |
-| **CHOCO** | ![Choco upgrade](../assets/images/windows/app_manage-choco-upgrade.png) | ![Choco uninstall](../assets/images/windows/app_manage-choco-uninstall.png) |
-
-> [!NOTE]
->
-> Manage via Package Managers **(Scoop isn't PM btw :v)**
-
-> [!IMPORTANT]
->
-> Need FZF
-
----
-
-## 🪴 INSTALL
-
-### 1️⃣ Install Chezmoi
-
-```sh
-iex "&{$(irm 'https://get.chezmoi.io/ps1')} -b '~/bin'"
-```
-
-> [!NOTE]
-> Remove chezmoi from `~/bin` later. Because it should be managed by scoop
-
-### 1️⃣ Add Keys
-
-- SSH _(Admin)_
-  ```ps1
-  Set-Service ssh-agent -StartupType Automatic
-  Start-Service ssh-agent
-  ssh-add "$env:USERPROFILE/.ssh/id_ed25519"
-  ```
-- Import GPG Keys _(use builtin GPG from git)_:
-  ```sh
-  git bash
-  gpg --import public.gpg
-  gpg --import secret.gpg
-  gpg --edit-key KevinNitroG
-  trust
-  5
-  y
-  quit
-  ```
-
-> In order to encrypt / decrypt chezmoi
-
-> [!NOTE]
-> Maybe we don't need gpg trust because config has chezmoi
-
----
-
-### 3️⃣ Chezmoi
-
-> [!IMPORTANT]
->
-> Use powershell IDE _(not pwsh also)_, don't use Windows Terminal.
->
-> Run with Administrator
-
-```ps1
-chezmoi init --apply --verbose git@github.com:KevinNitroG/dotfiles.git
-```
-
-> Follow instruction of chezmoi to setup chezmoi config
-
----
-
-### 6️⃣ Install fonts
+### Install fonts
 
 - https://fonts.google.com/specimen/Be+Vietnam+Pro?query=be+vie
-
-<!--TODO: Note later I'm tired-->
-
-- Set execution policy to run script from URL _(non-admin)_
-  ```ps1
-  Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser
-  ```
 
 ---
 

@@ -6,13 +6,33 @@
 Dotfiles managed with [chezmoi](https://www.chezmoi.io/):
 
 - Windows
-- Arch linux **([hyprdots](https://github.com/prasanthrangan/hyprdots/))**
+- Arch linux _([hyprdots](https://github.com/prasanthrangan/hyprdots/))_
 
 > [!NOTE]
 > Haven't enough money to buy Mac yet
 
 > [!WARNING]
-> This is for my personal use, because it has encrypted file. If you want to use this, run chezmoi init with `--exclude=encrypted` arg.
+> This is for personal use, as it contains encrypted files. If you wish to use it, initialize Chezmoi with the `--exclude=encrypted` argument.
+
+---
+
+## Table of Contents
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [😎 SHOWCASE](#-showcase)
+  - [Terminal](#terminal)
+  - [Neovim](#neovim)
+- [📝 INSTALLATION](#-installation)
+- [💁 REFERENCES](#-references)
+  - [Wallpaper](#wallpaper)
+  - [Other dotfiles](#other-dotfiles)
+    - [Preconfig](#preconfig)
+    - [Others](#others)
+    - [Chezmoi](#chezmoi)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ---
 
@@ -33,45 +53,46 @@ Dotfiles managed with [chezmoi](https://www.chezmoi.io/):
 > [!NOTE]
 > Neovim config <https://github.com/KevinNitroG/nvim>
 
-### Find files / directories / file content
-
-| **Files**                                            | **Directories**                                             |
-| ---------------------------------------------------- | ----------------------------------------------------------- |
-| ![Find files](./assets/images/windows/find-file.png) | ![Find files](./assets/images/windows/find-directories.png) |
-
-| **Ripgrep**                                                    | **Fzf**                                                        |
-| -------------------------------------------------------------- | -------------------------------------------------------------- |
-| ![Find file ripgrep](./assets/images/windows/find-ripgrep.png) | ![Find file fzf](./assets/images/windows/find-ripgrep_fzf.png) |
-
-> [!NOTE]
-> Both pwsh and zsh have been configured
-
-### Get wifi password
-
-#### Zsh
-
-| `get_wifi_password`                                               | `get_current_wifi_password`                                                       |
-| ----------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| ![get_wifi_password](./assets/images/linux/get-wifi-password.png) | ![get_current_wifi_password](./assets/images/linux/get-current-wifi-password.png) |
-
-#### Pwsh
-
-|                                 **SELECT**                                  |                                  **SHOWN**                                  |
-| :-------------------------------------------------------------------------: | :-------------------------------------------------------------------------: |
-| ![Check Wifi Password 1](./assets/images/windows/check_wifi_password-1.png) | ![Check Wifi Password 2](./assets/images/windows/check_wifi_password-2.png) |
-
 ---
 
 ## 📝 INSTALLATION
 
-- Install chezmoi: <https://www.chezmoi.io/install>
-- Config SSH key and GPG key: Read in docs below
-- Chezmoi init
+- Add ssh key
+  - Linux
+    ```sh
+    eval "$(ssh-agent -s)"
+    chmod 700 ~/.ssh/
+    chmod 644 ~/.ssh/id_ed25519.pub
+    chmod 600 ~/.ssh/id_ed25519
+    ssh-add ~/.ssh/id_ed25519
+    ```
+  - Windows
+    ```powershell
+    Set-Service ssh-agent -StartupType Automatic
+    Start-Service ssh-agent
+    Ssh-Add "$env:USERPROFILE/.ssh/id_ed25519"
+    ```
+- Install chezmoi and init, apply, and delete binary: _([docs](https://www.chezmoi.io/install))_
+  - shell
+    ```sh
+    sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply --ssh --purge-binary KevinNitroG
+    ```
+  - pwsh
+    ```powershell
+    iex "&{$(irm 'https://get.chezmoi.io/ps1')} -- init --apply --ssh --purge-binary KevinNitroG"
+    ```
+- GPG for sign commit
   ```sh
-  chezmoi init KevinNitroG --ssh --apply
+  gpg --import public.gpg
+  gpg --import secret.gpg
+  gpg --edit-key KevinNitroG
+  trust
+  5
+  y
+  quit
   ```
+  > On windows use GPG from git. We can open `git bash`
 
-> - If running chezmoi with binary, can remove it later by passing `--purge-binary` arg to `chezmoi init`
 > - [Windows](./docs/windows.md)
 > - [Linux](./docs/linux.md)
 
