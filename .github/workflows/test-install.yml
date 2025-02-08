@@ -14,12 +14,12 @@ env:
     --color=false
   APPLY_ARGS: >
     --exclude=encrypted,externals,scripts
+    --keep-going
     --parent-dirs
     --use-builtin-diff
     --no-pager
     --no-tty
     --color=false
-    --verbose
   DOCTOR_ARGS: >
     --keep-going 
     --no-tty
@@ -28,7 +28,7 @@ env:
 jobs:
   test:
     strategy:
-      fail-fast: true
+      fail-fast: false
       matrix:
         os:
           - windows

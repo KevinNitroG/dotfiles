@@ -1,13 +1,9 @@
-font_family      JetBrainsMono Nerd Font
+font_family JetBrainsMono Nerd Font
 enable_audio_bell true
 font_size {{ .terminalFontSize }}
 window_padding_width 5
-# include theme.conf
-#background_opacity 0.60
-#hide_window_decorations yes
-#confirm_os_window_close 0
+background_opacity 0.80
+hide_window_decorations no
+confirm_os_window_close 0
 
-# initially empty, to be configured by user and remains static
-include userprefs.conf
-
-# Note: as userprefs.conf is included at the end, settings configured in this file will override the defaults
+include themes/mocha.conf

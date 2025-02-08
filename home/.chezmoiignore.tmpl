@@ -26,21 +26,21 @@
 
 {{ if eq .chezmoi.os "windows" }}
 
-.config/Code/**
-.config/lazygit/**
-.config/rclone/**
-.config/bat/**
-.config/vlc/**
-.config/sddm/**
-.config/systemd/**
-.config/tlp/**
-.config/tlpui/**
-.config/fcitx5/**
-.config/crontab/**
-.config/gammastep/**
-.config/hypr/**
-.config/kanata/**
-.config/kitty/**
+.config/Code/**/*
+.config/lazygit/**/*
+.config/rclone/**/*
+.config/bat/**/*
+.config/vlc/**/*
+.config/sddm/**/*
+.config/systemd/**/*
+.config/tlp/**/*
+.config/tlpui/**/*
+.config/fcitx5/**/*
+.config/crontab/**/*
+.config/gammastep/**/*
+.config/hypr/**/*
+.config/kanata/**/*
+.config/kitty/**/*
 
 .config/brave-flags.conf
 .config/chrome-flags.conf
@@ -55,9 +55,9 @@
 .config/private_trashrc
 .config/spotify-flags.conf
 
-.font/**
-.npm-global/**
-mount/**
+.font/**/*
+.npm-global/**/*
+mount/**/*
 
 .gtkrc-2.0.mine
 .tmux.conf
@@ -69,16 +69,16 @@ mount/**
 
 {{ else }}
 
-AppData/**
-Documents/**
-.config/autohotkey/**
-.config/komorebi/**
-.config/microsoft-office/**
-.config/scoop/**
-.config/windows-tasks-scheduler/**
-.config/xinmeng/**
-.config/whkdrc/**
-.config/yasb/**
+AppData/**/*
+Documents/**/*
+.config/autohotkey/**/*
+.config/komorebi/**/*
+.config/microsoft-office/**/*
+.config/scoop/**/*
+.config/windows-tasks-scheduler/**/*
+.config/xinmeng/**/*
+.config/whkdrc/**/*
+.config/yasb/**/*
 
 .vsvimrc
 .wslconfig
@@ -88,12 +88,12 @@ Documents/**
 ##########################################
 
 {{ if not (lookPath "sddm") }}
-.config/sddm/themes/**
+.config/sddm/themes/**/*
 {{ end }}
 
 ##########################################
 
 {{ if not (lookPath "hyprland") }}
-.config/hypr/**
+.config/hypr/**/*
 !.config/hypr/userprefs.conf
 {{ end }}
