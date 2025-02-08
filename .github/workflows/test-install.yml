@@ -58,7 +58,7 @@ jobs:
       #   run: chezmoi doctor ${{ env.DOCTOR_ARGS }} || true
 
       - name: Check all template
-        working-directory: ${{ env.HOME }}/.local/share/chezmoi
+        working-directory: ~/.local/share/chezmoi
         shell: bash
         run: |
           tmpls=$(find . -type f -name "*.tmpl" ! -name ".chezmoi.toml.tmpl" ! -name "rclone.conf.tmpl")
