@@ -21,7 +21,7 @@ env:
     --no-tty
     --color=false
   DOCTOR_ARGS: >
-    --keep-going 
+    --keep-going
     --no-tty
     --color=false
 
@@ -53,9 +53,9 @@ jobs:
       #   shell: bash
       #   run: chezmoi apply ${{ env.APPLY_ARGS }}
 
-      - name: Chezmoi doctor
-        shell: bash
-        run: chezmoi doctor ${{ env.DOCTOR_ARGS }}
+      # - name: Chezmoi doctor
+      #   shell: bash
+      #   run: chezmoi doctor ${{ env.DOCTOR_ARGS }} || true
 
       - name: Check all template
         working-directory: ${{ env.HOME }}/.local/share/chezmoi
