@@ -1,24 +1,39 @@
+{{/* Default static values */}}
+
 {{ $gpgId := "780EDBE72B368638D3DA4691071E9CD8A2D41057" }}
 {{ $sshId := "071E9CD8A2D41057" }}
+{{ $themes := list "dark" "light" }}
+{{ $catppuccinFlavors := list "latte" "frappe" "macchiato" "mocha" }}
+{{ $catppuccinAccentColors := list "blue" "flamingo" "green" "lavender" "maroon" "mauve" "peach" "pink" "red" "rosewater" "sapphire" "sky" "teal" "yellow" }}
+
+{{/* Default dynamic values */}}
 
 {{ $shell := "" }}
+{{ $terminalFontSize := 13 }}
+{{ $theme := "dark" }}
+{{ $catppuccinLightFlavour := "latte" }}
+{{ $catppuccinDarkFlavour := "mocha" }}
+{{ $catppuccinAccentColor := "lavender" }}
+
+{{/* Pre auto */}}
+
 {{- if eq .chezmoi.os "windows" -}}
   {{- $shell = "pwsh" -}}
 {{- else -}}
   {{- $shell = "zsh" -}}
 {{- end -}}
 
-{{ $terminalFontSize := promptInt "Enter terminal font size" 13 }}
+{{/* Prompts */}}
 
-{{ $themes := list "dark" "light" }}
-{{ $theme := promptChoice "Theme" $themes "dark" }}
+{{ if stdinIsATTY }}
+  {{ $terminalFontSize = promptInt "Enter terminal font size" 13 }}
+  {{ $theme = promptChoice "Theme" $themes "dark" }}
+  {{ $catppuccinLightFlavour = promptChoiceOnce . "catppuccinLightFlavour" "Catppuccin flavor for light mode" $catppuccinFlavors "latte" }}
+  {{ $catppuccinDarkFlavour = promptChoiceOnce . "catppuccinDarkFlavour" "Catppuccin flavor for dark mode" $catppuccinFlavors "mocha" }}
+  {{ $catppuccinAccentColor = promptChoiceOnce . "catppuccinAccentColor" "Catppuccin accent color" $catppuccinAccentColors "lavender" }}
+{{ end }}
 
-{{ $catppuccinFlavors := list "latte" "frappe" "macchiato" "mocha" }}
-{{ $catppuccinLightFlavour := promptChoiceOnce . "catppuccinLightFlavour" "Catppuccin flavor for light mode" $catppuccinFlavors "latte" }}
-{{ $catppuccinDarkFlavour := promptChoiceOnce . "catppuccinDarkFlavour" "Catppuccin flavor for dark mode" $catppuccinFlavors "mocha" }}
-
-{{ $catppuccinAccentColors := list "blue" "flamingo" "green" "lavender" "maroon" "mauve" "peach" "pink" "red" "rosewater" "sapphire" "sky" "teal" "yellow" }}
-{{ $catppuccinAccentColor := promptChoiceOnce . "catppuccinAccentColor" "Catppuccin accent color" $catppuccinAccentColors "lavender" }}
+{{/* Post auto */}}
 
 {{ $catppuccinFlavor := "" }}
 {{ if eq $theme "dark" }}
