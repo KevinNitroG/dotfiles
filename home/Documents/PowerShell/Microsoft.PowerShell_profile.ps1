@@ -528,34 +528,46 @@ function _fzf_open_path
 
 function _fzf_get_path_using_fd
 {
-  $input_path = fd --type file --follow --hidden --exclude .git |
-    fzf --prompt 'Files> ' `
-      --header-first `
-      --header 'CTRL-S: Switch between Files/Directories' `
-      --bind 'ctrl-s:transform:if not "%FZF_PROMPT%"=="Files> " (echo ^change-prompt^(Files^> ^)^+^reload^(fd --type file^)) else (echo ^change-prompt^(Directory^> ^)^+^reload^(fd --type directory^))' `
-      --preview 'if "%FZF_PROMPT%"=="Files> " (bat --color=always {} --style=plain) else (eza -T --colour=always --icons=always {})'
-  return $input_path
+  try
+  {
+    $input_path = fd --type file --follow --hidden --exclude .git |
+      fzf --prompt 'Files> ' `
+        --header-first `
+        --header 'CTRL-S: Switch between Files/Directories' `
+        --bind 'ctrl-s:transform:if not "%FZF_PROMPT%"=="Files> " (echo ^change-prompt^(Files^> ^)^+^reload^(fd --type file^)) else (echo ^change-prompt^(Directory^> ^)^+^reload^(fd --type directory^))' `
+        --preview 'if "%FZF_PROMPT%"=="Files> " (bat --color=always {} --style=plain) else (eza -T --colour=always --icons=always {})'
+    return $input_path
+  } catch
+  {
+    return ""
+  }
 }
 
 function _fzf_get_path_using_rg
 {
-  $INITIAL_QUERY = "${*:-}"
-  $RG_PREFIX = "rg --column --line-number --no-heading --color=always --smart-case"
-  $input_path = "" |
-    fzf --ansi --disabled --query "$INITIAL_QUERY" `
-      --bind "start:reload:$RG_PREFIX {q}" `
-      --bind "change:reload:sleep 0.1 & $RG_PREFIX {q} || rem" `
-      --bind 'ctrl-s:transform:if not "%FZF_PROMPT%" == "1. ripgrep> " (echo ^rebind^(change^)^+^change-prompt^(1. ripgrep^> ^)^+^disable-search^+^transform-query:echo ^{q^} ^> %TEMP%\rg-fzf-f ^& type %TEMP%\rg-fzf-r) else (echo ^unbind^(change^)^+^change-prompt^(2. fzf^> ^)^+^enable-search^+^transform-query:echo ^{q^} ^> %TEMP%\rg-fzf-r ^& type %TEMP%\rg-fzf-f)' `
-      --color 'hl:-1:underline,hl+:-1:underline:reverse' `
-      --delimiter ':' `
-      --prompt '1. ripgrep> ' `
-      --preview-label 'Preview' `
-      --header 'CTRL-S: Switch between ripgrep/fzf' `
-      --header-first `
-      --preview 'bat --color=always {1} --highlight-line {2} --style=plain' `
-      --preview-window 'up,60%,border-bottom,+{2}+3/3'
-  $input_path = ($input_path -split ":")[0]
-  return $input_path
+  try
+  {
+    $INITIAL_QUERY = "${*:-}"
+    $RG_PREFIX = "rg --column --line-number --no-heading --color=always --smart-case"
+    $input_path = "" |
+      fzf --ansi --disabled --query "$INITIAL_QUERY" `
+        --bind "start:reload:$RG_PREFIX {q}" `
+        --bind "change:reload:sleep 0.1 & $RG_PREFIX {q} || rem" `
+        --bind 'ctrl-s:transform:if not "%FZF_PROMPT%" == "1. ripgrep> " (echo ^rebind^(change^)^+^change-prompt^(1. ripgrep^> ^)^+^disable-search^+^transform-query:echo ^{q^} ^> %TEMP%\rg-fzf-f ^& type %TEMP%\rg-fzf-r) else (echo ^unbind^(change^)^+^change-prompt^(2. fzf^> ^)^+^enable-search^+^transform-query:echo ^{q^} ^> %TEMP%\rg-fzf-r ^& type %TEMP%\rg-fzf-f)' `
+        --color 'hl:-1:underline,hl+:-1:underline:reverse' `
+        --delimiter ':' `
+        --prompt '1. ripgrep> ' `
+        --preview-label 'Preview' `
+        --header 'CTRL-S: Switch between ripgrep/fzf' `
+        --header-first `
+        --preview 'bat --color=always {1} --highlight-line {2} --style=plain' `
+        --preview-window 'up,60%,border-bottom,+{2}+3/3'
+    $input_path = ($input_path -split ":")[0]
+    return $input_path
+  } catch
+  {
+    return ""
+  }
 }
 
 function fdg
