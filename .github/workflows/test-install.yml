@@ -58,9 +58,9 @@ jobs:
       #   run: chezmoi doctor ${{ env.DOCTOR_ARGS }} || true
 
       - name: Check all template
-        working-directory: ~/.local/share/chezmoi
         shell: bash
         run: |
+          cd "$HOME/.local/share/chezmoi"
           tmpls=$(find . -type f -name "*.tmpl" ! -name ".chezmoi.toml.tmpl" ! -name "rclone.conf.tmpl")
           for tmpl in "${tmpls[@]}"; do
             chezmoi execute-template < "$tmpl" &>/dev/null
