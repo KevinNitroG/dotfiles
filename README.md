@@ -12,7 +12,9 @@ Dotfiles managed with [chezmoi](https://www.chezmoi.io/):
 > Haven't enough money to buy Mac yet
 
 > [!WARNING]
-> This is for personal use, as it contains encrypted files. If you wish to use it, initialize Chezmoi with the `--exclude=encrypted` argument.
+> This is for personal use, as it contains encrypted files.
+>
+> If you wish to use it, run chezmoi apply with the `--exclude=encrypted` argument.
 
 ---
 
@@ -21,22 +23,22 @@ Dotfiles managed with [chezmoi](https://www.chezmoi.io/):
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-- [😎 SHOWCASE](#-showcase)
+- [😎 Showcase](#-showcase)
   - [Terminal](#terminal)
   - [Neovim](#neovim)
-- [📝 INSTALLATION](#-installation)
-- [💁 REFERENCES](#-references)
+- [📝 Installation](#-installation)
+- [💁 References](#-references)
   - [Wallpaper](#wallpaper)
   - [Other dotfiles](#other-dotfiles)
     - [Preconfig](#preconfig)
-    - [Others](#others)
     - [Chezmoi](#chezmoi)
+    - [Others](#others)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ---
 
-## 😎 SHOWCASE
+## 😎 Showcase
 
 ### Terminal
 
@@ -55,7 +57,7 @@ Dotfiles managed with [chezmoi](https://www.chezmoi.io/):
 
 ---
 
-## 📝 INSTALLATION
+## 📝 Installation
 
 - Add ssh key
   - Linux
@@ -72,6 +74,7 @@ Dotfiles managed with [chezmoi](https://www.chezmoi.io/):
     Start-Service ssh-agent
     Ssh-Add "$env:USERPROFILE/.ssh/id_ed25519"
     ```
+- Create `~/.age-key.txt` _(for encrypt/decrypt)_
 - Install chezmoi and init, apply, and delete binary: _([docs](https://www.chezmoi.io/install))_
   - shell
     ```sh
@@ -98,7 +101,7 @@ Dotfiles managed with [chezmoi](https://www.chezmoi.io/):
 
 ---
 
-## 💁 REFERENCES
+## 💁 References
 
 ### Wallpaper
 
@@ -116,6 +119,11 @@ Dotfiles managed with [chezmoi](https://www.chezmoi.io/):
 - <https://github.com/koeqaife/hyprland-material-you>
 - <https://github.com/prasanthrangan/hyprdots>
 - <https://gitlab.com/stephan-raabe/dotfiles>
+
+#### Chezmoi
+
+- <https://github.com/megabyte-labs/install.doctor>
+- <https://github.com/lildude/dotfiles/> (Have config for codespace)
 
 #### Others
 
@@ -142,8 +150,3 @@ Dotfiles managed with [chezmoi](https://www.chezmoi.io/):
 - <https://github.com/siduck/dotfiles>
 - <https://github.com/stevearc/dotfiles>
 - <https://github.com/wincent/wincent> (Old dotfiles 😱)
-
-#### Chezmoi
-
-- <https://github.com/megabyte-labs/install.doctor>
-- <https://github.com/lildude/dotfiles/> (Have config for codespace)
