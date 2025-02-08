@@ -2,7 +2,6 @@
 
 [include]
   path = ~/.config/delta/themes/catppuccin/catppuccin.gitconfig
-  path = ~/.config/git/os.gitconfig
 
 [user]
   name = Kevin Nitro
@@ -16,7 +15,7 @@
   editor = nvim
   longpaths = true
   pager = delta
-  excludesFile = ~/.config/git/global.gitignore
+  excludesFile = ~/.config/git/ignore
 
 [color]
   ui = always
@@ -24,6 +23,8 @@
 
 [safe]
   directory = ~/gits
+  directory = E:/gits
+  directory = ~/scoop/*
 
 [alias]
   gcc = !git reflog expire --all --expire=now && git gc --prune=now --aggressive ; clean local reflog: https://stackoverflow.com/a/2116892/23173098
@@ -131,3 +132,8 @@
   clean = git-lfs clean -- %f
   smudge = git-lfs smudge -- %f
   process = git-lfs filter-process
+
+{{ if eq .chezmoi.os "windows" }}
+[credential "helperselector"]
+  selected = manager
+{{ end }}
