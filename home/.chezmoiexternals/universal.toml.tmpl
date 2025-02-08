@@ -9,7 +9,7 @@
 [".config/nvim"]
 {{ end }}
 type = "git-repo"
-url = "git@github.com:KevinNitroG/nvim.git"
+url = "git@github.com:{{ .githubUsername }}/nvim.git"
 {{ $gitArgs }}
 
 {{ if eq .chezmoi.os "windows" }}
@@ -50,7 +50,7 @@ url = "https://raw.githubusercontent.com/Julien-cpsn/ATAC/main/example_resources
 
 ["obsidian/main"]
 type = "git-repo"
-url = "git@github.com:KevinNitroG/obsidian-vault-main.git"
+url = "git@github.com:{{ .githubUsername }}/obsidian-vault-main.git"
 {{ $gitArgs }}
 
 [".config/git/githelpers.sh"]
