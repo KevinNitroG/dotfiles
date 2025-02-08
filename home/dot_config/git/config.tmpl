@@ -15,9 +15,7 @@
 [core]
   editor = nvim
   longpaths = true
-  {{ if not env "CI" }}{{/* Disable delta in git config when running on CI */}}
   pager = delta
-  {{ end }}
   excludesFile = ~/.config/git/global.gitignore
 
 [color]
