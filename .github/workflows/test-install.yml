@@ -13,7 +13,7 @@ env:
     --no-tty
     --color=false
   APPLY_ARGS: >
-    --exclude='encrypted,externals,scripts'
+    --exclude=encrypted,externals,scripts
     --parent-dirs
     --no-tty
     --color=false
@@ -36,23 +36,32 @@ jobs:
     steps:
       - name: Install chezmoi
         shell: bash
-        run: bash <(curl -fsLS get.chezmoi.io) -b ${{ env.BIN_PATH }}
+        run: bash <(curl -fsLS get.chezmoi.io) -b '${{ env.BIN_PATH }}'
+
+      - name: Export ${{ env.BIN_PATH }} to GITHUB_PATH
+        shell: bash
+        run: echo '${{ env.BIN_PATH }}' >> "$GITHUB_PATH"
+
       - name: Init chezmoi
         shell: bash
-        run: ${{ env.BIN_PATH }}/chezmoi init ${{ github.repository_owner }} ${{ env.INIT_ARGS }}
+        run: chezmoi init ${{ github.repository_owner }} ${{ env.INIT_ARGS }}
+
       - name: Chezmoi apply
         shell: bash
-        run: ${{ env.BIN_PATH }}/chezmoi apply ${{ env.APPLY_ARGS }}
+        run: chezmoi apply ${{ env.APPLY_ARGS }}
+
       - name: Chezmoi doctor
         shell: bash
-        run: ${{ env.BIN_PATH }}/chezmoi doctor ${{ env.DOCTOR_ARGS }}
+        run: chezmoi doctor ${{ env.DOCTOR_ARGS }}
+
       - name: Check all template
+        working-directory: ${{ env.HOME }}/.local/share/chezmoi
         shell: bash
         run: |
           tmpls=$(find . -type f -name "*.tmpl" ! -name ".chezmoi.toml.tmpl")
           for tmpl in "${tmpls[@]}"; do
-            chezmoi execute-template < "$tmpl" &> /dev/null
+            chezmoi execute-template < "$tmpl" &>/dev/null
             if [ $? -ne 0 ]; then
-              echo "$tmpl: Tmpl error" 1>&2
+              echo "$tmpl: Template error" 1>&2
             fi
           done
