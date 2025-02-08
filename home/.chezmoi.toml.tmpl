@@ -1,6 +1,7 @@
 {{/* Default static values */}}
 
 {{ $gpgId := "780EDBE72B368638D3DA4691071E9CD8A2D41057" }}
+{{ $agePubKey := "age1xq0t7wyprw8sqn6w5lqw33wl8kgct32djs7r7jmsgxjj8lqe54vsd76td3" }}
 {{ $sshId := "071E9CD8A2D41057" }}
 {{ $themes := list "dark" "light" }}
 {{ $catppuccinFlavors := list "latte" "frappe" "macchiato" "mocha" }}
@@ -42,7 +43,7 @@
   {{ $catppuccinFlavor = $catppuccinLightFlavour }}
 {{ end }}
 
-encryption = "gpg"
+encryption = "age" # or gpg
 mode = "file" # file, symlink
 progress = true
 
@@ -56,14 +57,18 @@ catppuccinAccentColor = {{ $catppuccinAccentColor | quote }}
 gpgId = {{ $gpgId | quote }}
 sshId = {{ $sshId | quote }}
 
-[git]
-autoAdd = true # Add changes to the source state after any change
-autoCommit = false
-autoPush = false
+[age]
+identity = "~/.age-key.txt"
+recipient = {{ $agePubKey | quote }}
 
 [gpg]
 recipient = {{ $gpgId | quote }}
 args = ["--quiet"]
+
+[git]
+autoAdd = true # Add changes to the source state after any change
+autoCommit = false
+autoPush = false
 
 [cd]
 command = {{ $shell | quote }}
