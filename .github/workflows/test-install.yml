@@ -17,6 +17,7 @@ env:
     --parent-dirs
     --no-tty
     --color=false
+    --verbose
   DOCTOR_ARGS: >
     --keep-going 
     --no-tty
