@@ -3,9 +3,32 @@
 {{ $gpgId := "780EDBE72B368638D3DA4691071E9CD8A2D41057" }}
 {{ $agePubKey := "age1xq0t7wyprw8sqn6w5lqw33wl8kgct32djs7r7jmsgxjj8lqe54vsd76td3" }}
 {{ $sshId := "071E9CD8A2D41057" }}
-{{ $themes := list "dark" "light" }}
-{{ $catppuccinFlavors := list "latte" "frappe" "macchiato" "mocha" }}
-{{ $catppuccinAccentColors := list "blue" "flamingo" "green" "lavender" "maroon" "mauve" "peach" "pink" "red" "rosewater" "sapphire" "sky" "teal" "yellow" }}
+{{ $themes := list
+     "dark"
+     "light"
+}}
+{{ $catppuccinFlavors := list
+     "latte"
+     "frappe"
+     "macchiato"
+     "mocha"
+}}
+{{ $catppuccinAccentColors := list
+     "blue"
+     "flamingo"
+     "green"
+     "lavender"
+     "maroon"
+     "mauve"
+     "peach"
+     "pink"
+     "red"
+     "rosewater"
+     "sapphire"
+     "sky"
+     "teal"
+     "yellow"
+}}
 
 {{/* Default dynamic values */}}
 
@@ -56,6 +79,10 @@ catppuccinFlavor = {{ $catppuccinFlavor | quote }}
 catppuccinAccentColor = {{ $catppuccinAccentColor | quote }}
 gpgId = {{ $gpgId | quote }}
 sshId = {{ $sshId | quote }}
+
+[data.catppuccin]
+accentColors = [ {{ $catppuccinAccentColors | quoteList | join ", " }} ]
+flavors = [ {{ $catppuccinFlavors | quoteList | join ", " }} ]
 
 [age]
 identity = "~/.age-key.txt"
