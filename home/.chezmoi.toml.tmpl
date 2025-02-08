@@ -59,11 +59,9 @@ custom = true
 [edit]
 command = "nvim"
 
-{{ if not env "CI" }}{{/* Disable delta in git config when running on CI */}}
 [diff]
 command = "delta"
 pager = "delta"
-{{ end }}
 
 [merge]
 command = "nvim"
