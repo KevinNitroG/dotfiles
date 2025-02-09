@@ -1,14 +1,12 @@
 #!/usr/bin/env bash
 
-{{ $docker := lookPath "docker" }}
-
-{{ if $docker }}
-
 set -eufo pipefail
+
+if ! command -v docker &>/dev/null; then
+  exit
+fi
 
 echo "SETTING UP DOCKER..."
 sudo rm "$HOME/.docker/" -rf || true
 sudo groupadd docker || true
 sudo usermod -aG docker "$USER"
-
-{{ end }}
