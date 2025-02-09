@@ -14,8 +14,8 @@ import = [
 live_config_reload = true
 
 [env]
-# TERM = "xterm-256color"
-TERM = "alacritty"
+TERM = "xterm-256color"
+# TERM = "alacritty"
 TERMINAL = "alacritty"
 
 [terminal]
@@ -32,8 +32,8 @@ shell = {
 [window]
 padding = { x = 0, y = 0 }
 dynamic_padding = true
-decorations = "Full"       # Full or None
-opacity = 0.7
+decorations = "Full" # Full or None
+opacity = {{ .terminalBlur }}
 blur = true
 startup_mode = "Maximized"
 

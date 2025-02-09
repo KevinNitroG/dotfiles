@@ -5,4 +5,4 @@ if ! command -v spotify &>/dev/null; then
 fi
 
 echo 'PATCHING SPOTIFY USING SPOTX...'
-bash <(curl -sSL https://spotx-official.github.io/run.sh)
+bash <(curl -sSL https://spotx-official.github.io/run.sh) --blockupdates || true

@@ -171,10 +171,10 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always --icons=alway
 # ALIAS / FUNCTION
 
 # Apps
-if [[ -e "$HOME/.scripts/shell/appx.sh" ]]; then
-  alias ia="$HOME/.scripts/shell/appx.sh -i"
-  alias ua="$HOME/.scripts/shell/appx.sh -u -f"
-  alias uaa="$HOME/.scripts/shell/appx.sh -U"
+if [[ -e "$HOME/.local/bin/appx.sh" ]]; then
+  alias ia="$HOME/.local/bin/appx.sh -i"
+  alias ua="$HOME/.local/bin/appx.sh -u -f"
+  alias uaa="$HOME/.local/bin/appx.sh -U"
 fi
 
 # Ls
@@ -229,24 +229,23 @@ tks() {
     tmux kill-server
   fi
 }
-# ta() {
-#   if [ "$#" != "0" ]; then
-#     tmux attach -t $@
-#   else
-#     tmux has-session &>/dev/null && tmux attach || tmux
-#   fi
-# }
+ta() {
+  if [ "$#" != "0" ]; then
+    tmux attach -t $@
+  else
+    tmux has-session &>/dev/null && tmux attach || tmux
+  fi
+}
 
 # NOTE: Src: https://dev.to/serhatteker/restore-tmux-sessions-after-reboot-7g6
-
-ta()
-{
-  pgrep -vx tmux > /dev/null && \
-    tmux new -d -s delete-me && \
-    tmux run-shell ~/.tmux/plugins/tmux-resurrect/scripts/restore.sh && \
-    tmux kill-session -t delete-me && \
-    tmux attach || tmux attach
-}
+# ta()
+# {
+#   pgrep -vx tmux > /dev/null && \
+  #     tmux new -d -s delete-me && \
+  #     tmux run-shell ~/.tmux/plugins/tmux-resurrect/scripts/restore.sh && \
+  #     tmux kill-session -t delete-me && \
+  #     tmux attach || tmux attach
+# }
 
 # ChatGPT gen it for me :(
 yzcd() {

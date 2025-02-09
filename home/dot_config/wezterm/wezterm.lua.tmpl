@@ -1,7 +1,14 @@
 -- Ref: https://github.com/theopn/dotfiles/blob/main/wezterm/wezterm.lua
 
+{{ $shell := "" }}
+{{- if eq .chezmoi.os "windows" -}}
+  {{ $shell = "pwsh" }}
+{{ else }}
+  {{ $shell = "zsh" }}
+{{ end }}
+
 local is_dark = true
-local shell = { "pwsh" }
+local shell = { {{ $shell | quote }} }
 
 local wezterm = require("wezterm")
 local act = wezterm.action
@@ -36,7 +43,7 @@ config.font = wezterm.font_with_fallback({
 })
 config.font_size = {{ .terminalFontSize }}
 config.line_height = 1.1
-config.window_background_opacity = 0.9
+config.window_background_opacity = {{ .terminalBlur }}
 config.window_decorations = "TITLE | RESIZE" -- INTEGRATED_BUTTONS, RESIZE, TITLE, NONE
 config.window_padding = {
 	left = 5,
@@ -66,16 +73,17 @@ config.pane_focus_follows_mouse = false
 config.window_close_confirmation = "NeverPrompt"
 config.scrollback_lines = 3000
 config.default_workspace = "main"
+{{ if eq .chezmoi.os "window" }}
 config.win32_system_backdrop = "Acrylic" -- Auto, Disabled, Acrylic, Mica, Tabbed
-config.window_background_opacity = 0.7
+{{ end }}
+config.window_background_opacity = {{ .terminalBlur }}
 config.initial_cols = 138
 config.initial_rows = 28
-config.front_end = "WebGpu" -- OpenGL, WebGpu, Software
+-- config.front_end = "WebGpu" -- OpenGL, WebGpu, Software
 
 -- Wezterm
 config.set_environment_variables = { TERMINAL = "WezTerm" }
 config.warn_about_missing_glyphs = false
-config.show_update_window = true
 config.check_for_updates = false
 config.enable_scroll_bar = false
 config.hide_tab_bar_if_only_one_tab = true
