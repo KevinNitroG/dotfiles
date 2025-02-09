@@ -24,7 +24,7 @@ export path=(
   $HOME/.local/share/nvim/mason/bin
   $HOME/.npm-global/bin
   $PNPM_HOME
-  $HOME/.local/bin
+  $HOME/.local/share/bin/
   $path
 )
 
@@ -39,15 +39,14 @@ export path=(
 
 # LIST OF PLUGINS TO USE IN OH-MY-ZSH
 plugins=(
+  zsh-vi-mode
+
   # wakatime
-  # zsh-autocomplete
   archlinux
   docker
   docker-compose
   dotenv
   extract
-  fancy-ctrl-z
-  fzf
   fzf-tab
   gh
   git
@@ -59,6 +58,11 @@ plugins=(
   zsh-syntax-highlighting
 
   history-substring-search # Always below zsh-syntax-highlighting
+
+  # Have to load after zsh-vi-mode
+  # fancy-ctrl-z
+  # fzf
+  # zsh-autocomplete
 )
 source $ZSH/oh-my-zsh.sh
 
@@ -118,17 +122,6 @@ clean_all() {
   fi
 }
 
-
-##########################################
-
-# KEYBINDINGS
-bindkey -e
-bindkey '^p' history-substring-search-up
-bindkey '^n' history-substring-search-down
-bindkey '^[w' kill-region # Delete all words before cursor
-bindkey '^H' backward-kill-word # Source: https://www.reddit.com/r/neovim/comments/18txgth/ctrlbackspace_doesnt_work_as_intended_in_neovim
-
-
 ##########################################
 
 # ZSH CONFIG
@@ -178,10 +171,10 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always --icons=alway
 # ALIAS / FUNCTION
 
 # Apps
-if [[ -e "$HOME/.local/bin/appx.sh" ]]; then
-  alias ia="$HOME/.local/bin/appx.sh -i"
-  alias ua="$HOME/.local/bin/appx.sh -u -f"
-  alias uaa="$HOME/.local/bin/appx.sh -U"
+if [[ -e "$HOME/.scripts/shell/appx.sh" ]]; then
+  alias ia="$HOME/.scripts/shell/appx.sh -i"
+  alias ua="$HOME/.scripts/shell/appx.sh -u -f"
+  alias uaa="$HOME/.scripts/shell/appx.sh -U"
 fi
 
 # Ls
@@ -193,9 +186,9 @@ if has eza; then
     '--ignore-glob=".DS_Store|.idea|.venv|.vs|__pycache__|cache|debug|.git|node_modules|venv"'
     '-s Name'
   )
-  alias l="eza -lh  $EZA_OPTS" # long list
+  alias l="eza -lh $EZA_OPTS" # long list
   alias ls="exa -1 $EZA_OPTS" # Normal ls
-  alias ll="exa -lag $EZA_OPTS" # Long list all
+  alias ll="exa -lhag $EZA_OPTS" # Long list all
   alias ld="eza -lhD $EZA_OPTS" # long list dirs
   alias lt="eza -T $EZA_OPTS" # list folder as tree
   alias llt="eza -lagT $EZA_OPTS" # list folder as tree
@@ -245,6 +238,7 @@ tks() {
 # }
 
 # NOTE: Src: https://dev.to/serhatteker/restore-tmux-sessions-after-reboot-7g6
+
 ta()
 {
   pgrep -vx tmux > /dev/null && \
@@ -264,7 +258,6 @@ yzcd() {
   fi
   rm "$tmp"
 }
-bindkey -s '^d' 'yzcd\n'
 
 # Cd
 alias cdc='cd ~/.config/'
@@ -373,9 +366,6 @@ rgg() {
   _fzf_open_path "$(_fzf_get_path_using_rg)"
 }
 
-bindkey -s '^G' 'rgg\n'
-bindkey -s '^F' 'fdg\n'
-
 
 # NOTE: this is for ... inplace but nah. This is trash
 
@@ -468,14 +458,27 @@ get_wifi_password() {
 
 ##########################################
 
+# KEYBINDINGS
+
+function zvm_after_init() {
+  zvm_bindkey viins '^p' history-substring-search-up
+  zvm_bindkey viins '^n' history-substring-search-down
+  zvm_bindkey viins '^H' backward-kill-word
+  [ -f "$ZSH/plugins/fzf/fzf.plugin.zsh" ] && source "$ZSH/plugins/fzf/fzf.plugin.zsh"
+  [ -f "$ZSH/plugins/fancy-ctrl-z/fancy-ctrl-z.plugin.zsh" ] && source "$ZSH/plugins/fancy-ctrl-z/fancy-ctrl-z.plugin.zsh"
+}
+
+function zvm_after_lazy_keybindings() {
+  zvm_define_widget yzcd_widget yzcd
+  zvm_define_widget rgg_widget rgg
+  zvm_define_widget fdg_widget fdg
+  zvm_bindkey viins '^d' yzcd_widget
+  zvm_bindkey viins '^g' rgg_widget
+  zvm_bindkey viins '^f' fdg_widget
+}
+
+##########################################
+
 # RUN SOME STUFF
 fastfetch
 eval "$(starship init zsh)"
-
-# pnpm
-export PNPM_HOME="/home/kevinnitro/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end

@@ -86,6 +86,12 @@ export MANROFFOPT='-c'
 
 ##########################################
 
+# ZVM VI
+ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
+
+
+##########################################
+
 # ZOXIDE
 export ZOXIDE_CMD_OVERRIDE="cd"
 
