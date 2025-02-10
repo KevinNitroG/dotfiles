@@ -1,14 +1,17 @@
+[Colors:View]
+BackgroundNormal=#00000000
+
 [General]
-TerminalApplication=kitty
+TerminalApplication=/usr/bin/ghostty
 
 [Icons]
 Theme=Tela-circle-dracula
 
-[Colors:View]
-BackgroundNormal=#00000000
-
 [KDE]
 widgetStyle=kvantum
+
+[UISettings]
+ColorScheme=Wallbash-Gtk
 
 [UiSettings]
 ColorScheme=*

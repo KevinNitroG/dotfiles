@@ -77,10 +77,12 @@ Amazon = ""
 Android = ""
 Arch = "󰣇"
 Artix = "󰣇"
+EndeavourOS = ""
 CentOS = ""
 Debian = "󰣚"
 Redhat = "󱄛"
 RedHatEnterprise = "󱄛"
+Pop = ""
 
 [username]
 show_always = true
