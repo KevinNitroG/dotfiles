@@ -1,4 +1,5 @@
-*.exportedUI linguist-language=xml linguist-detectable
+# https://github.com/github-linguist/linguist/blob/1647b5be1658fb15a5e09bf89067f79b392301e2/lib/linguist/languages.yml#L8164
+*.exportedUI linguist-language=xsd linguist-detectable
 
 *config* linguist-language=ini linguist-detectable
 
