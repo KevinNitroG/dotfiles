@@ -229,6 +229,7 @@ tks() {
     tmux kill-server
   fi
 }
+
 ta() {
   if [ "$#" != "0" ]; then
     tmux attach -t $@
