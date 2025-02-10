@@ -1,3 +1,5 @@
+*.exportedUI linguist-language=xaml linguist-detectable
+
 *config* linguist-language=ini linguist-detectable
 
 *.json linguist-language=json linguist-detectable
