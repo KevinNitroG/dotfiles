@@ -3,4 +3,5 @@ ignore-dirs:
   - /dev
   - /sys
   - /run
-  - ~/mount/rclone-drives/
+ignore-dir-patterns:
+  - '.*/mount/.*'
