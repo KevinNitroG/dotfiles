@@ -1,4 +1,4 @@
-*.exportedUI linguist-language=xaml linguist-detectable
+*.exportedUI linguist-language=xml linguist-detectable
 
 *config* linguist-language=ini linguist-detectable
 
