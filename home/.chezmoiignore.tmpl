@@ -4,43 +4,10 @@
 
 ##########################################
 
-# For chezmoi stuff
-
 {{ if ne .chezmoi.os "linux" }}
 .chezmoiscripts/linux/**/*
-{{ end }}
-{{ if ne .chezmoi.os "windows" }}
-.chezmoiscripts/windows/**/*
-.local/bin/*.bat
-.local/bin/*.reg
-.local/bin/*.ps1
-{{ end }}
-{{ if ne .chezmoi.os "darwin" }}
-.chezmoiscripts/darwin/**/*
-{{ end }}
-{{ if eq .chezmoi.os "windows" }}
-.local/bin/*.sh
-{{ end }}
 
-##########################################
-
-{{ if eq .chezmoi.os "windows" }}
-
-.config/Code/**/*
-.config/lazygit/**/*
-.config/rclone/**/*
-.config/bat/**/*
-.config/vlc/**/*
-.config/sddm/**/*
-.config/systemd/**/*
-.config/tlp/**/*
-.config/tlpui/**/*
-.config/fcitx5/**/*
-.config/crontab/**/*
-.config/gammastep/**/*
-.config/hypr/**/*
-.config/kanata/**/*
-.config/kitty/**/*
+.gtkrc-2.0.mine
 
 .config/brave-flags.conf
 .config/chrome-flags.conf
@@ -55,11 +22,54 @@
 .config/private_trashrc
 .config/spotify-flags.conf
 
+.config/fcitx5/**/*
+.config/gammastep/**/*
+.config/hypr/**/*
+.config/sddm/**/*
+.config/systemd/**/*
+.config/tlp/**/*
+.config/tlpui/**/*
+
+{{ end }}
+
+{{ if ne .chezmoi.os "windows" }}
+
+.chezmoiscripts/windows/**/*
+.local/bin/*.bat
+.local/bin/*.reg
+.local/bin/*.ps1
+
+{{ end }}
+
+{{ if ne .chezmoi.os "darwin" }}
+
+.chezmoiscripts/darwin/**/*
+
+{{ end }}
+
+{{ if eq .chezmoi.os "windows" }}
+
+.local/bin/*.sh
+
+{{ end }}
+
+##########################################
+
+{{ if eq .chezmoi.os "windows" }}
+
+.config/Code/**/*
+.config/lazygit/**/*
+.config/rclone/**/*
+.config/bat/**/*
+.config/vlc/**/*
+.config/crontab/**/*
+.config/kanata/**/*
+.config/kitty/**/*
+
 .font/**/*
 .npm-global/**/*
 mount/**/*
 
-.gtkrc-2.0.mine
 .tmux.conf
 .zprofile
 .zshenv
