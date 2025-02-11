@@ -1,3 +1,5 @@
+{{ $palette := index .catppuccin.palettes .catppuccinFlavor }}
+
 #reference from https://github.com/scottmckendry/Windots/blob/main/lazygit/config.yml
 
 notARepository: skip
@@ -14,26 +16,26 @@ gui:
   # use catppuccin macchiato yellow - https://github.com/catppuccin/lazygit/blob/main/themes/macchiato/yellow.yml
   theme:
     activeBorderColor:
-      - '#eed49f'
+      - '{{ $palette.yellow }}'
       - bold
     inactiveBorderColor:
-      - '#a5adcb'
+      - '{{ $palette.subtext0 }}'
     optionsTextColor:
-      - '#8aadf4'
+      - '{{ $palette.blue }}'
     selectedLineBgColor:
-      - '#363a4f'
+      - '{{ $palette.surface0 }}'
     cherryPickedCommitBgColor:
-      - '#494d64'
+      - '{{ $palette.surface1 }}'
     cherryPickedCommitFgColor:
-      - '#eed49f'
+      - '{{ $palette.yellow }}'
     unstagedChangesColor:
-      - '#ed8796'
+      - '{{ $palette.red }}'
     defaultFgColor:
-      - '#cad3f5'
+      - '{{ $palette.text }}'
     searchingActiveBorderColor:
-      - '#eed49f'
+      - '{{ $palette.yellow }}'
   authorColors:
-    '*': '#b7bdf8'
+    '*': '{{ $palette.lavender }}'
 
 git:
   parseEmoji: true
