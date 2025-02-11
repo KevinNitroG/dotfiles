@@ -1,6 +1,6 @@
 {{ if eq .chezmoi.os "windows" }}
 
-{{ $gitArgs := "clone.args = ['--depth', '1']\n    pull.args = ['--ff-only']" }}
+{{ $gitArgs := "clone.args = ['--depth', '1']\npull.args = ['--ff-only', '--depth', '1']" }}
 
 ##########################################
 
