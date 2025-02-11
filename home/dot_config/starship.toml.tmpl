@@ -27,35 +27,37 @@ $cmd_duration\
 [ ](fg:lavender)\
 $line_break$character"""
 
-palette = 'catppuccin_macchiato'
+command_timeout = 2000
+palette = 'catppuccin'
 
-[palettes.catppuccin_macchiato]
-rosewater = "#f4dbd6"
-flamingo = "#f0c6c6"
-pink = "#f5bde6"
-mauve = "#c6a0f6"
-red = "#ed8796"
-maroon = "#ee99a0"
-peach = "#f5a97f"
-yellow = "#eed49f"
-green = "#a6da95"
-teal = "#8bd5ca"
-sky = "#91d7e3"
-sapphire = "#7dc4e4"
-blue = "#8aadf4"
-lavender = "#b7bdf8"
-text = "#cad3f5"
-subtext1 = "#b8c0e0"
-subtext0 = "#a5adcb"
-overlay2 = "#939ab7"
-overlay1 = "#8087a2"
-overlay0 = "#6e738d"
-surface2 = "#5b6078"
-surface1 = "#494d64"
-surface0 = "#363a4f"
-base = "#24273a"
-mantle = "#1e2030"
-crust = "#181926"
+{{ $palette := index .catppuccin.palettes .catppuccinFlavor }}
+[palettes.catppuccin]
+rosewater = {{ $palette.rosewater | quote }}
+flamingo = {{ $palette.flamingo | quote }}
+pink = {{ $palette.pink | quote }}
+mauve = {{ $palette.mauve | quote }}
+red = {{ $palette.red | quote }}
+maroon = {{ $palette.maroon | quote }}
+peach = {{ $palette.peach | quote }}
+yellow = {{ $palette.yellow | quote }}
+green = {{ $palette.green | quote }}
+teal = {{ $palette.teal | quote }}
+sky = {{ $palette.sky | quote }}
+sapphire = {{ $palette.sapphire | quote }}
+blue = {{ $palette.blue | quote }}
+lavender = {{ $palette.lavender | quote }}
+text = {{ $palette.text | quote }}
+subtext1 = {{ $palette.subtext1 | quote }}
+subtext0 = {{ $palette.subtext0 | quote }}
+overlay2 = {{ $palette.overlay2 | quote }}
+overlay1 = {{ $palette.overlay1 | quote }}
+overlay0 = {{ $palette.overlay0 | quote }}
+surface2 = {{ $palette.surface2 | quote }}
+surface1 = {{ $palette.surface1 | quote }}
+surface0 = {{ $palette.surface0 | quote }}
+base = {{ $palette.base | quote }}
+mantle = {{ $palette.mantle | quote }}
+crust = {{ $palette.crust | quote }}
 
 [os]
 disabled = false
