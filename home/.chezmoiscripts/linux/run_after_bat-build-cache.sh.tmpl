@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# color hash: {{ .catppuccinFlavor }}
+# themeConfigFile hash: {{ include (joinPath .chezmoi.homeDir ".config/bat/themes" (printf "Catppuccin %s.tmTheme" (.catppuccinFlavor | title))) | sha256sum }}
 
 if ! command -v bat &>/dev/null; then
   exit

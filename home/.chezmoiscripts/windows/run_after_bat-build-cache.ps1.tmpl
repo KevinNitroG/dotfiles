@@ -1,5 +1,4 @@
-# Cannot includeTemplate because the template execute in order bruh bruh that cannot expand the .catppuccinFlavor var in chezmoitemplates/bat/config.tmpl
-# color hash: {{ .catppuccinFlavor }}
+# themeConfigFile hash: {{ include (joinPath .chezmoi.homeDir "AppData/Roaming/bat" (printf "Catppuccin %s.tmTheme" (.catppuccinFlavor | title))) | sha256sum }}
 
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 
