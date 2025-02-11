@@ -61,7 +61,7 @@ desc = "go to gits directory"
 
 [[manager.prepend_keymap]]
 on   = [ "g", "n" ]
-{{ if ne .chezmoi.os "windows" }}
+{{ if ne .osId "windows" }}
 run  = "cd %LOCALAPPDATA/nvim/"
 {{ else }}
 run  = "cd $HOME/.config/nvim/"

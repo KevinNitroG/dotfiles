@@ -1,7 +1,7 @@
 # https://alacritty.org/config-alacritty.html
 
 {{- $catppuccinThemePath := "" }}
-{{- if eq .chezmoi.os "windows" }}
+{{- if eq .osId "windows" }}
   {{- $catppuccinThemePath = "~/AppData/Roaming/alacritty/themes/catppuccin" }}
 {{- else }}
   {{- $catppuccinThemePath = "~/.config/alacritty/themes/catppuccin" }}
@@ -21,7 +21,7 @@ TERMINAL = "alacritty"
 [terminal]
 osc52 = "CopyPaste"
 shell = {
-  {{- if eq .chezmoi.os "windows" -}}
+  {{- if eq .osId "windows" -}}
   program = "pwsh",
   args = ["-noLogo", "-WorkingDirectory C:/Users/kevinnitro/"]
   {{- else -}}

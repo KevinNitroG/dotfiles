@@ -3,16 +3,15 @@
 
 ##########################################
 
-{{ if eq .chezmoi.os "windows" }}
+{{ if eq .osId "windows" }}
 ["AppData/Local/nvim"]
 {{ else }}
 [".config/nvim"]
 {{ end }}
 type = "git-repo"
 url = "git@github.com:{{ .githubUsername }}/nvim.git"
-{{ $gitArgs }}
 
-{{ if eq .chezmoi.os "windows" }}
+{{ if eq .osId "windows" }}
 ["AppData/Roaming/alacritty/themes/catppuccin"]
 {{ else }}
 [".config/alacritty/themes/catppuccin"]
@@ -21,7 +20,7 @@ type = "git-repo"
 url = "https://github.com/catppuccin/alacritty.git"
 {{ $gitArgs }}
 
-{{ if eq .chezmoi.os "windows" }}
+{{ if eq .osId "windows" }}
 ["AppData/Roaming/bat/themes/Catppuccin {{ $catppuccinFlavorTitle }}.tmTheme"]
 {{ else }}
 [".config/bat/themes/Catppuccin {{ $catppuccinFlavorTitle }}.tmTheme"]
@@ -34,7 +33,7 @@ type = "git-repo"
 url = "https://github.com/catppuccin/delta.git"
 {{ $gitArgs }}
 
-{{ if eq .chezmoi.os "windows" }}
+{{ if eq .osId "windows" }}
 ["AppData/Local/glow/Config/themes/catppuccin-{{ .catppuccinFlavor }}.json"]
 {{ else }}
 [".config/glow/themes/catppuccin-{{ .catppuccinFlavor }}.json"]

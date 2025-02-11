@@ -29,28 +29,15 @@ fi
 
 # INSTALL PACKAGES
 echo 'INSTALLING PACKAGES...'
-yay -S {{ .pkgs.archBased.universal | quoteList }} --needed
+{{ range $pkg := .pkgs.archBased.universal }}
+yay -S '{{ $pkg }}' --needed
+{{ end }}
 
-# INSTALL LAPTOP STUFF
-read -rp 'INSTALL LAPTOP STUFF? [y/N]: ' yn
-case "$yn" in
-[yY])
-  echo 'INSTALLING LAPTOP STUFF...'
-  yay -S {{ .pkgs.archBased.laptop | quoteList }} --needed
-  ;;
-esac
-
-# INSTALL HYPRDOTS
-if ! command -v Hyde &>/dev/null; then
-  read -rp 'INSTALL HYPRDOTS? [Y/n]: ' yn
-  case "$yn" in
-  [nN]) ;;
-  *)
-    git clone --depth 1 https://github.com/prasanthrangan/hyprdots ~/Hyde
-    chmod +x ~/Hyde/Scripts/install.sh
-    ~/Hyde/Scripts/install.sh
-    ;;
-  esac
-fi
+{{ if .isLaptop }}
+echo 'INSTALLING LAPTOP PACKAGES...'
+{{ range $pkg := .pkgs.archBased.laptop }}
+yay -S '{{ $pkg }}' --needed
+{{ end }}
+{{ end }}
 
 systemctl list-unit-files "cronie.service" &>/dev/null && sudo systemctl enable --now cronie.service

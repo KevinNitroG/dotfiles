@@ -1,4 +1,4 @@
-{{ if or (eq .chezmoi.os "linux") (eq .chezmoi.os "darwin") }}
+{{ if eq .chezmoi.os "linux" "darwin" }}
 
 {{ $gitArgs := "clone.args = ['--depth', '1']\npull.args = ['--ff-only', '--depth', '1']" }}
 

@@ -39,14 +39,21 @@
 {{ $catppuccinLightFlavour := "latte" }}
 {{ $catppuccinDarkFlavour := "mocha" }}
 {{ $catppuccinAccentColor := "lavender" }}
+{{ $useHyde := false }}
+{{ $isLaptop := false }}
 
 {{/* Pre auto */}}
 
-{{- if eq .chezmoi.os "windows" -}}
-  {{- $shell = "pwsh" -}}
-{{- else -}}
-  {{- $shell = "zsh" -}}
-{{- end -}}
+{{ $osId := .chezmoi.os }}
+{{ if (and (eq .chezmoi.os "linux") (hasKey .chezmoi.osRelease "id")) }}
+  {{ $osId = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id }}
+{{ end }}
+
+{{ if eq $osId "windows" }}
+  {{ $shell = "pwsh" }}
+{{ else }}
+  {{ $shell = "zsh" }}
+{{ end }}
 
 {{/* Prompts */}}
 
@@ -57,6 +64,21 @@
   {{ $catppuccinLightFlavour = promptChoiceOnce . "catppuccinLightFlavour" "Catppuccin flavor for light mode" $catppuccinFlavors "latte" }}
   {{ $catppuccinDarkFlavour = promptChoiceOnce . "catppuccinDarkFlavour" "Catppuccin flavor for dark mode" $catppuccinFlavors "mocha" }}
   {{ $catppuccinAccentColor = promptChoiceOnce . "catppuccinAccentColor" "Catppuccin accent color" $catppuccinAccentColors "lavender" }}
+  {{ if eq $osId "linux-arch" }}
+    {{ $useHyde = promptBoolOnce . "useHyde" "Use Hyde" true }}
+  {{ end }}
+{{ end }}
+
+{{/* Semi prompts or auto */}}
+
+{{ if eq .chezmoi.os "linux" }}
+  {{ if lookPath "hostnamectl" }}
+    {{ if eq (output "hostnamectl" "chassis") "laptop" }}
+      {{ $isLaptop = true }}
+    {{ end }}
+  {{ else if stdinIsATTY }}
+    {{ $isLaptop = promptBoolOnce . "isLaptop" "Is this a laptop" false }}
+  {{ end }}
 {{ end }}
 
 {{/* Post auto */}}
@@ -82,6 +104,9 @@ catppuccinFlavor = {{ $catppuccinFlavor | quote }}
 catppuccinAccentColor = {{ $catppuccinAccentColor | quote }}
 gpgId = {{ $gpgId | quote }}
 sshId = {{ $sshId | quote }}
+osId = {{ $osId | quote }}
+useHyde = {{ $useHyde }}
+isLaptop = {{ $isLaptop }}
 
 [data.catppuccin]
 accentColors = [ {{ $catppuccinAccentColors | quoteList | join ", " }} ]

@@ -1,7 +1,7 @@
 -- Ref: https://github.com/theopn/dotfiles/blob/main/wezterm/wezterm.lua
 
 {{ $shell := "" }}
-{{- if eq .chezmoi.os "windows" -}}
+{{- if eq .osId "windows" -}}
   {{ $shell = "pwsh" }}
 {{ else }}
   {{ $shell = "zsh" }}
@@ -73,7 +73,7 @@ config.pane_focus_follows_mouse = false
 config.window_close_confirmation = "NeverPrompt"
 config.scrollback_lines = 3000
 config.default_workspace = "main"
-{{ if eq .chezmoi.os "window" }}
+{{ if eq .osId "window" }}
 config.win32_system_backdrop = "Acrylic" -- Auto, Disabled, Acrylic, Mica, Tabbed
 {{ end }}
 config.window_background_opacity = {{ .terminalBlur }}

@@ -133,7 +133,7 @@
   smudge = git-lfs smudge -- %f
   process = git-lfs filter-process
 
-{{ if eq .chezmoi.os "windows" }}
+{{ if eq .osId "windows" }}
 [credential "helperselector"]
   selected = manager
 {{ end }}

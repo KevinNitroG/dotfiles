@@ -4,6 +4,13 @@
 
 ##########################################
 
+# Specific
+{{ if not .useHyde }}
+.chezmoiscripts/linux/*install-hyde*.sh
+{{ end }}
+
+##########################################
+
 # Exclude if no ~/.age-key.txt
 
 {{ if (joinPath .chezmoi.homeDir ".age-key.txt" | lstat) }}
@@ -41,7 +48,7 @@ AppData/Roaming/rclone/rclone.conf
 
 {{ end }}
 
-{{ if ne .chezmoi.os "windows" }}
+{{ if ne .osId "windows" }}
 
 .chezmoiscripts/windows/**/*
 .local/bin/*.bat
@@ -50,13 +57,13 @@ AppData/Roaming/rclone/rclone.conf
 
 {{ end }}
 
-{{ if ne .chezmoi.os "darwin" }}
+{{ if ne .osId "darwin" }}
 
 .chezmoiscripts/darwin/**/*
 
 {{ end }}
 
-{{ if eq .chezmoi.os "windows" }}
+{{ if eq .osId "windows" }}
 
 .config/gdu/**/*
 
@@ -66,7 +73,7 @@ AppData/Roaming/rclone/rclone.conf
 
 ##########################################
 
-{{ if eq .chezmoi.os "windows" }}
+{{ if eq .osId "windows" }}
 
 .config/Code/**/*
 .config/lazygit/**/*
