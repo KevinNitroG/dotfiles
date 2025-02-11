@@ -2,7 +2,7 @@
 BackgroundNormal=#00000000
 
 [General]
-TerminalApplication=/usr/bin/ghostty
+TerminalApplication=/usr/bin/kitty
 
 [Icons]
 Theme=Tela-circle-dracula
@@ -11,7 +11,7 @@ Theme=Tela-circle-dracula
 widgetStyle=kvantum
 
 [UISettings]
-ColorScheme=Wallbash-Gtk
+ColorScheme=Catppuccin-Mocha
 
 [UiSettings]
 ColorScheme=*
