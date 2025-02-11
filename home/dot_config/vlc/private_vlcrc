@@ -758,6 +758,29 @@
 # Delay (ms) (integer)
 #sout-display-delay=100
 
+[stream_out_chromecast] # Chromecast stream output
+
+# ? (string)
+#sout-chromecast-ip=
+
+# ? (integer)
+#sout-chromecast-port=8009
+
+# ? (boolean)
+#sout-chromecast-video=1
+
+# HTTP port (integer)
+#sout-chromecast-http-port=8010
+
+# Performance warning (integer)
+#sout-chromecast-show-perf-warning=1
+
+# Enable Audio passthrough (boolean)
+#sout-chromecast-audio-passthrough=0
+
+# Conversion quality (integer)
+#sout-chromecast-conversion-quality=1
+
 [delay] # Delay a stream
 
 # Elementary Stream ID (integer)
@@ -883,7 +906,7 @@
 [stream_out_transcode] # Transcode stream output
 
 # Video encoder (string)
-sout-transcode-venc=any
+#sout-transcode-venc=
 
 # Destination video codec (string)
 #sout-transcode-vcodec=
@@ -919,7 +942,7 @@ sout-transcode-venc=any
 #sout-transcode-vfilter=
 
 # Audio encoder (string)
-sout-transcode-aenc=any
+#sout-transcode-aenc=
 
 # Destination audio codec (string)
 #sout-transcode-acodec=
@@ -940,7 +963,7 @@ sout-transcode-aenc=any
 #sout-transcode-afilter=
 
 # Subtitle encoder (string)
-sout-transcode-senc=any
+#sout-transcode-senc=
 
 # Destination subtitle codec (string)
 #sout-transcode-scodec=
@@ -977,13 +1000,13 @@ sout-transcode-senc=any
 freetype-font=VNF-Futura
 
 # Monospace Font (string)
-freetype-monofont=Noto Sans Mono
+#freetype-monofont=Monospace
 
 # Font size in pixels (integer)
 #freetype-fontsize=0
 
 # Relative font size (integer)
-freetype-rel-fontsize=20
+freetype-rel-fontsize=18
 
 # Text opacity (integer)
 #freetype-opacity=255
@@ -1010,7 +1033,7 @@ freetype-rel-fontsize=20
 #freetype-outline-thickness=4
 
 # Shadow opacity (integer)
-#freetype-shadow-opacity=128
+freetype-shadow-opacity=0
 
 # Shadow color (integer)
 #freetype-shadow-color=0
@@ -1873,7 +1896,7 @@ freetype-rel-fontsize=20
 [libass] # Subtitle renderers using libass
 
 # Additional fonts directory (string)
-ssa-fontsdir=~/.fonts/
+#ssa-fontsdir=
 
 [gstdecode] # GStreamer Based Decoder
 
@@ -2370,10 +2393,10 @@ ssa-fontsdir=~/.fonts/
 #sout-x264-stats=x264_2pass.log
 
 # Default preset setting used (string)
-#sout-x264-preset=
+sout-x264-preset=ultrafast
 
 # Default tune setting used (string)
-#sout-x264-tune=
+sout-x264-tune=film
 
 # x264 advanced options (string)
 #sout-x264-options=
@@ -2559,7 +2582,7 @@ ssa-fontsdir=~/.fonts/
 [transform] # Video transformation filter
 
 # Transform type (string)
-transform-type=270
+#transform-type=90
 
 [mirror] # Mirror video filter
 
@@ -2986,7 +3009,7 @@ transform-type=270
 #rss-y=0
 
 # Text position (integer)
-rss-position=0
+#rss-position=-1
 
 # Opacity (integer)
 #rss-opacity=255
@@ -3058,7 +3081,7 @@ rss-position=0
 #marq-y=0
 
 # Marquee position (integer)
-marq-position=0
+#marq-position=-1
 
 # Opacity (integer)
 #marq-opacity=255
@@ -3203,7 +3226,7 @@ marq-position=0
 #qt-recentplay-filter=
 
 # Continue playback? (integer)
-qt-continue=2
+#qt-continue=1
 
 # Embed the file browser in open dialog (boolean)
 #qt-embedded-open=0
@@ -3565,7 +3588,7 @@ qt-privacy-ask=0
 #audio-time-stretch=1
 
 # Audio output module (string)
-#aout=
+aout=any
 
 # Media role (string)
 #role=video
@@ -3625,7 +3648,7 @@ qt-privacy-ask=0
 #video-title-timeout=5000
 
 # Position of video title (integer)
-video-title-position=4
+#video-title-position=8
 
 # Hide cursor and fullscreen controller after x milliseconds (integer)
 #mouse-hide-timeout=1000
@@ -3703,7 +3726,7 @@ video-title-position=4
 #deinterlace-mode=auto
 
 # Video output module (string)
-#vout=
+vout=any
 
 # Video filter module (string)
 #video-filter=
@@ -3718,7 +3741,7 @@ video-title-position=4
 #osd=1
 
 # Text rendering module (string)
-text-renderer=any
+#text-renderer=
 
 # Use subtitle file (string)
 #sub-file=
@@ -3733,7 +3756,7 @@ text-renderer=any
 #sub-autodetect-path=./Subtitles, ./subtitles, ./Subs, ./subs
 
 # Force subtitle position (integer)
-sub-margin=-2
+#sub-margin=0
 
 # Subpictures source module (string)
 #sub-source=
@@ -3958,7 +3981,7 @@ sub-margin=-2
 #sap-interval=5
 
 # Mux module (string)
-mux=any
+#mux=
 
 # Access output module (string)
 #access_output=
@@ -3976,7 +3999,7 @@ mux=any
 #packetizer=
 
 # VoD server module (string)
-vod-server=any
+#vod-server=
 
 # Use a plugins cache (boolean)
 #plugins-cache=1
