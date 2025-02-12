@@ -32,7 +32,7 @@ fi
 
 {{ if $pkgs }}
 echo 'INSTALLING PACKAGES...'
-yay -S {{ $pkgs | quoteList }} --needed --noconfirm
+yay -S {{ $pkgs | quoteList | join " " }} --needed --noconfirm
 {{ end }}
 
 systemctl list-unit-files "cronie.service" &>/dev/null && sudo systemctl enable --now cronie.service

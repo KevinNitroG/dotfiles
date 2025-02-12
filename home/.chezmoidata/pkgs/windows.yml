@@ -65,7 +65,7 @@ pkgs:
         # - 'main/oh-my-posh'
         # - 'main/sed'
         # - 'main/touch'
-        - 'extra/jqp'
+        # - 'extra/jqp'
         - 'extras/autohotkey'
         - 'extras/keyviz'
         - 'extras/komorebi'

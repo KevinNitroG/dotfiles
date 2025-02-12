@@ -10,6 +10,6 @@ if (-not (Get-Command "winget" -ErrorAction SilentlyContinue))
 
 Write-Host "INSTALLING WINGET PACKAGES..."
 
-winget install {{ .pkgs.windows.winget | quoteList }} --accept-source-agreements --accept-package-agreements
+winget install {{ .pkgs.windows.winget | quoteList | join " " }} --accept-source-agreements --accept-package-agreements
 
 {{ end }}

@@ -18,6 +18,6 @@ if (-not (Get-Command "choco" -ErrorAction SilentlyContinue))
 }
 
 Write-Host "INSTALLING CHOCO PACKAGES..."
-choco install {{ .pkgs.windows.choco | quoteList }} -y
+choco install {{ .pkgs.windows.choco | quoteList | join " " }} -y
 
 {{ end }}

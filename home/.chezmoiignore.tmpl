@@ -65,8 +65,6 @@ AppData/Roaming/rclone/rclone.conf
 
 {{ if eq .osId "windows" }}
 
-.config/gdu/**/*
-
 .local/bin/*.sh
 
 {{ end }}
@@ -76,16 +74,16 @@ AppData/Roaming/rclone/rclone.conf
 {{ if eq .osId "windows" }}
 
 .config/Code/**/*
-.config/lazygit/**/*
-.config/rclone/**/*
 .config/bat/**/*
-.config/vlc/**/*
 .config/crontab/**/*
+.config/gdu/**/*
 .config/kanata/**/*
 .config/kitty/**/*
+.config/lazygit/**/*
+.config/rclone/**/*
+.config/vlc/**/*
 
 .font/**/*
-.npm-global/**/*
 mount/**/*
 
 .tmux.conf
