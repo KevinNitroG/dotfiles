@@ -71,14 +71,16 @@
 
 {{/* Semi prompts or auto */}}
 
-{{ if eq .chezmoi.os "linux" }}
-  {{ if lookPath "hostnamectl" }}
-    {{ if eq (output "hostnamectl" "chassis") "laptop" }}
-      {{ $isLaptop = true }}
-    {{ end }}
-  {{ else if stdinIsATTY }}
-    {{ $isLaptop = promptBoolOnce . "isLaptop" "Is this a laptop" false }}
+{{ if lookPath "hostnamectl" }}
+  {{ if eq (output "hostnamectl" "chassis") "laptop" }}
+    {{ $isLaptop = true }}
   {{ end }}
+{{ else if lookPath "wmic" }}
+  {{ if eq (output "wmic" "computersystem" "get" "PCSystemType" "/VALUE" | trim) "PCSystemType=2" }}
+    {{ $isLaptop = true }}
+  {{ end }}
+{{ else if stdinIsATTY }}
+  {{ $isLaptop = promptBoolOnce . "isLaptop" "Is this a laptop" false }}
 {{ end }}
 
 {{/* Post auto */}}
