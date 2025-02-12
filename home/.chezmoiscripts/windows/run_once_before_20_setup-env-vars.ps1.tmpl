@@ -8,7 +8,7 @@ $UpdatedPath = (@($NewPaths) + $ExistingPaths) -join ";"
 # Hashtable of environment variables
 $SetupEnv = @{
   {{- range $k, $v := .config.windows.envs.others -}}
-  {{- $k -}} = '{{- $v | replace "/" "\\" -}}';
+  {{- $k -}} = '{{- $v -}}';
   {{- end -}}
   Path = $UpdatedPath
 }

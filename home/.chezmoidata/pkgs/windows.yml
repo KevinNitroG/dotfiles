@@ -129,10 +129,10 @@ pkgs:
         - 'nonportable/k-lite-codec-pack-standard-np'
         - 'nonportable/winfsp-np' # For rclone
       importRegistry:
-        # - "$env:USERPROFILE/scoop/apps/windows-terminal/current/install-context.reg"
-        - '$env:USERPROFILE/scoop/apps/pwsh/current/install-explorer-context.reg'
-        - '$env:USERPROFILE/scoop/apps/pwsh/current/install-file-context.reg'
-        - '$env:USERPROFILE/scoop/apps/7zip/current/install-context.reg'
+        # - "$env:USERPROFILE\scoop\apps\windows-terminal\current\install-context.reg"
+        - '$env:USERPROFILE\scoop\apps\pwsh\current\install-explorer-context.reg'
+        - '$env:USERPROFILE\scoop\apps\pwsh\current\install-file-context.reg'
+        - '$env:USERPROFILE\scoop\apps\7zip\current\install-context.reg'
     choco:
       - 'internet-download-manager'
       - 'itunes'
