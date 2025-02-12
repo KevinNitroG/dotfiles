@@ -7,6 +7,12 @@ param(
 
 $ErrorActionPreference='Stop'
 
+if (!(Get-Command jq -ErrorAction SilentlyContinue))
+{
+  Write-Error "No jq available!"
+  exit 2
+}
+
 $URL = "https://github.com/catppuccin/userstyles/releases/download/all-userstyles-export/import.json"
 $FILE_DIR = "$HOME/.config/browser-data/stylus"
 $FILE_PATH = "$FILE_DIR/catppuccin.json"
@@ -17,25 +23,7 @@ if (!(Test-Path $FILE_DIR))
   New-Item -ItemType Directory -Path $FILE_DIR -Force | Out-Null
 }
 
-# Check if curl or wget is available
-if (Get-Command curl -ErrorAction SilentlyContinue)
-{
-  $stylus = curl $URL | Out-String
-} elseif (Get-Command wget -ErrorAction SilentlyContinue)
-{
-  $stylus = wget -q -O - $URL | Out-String
-} else
-{
-  Write-Error "No curl or wget available!"
-  exit 1
-}
-
-# Check if jq is available
-if (!(Get-Command jq -ErrorAction SilentlyContinue))
-{
-  Write-Error "No jq available!"
-  exit 2
-}
+$stylus = (New-Object Net.WebClient).DownloadString($URL)
 
 # Process JSON and save to file
 $stylus | jq ".[1:].[].usercssData.vars.accentColor.value |= `"$accent_color`" | .[1:].[].usercssData.vars.lightFlavor.value |= `"$light_flavor`" | .[1:].[].usercssData.vars.darkFlavor.value |= `"$dark_flavor`"" | Out-File -Encoding utf8 $FILE_PATH
