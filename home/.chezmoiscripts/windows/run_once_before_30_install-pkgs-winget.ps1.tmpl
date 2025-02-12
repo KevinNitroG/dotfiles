@@ -1,3 +1,5 @@
+{{ if .pkgs.windows.winget }}
+
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
 
 if (-not (Get-Command "winget" -ErrorAction SilentlyContinue))
@@ -8,6 +10,6 @@ if (-not (Get-Command "winget" -ErrorAction SilentlyContinue))
 
 Write-Host "INSTALLING WINGET PACKAGES..."
 
-{{ range $pkgId := .pkgs.windows.winget }}
-winget install '{{ $pkgId }}' --accept-source-agreements --accept-package-agreements
+winget install {{ .pkgs.windows.winget | quoteList }} --accept-source-agreements --accept-package-agreements
+
 {{ end }}
