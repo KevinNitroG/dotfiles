@@ -1,15 +1,23 @@
 # KEVINNITRO DOTFILES
 
-[![GitHub last commit (by committer)](https://img.shields.io/github/last-commit/KevinNitroG/dotfiles?style=for-the-badge&color=FAB387)](../../commits/main)
-![GitHub repo size](https://img.shields.io/github/repo-size/KevinNitroG/dotfiles?style=for-the-badge&color=B4BEFE)
+<div align=center>
+  <a href="../../commits/main">
+    <img alt="Last commit" src="https://img.shields.io/github/last-commit/KevinNitroG/dotfiles?style=for-the-badge&color=f2cdcd"/>
+  </a>
+  <img alt="Repo size" src="https://img.shields.io/github/repo-size/KevinNitroG/dotfiles?style=for-the-badge&color=eba0ac"/>
+  <a href="https://www.chezmoi.io/">
+    <img alt="Chezmoi" src="https://img.shields.io/badge/chezmoi-fab387?style=for-the-badge"/>
+  </a>
+  <a href="https://github.com/HyDE-Project/HyDE">
+    <img alt="HyDE" src="https://img.shields.io/badge/Hyde-cba6f7?style=for-the-badge"/>
+  </a>
+</div>
 
-Dotfiles managed with [chezmoi](https://www.chezmoi.io/):
-
-- Windows
-- Arch linux _([hyprdots](https://github.com/prasanthrangan/hyprdots/))_
-
-> [!NOTE]
-> Haven't enough money to buy Mac yet
+<div align=center>
+  <img alt="Arch" src="https://img.shields.io/badge/Arch%20Linux-89b4fa?logo=arch-linux&logoColor=white&style=for-the-badge"/>
+  <img alt="EndeavourOS" src="https://img.shields.io/badge/endeavour%20os-b4befe?logo=endeavouros&logoColor=white&style=for-the-badge"/>
+  <img alt="Windows" src="https://img.shields.io/badge/Windows-74c7ec?style=for-the-badge&logo=windows&logoColor=white"/>
+</div>
 
 > [!WARNING]
 > This is for personal use, as it contains encrypted files.
@@ -78,11 +86,11 @@ Dotfiles managed with [chezmoi](https://www.chezmoi.io/):
 - Install chezmoi and init, apply, and delete binary: _([docs](https://www.chezmoi.io/install))_
   - shell
     ```sh
-    sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply --ssh --purge-binary KevinNitroG
+    sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply --ssh --depth 1 --purge-binary KevinNitroG
     ```
   - pwsh
     ```powershell
-    iex "&{$(irm 'https://get.chezmoi.io/ps1')} -- init --apply --ssh --purge-binary KevinNitroG"
+    iex "&{$(irm 'https://get.chezmoi.io/ps1')} -- init --apply --ssh --depth 1 --purge-binary KevinNitroG"
     ```
 - GPG for sign commit
   ```sh
