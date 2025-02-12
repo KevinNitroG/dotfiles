@@ -141,6 +141,8 @@ pkgs:
       # - 'ultraviewer'
     winget:
       - 'XP8C9QZMS2PC1T' # Brave
+      - 'Microsoft.WindowsTerminal' # Windows terminal stable
+      - 'AmN.yasb' # YASB
     psGallery:
       # - 'DockerCompletion'
       # - 'PsReadLine'
