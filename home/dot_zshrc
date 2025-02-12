@@ -470,12 +470,12 @@ function zvm_after_init() {
 }
 
 function zvm_after_lazy_keybindings() {
-  zvm_define_widget yzcd_widget yzcd
-  zvm_define_widget rgg_widget rgg
-  zvm_define_widget fdg_widget fdg
-  zvm_bindkey viins '^d' yzcd_widget
-  zvm_bindkey viins '^g' rgg_widget
-  zvm_bindkey viins '^f' fdg_widget
+  zvm_define_widget rgg
+  zvm_define_widget fdg
+
+  bindkey -M vicmd -s '^d' 'iyzcd\n' # yazi doesn't like to... :v
+  zvm_bindkey vicmd '^g' rgg
+  zvm_bindkey vicmd '^f' fdg
 }
 
 ##########################################
