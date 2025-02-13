@@ -1,21 +1,6 @@
 # HELP
 # - https://unix.stackexchange.com/a/487889/612293 - .zshenv, .zprofile, .zshrc,...
 
-# REF:
-# - https://github.com/mischavandenburg/dotfiles
-# - https://github.com/dreamsofautonomy/zensh
-# - https://github.com/Alexis12119/dotfiles
-# - https://github.com/stevearc/dotfiles
-# - https://github.com/omerxx/dotfiles
-# - https://github.com/rusty-electron/dotfiles
-# - https://github.com/chaneyzorn/dotfiles
-# - https://github.com/siduck/dotfiles
-# - https://github.com/craftzdog/dotfiles-public
-# - https://github.com/JoosepAlviste/dotfiles
-# - https://github.com/petobens/dotfiles
-# - https://github.com/asilvadesigns/config
-
-
 ##########################################
 
 # UPDATE PATH
@@ -56,6 +41,7 @@ plugins=(
   zsh-256color
   zsh-autosuggestions
   zsh-syntax-highlighting
+  command-not-found
 
   history-substring-search # Always below zsh-syntax-highlighting
 
@@ -223,31 +209,6 @@ alias cmra='chezmoi re-add'
 
 # Tmux
 alias t='tmux'
-tks() {
-  if [ "$#" != "0" ]; then
-    tmux kill-session -t $@
-  else
-    tmux kill-server
-  fi
-}
-
-ta() {
-  if [ "$#" != "0" ]; then
-    tmux attach -t $@
-  else
-    tmux has-session &>/dev/null && tmux attach || tmux
-  fi
-}
-
-# NOTE: Src: https://dev.to/serhatteker/restore-tmux-sessions-after-reboot-7g6
-# ta()
-# {
-#   pgrep -vx tmux > /dev/null && \
-  #     tmux new -d -s delete-me && \
-  #     tmux run-shell ~/.tmux/plugins/tmux-resurrect/scripts/restore.sh && \
-  #     tmux kill-session -t delete-me && \
-  #     tmux attach || tmux attach
-# }
 
 # ChatGPT gen it for me :(
 yzcd() {
@@ -291,7 +252,6 @@ alias rl='source ~/.zshrc'
 alias sv='sudo -E nvim'
 alias v='nvim'
 alias yz='yazi'
-bindkey -s '^[R' 'rl\n'
 
 
 ##########################################
