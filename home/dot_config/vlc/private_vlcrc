@@ -3648,7 +3648,7 @@ aout=any
 #video-title-timeout=5000
 
 # Position of video title (integer)
-#video-title-position=8
+video-title-position=4
 
 # Hide cursor and fullscreen controller after x milliseconds (integer)
 #mouse-hide-timeout=1000
@@ -3999,7 +3999,7 @@ vout=any
 #packetizer=
 
 # VoD server module (string)
-#vod-server=
+vod-server=any
 
 # Use a plugins cache (boolean)
 #plugins-cache=1
