@@ -6,7 +6,7 @@
 
 # Specific
 {{ if not .useHyde }}
-.chezmoiscripts/linux/*install-hyde*.sh
+.chezmoiscripts/linux/*hyde*.sh
 {{ end }}
 
 ##########################################
@@ -38,13 +38,15 @@ AppData/Roaming/rclone/rclone.conf
 .config/private_trashrc
 .config/spotify-flags.conf
 
-.config/fcitx5/**/*
-.config/gammastep/**/*
-.config/hypr/**/*
-.config/sddm/**/*
-.config/systemd/**/*
-.config/tlp/**/*
-.config/tlpui/**/*
+.config/fcitx5/
+.config/fcitx5/**
+.config/gammastep/
+.config/hypr/
+.config/hypr/**
+.config/sddm/
+.config/systemd/
+.config/systemd/**
+.config/tlp/
 
 {{ end }}
 
@@ -73,18 +75,21 @@ AppData/Roaming/rclone/rclone.conf
 
 {{ if eq .osId "windows" }}
 
-.config/Code/**/*
-.config/bat/**/*
-.config/crontab/**/*
-.config/gdu/**/*
-.config/kanata/**/*
-.config/kitty/**/*
-.config/lazygit/**/*
-.config/rclone/**/*
-.config/vlc/**/*
+.config/Code/
+.config/bat/
+.config/crontab/
+.config/crontab/**
+.config/gdu/
+.config/kanata/
+.config/kitty/
+.config/kitty/**
+.config/lazygit/
+.config/rclone/
+.config/rclone/**
+.config/vlc/
 
-.font/**/*
-mount/**/*
+.font/
+.npm-global/
 
 .tmux.conf
 .zprofile
@@ -95,16 +100,20 @@ mount/**/*
 
 {{ else }}
 
-AppData/**/*
-Documents/**/*
-.config/autohotkey/**/*
-.config/komorebi/**/*
-.config/microsoft-office/**/*
-.config/scoop/**/*
-.config/windows-tasks-scheduler/**/*
-.config/xinmeng/**/*
-.config/whkdrc/**/*
-.config/yasb/**/*
+.config/autohotkey/
+.config/autohotkey/**
+.config/komorebi/
+.config/microsoft-office/
+.config/scoop/
+.config/scoop/**
+.config/whkdrc/
+.config/windows-tasks-scheduler/
+.config/xinmeng/
+.config/yasb/
+AppData/
+AppData/**
+Documents/
+Documents/**
 
 .vsvimrc
 .wslconfig
@@ -114,12 +123,13 @@ Documents/**/*
 ##########################################
 
 {{ if not (lookPath "sddm") }}
-.config/sddm/themes/**/*
+.config/sddm/
+.config/sddm/**
 {{ end }}
 
 ##########################################
 
 {{ if not (lookPath "hyprland") }}
-.config/hypr/**/*
-!.config/hypr/userprefs.conf
+.config/hypr/
+.config/hypr/**
 {{ end }}
