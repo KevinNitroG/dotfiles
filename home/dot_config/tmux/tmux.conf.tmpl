@@ -53,7 +53,7 @@ set -g @plugin 'wfxr/tmux-fzf-url' # 🚀 (prefix u) Quickly open urls on your t
 
 # CATPPUCCIN THEME CONFIG
 # Catppuccin tmux config 3: https://github.com/catppuccin/tmux#config-3
-set -g @catppuccin_flavor 'mocha' # latte, frappe, macchiato or mocha
+set -g @catppuccin_flavor '{{ .catppuccinFlavor }}' # latte, frappe, macchiato or mocha
 set -g @catppuccin_window_status_style "rounded"
 set -g @catppuccin_status_background "default"
 set -g status-left ""
@@ -101,7 +101,7 @@ set -g @continuum-save-interval '5' # Minutes
 # set -g @resurrect-dir '~/.tmux_resurrect'
 # NOTE: Due to randomly create a new session while restore
 # You have to name your sessions
-set -g @resurrect-hook-pre-restore-pane-processes 'tmux switch-client -n && tmux kill-session -t=0' # https://github.com/tmux-plugins/tmux-resurrect/issues/101#issuecomment-560026971
+# set -g @resurrect-hook-pre-restore-pane-processes 'tmux switch-client -n && tmux kill-session -t=0' # https://github.com/tmux-plugins/tmux-resurrect/issues/101#issuecomment-560026971
 
 ##########################################
 

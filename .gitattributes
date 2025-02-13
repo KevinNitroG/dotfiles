@@ -25,7 +25,7 @@
 *.ps1.tmpl linguist-language=pwsh linguist-detectable
 
 *.sh.tmpl linguist-language=sh linguist-detectable
-*tmux.conf linguist-language=sh linguist-detectable
+*tmux.conf.tmpl linguist-language=sh linguist-detectable
 *zprofile* linguist-language=sh linguist-detectable
 *zshenv* linguist-language=sh linguist-detectable
 *zshrc* linguist-language=sh linguist-detectable
