@@ -1,10 +1,12 @@
-# KEVINNITRO DOTFILES
+<h1 align=center>
+  KEVINNITRO DOTFILES
+</h1>
 
 <div align=center>
   <a href="../../commits/main">
-    <img alt="Last commit" src="https://img.shields.io/github/last-commit/KevinNitroG/dotfiles?style=for-the-badge&color=f2cdcd"/>
+    <img alt="Last commit" src="https://img.shields.io/github/last-commit/KevinNitroG/dotfiles?style=for-the-badge&color=f2cdcd&labelColor=363a4f"/>
   </a>
-  <img alt="Repo size" src="https://img.shields.io/github/repo-size/KevinNitroG/dotfiles?style=for-the-badge&color=eba0ac"/>
+  <img alt="Repo size" src="https://img.shields.io/github/repo-size/KevinNitroG/dotfiles?style=for-the-badge&color=eba0ac&labelColor=363a4f"/>
   <a href="https://www.chezmoi.io/">
     <img alt="Chezmoi" src="https://img.shields.io/badge/chezmoi-fab387?style=for-the-badge"/>
   </a>
@@ -14,19 +16,18 @@
 </div>
 
 <div align=center>
-  <img alt="Arch" src="https://img.shields.io/badge/Arch%20Linux-89b4fa?logo=arch-linux&logoColor=white&style=for-the-badge"/>
+  <img alt="Arch" src="https://img.shields.io/badge/Arch-89b4fa?logo=arch-linux&logoColor=white&style=for-the-badge"/>
   <img alt="EndeavourOS" src="https://img.shields.io/badge/endeavour%20os-b4befe?logo=endeavouros&logoColor=white&style=for-the-badge"/>
   <img alt="Windows" src="https://img.shields.io/badge/Windows-74c7ec?style=for-the-badge&logo=windows&logoColor=white"/>
 </div>
 
-> [!WARNING]
-> This is for personal use, as it contains encrypted files.
->
-> If you wish to use it, run chezmoi apply with the `--exclude=encrypted` argument.
+<div align="center">
+  <img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/palette/macchiato.png" width="400" />
+</div>
 
 ---
 
-## Table of Contents
+## ToC
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
@@ -34,7 +35,8 @@
 - [😎 Showcase](#-showcase)
   - [Terminal](#terminal)
   - [Neovim](#neovim)
-- [📝 Installation](#-installation)
+- [⚙️ Installation](#-installation)
+- [📝 Other notes](#-other-notes)
 - [💁 References](#-references)
   - [Wallpaper](#wallpaper)
   - [Other dotfiles](#other-dotfiles)
@@ -65,7 +67,7 @@
 
 ---
 
-## 📝 Installation
+## ⚙️ Installation
 
 - Add ssh key
   - Linux
@@ -83,6 +85,9 @@
     Ssh-Add "$env:USERPROFILE/.ssh/id_ed25519"
     ```
 - Create `~/.age-key.txt` _(for encrypt/decrypt)_
+
+  > This is for personal use, as it contains encrypted files. If you wish to use it, run chezmoi apply with the `--exclude=encrypted` argument
+
 - Install chezmoi and init, apply, and delete binary: _([docs](https://www.chezmoi.io/install))_
   - shell
     ```sh
@@ -104,8 +109,13 @@
   ```
   > On windows use GPG from git. We can open `git bash`
 
-> - [Windows](./docs/windows.md)
-> - [Linux](./docs/linux.md)
+---
+
+## 📝 Other notes
+
+- [Windows](./docs/windows.md)
+- [Linux](./docs/linux.md)
+- [Browser](./docs/browser.md)
 
 ---
 
