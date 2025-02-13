@@ -1,0 +1,6 @@
+# NOTE: The version is fixed
+
+["AppData/Local/UniKey"]
+type = "archive"
+url = "https://www.unikey.org/assets/release/unikey46RC2-230919-win64.zip"
+include = ["UniKeyNT.exe"]

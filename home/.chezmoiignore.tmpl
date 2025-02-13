@@ -6,6 +6,7 @@
 
 # Specific
 {{ if not .useHyde }}
+
 .chezmoiscripts/linux/*hyde*.sh
 {{ end }}
 
@@ -20,58 +21,27 @@ AppData/Roaming/rclone/rclone.conf
 
 ##########################################
 
+# Chezmoi stuff
+
+{{ if not (eq .chezmoi.os "linux" "darwin") }}
+.chezmoiexternals/unix/**
+{{ end }}
+
 {{ if ne .chezmoi.os "linux" }}
-.chezmoiscripts/linux/**/*
-
-.gtkrc-2.0.mine
-
-.config/brave-flags.conf
-.config/chrome-flags.conf
-.config/chromium-flags.conf
-.config/code-flags.conf
-.config/dolphinrc
-.config/electron-flags.conf
-.config/kdeglobals
-.config/libinput-gestures.conf
-.config/mimeapps.list
-.config/private_ktrashrc
-.config/private_trashrc
-.config/spotify-flags.conf
-
-.config/fcitx5/
-.config/fcitx5/**
-.config/gammastep/
-.config/hypr/
-.config/hypr/**
-.config/sddm/
-.config/systemd/
-.config/systemd/**
-.config/tlp/
-
+.chezmoiscripts/linux/**
 {{ end }}
 
 {{ if ne .osId "windows" }}
-
-.chezmoiscripts/windows/**/*
-.local/bin/*.bat
-.local/bin/*.reg
-.local/bin/*.ps1
-
+.chezmoiscripts/windows/**
 {{ end }}
 
 {{ if ne .osId "darwin" }}
-
-.chezmoiscripts/darwin/**/*
-
-{{ end }}
-
-{{ if eq .osId "windows" }}
-
-.local/bin/*.sh
-
+.chezmoiscripts/darwin/**
 {{ end }}
 
 ##########################################
+
+# Windows
 
 {{ if eq .osId "windows" }}
 
@@ -98,6 +68,8 @@ AppData/Roaming/rclone/rclone.conf
 .zshenv_private
 .zsh_history
 
+.local/bin/*.sh
+
 {{ else }}
 
 .config/autohotkey/
@@ -117,6 +89,43 @@ Documents/**
 
 .vsvimrc
 .wslconfig
+
+.local/bin/*.bat
+.local/bin/*.reg
+.local/bin/*.ps1
+
+{{ end }}
+
+##########################################
+
+# Linux
+
+{{ if ne .chezmoi.os "linux" }}
+
+.gtkrc-2.0.mine
+
+.config/brave-flags.conf
+.config/chrome-flags.conf
+.config/chromium-flags.conf
+.config/code-flags.conf
+.config/dolphinrc
+.config/electron-flags.conf
+.config/kdeglobals
+.config/libinput-gestures.conf
+.config/mimeapps.list
+.config/private_ktrashrc
+.config/private_trashrc
+.config/spotify-flags.conf
+
+.config/fcitx5/
+.config/fcitx5/**
+.config/gammastep/
+.config/hypr/
+.config/hypr/**
+.config/sddm/
+.config/systemd/
+.config/systemd/**
+.config/tlp/
 
 {{ end }}
 

@@ -1,44 +1,40 @@
-{{ $gitArgs := "clone.args = ['--depth', '1']\npull.args = ['--ff-only', '--depth', '1']" }}
-
-##########################################
-
 [".config/yazi/theme.toml"]
 type = "file"
 url = "https://raw.githubusercontent.com/catppuccin/yazi/refs/heads/main/themes/mocha/catppuccin-{{ .catppuccinFlavor }}-{{ .catppuccinAccentColor }}.toml"
 
 [".config/yazi/Catppuccin-{{ .catppuccinFlavor }}.tmTheme"]
 type = "file"
-url = "https://raw.githubusercontent.com/catppuccin/bat/main/themes/Catppuccin%20{{ .catppuccinFlavor | title }}.tmTheme"
+url = "https://raw.githubusercontent.com/catppuccin/bat/main/themes/Catppuccin%20{{ .catppuccinFlavorTitle }}.tmTheme"
 
 [".config/yazi/plugins/toggle-view.yazi"]
 type = "git-repo"
 url = "https://github.com/dawsers/toggle-view.yazi"
-{{ $gitArgs }}
+{{ .chezmoiGitArgs }}
 
 [".config/yazi/plugins/glow.yazi"]
 type = "git-repo"
 url = "https://github.com/Reledia/glow.yazi"
-{{ $gitArgs }}
+{{ .chezmoiGitArgs }}
 
 [".config/yazi/plugins/eza-preview.yazi"]
 type = "git-repo"
 url = "https://github.com/sharklasers996/eza-preview.yazi"
-{{ $gitArgs }}
+{{ .chezmoiGitArgs }}
 
 [".config/yazi/plugins/relative-motions.yazi"]
 type = "git-repo"
 url = "https://github.com/dedukun/relative-motions.yazi"
-{{ $gitArgs }}
+{{ .chezmoiGitArgs }}
 
 [".config/yazi/plugins/compress.yazi"]
 type = "git-repo"
 url = "https://github.com/KKV9/compress.yazi"
-{{ $gitArgs }}
+{{ .chezmoiGitArgs }}
 
 [".config/yazi/plugins/what-size.yazi"]
 type = "git-repo"
 url = "https://github.com/pirafrank/what-size.yazi"
-{{ $gitArgs }}
+{{ .chezmoiGitArgs }}
 
 [".config/yazi/plugins"]
 type = "archive"

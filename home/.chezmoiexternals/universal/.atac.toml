@@ -1,0 +1,4 @@
+[".config/atac/key_bindings.toml"]
+type = "file"
+url = "https://raw.githubusercontent.com/Julien-cpsn/ATAC/main/example_resources/key_bindings/vim_key_bindings.toml"
+

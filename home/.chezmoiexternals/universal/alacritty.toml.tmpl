@@ -1,0 +1,7 @@
+{{ if eq .osId "windows" }}
+["AppData/Roaming/alacritty/catppuccin-{{ .catppuccinFlavor }}.toml"]
+{{ else }}
+[".config/alacritty/catppuccin-{{ .catppuccinFlavor }}.toml"]
+{{ end }}
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/alacritty/refs/heads/main/catppuccin-{{ .catppuccinFlavor }}.toml"

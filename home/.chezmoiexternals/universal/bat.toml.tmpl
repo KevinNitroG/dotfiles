@@ -1,0 +1,7 @@
+{{ if eq .osId "windows" }}
+["AppData/Roaming/bat/themes/Catppuccin {{ .catppuccinFlavorTitle }}.tmTheme"]
+{{ else }}
+[".config/bat/themes/Catppuccin {{ .catppuccinFlavorTitle }}.tmTheme"]
+{{ end }}
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/bat/main/themes/Catppuccin%20{{ .catppuccinFlavorTitle }}.tmTheme"

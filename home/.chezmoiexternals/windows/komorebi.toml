@@ -1,0 +1,3 @@
+[".config/komorebi/applications.json"]
+type = "file"
+url = "https://raw.githubusercontent.com/LGUG2Z/komorebi-application-specific-configuration/refs/heads/master/applications.json"

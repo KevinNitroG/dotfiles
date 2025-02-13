@@ -1,0 +1,7 @@
+{{ if eq .osId "windows" }}
+["AppData/Local/nvim"]
+{{ else }}
+[".config/nvim"]
+{{ end }}
+type = "git-repo"
+url = "git@github.com:{{ .githubUsername }}/nvim.git"

@@ -1,0 +1,3 @@
+[".config/delta/catppuccin.gitconfig"]
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/delta/refs/heads/main/catppuccin.gitconfig"

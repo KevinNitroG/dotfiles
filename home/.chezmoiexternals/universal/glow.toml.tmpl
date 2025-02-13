@@ -1,0 +1,8 @@
+{{ if eq .osId "windows" }}
+["AppData/Local/glow/Config/themes/catppuccin-{{ .catppuccinFlavor }}.json"]
+{{ else }}
+[".config/glow/themes/catppuccin-{{ .catppuccinFlavor }}.json"]
+{{ end }}
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/glamour/main/themes/catppuccin-{{ .catppuccinFlavor }}.json"
+

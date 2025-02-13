@@ -1,0 +1,10 @@
+[".config/ghostty"]
+type = "archive"
+url = "https://github.com/catppuccin/ghostty/archive/refs/heads/main.zip"
+stripComponents = 1
+include = ["*/themes/**"]
+
+[".config/sddm/themes/"]
+type = "archive"
+url = "https://github.com/catppuccin/sddm/releases/latest/download/catppuccin-{{ .catppuccinFlavor }}.zip"
+include = ["**/*"]

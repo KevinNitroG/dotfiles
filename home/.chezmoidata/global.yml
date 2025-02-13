@@ -1,1 +1,2 @@
 githubUsername: KevinNitroG
+chezmoiGitArgs: "clone.args = ['--depth', '1']\npull.args = ['--ff-only', '--depth', '1']"
