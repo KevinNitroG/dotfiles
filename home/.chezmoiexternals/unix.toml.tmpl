@@ -1,22 +1,21 @@
 {{ if eq .chezmoi.os "linux" "darwin" }}
 
-{{ $gitArgs := "clone.args = ['--depth', '1']\npull.args = ['--ff-only', '--depth', '1']" }}
-
 ##########################################
 
 [".config/tmux/plugins/tpm"]
 type = "git-repo"
 url = "https://github.com/tmux-plugins/tpm"
-{{ $gitArgs }}
+{{ .externalGitArgs }}
 
 [".config/zathura/catppuccin-{{ .catppuccinFlavor }}"]
 type = "file"
 url = "https://raw.githubusercontent.com/catppuccin/zathura/main/src/catppuccin-{{ .catppuccinFlavor }}"
 
-[".config/btop/themes"]
+[".config/btop"]
 type = "archive"
 url = "https://github.com/catppuccin/btop/archive/refs/heads/main.zip"
-include = ["*/themes/**"]
+stripComponents = 1
+include = ["*/themes/*"]
 
 [".config/kitty"]
 type = "archive"
@@ -33,7 +32,7 @@ include = ["*/themes/**"]
 [".config/sddm/themes/"]
 type = "archive"
 url = "https://github.com/catppuccin/sddm/releases/latest/download/catppuccin-{{ .catppuccinFlavor }}.zip"
-include = ["**/*"]
+include = ["*/*"]
 
 ##########################################
 

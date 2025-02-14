@@ -1,49 +1,46 @@
 {{ if eq .chezmoi.os "linux" "darwin" }}
 
-{{ $gitArgs := "clone.args = ['--depth', '1']\npull.args = ['--ff-only', '--depth', '1']" }}
-
 ##########################################
 
 [".oh-my-zsh"]
 type = "git-repo"
 url = "https://github.com/ohmyzsh/ohmyzsh.git"
-{{ $gitArgs }}
+{{ .externalGitArgs }}
 
 [".oh-my-zsh/custom/plugins/fzf-tab"]
 type = "git-repo"
 url = "https://github.com/Aloxaf/fzf-tab.git"
-{{ $gitArgs }}
+{{ .externalGitArgs }}
 
 [".oh-my-zsh/custom/plugins/wakatime"]
 type = "git-repo"
 url = "https://github.com/sobolevn/wakatime-zsh-plugin.git"
-{{ $gitArgs }}
+{{ .externalGitArgs }}
 
 [".oh-my-zsh/custom/plugins/zsh-256color"]
 type = "git-repo"
 url = "https://github.com/chrissicool/zsh-256color.git"
-{{ $gitArgs }}
+{{ .externalGitArgs }}
 
 [".oh-my-zsh/custom/plugins/zsh-autosuggestions"]
 type = "git-repo"
 url = "https://github.com/zsh-users/zsh-autosuggestions.git"
-{{ $gitArgs }}
+{{ .externalGitArgs }}
 
 [".oh-my-zsh/custom/plugins/zsh-syntax-highlighting"]
 type = "git-repo"
 url = "https://github.com/zsh-users/zsh-syntax-highlighting.git"
-{{ $gitArgs }}
+{{ .externalGitArgs }}
 
 [".oh-my-zsh/custom/plugins/zsh-autocomplete"]
 type = "git-repo"
 url = "https://github.com/marlonrichert/zsh-autocomplete.git"
-{{ $gitArgs }}
+{{ .externalGitArgs }}
 
 [".oh-my-zsh/custom/plugins/zsh-vi-mode"]
 type = "git-repo"
 url = "https://github.com/jeffreytse/zsh-vi-mode"
-{{ $gitArgs }}
-
+{{ .externalGitArgs }}
 
 ##########################################
 

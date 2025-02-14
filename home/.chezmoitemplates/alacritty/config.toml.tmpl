@@ -1,21 +1,13 @@
 # https://alacritty.org/config-alacritty.html
 
-{{- $catppuccinThemePath := "" }}
-{{- if eq .osId "windows" }}
-  {{- $catppuccinThemePath = "~/AppData/Roaming/alacritty/themes/catppuccin" }}
-{{- else }}
-  {{- $catppuccinThemePath = "~/.config/alacritty/themes/catppuccin" }}
-{{- end }}
-
 [general]
 import = [
-"{{ $catppuccinThemePath }}/catppuccin-{{ .catppuccinFlavor }}.toml"
+"themes/catppuccin/catppuccin-{{ .catppuccinFlavor }}.toml"
 ]
 live_config_reload = true
 
 [env]
 TERM = "xterm-256color"
-# TERM = "alacritty"
 TERMINAL = "alacritty"
 
 [terminal]

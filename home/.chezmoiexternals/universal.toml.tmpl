@@ -1,8 +1,3 @@
-{{ $gitArgs := "clone.args = ['--depth', '1']\npull.args = ['--ff-only', '--depth', '1']" }}
-{{ $catppuccinFlavorTitle := .catppuccinFlavor | title }}
-
-##########################################
-
 {{ if eq .osId "windows" }}
 ["AppData/Local/nvim"]
 {{ else }}
@@ -12,26 +7,24 @@ type = "git-repo"
 url = "git@github.com:{{ .githubUsername }}/nvim.git"
 
 {{ if eq .osId "windows" }}
-["AppData/Roaming/alacritty/themes/catppuccin"]
+["AppData/Roaming/alacritty/themes/catppuccin/"]
 {{ else }}
-[".config/alacritty/themes/catppuccin"]
+[".config/alacritty/themes/catppuccin/"]
 {{ end }}
 type = "git-repo"
 url = "https://github.com/catppuccin/alacritty.git"
-{{ $gitArgs }}
 
 {{ if eq .osId "windows" }}
-["AppData/Roaming/bat/themes/Catppuccin {{ $catppuccinFlavorTitle }}.tmTheme"]
+["AppData/Roaming/bat/themes/Catppuccin {{ .catppuccinFlavorTitle }}.tmTheme"]
 {{ else }}
-[".config/bat/themes/Catppuccin {{ $catppuccinFlavorTitle }}.tmTheme"]
+[".config/bat/themes/Catppuccin {{ .catppuccinFlavorTitle }}.tmTheme"]
 {{ end }}
 type = "file"
-url = "https://raw.githubusercontent.com/catppuccin/bat/main/themes/Catppuccin%20{{ $catppuccinFlavorTitle }}.tmTheme"
+url = "https://raw.githubusercontent.com/catppuccin/bat/main/themes/Catppuccin%20{{ .catppuccinFlavorTitle }}.tmTheme"
 
-[".config/delta/themes/catppuccin"]
-type = "git-repo"
-url = "https://github.com/catppuccin/delta.git"
-{{ $gitArgs }}
+[".config/delta/catppuccin.gitconfig"]
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/delta/refs/heads/main/catppuccin.gitconfig"
 
 {{ if eq .osId "windows" }}
 ["AppData/Local/glow/Config/themes/catppuccin-{{ .catppuccinFlavor }}.json"]
@@ -50,10 +43,8 @@ url = "https://raw.githubusercontent.com/Julien-cpsn/ATAC/main/example_resources
 ["obsidian/main"]
 type = "git-repo"
 url = "git@github.com:{{ .githubUsername }}/obsidian-vault-main.git"
-{{ $gitArgs }}
+{{ .externalGitArgs }}
 
 [".config/git/githelpers.sh"]
 type = "file"
 url = "https://raw.githubusercontent.com/stevearc/dotfiles/master/.githelpers"
-
-##########################################

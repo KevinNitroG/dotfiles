@@ -1,7 +1,5 @@
 {{ if eq .osId "windows" }}
 
-{{ $gitArgs := "clone.args = ['--depth', '1']\npull.args = ['--ff-only', '--depth', '1']" }}
-
 ##########################################
 
 # NOTE: cannot, because Microsoft call it x64, but it should be amd64 that chezmoi cannot ...
@@ -24,12 +22,12 @@ include = ["UniKeyNT.exe"]
 [".config/cursor/Windows-11-Cursor-by-rosea92"]
 type = "git-repo"
 url = "https://github.com/YT-Advanced/Windows-11-Cursor-by-rosea92.git"
-{{ $gitArgs }}
+{{ .externalGitArgs }}
 
 [".config/wakatime/posh-wakatime"]
 type = "git-repo"
 url = "https://github.com/Gravifer/posh-wakatime.git"
-{{ $gitArgs }}
+{{ .externalGitArgs }}
 
 [".config/komorebi/applications.json"]
 type = "file"
@@ -46,7 +44,7 @@ url = "https://raw.githubusercontent.com/steveseguin/hide-cursor/refs/heads/main
 ["Document/PowerShell/Modules/Catppuccin"]
 type = "git-repo"
 url = "https://github.com/catppuccin/powershell.git"
-{{ $gitArgs }}
+{{ .externalGitArgs }}
 
 ##########################################
 

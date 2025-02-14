@@ -103,6 +103,7 @@ theme = {{ $theme | quote }}
 catppuccinLightFlavour = {{ $catppuccinLightFlavour | quote }}
 catppuccinDarkFlavour = {{ $catppuccinDarkFlavour | quote }}
 catppuccinFlavor = {{ $catppuccinFlavor | quote }}
+catppuccinFlavorTitle = {{ $catppuccinFlavor | title | quote }}
 catppuccinAccentColor = {{ $catppuccinAccentColor | quote }}
 gpgId = {{ $gpgId | quote }}
 sshId = {{ $sshId | quote }}
@@ -139,6 +140,7 @@ command = "nvim"
 [diff]
 command = "delta"
 pager = "delta"
+args = ["--paging=never"]
 
 [merge]
 command = "nvim"

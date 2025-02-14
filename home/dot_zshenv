@@ -89,6 +89,9 @@ export MANROFFOPT='-c'
 # ZVM VI
 ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
 
+# ZSH TMUX
+ZSH_TMUX_CONFIG="${XDG_CONFIG_HOME}/tmux/tmux.conf"
+
 
 ##########################################
 
