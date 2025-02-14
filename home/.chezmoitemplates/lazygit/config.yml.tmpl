@@ -9,9 +9,6 @@ update:
   method: never
   days: 14
 
-os:
-  editPreset: 'vim'
-
 gui:
   nerdFontsVersion: '3'
   border: rounded
@@ -49,6 +46,14 @@ git:
 {{ end }}
 
 customCommands:
+  - key: 'E'
+    context: 'files'
+    command: 'vim {{ "{{" }} .SelectedFile.Name | quote {{ "}}" }}'
+    description: 'Edit with vim'
+    loadingText: 'Editing with vim'
+    showOutput: true
+    subprocess: true
+
   - key: 'F'
     context: 'files'
     command: 'git f' # require alias f = git add -A && git commit -m \"chore(save): $(curl -s -f https://whatthecommit.com/index.txt || \"save point\")\" && push origin HEAD
@@ -81,12 +86,12 @@ customCommands:
 
   - key: 'u'
     context: 'files'
-    command: 'git rm --cached {{ "{{" }}.SelectedFile.Name | quote{{ "}}" }}'
+    command: 'git rm --cached {{ "{{" }} .SelectedFile.Name | quote {{ "}}" }}'
     description: 'Untrack a file'
     prompts:
       - type: 'confirm'
         title: 'Untrack'
-        body: 'Are you sure you want to untrack {{ "{{" }}.SelectedFile.Name | quote{{ "}}" }}?'
+        body: 'Are you sure you want to untrack {{ "{{" }} .SelectedFile.Name | quote {{ "}}" }}?'
     loadingText: 'Untracking file'
 
   - key: '<c-r>'
