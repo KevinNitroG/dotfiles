@@ -1,30 +1,57 @@
+""" REF:
+" - https://github.com/romainl/idiomatic-vimrc
+" - https://github.com/amix/vimrc/blob/master/vimrcs/basic.vim
+
+""""""""""""""""""""""""""""""""""""""""""""
+
+""" Options
+
 let mapleader = " "
 
-set clipboard=unnamed
-set conceallevel=0
-set encoding=UTF-8
-set hlsearch " Highlight found searches
+" Compatibility & Encoding
+set encoding=UTF-8 " Set file encoding to UTF-8
+set nocompatible " Enable modern Vim features
+
+" Clipboard Settings
+set clipboard=unnamed " Use system clipboard for copy-paste
+
+" Search & Navigation
+set hlsearch " Highlight search results
 set ignorecase " Case-insensitive search
-set incsearch " Shows the match while typing
-set laststatus=2 " For lightline
-set mouse=a " Allow mouse
-set nobackup
-set nocompatible " be iMproved
-set nocursorcolumn
-set nocursorline
-set noshowmode " For lightline
-set noswapfile
-set nowb
-set number
-set regexpengine=0 " Set regular expression engine automatically
-set relativenumber
-set shm+=I " Disable startup screen
-set shortmess+=Ac
-set showtabline=1
+set incsearch " Show search matches while typing
 set smartcase " Case-sensitive if uppercase letters are used
-set termguicolors " For catppuccin
-set whichwrap+=<,>,[,],h,l
+
+" User Interface & Display
+set number " Show line numbers
+set relativenumber " Show relative line numbers
+set scrolloff=4 " Keep 4 lines visible above/below cursor
+set sidescrolloff=8 " Keep 8 columns visible when scrolling horizontally
+set conceallevel=0 " Show all concealed text
+set laststatus=2 " Always show status line (for lightline)
+set showtabline=1 " Show tab bar when multiple tabs exist
+set noshowmode " Hide mode indicator (for lightline)
+set fillchars=eob:\ ,fold:\ ,foldopen:,foldsep:\ ,foldclose:,lastline:\ 
+set shortmess=AcqFI " Reduce message clutter
+
+" Cursor & Mouse Behavior
+set mouse=a " Enable mouse support
+set nocursorcolumn " Disable highlighting of the cursor column
+set nocursorline " Disable highlighting of the cursor line
+set whichwrap+=<,>,[,],h,l " Allow wrapping with arrow keys
+
+" File Handling & Backup
+set nobackup " Disable backup files
+set noswapfile " Disable swap files
+set nowb " Disable write backup
+
+" Regular Expressions & Search Engine
+set regexpengine=0 " Automatically choose the best regex engine
+
+" Clipboard & File Completion
 set wildignorecase " Case-insensitive command/file completion
+
+" Color & Visual Enhancements
+set termguicolors " Enable true color support (for Catppuccin theme)
 
 set expandtab " Use space instead tab
 set shiftwidth=2
@@ -45,7 +72,7 @@ syntax on
 
 """"""""""""""""""""""""""""""""""""""""""""
 
-" PLUGINS
+""" PLUGINS
 
 " autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 
@@ -60,13 +87,16 @@ Plug 'junegunn/fzf.vim'
 Plug 'liuchengxu/vim-which-key'
 Plug 'luochen1990/rainbow'
 Plug 'machakann/vim-highlightedyank'
+Plug 'mengelbrecht/lightline-bufferline'
+Plug 'mg979/vim-visual-multi', { 'branch': 'master' }
 Plug 'prabirshrestha/asyncomplete-buffer.vim'
 Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'preservim/nerdtree'
+Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'psliwka/vim-smoothie'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tribela/vim-transparent'
@@ -80,7 +110,7 @@ call plug#end()
 
 """"""""""""""""""""""""""""""""""""""""""""
 
-" Plug
+""" Plug
 
 nnoremap <leader>pi :PlugInstall<CR>
 nnoremap <leader>pu :PlugUpdate<CR>
@@ -88,7 +118,19 @@ nnoremap <leader>pc :PlugClean<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""
 
-" prabirshrestha/asyncomplete.vim
+""" junegunn/fzf.vim
+nnoremap <leader><leader> :Files<CR>
+nnoremap <leader>fC :Commands<CR>
+nnoremap <leader>fb :Buffers<CR>
+nnoremap <leader>fc :Commits<CR>
+nnoremap <leader>fk :Maps<CR>
+nnoremap <leader>fm :Marks<CR>
+nnoremap <leader>fr :History<CR>
+nnoremap <leader>fw :Rg<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""
+
+""" prabirshrestha/asyncomplete.vim
 
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -100,7 +142,7 @@ autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
 
 """"""""""""""""""""""""""""""""""""""""""""
 
-" prabirshrestha/asyncomplete-buffer.vim
+""" prabirshrestha/asyncomplete-buffer.vim
 call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
       \ 'name': 'buffer',
       \ 'allowlist': ['*'],
@@ -113,49 +155,105 @@ call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options
 
 """"""""""""""""""""""""""""""""""""""""""""
 
-" preservim/nerdtree
+""" preservim/nerdtree
+
+let g:NERDTreeDirArrowExpandable = ''
+let g:NERDTreeDirArrowCollapsible = ''
+let g:NERDTreeMinimalUI=1
+let g:NERDTreeShowLineNumbers=1
+
+
 nnoremap <leader>e :NERDTreeToggle<CR>
 
 " Close the tab if NERDTree is the only window remaining in it.
 autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | call feedkeys(":quit\<CR>:\<BS>") | endif
 
+" Relative line number
+autocmd FileType nerdtree setlocal relativenumber
+
 """"""""""""""""""""""""""""""""""""""""""""
 
-" tpope/vim-repeat
+""" tpope/vim-repeat
 
 filetype plugin indent on
 
 """"""""""""""""""""""""""""""""""""""""""""
 
-" liuchengxu/vim-which-key
+""" liuchengxu/vim-which-key
 
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
 set timeoutlen=500
 
+let g:which_key_map = {}
+let g:which_key_map['f'] = { 'name': 'Find' }
+let g:which_key_map['o'] = { 'name': 'Options' }
+let g:which_key_map['p'] = { 'name': 'Plugins' }
+
+call which_key#register('<Space>', "g:which_key_map")
+
 """"""""""""""""""""""""""""""""""""""""""""
 
-" luochen1990/rainbow
+""" luochen1990/rainbow
 
 let g:rainbow_active = 0
 
 """"""""""""""""""""""""""""""""""""""""""""
 
-" catppuccin/vim
-:colorscheme catppuccin_mocha
+""" catppuccin/vim
+if !empty($CATPPUCCIN_FLAVOR)
+  let catppuccin_flavor = $CATPPUCCIN_FLAVOR
+else
+  let catppuccin_flavor = 'mocha'
+endif
 
-let g:lightline = {'colorscheme': 'catppuccin_mocha'}
+let colorscheme = 'catppuccin_' . catppuccin_flavor
+
+execute 'colorscheme ' . colorscheme
+
+let g:lightline = {'colorscheme': colorscheme}
 
 """"""""""""""""""""""""""""""""""""""""""""
 
-" itchyny/lightline.vim
+""" itchyny/lightline.vim
+""" mengelbrecht/lightline-bufferline
 
 if !has('gui_running')
   set t_Co=256
 endif
 
+set guitablabel=%N:%M%t " Show tab numbers
+
+let g:lightline.active = {
+      \ 'left': [ [ 'mode', 'paste' ],
+      \           [ 'readonly', 'filename', 'modified' ] ],
+      \ 'right': [ [ 'lineinfo' ],
+      \            [ 'percent' ],
+      \            [ 'fileformat', 'filetype' ] ] }
+
+let g:lightline.tabline = {
+      \   'left': [ ['buffers'] ],
+      \   'right': [ ['close', 'tabs'] ]
+      \ }
+
+let g:lightline.component_expand = {
+      \   'buffers': 'lightline#bufferline#buffers'
+      \ }
+
+let g:lightline.component_type = {
+      \   'buffers': 'tabsel'
+      \ }
+
 """"""""""""""""""""""""""""""""""""""""""""
 
-" christoomey/vim-tmux-navigator
+" mg979/vim-visual-multi
+" Seem page up down doesn't work
+let g:VM_maps = {}
+let g:VM_maps['Add Cursor Up'] = '<C-PageUp>'
+let g:VM_maps['Add Cursor Down'] = '<C-PageDown>'
+
+""""""""""""""""""""""""""""""""""""""""""""
+
+""" christoomey/vim-tmux-navigator
 
 let g:tmux_navigator_no_mappings = 1
 
@@ -167,20 +265,20 @@ nnoremap <silent> <C-\> :<C-U>TmuxNavigatePrevious<cr>
 
 """"""""""""""""""""""""""""""""""""""""""""
 
-" tiagofumo/vim-nerdtree-syntax-highlight
+""" tiagofumo/vim-nerdtree-syntax-highlight
 
 let g:NERDTreeHighlightCursorline = 0
 
 """"""""""""""""""""""""""""""""""""""""""""
 
-" machakann/vim-highlightedyank
+""" machakann/vim-highlightedyank
 
 let g:highlightedyank_highlight_duration = 200
 
 
 """"""""""""""""""""""""""""""""""""""""""""
 
-" MAPPING
+""" MAPPING
 
 inoremap jk <Esc>
 nnoremap <leader>x :wq<CR>
@@ -292,6 +390,8 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
 """"""""""""""""""""""""""""""""""""""""""""
 
+""" AUTOCMD
+
 " Return to last edit position when opening files (You want this!)
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
@@ -299,13 +399,7 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "norm
 autocmd FileType c,cpp,cs,py set tabstop=4 shiftwidth=4 expandtab
 
 " q to close those fts
-autocmd FileType Avante,
-      \ dbout,
-      \ gitsigns.blame,
-      \ help,
-      \ notify,
-      \ qf,
-      \ setlocal nobuflisted | nnoremap <buffer> q :close<CR>
+autocmd FileType Avante,dbout,gitsigns.blame,help,notify,qf setlocal nobuflisted | nnoremap <buffer> q :close<CR>
 
 " Create dir when save
 autocmd BufWritePre * call mkdir(expand("<afile>:p:h"), "p")
@@ -315,7 +409,7 @@ autocmd BufReadPre * call BigFile()
 
 """"""""""""""""""""""""""""""""""""""""""""
 
-" Custom command
+""" CUSTOM COMMAND
 
 function! BigFile()
   let l:path = expand('<afile>:p')
