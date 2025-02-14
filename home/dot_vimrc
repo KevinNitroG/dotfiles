@@ -1,13 +1,37 @@
 let mapleader = " "
 
+set autoread
 set clipboard=unnamed
+set conceallevel=0
+set encoding=UTF-8
 set hlsearch
+set hlsearch " Highlight found searches
 set ignorecase
+set ignorecase " Search case insensitive...
+set incsearch " Shows the match while typing
+set laststatus=2 " For lightline
+set mouse=a " Allow mouse
+set nocompatible " be iMproved
+set nocursorcolumn
+set nocursorline
+set noshowmode " For lightline
 set number
 set relativenumber
 set shortmess+=Ac
 set smartcase
+set smartcase " ... but not when search pattern contains upper case characters
+set termguicolors " For catppuccin
 set whichwrap+=<,>,[,],h,l
+set showtabline=1
+
+" No delay on esc?
+set ttimeout
+set ttimeoutlen=1
+set ttyfast
+
+set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:Cursor/lCursor,sm:block
+
+syntax on
 
 inoremap jk <Esc>
 nnoremap <leader>x :wq<CR>
@@ -40,10 +64,10 @@ nnoremap <leader>w :close<CR>
 nnoremap sq :close<CR>
 
 " Better Down
-nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
+" nnoremap <expr> j (v:count == 0 ? 'gj' : 'j')
 
 " Better Up
-nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
+" nnoremap <expr> k (v:count == 0 ? 'gk' : 'k')
 
 " Go to upper window
 nnoremap <C-j> <C-w>j
@@ -97,3 +121,111 @@ augroup General
   autocmd!
   autocmd TextYankPost * silent! lua vim.highlight.on_yank { timeout = 200 }
 augroup END
+
+" ##########################################
+
+" PLUGINS
+
+" autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+
+call plug#begin()
+
+Plug 'preservim/nerdtree'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'prabirshrestha/asyncomplete-buffer.vim'
+Plug 'psliwka/vim-smoothie'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-repeat'
+Plug 'liuchengxu/vim-which-key'
+Plug 'tribela/vim-transparent'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'luochen1990/rainbow'
+Plug 'wellle/targets.vim'
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
+Plug 'itchyny/lightline.vim'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'ryanoasis/vim-devicons'
+
+call plug#end()
+
+" ##########################################
+
+" prabirshrestha/asyncomplete.vim
+
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
+imap <c-@> <Plug>(asyncomplete_force_refresh)
+let g:asyncomplete_auto_completeopt = 0
+
+set completeopt=menuone,noinsert,noselect,preview
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" ##########################################
+
+" prabirshrestha/asyncomplete-buffer.vim
+call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
+      \ 'name': 'buffer',
+      \ 'allowlist': ['*'],
+      \ 'blocklist': ['go'],
+      \ 'completor': function('asyncomplete#sources#buffer#completor'),
+      \ 'config': {
+      \    'max_buffer_size': 5000000,
+      \  },
+      \ }))
+
+" ##########################################
+
+" preservim/nerdtree
+nnoremap <leader>e :NERDTreeToggle<CR>
+
+" Close the tab if NERDTree is the only window remaining in it.
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | call feedkeys(":quit\<CR>:\<BS>") | endif
+
+" ##########################################
+
+" tpope/vim-repeat
+
+filetype plugin indent on
+
+" ##########################################
+
+" liuchengxu/vim-which-key
+
+nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+set timeoutlen=500
+
+" ##########################################
+
+" luochen1990/rainbow
+
+let g:rainbow_active = 0
+
+" ##########################################
+
+" catppuccin/vim
+:colorscheme catppuccin_mocha
+
+let g:lightline = {'colorscheme': 'catppuccin_mocha'}
+
+" ##########################################
+
+" itchyny/lightline.vim
+
+if !has('gui_running')
+  set t_Co=256
+endif
+
+" ##########################################
+
+" christoomey/vim-tmux-navigator
+
+let g:tmux_navigator_no_mappings = 1
+
+nnoremap <silent> <C-h> :<C-U>TmuxNavigateLeft<cr>
+nnoremap <silent> <C-j> :<C-U>TmuxNavigateDown<cr>
+nnoremap <silent> <C-k> :<C-U>TmuxNavigateUp<cr>
+nnoremap <silent> <C-l> :<C-U>TmuxNavigateRight<cr>
+nnoremap <silent> <C-\> :<C-U>TmuxNavigatePrevious<cr>
