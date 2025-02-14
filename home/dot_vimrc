@@ -1,28 +1,38 @@
 let mapleader = " "
 
-set autoread
 set clipboard=unnamed
 set conceallevel=0
 set encoding=UTF-8
-set hlsearch
 set hlsearch " Highlight found searches
-set ignorecase
-set ignorecase " Search case insensitive...
+set ignorecase " Case-insensitive search
 set incsearch " Shows the match while typing
 set laststatus=2 " For lightline
 set mouse=a " Allow mouse
+set nobackup
 set nocompatible " be iMproved
 set nocursorcolumn
 set nocursorline
 set noshowmode " For lightline
+set noswapfile
+set nowb
 set number
+set regexpengine=0 " Set regular expression engine automatically
 set relativenumber
+set shm+=I " Disable startup screen
 set shortmess+=Ac
-set smartcase
-set smartcase " ... but not when search pattern contains upper case characters
+set showtabline=1
+set smartcase " Case-sensitive if uppercase letters are used
 set termguicolors " For catppuccin
 set whichwrap+=<,>,[,],h,l
-set showtabline=1
+set wildignorecase " Case-insensitive command/file completion
+
+set expandtab " Use space instead tab
+set shiftwidth=2
+set tabstop=2
+
+" Set to auto read when a file is changed from the outside
+set autoread
+au FocusGained,BufEnter * silent! checktime
 
 " No delay on esc?
 set ttimeout
@@ -33,8 +43,151 @@ set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:Cursor/lCursor,sm:b
 
 syntax on
 
+""""""""""""""""""""""""""""""""""""""""""""
+
+" PLUGINS
+
+" autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+
+call plug#begin()
+
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'catppuccin/vim', { 'as': 'catppuccin' }
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'itchyny/lightline.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'liuchengxu/vim-which-key'
+Plug 'luochen1990/rainbow'
+Plug 'machakann/vim-highlightedyank'
+Plug 'prabirshrestha/asyncomplete-buffer.vim'
+Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'preservim/nerdtree'
+Plug 'psliwka/vim-smoothie'
+Plug 'ryanoasis/vim-devicons'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tribela/vim-transparent'
+Plug 'wellle/targets.vim'
+
+if filereadable(expand("$HOME") . "/.wakatime.cfg")
+  Plug 'wakatime/vim-wakatime'
+endif
+
+call plug#end()
+
+""""""""""""""""""""""""""""""""""""""""""""
+
+" Plug
+
+nnoremap <leader>pi :PlugInstall<CR>
+nnoremap <leader>pu :PlugUpdate<CR>
+nnoremap <leader>pc :PlugClean<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""
+
+" prabirshrestha/asyncomplete.vim
+
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
+imap <c-@> <Plug>(asyncomplete_force_refresh)
+
+set completeopt=menuone,noinsert,noselect,preview
+autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+
+""""""""""""""""""""""""""""""""""""""""""""
+
+" prabirshrestha/asyncomplete-buffer.vim
+call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
+      \ 'name': 'buffer',
+      \ 'allowlist': ['*'],
+      \ 'blocklist': ['go'],
+      \ 'completor': function('asyncomplete#sources#buffer#completor'),
+      \ 'config': {
+      \    'max_buffer_size': 5000000,
+      \  },
+      \ }))
+
+""""""""""""""""""""""""""""""""""""""""""""
+
+" preservim/nerdtree
+nnoremap <leader>e :NERDTreeToggle<CR>
+
+" Close the tab if NERDTree is the only window remaining in it.
+autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | call feedkeys(":quit\<CR>:\<BS>") | endif
+
+""""""""""""""""""""""""""""""""""""""""""""
+
+" tpope/vim-repeat
+
+filetype plugin indent on
+
+""""""""""""""""""""""""""""""""""""""""""""
+
+" liuchengxu/vim-which-key
+
+nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+set timeoutlen=500
+
+""""""""""""""""""""""""""""""""""""""""""""
+
+" luochen1990/rainbow
+
+let g:rainbow_active = 0
+
+""""""""""""""""""""""""""""""""""""""""""""
+
+" catppuccin/vim
+:colorscheme catppuccin_mocha
+
+let g:lightline = {'colorscheme': 'catppuccin_mocha'}
+
+""""""""""""""""""""""""""""""""""""""""""""
+
+" itchyny/lightline.vim
+
+if !has('gui_running')
+  set t_Co=256
+endif
+
+""""""""""""""""""""""""""""""""""""""""""""
+
+" christoomey/vim-tmux-navigator
+
+let g:tmux_navigator_no_mappings = 1
+
+nnoremap <silent> <C-h> :<C-U>TmuxNavigateLeft<cr>
+nnoremap <silent> <C-j> :<C-U>TmuxNavigateDown<cr>
+nnoremap <silent> <C-k> :<C-U>TmuxNavigateUp<cr>
+nnoremap <silent> <C-l> :<C-U>TmuxNavigateRight<cr>
+nnoremap <silent> <C-\> :<C-U>TmuxNavigatePrevious<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""
+
+" tiagofumo/vim-nerdtree-syntax-highlight
+
+let g:NERDTreeHighlightCursorline = 0
+
+""""""""""""""""""""""""""""""""""""""""""""
+
+" machakann/vim-highlightedyank
+
+let g:highlightedyank_highlight_duration = 200
+
+
+""""""""""""""""""""""""""""""""""""""""""""
+
+" MAPPING
+
 inoremap jk <Esc>
 nnoremap <leader>x :wq<CR>
+
+" Quit
+nnoremap <leader>q :qa!<CR>
+nnoremap <leader>x :wqa!<CR>
 
 " Middle Search Result
 nnoremap n nzz
@@ -49,9 +202,6 @@ nnoremap <Esc> :noh<return>
 " Yank All
 nnoremap <leader>y :%y+<return>
 
-" IDK
-nnoremap <leader>D :%d+<return>
-
 " Toggle Wrap
 nnoremap <leader>ow :set wrap!<CR>
 
@@ -60,7 +210,7 @@ nnoremap ss :split<CR>
 nnoremap sv :vsplit<CR>
 
 " Close current window
-nnoremap <leader>w :close<CR>
+nnoremap <leader>w :Bclose<CR>
 nnoremap sq :close<CR>
 
 " Better Down
@@ -116,116 +266,84 @@ vnoremap <leader>uu :sort u<CR>gv<ESC>
 nnoremap X "_dd
 vnoremap x "_d
 
-" Highlight on Yank
-augroup General
-  autocmd!
-  autocmd TextYankPost * silent! lua vim.highlight.on_yank { timeout = 200 }
-augroup END
+" Navigate buffer
+nnoremap H :bprevious<CR>
+nnoremap L :bnext<CR>
 
-" ##########################################
+" Close buffer
+nnoremap <leader>c :Bclose<cr>
+nnoremap <leader>C :bufdo bdelete<cr>
 
-" PLUGINS
+" Resize window
+nnoremap <C-right> :vertical resize +2<CR>
+nnoremap <C-left> :vertical resize -2<CR>
+nnoremap <C-up> :resize +2<CR>
+nnoremap <C-down> :resize -2<CR>
 
-" autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+" Navigate tab
+nnoremap <Left> :tabprevious<CR>
+nnoremap <Right> :tabnext<CR>
+nnoremap <Up> :tabnew<CR>
+nnoremap <Down> :tabclose<CR>
 
-call plug#begin()
+" From amix/vimrc, for * and # to search
+vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
-Plug 'preservim/nerdtree'
-Plug 'prabirshrestha/asyncomplete.vim'
-Plug 'prabirshrestha/asyncomplete-buffer.vim'
-Plug 'psliwka/vim-smoothie'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-repeat'
-Plug 'liuchengxu/vim-which-key'
-Plug 'tribela/vim-transparent'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'luochen1990/rainbow'
-Plug 'wellle/targets.vim'
-Plug 'catppuccin/vim', { 'as': 'catppuccin' }
-Plug 'itchyny/lightline.vim'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'ryanoasis/vim-devicons'
+""""""""""""""""""""""""""""""""""""""""""""
 
-call plug#end()
+" Return to last edit position when opening files (You want this!)
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
-" ##########################################
+" Set tab 4 for those fts
+autocmd FileType c,cpp,cs,py set tabstop=4 shiftwidth=4 expandtab
 
-" prabirshrestha/asyncomplete.vim
+" q to close those fts
+autocmd FileType Avante,
+      \ dbout,
+      \ gitsigns.blame,
+      \ help,
+      \ notify,
+      \ qf,
+      \ setlocal nobuflisted | nnoremap <buffer> q :close<CR>
 
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr> <cr>    pumvisible() ? asyncomplete#close_popup() : "\<cr>"
-imap <c-@> <Plug>(asyncomplete_force_refresh)
-let g:asyncomplete_auto_completeopt = 0
+" Create dir when save
+autocmd BufWritePre * call mkdir(expand("<afile>:p:h"), "p")
 
-set completeopt=menuone,noinsert,noselect,preview
-autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+" DetectBigfile
+autocmd BufReadPre * call BigFile()
 
-" ##########################################
+""""""""""""""""""""""""""""""""""""""""""""
 
-" prabirshrestha/asyncomplete-buffer.vim
-call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options({
-      \ 'name': 'buffer',
-      \ 'allowlist': ['*'],
-      \ 'blocklist': ['go'],
-      \ 'completor': function('asyncomplete#sources#buffer#completor'),
-      \ 'config': {
-      \    'max_buffer_size': 5000000,
-      \  },
-      \ }))
+" Custom command
 
-" ##########################################
+function! BigFile()
+  let l:path = expand('<afile>:p')
+  if exists('g:bigfile_size') && getfsize(l:path) > g:bigfile_size
+    setlocal syntax=
+    setlocal nospell
+    setlocal smoothie_enabled=0
+  endif
+endfunction
 
-" preservim/nerdtree
-nnoremap <leader>e :NERDTreeToggle<CR>
+" From amix/vimrc
+" Don't close window, when deleting a buffer
+command! Bclose call <SID>BufcloseCloseIt()
+function! <SID>BufcloseCloseIt()
+    let l:currentBufNum = bufnr("%")
+    let l:alternateBufNum = bufnr("#")
 
-" Close the tab if NERDTree is the only window remaining in it.
-autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | call feedkeys(":quit\<CR>:\<BS>") | endif
+    if buflisted(l:alternateBufNum)
+        buffer #
+    else
+        bnext
+    endif
 
-" ##########################################
+    if bufnr("%") == l:currentBufNum
+        new
+    endif
 
-" tpope/vim-repeat
-
-filetype plugin indent on
-
-" ##########################################
-
-" liuchengxu/vim-which-key
-
-nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
-set timeoutlen=500
-
-" ##########################################
-
-" luochen1990/rainbow
-
-let g:rainbow_active = 0
-
-" ##########################################
-
-" catppuccin/vim
-:colorscheme catppuccin_mocha
-
-let g:lightline = {'colorscheme': 'catppuccin_mocha'}
-
-" ##########################################
-
-" itchyny/lightline.vim
-
-if !has('gui_running')
-  set t_Co=256
-endif
-
-" ##########################################
-
-" christoomey/vim-tmux-navigator
-
-let g:tmux_navigator_no_mappings = 1
-
-nnoremap <silent> <C-h> :<C-U>TmuxNavigateLeft<cr>
-nnoremap <silent> <C-j> :<C-U>TmuxNavigateDown<cr>
-nnoremap <silent> <C-k> :<C-U>TmuxNavigateUp<cr>
-nnoremap <silent> <C-l> :<C-U>TmuxNavigateRight<cr>
-nnoremap <silent> <C-\> :<C-U>TmuxNavigatePrevious<cr>
+    if buflisted(l:currentBufNum)
+        execute("bdelete! ".l:currentBufNum)
+    endif
+endfunction
