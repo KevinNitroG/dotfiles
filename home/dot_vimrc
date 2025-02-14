@@ -7,13 +7,14 @@
 """ Options
 
 let mapleader = " "
+let g:bigfile_size = 1024 * 1024 * 1.5 " 1.5MB
 
 " Compatibility & Encoding
 set encoding=UTF-8 " Set file encoding to UTF-8
 set nocompatible " Enable modern Vim features
 
 " Clipboard Settings
-set clipboard=unnamed " Use system clipboard for copy-paste
+" set clipboard=unnamed " Use system clipboard for copy-paste
 
 " Search & Navigation
 set hlsearch " Highlight search results
@@ -28,9 +29,9 @@ set scrolloff=4 " Keep 4 lines visible above/below cursor
 set sidescrolloff=8 " Keep 8 columns visible when scrolling horizontally
 set conceallevel=0 " Show all concealed text
 set laststatus=2 " Always show status line (for lightline)
-set showtabline=1 " Show tab bar when multiple tabs exist
+set showtabline=2 " Show tab bar when multiple tabs exist
 set noshowmode " Hide mode indicator (for lightline)
-set fillchars=eob:\ ,fold:\ ,foldopen:,foldsep:\ ,foldclose:,lastline:\ 
+set fillchars=eob:\ " No tidle '~' in eob
 set shortmess=AcqFI " Reduce message clutter
 
 " Cursor & Mouse Behavior
@@ -43,6 +44,7 @@ set whichwrap+=<,>,[,],h,l " Allow wrapping with arrow keys
 set nobackup " Disable backup files
 set noswapfile " Disable swap files
 set nowb " Disable write backup
+set undofile
 
 " Regular Expressions & Search Engine
 set regexpengine=0 " Automatically choose the best regex engine
@@ -85,7 +87,6 @@ Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'liuchengxu/vim-which-key'
-Plug 'luochen1990/rainbow'
 Plug 'machakann/vim-highlightedyank'
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'mg979/vim-visual-multi', { 'branch': 'master' }
@@ -101,6 +102,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tribela/vim-transparent'
 Plug 'wellle/targets.vim'
+Plug 'zivyangll/git-blame.vim'
 
 if filereadable(expand("$HOME") . "/.wakatime.cfg")
   Plug 'wakatime/vim-wakatime'
@@ -157,10 +159,11 @@ call asyncomplete#register_source(asyncomplete#sources#buffer#get_source_options
 
 """ preservim/nerdtree
 
-let g:NERDTreeDirArrowExpandable = ''
-let g:NERDTreeDirArrowCollapsible = ''
-let g:NERDTreeMinimalUI=1
-let g:NERDTreeShowLineNumbers=1
+let NERDTreeDirArrowExpandable = ''
+let NERDTreeDirArrowCollapsible = ''
+let NERDTreeMinimalUI=1
+let NERDTreeShowLineNumbers=1
+let NERDTreeShowHidden=1
 
 
 nnoremap <leader>e :NERDTreeToggle<CR>
@@ -193,12 +196,6 @@ call which_key#register('<Space>', "g:which_key_map")
 
 """"""""""""""""""""""""""""""""""""""""""""
 
-""" luochen1990/rainbow
-
-let g:rainbow_active = 0
-
-""""""""""""""""""""""""""""""""""""""""""""
-
 """ catppuccin/vim
 if !empty($CATPPUCCIN_FLAVOR)
   let catppuccin_flavor = $CATPPUCCIN_FLAVOR
@@ -223,25 +220,96 @@ endif
 
 set guitablabel=%N:%M%t " Show tab numbers
 
+let g:lightline.separator = { 'left': "", 'right': "" }
+let g:lightline.subseparator = { 'left': "\ue0b1", 'right': "\ue0b3" }
+
+let g:lightline.tabline_separator = { 'left': "", 'right': "" }
+let g:lightline.tabline_subseparator = { 'left': "", 'right': "" }
+
 let g:lightline.active = {
       \ 'left': [ [ 'mode', 'paste' ],
-      \           [ 'readonly', 'filename', 'modified' ] ],
+      \           [ 'fugitive', 'readonly', 'filename', 'modified' ] ],
       \ 'right': [ [ 'lineinfo' ],
       \            [ 'percent' ],
       \            [ 'fileformat', 'filetype' ] ] }
 
 let g:lightline.tabline = {
       \   'left': [ ['buffers'] ],
-      \   'right': [ ['close', 'tabs'] ]
+      \   'right': [ ['tabs'] ]
       \ }
 
 let g:lightline.component_expand = {
       \   'buffers': 'lightline#bufferline#buffers'
       \ }
 
+let g:lightline.component_function = {
+      \   'fugitive': 'LightlineFugitive',
+      \   'filename': 'LightlineFilename',
+      \   'fileformat': 'LightlineFileformat',
+      \   'filetype': 'LightlineFiletype',
+      \   'fileencoding': 'LightlineFileencoding',
+      \   'mode': 'LightlineMode',
+      \ }
+
 let g:lightline.component_type = {
       \   'buffers': 'tabsel'
       \ }
+
+function! LightlineModified()
+  return &ft ==# 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! LightlineReadonly()
+  return &ft !~? 'help' && &readonly ? 'RO' : ''
+endfunction
+
+function! LightlineFilename()
+  let fname = expand('%:t')
+  return fname =~# '^__Tagbar__\|__Gundo\|NERD_tree' ? '' :
+        \ &ft ==# 'vimfiler' ? vimfiler#get_status_string() :
+        \ &ft ==# 'unite' ? unite#get_status_string() :
+        \ &ft ==# 'vimshell' ? vimshell#get_status_string() :
+        \ (LightlineReadonly() !=# '' ? LightlineReadonly() . ' ' : '') .
+        \ (fname !=# '' ? fname : '[No Name]') .
+        \ (LightlineModified() !=# '' ? ' ' . LightlineModified() : '')
+endfunction
+
+function! LightlineFugitive()
+  try
+    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*FugitiveHead')
+      let mark = ' '  " edit here for cool mark
+      let branch = FugitiveHead()
+      return branch !=# '' ? mark.branch : ''
+    endif
+  catch
+  endtry
+  return ''
+endfunction
+
+function! LightlineFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! LightlineFiletype()
+  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+endfunction
+
+function! LightlineFileencoding()
+  return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
+endfunction
+
+function! LightlineMode()
+  let fname = expand('%:t')
+  return fname =~# '^__Tagbar__' ? 'Tagbar' :
+        \ fname ==# 'ControlP' ? 'CtrlP' :
+        \ fname ==# '__Gundo__' ? 'Gundo' :
+        \ fname ==# '__Gundo_Preview__' ? 'Gundo Preview' :
+        \ fname =~# 'NERD_tree' ? 'NERDTree' :
+        \ &ft ==# 'unite' ? 'Unite' :
+        \ &ft ==# 'vimfiler' ? 'VimFiler' :
+        \ &ft ==# 'vimshell' ? 'VimShell' :
+        \ winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""
 
@@ -250,6 +318,19 @@ let g:lightline.component_type = {
 let g:VM_maps = {}
 let g:VM_maps['Add Cursor Up'] = '<C-PageUp>'
 let g:VM_maps['Add Cursor Down'] = '<C-PageDown>'
+
+""""""""""""""""""""""""""""""""""""""""""""
+
+""" tpope/vim-fugitive
+
+nnoremap <leader>gb :GBrowse<CR>
+nnoremap <leader>gb :Git blame<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""
+
+""" zivyangll/git-blame.vim
+
+nnoremap <Leader>gl :<C-u>call gitblame#echo()<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""
 
@@ -282,6 +363,10 @@ let g:highlightedyank_highlight_duration = 200
 
 inoremap jk <Esc>
 nnoremap <leader>x :wq<CR>
+
+" Save
+nnoremap <C-s> :w<CR>
+inoremap <C-s> <cmd>w<CR>
 
 " Quit
 nnoremap <leader>q :qa!<CR>
@@ -399,7 +484,7 @@ autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "norm
 autocmd FileType c,cpp,cs,py set tabstop=4 shiftwidth=4 expandtab
 
 " q to close those fts
-autocmd FileType Avante,dbout,gitsigns.blame,help,notify,qf setlocal nobuflisted | nnoremap <buffer> q :close<CR>
+autocmd FileType Avante,dbout,git,fugitiveblame,help setlocal nobuflisted | nnoremap <buffer> q :close<CR>
 
 " Create dir when save
 autocmd BufWritePre * call mkdir(expand("<afile>:p:h"), "p")
@@ -413,7 +498,7 @@ autocmd BufReadPre * call BigFile()
 
 function! BigFile()
   let l:path = expand('<afile>:p')
-  if exists('g:bigfile_size') && getfsize(l:path) > g:bigfile_size
+  if getfsize(l:path) > g:bigfile_size
     setlocal syntax=
     setlocal nospell
     setlocal smoothie_enabled=0
