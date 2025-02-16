@@ -56,17 +56,18 @@ theme:
       showSeparator: true
 colors:
   text:
-    primary: "#CDD6F4"
-    secondary: "#A6ADC8"
-    inverted: "#313244"
-    faint: "#45475A"
-    warning: "#F38BA8"
-    success: "#A6E3A1"
+    {{- $palette := index .catppuccin.palettes .catppuccinFlavor }}
+    primary: {{ $palette.text | quote }}
+    secondary: {{ index $palette .catppuccinAccentColor | quote }}
+    inverted: {{ $palette.surface0 | quote }}
+    faint: {{ $palette.surface1 | quote }}
+    warning: {{ $palette.red | quote }}
+    success: {{ $palette.green | quote }}
   background:
-    selected: "#9399B2"
+    selected: {{ $palette.overlay2 | quote }}
   border:
-    primary: "#B4BEFE"
-    secondary: "#89B4FA"
-    faint: "#94E2D5"
+    primary: {{ $palette.lavender | quote }}
+    secondary: {{ index $palette .catppuccinAccentColor | quote }}
+    faint: {{ $palette.teal | quote }}
 pager:
   diff: "delta" # delta | less

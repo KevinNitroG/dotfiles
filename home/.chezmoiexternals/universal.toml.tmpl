@@ -15,32 +15,38 @@ type = "file"
 url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 
 {{ if eq .osId "windows" }}
-["AppData/Roaming/alacritty/themes/catppuccin/"]
+["AppData/Roaming/alacritty/themes"]
 {{ else }}
-[".config/alacritty/themes/catppuccin/"]
+[".config/alacritty/themes"]
 {{ end }}
-type = "git-repo"
-url = "https://github.com/catppuccin/alacritty.git"
+type = "archive"
+url = "https://github.com/catppuccin/alacritty/archive/refs/heads/main.zip"
+stripComponents = 1
+include = ["alacritty-main/catppuccin-*.toml"]
 
 {{ if eq .osId "windows" }}
-["AppData/Roaming/bat/themes/Catppuccin {{ .catppuccinFlavorTitle }}.tmTheme"]
+["AppData/Roaming/bat/themes"]
 {{ else }}
-[".config/bat/themes/Catppuccin {{ .catppuccinFlavorTitle }}.tmTheme"]
+[".config/bat/themes"]
 {{ end }}
-type = "file"
-url = "https://raw.githubusercontent.com/catppuccin/bat/main/themes/Catppuccin%20{{ .catppuccinFlavorTitle }}.tmTheme"
+type = "archive"
+url = "https://github.com/catppuccin/bat/archive/refs/heads/main.zip"
+stripComponents = 2
+include = ["bat-main/themes/Catppuccin *.tmTheme"]
 
 [".config/delta/catppuccin.gitconfig"]
 type = "file"
 url = "https://raw.githubusercontent.com/catppuccin/delta/refs/heads/main/catppuccin.gitconfig"
 
 {{ if eq .osId "windows" }}
-["AppData/Local/glow/Config/themes/catppuccin-{{ .catppuccinFlavor }}.json"]
+["AppData/Local/glow/Config/themes"]
 {{ else }}
-[".config/glow/themes/catppuccin-{{ .catppuccinFlavor }}.json"]
+[".config/glow/themes"]
 {{ end }}
-type = "file"
-url = "https://raw.githubusercontent.com/catppuccin/glamour/main/themes/catppuccin-{{ .catppuccinFlavor }}.json"
+type = "archive"
+url = "https://github.com/catppuccin/glamour/archive/refs/heads/main.zip"
+stripComponents = 2
+include = ["glamour-main/themes/catppuccin-*.json"]
 
 [".config/atac/key_bindings.toml"]
 type = "file"

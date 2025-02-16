@@ -7,27 +7,29 @@ type = "git-repo"
 url = "https://github.com/tmux-plugins/tpm"
 {{ .externalGitArgs }}
 
-[".config/zathura/catppuccin-{{ .catppuccinFlavor }}"]
-type = "file"
-url = "https://raw.githubusercontent.com/catppuccin/zathura/main/src/catppuccin-{{ .catppuccinFlavor }}"
+[".config/zathura"]
+type = "archive"
+url = "https://github.com/catppuccin/zathura/archive/refs/heads/main.zip"
+stripComponents = 2
+include = ["zathura-main/src/catppuccin-*"]
 
-[".config/btop"]
+[".config/btop/themes"]
 type = "archive"
 url = "https://github.com/catppuccin/btop/archive/refs/heads/main.zip"
-stripComponents = 1
-include = ["*/themes/*"]
+stripComponents = 2
+include = ["btop-main/themes/catppuccin_*.theme"]
 
-[".config/kitty"]
+[".config/kitty/themes"]
 type = "archive"
 url = "https://github.com/catppuccin/kitty/archive/refs/heads/main.zip"
-stripComponents = 1
-include = ["*/themes/**"]
+stripComponents = 2
+include = ["kitty-main/themes/*catppuccin.conf"]
 
-[".config/ghostty"]
+[".config/ghostty/themes"]
 type = "archive"
 url = "https://github.com/catppuccin/ghostty/archive/refs/heads/main.zip"
-stripComponents = 1
-include = ["*/themes/**"]
+stripComponents = 2
+include = ["ghostty-main/themes/catppuccin-*.conf"]
 
 [".config/sddm/themes/"]
 type = "archive"

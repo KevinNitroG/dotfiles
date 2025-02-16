@@ -16,7 +16,8 @@ gui:
   # use catppuccin macchiato yellow - https://github.com/catppuccin/lazygit/blob/main/themes/macchiato/yellow.yml
   theme:
     activeBorderColor:
-      - '{{ $palette.yellow }}'
+      # - '{{ index $palette .catppuccinAccentColor }}'
+      - '{{ index $palette.yellow }}'
       - bold
     inactiveBorderColor:
       - '{{ $palette.subtext0 }}'
@@ -27,6 +28,7 @@ gui:
     cherryPickedCommitBgColor:
       - '{{ $palette.surface1 }}'
     cherryPickedCommitFgColor:
+      # - '{{ index $palette .catppuccinAccentColor }}'
       - '{{ $palette.yellow }}'
     unstagedChangesColor:
       - '{{ $palette.red }}'
