@@ -24,4 +24,9 @@ if ! command -v jq &>/dev/null; then
   exit 2
 fi
 
-echo "$stylus" | jq ".[1:].[].usercssData.vars.accentColor.value |= \"$accent_color\" | .[1:].[].usercssData.vars.lightFlavor.value |= \"$light_flavor\" | .[1:].[].usercssData.vars.darkFlavor.value |= \"$dark_flavor\"" >"$FILE_PATH"
+echo "$stylus" | jq --arg accent "$accent_color" \
+  --arg light "$light_flavor" \
+  --arg dark "$dark_flavor" \
+  '.[1:].[].usercssData.vars.accentColor.value |= $accent |
+                     .[1:].[].usercssData.vars.lightFlavor.value |= $light |
+                     .[1:].[].usercssData.vars.darkFlavor.value |= $dark' >"$FILE_PATH"

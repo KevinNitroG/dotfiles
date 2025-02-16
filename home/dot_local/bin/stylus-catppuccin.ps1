@@ -26,4 +26,7 @@ if (!(Test-Path $FILE_DIR))
 $stylus = (New-Object Net.WebClient).DownloadString($URL)
 
 # Process JSON and save to file
-$stylus | jq ".[1:].[].usercssData.vars.accentColor.value |= `"$accent_color`" | .[1:].[].usercssData.vars.lightFlavor.value |= `"$light_flavor`" | .[1:].[].usercssData.vars.darkFlavor.value |= `"$dark_flavor`"" | Out-File -Encoding utf8 $FILE_PATH
+$stylus | jq --arg accent "$accent_color" `
+  --arg light "$light_flavor" `
+  --arg dark "$dark_flavor" `
+  '.[1:].[].usercssData.vars.accentColor.value |= $accent | .[1:].[].usercssData.vars.lightFlavor.value |= $light | .[1:].[].usercssData.vars.darkFlavor.value |= $dark' | Out-File -Encoding utf8 $FILE_PATH
