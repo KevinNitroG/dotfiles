@@ -1,0 +1,196 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[](surface0)\
+$os\
+$username\
+[](bg:peach fg:surface0)\
+$directory\
+[](fg:peach bg:yellow)\
+$git_branch\
+$git_status\
+[](fg:yellow bg:green)\
+$c\
+$rust\
+$golang\
+$nodejs\
+$php\
+$java\
+$kotlin\
+$haskell\
+$python\
+[](fg:green bg:blue)\
+$docker_context\
+$conda\
+[](fg:blue bg:lavender)\
+$cmd_duration\
+[ ](fg:lavender)\
+$line_break$character"""
+
+command_timeout = 2000
+palette = 'catppuccin'
+
+{{ $palette := index .catppuccin.palettes .catppuccinFlavor }}
+[palettes.catppuccin]
+rosewater = {{ $palette.rosewater | quote }}
+flamingo = {{ $palette.flamingo | quote }}
+pink = {{ $palette.pink | quote }}
+mauve = {{ $palette.mauve | quote }}
+red = {{ $palette.red | quote }}
+maroon = {{ $palette.maroon | quote }}
+peach = {{ $palette.peach | quote }}
+yellow = {{ $palette.yellow | quote }}
+green = {{ $palette.green | quote }}
+teal = {{ $palette.teal | quote }}
+sky = {{ $palette.sky | quote }}
+sapphire = {{ $palette.sapphire | quote }}
+blue = {{ $palette.blue | quote }}
+lavender = {{ $palette.lavender | quote }}
+text = {{ $palette.text | quote }}
+subtext1 = {{ $palette.subtext1 | quote }}
+subtext0 = {{ $palette.subtext0 | quote }}
+overlay2 = {{ $palette.overlay2 | quote }}
+overlay1 = {{ $palette.overlay1 | quote }}
+overlay0 = {{ $palette.overlay0 | quote }}
+surface2 = {{ $palette.surface2 | quote }}
+surface1 = {{ $palette.surface1 | quote }}
+surface0 = {{ $palette.surface0 | quote }}
+base = {{ $palette.base | quote }}
+mantle = {{ $palette.mantle | quote }}
+crust = {{ $palette.crust | quote }}
+
+[os]
+disabled = false
+style = "bg:surface0 fg:text"
+
+[os.symbols]
+Windows = "󰍲"
+Ubuntu = "󰕈"
+SUSE = ""
+Raspbian = "󰐿"
+Mint = "󰣭"
+Macos = "󰀵"
+Manjaro = ""
+Linux = "󰌽"
+Gentoo = "󰣨"
+Fedora = "󰣛"
+Alpine = ""
+Amazon = ""
+Android = ""
+Arch = "󰣇"
+Artix = "󰣇"
+EndeavourOS = ""
+CentOS = ""
+Debian = "󰣚"
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+Pop = ""
+
+[username]
+show_always = true
+style_user = "bg:surface0 fg:text"
+style_root = "bg:surface0 fg:text"
+format = '[ $user ]($style)'
+
+[directory]
+style = "fg:surface0 bg:peach"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = "󰝚 "
+"Pictures" = " "
+"Developer" = "󰲋 "
+
+[git_branch]
+symbol = ""
+style = "bg:yellow"
+format = '[[ $symbol $branch ](fg:surface0 bg:yellow)]($style)'
+
+[git_status]
+style = "bg:yellow"
+format = '[[($all_status$ahead_behind )](fg:surface0 bg:yellow)]($style)'
+
+[nodejs]
+symbol = ""
+style = "bg:text"
+format = '[[ $symbol( $version) ](fg:surface0 bg:green)]($style)'
+
+[c]
+symbol = " "
+style = "bg:text"
+format = '[[ $symbol( $version) ](fg:surface0 bg:green)]($style)'
+
+[rust]
+symbol = ""
+style = "bg:text"
+format = '[[ $symbol( $version) ](fg:surface0 bg:green)]($style)'
+
+[golang]
+symbol = ""
+style = "bg:text"
+format = '[[ $symbol( $version) ](fg:surface0 bg:green)]($style)'
+
+[php]
+symbol = ""
+style = "bg:text"
+format = '[[ $symbol( $version) ](fg:surface0 bg:green)]($style)'
+
+[java]
+symbol = " "
+style = "bg:text"
+format = '[[ $symbol( $version) ](fg:surface0 bg:green)]($style)'
+
+[kotlin]
+symbol = ""
+style = "bg:text"
+format = '[[ $symbol( $version) ](fg:surface0 bg:green)]($style)'
+
+[haskell]
+symbol = ""
+style = "bg:text"
+format = '[[ $symbol( $version) ](fg:surface0 bg:green)]($style)'
+
+[python]
+symbol = ""
+style = "bg:text"
+format = '[[ $symbol( $pyenv_prefix)( $version)( \($virtualenv\)) ](fg:surface0 bg:green)]($style)'
+
+[docker_context]
+symbol = ""
+style = "bg:blue"
+format = '[[ $symbol( $context) ](fg:#surface0 bg:blue)]($style)'
+
+[conda]
+style = "bg:blue"
+format = '[[ $symbol( $environment) ](fg:#surface0 bg:blue)]($style)'
+
+[time]
+disabled = true
+time_format = "%R"
+style = "bg:color_bg1"
+format = '[[  $time ](fg:surface0 bg:lavender)]($style)'
+
+[cmd_duration]
+disabled = false
+min_time = 2_000
+show_milliseconds = false
+show_notifications = false
+min_time_to_notify = 300_000
+style = "bg:color_bg1"
+format = '[[   $duration ](fg:surface0 bg:lavender)]($style)'
+
+[line_break]
+disabled = false
+
+[character]
+disabled = false
+success_symbol = '[](bold fg:text)'
+error_symbol = '[](bold fg:red)'
+vimcmd_symbol = '[](bold fg:text)'
+vimcmd_replace_one_symbol = '[](bold fg:blue)'
+vimcmd_replace_symbol = '[](bold fg:lavender)'
+vimcmd_visual_symbol = '[](bold fg:yellow)'

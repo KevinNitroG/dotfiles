@@ -1,0 +1,58 @@
+{{ if eq .osId "windows" }}
+["AppData/Local/nvim"]
+{{ else }}
+[".config/nvim"]
+{{ end }}
+type = "git-repo"
+url = "git@github.com:{{ .githubUsername }}/nvim.git"
+
+{{ if eq .osId "windows" }}
+["vimfile/autoload/plug.vim"]
+{{ else }}
+[".vim/autoload/plug.vim"]
+{{ end }}
+type = "file"
+url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+
+{{ if eq .osId "windows" }}
+["AppData/Roaming/alacritty/themes/catppuccin/"]
+{{ else }}
+[".config/alacritty/themes/catppuccin/"]
+{{ end }}
+type = "git-repo"
+url = "https://github.com/catppuccin/alacritty.git"
+
+{{ if eq .osId "windows" }}
+["AppData/Roaming/bat/themes/Catppuccin {{ .catppuccinFlavorTitle }}.tmTheme"]
+{{ else }}
+[".config/bat/themes/Catppuccin {{ .catppuccinFlavorTitle }}.tmTheme"]
+{{ end }}
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/bat/main/themes/Catppuccin%20{{ .catppuccinFlavorTitle }}.tmTheme"
+
+[".config/delta/catppuccin.gitconfig"]
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/delta/refs/heads/main/catppuccin.gitconfig"
+
+{{ if eq .osId "windows" }}
+["AppData/Local/glow/Config/themes/catppuccin-{{ .catppuccinFlavor }}.json"]
+{{ else }}
+[".config/glow/themes/catppuccin-{{ .catppuccinFlavor }}.json"]
+{{ end }}
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/glamour/main/themes/catppuccin-{{ .catppuccinFlavor }}.json"
+
+[".config/atac/key_bindings.toml"]
+type = "file"
+url = "https://raw.githubusercontent.com/Julien-cpsn/ATAC/main/example_resources/key_bindings/vim_key_bindings.toml"
+
+##########################################
+
+["obsidian/main"]
+type = "git-repo"
+url = "git@github.com:{{ .githubUsername }}/obsidian-vault-main.git"
+{{ .externalGitArgs }}
+
+[".config/git/githelpers.sh"]
+type = "file"
+url = "https://raw.githubusercontent.com/stevearc/dotfiles/master/.githelpers"

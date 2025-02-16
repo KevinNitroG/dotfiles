@@ -1,0 +1,14 @@
+**/.git/**
+**/node_modules/**
+**/dist/**
+**/build/**
+**/.husky/_/**
+**/__pycache__/**
+**/*.egg-info/**
+**/.venv*/**
+**/.idea/**
+**/.vs/**
+**/*cache*/**
+**/*debug*/**
+**/*bin*/**
+**/*obj*/**

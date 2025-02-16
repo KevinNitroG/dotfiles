@@ -1,0 +1,7 @@
+ignore-dirs:
+  - /proc
+  - /dev
+  - /sys
+  - /run
+ignore-dir-patterns:
+  - '.*/mount/.*'

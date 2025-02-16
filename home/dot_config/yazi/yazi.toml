@@ -1,0 +1,21 @@
+[manager]
+show_hidden = true
+show_symlink = true
+linemode = "size"
+
+[plugin]
+prepend_previewers = [
+  { name = "*.md", run = "glow" },
+  # { name = "*/", run = "eza-preview" },
+]
+prepend_fetchers = [
+  { id = "git", name = "*", run = "git" },
+  { id = "git", name = "*/", run = "git" },
+]
+
+
+[opener]
+edit = [
+  { run = '$EDITOR "$@"', block = true, for = "unix" },
+  { run = "%EDITOR% %*", block = true, for = "windows" },
+]

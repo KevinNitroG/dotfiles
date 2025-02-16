@@ -1,0 +1,89 @@
+# [[manager.prepend_keymap]]
+# on   = [ "p" ]
+# run  = "plugin --sync smart-paste"
+# desc = "Paste into the hovered directory or CWD"
+
+# compress
+[[manager.prepend_keymap]]
+on   = [ "c", "a" ]
+run  = "plugin compress"
+desc = "Archive selected files"
+
+# max-preview
+[[manager.prepend_keymap]]
+on   = "T"
+run  = "plugin max-preview"
+desc = "Maximize or restore preview"
+
+# relative-motions
+[[manager.prepend_keymap]]
+on =  ["M"] 
+run = "plugin relative-motions"
+desc = "Trigger a new relative motion"
+
+### eza-preview
+[[manager.prepend_keymap]]
+on   = "E"
+run  = "plugin eza-preview"
+desc = "Toggle tree/list dir preview" 
+
+### toggle-view
+[[manager.prepend_keymap]]
+on   = "<A-1>"
+run  = "plugin toggle-view --args=parent"
+desc = "Toggle parent" 
+[[manager.prepend_keymap]]
+on   = "<A-2>"
+run  = "plugin toggle-view --args=current"
+desc = "Toggle current"
+[[manager.prepend_keymap]]
+on   = "<A-3>"
+run  = "plugin toggle-view --args=preview"
+desc = "Toggle preview" 
+
+### what-size
+[[manager.prepend_keymap]]
+on   = [".", "s"]
+run  = "plugin what-size" # or "plugin what-size --args='--clipboard'"
+desc = "Calc size of selection or cwd"
+
+[[manager.prepend_keymap]]
+on   = [".", "S"]
+run  = "plugin what-size --args='--clipboard'"
+desc = "Calc size of selection or cwd & copy to clipboard"
+
+# Config for yazi
+
+[[manager.prepend_keymap]]
+on   = [ "g", "G" ]
+run  = "cd ~/gits/"
+desc = "go to gits directory"
+
+[[manager.prepend_keymap]]
+on   = [ "g", "n" ]
+{{ if ne .osId "windows" }}
+run  = "cd %LOCALAPPDATA/nvim/"
+{{ else }}
+run  = "cd $HOME/.config/nvim/"
+{{ end }}
+desc = "go to to nvim config directory"
+
+[[manager.prepend_keymap]]
+on   = [ "g", "C" ]
+run  = "cd ~/gits/code/"
+desc = "go to to code directory"
+
+[[manager.prepend_keymap]]
+on   = [ "g", "v" ]
+run  = "cd $HOME/Videos/"
+desc = "go to to videos directory"
+
+[[manager.prepend_keymap]]
+on   = [ "g", "p" ]
+run  = "cd $HOME/Pictures/"
+desc = "go to to pictures directory"
+
+[[manager.prepend_keymap]]
+on   = [ "g", "d" ]
+run  = "cd {{ .chezmoi.sourceDir }}"
+desc = "go to to dotfiles management"

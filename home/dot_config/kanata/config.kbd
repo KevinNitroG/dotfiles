@@ -1,0 +1,81 @@
+;; Ref: https://github.com/jtroo/kanata/issues/437#issuecomment-1584721072
+
+(defcfg
+  #|
+  This configuration will process all keys pressed inside of kanata, even if
+  they are not mapped in defsrc. This is so that certain actions can activate
+  at the right time for certain input sequences. By default, unmapped keys are
+  not processed through kanata due to a Windows issue related to AltGr. If you
+  use AltGr in your keyboard, you will likely want to follow the simple.kbd
+  file while unmapping lctl and ralt from defsrc.
+  |#
+  process-unmapped-keys yes
+)
+
+(defsrc
+  esc    f1       f2       f3       f4       f5       f6       f7       f8       f9       f10      f11      f12      del
+  grv    1        2        3        4        5        6        7        8        9        0        -        =        bspc
+  tab    q        w        e        r        t        y        u        i        o        p        [        ]        \
+  caps   a        s        d        f        g        h        j        k        l        ;        '        ret
+  lsft   z        x        c        v        b        n        m        ,        .        /        rsft
+            lmet  lalt                      spc                                  rmet  rctl
+)
+
+#|
+(deflayer blank
+  _      _        _        _        _        _        _        _        _        _        _        _        _        _     
+  _      _        _        _        _        _        _        _        _        _        _        _        _        _
+  _      _        _        _        _        _        _        _        _        _        _        _        _        _
+  _      _        _        _        _        _        _        _        _        _        _        _        _
+  _      _        _        _        _        _   _    _        _        _        _        _        _
+            _     _                          _                                   _        _
+)
+|#
+
+(deflayer default
+  @esc   f1       f2       f3       f4       f5       f6       f7       f8       f9       f10      f11      f12      del
+  @grv   1        2        3        4        5        6        7        8        9        0        -        =        bspc
+  tab    q        w        e        r        t        y        u        i        o        p        [        ]        \
+  @caps  a        s        d        f        g        h        j        k        l        ;        '        ret
+  lsft   z        x        c        v        b        n        m        ,        .        /        rsft
+            lmet  lalt                      spc                                  rmet  rctl
+)
+
+(deflayer grv
+  _      _        _        _        _        _        _        _        _        _        _        _        _        _     
+  _      _        _        _        @end     _        _        _        _        _        @start   _        _        _
+  _      _        @fwd     _        _        _        _        _        _        _        S-tab    _        _        _
+  _      _        _        @dd      _        _        left     down     up       rght     _        _        _
+  _      _        _        C-S-c    C-S-v    @back    tab      _        _        _        _        _
+            _     _                          _                                   _        _
+)
+
+(deflayer esc
+  _      _        _        _        _        _        _        _        _        _        _        _        _        _     
+  S-`    S-1      S-2      S-3      S-4      S-5      S-6      S-7      S-8      S-9      S-0      S--      S-=      _
+  _      _        _        _        _        _        _        _        _        _        _        S-[      S-]      S-\
+  _      _        _        _        _        _        _        _        _        _        S-;      S-'      _
+  _      _        _        _        _        _        _        _        S-,      S-.      S-/      _
+            _     _                          _                                   _        _
+)
+
+(defalias
+  caps (tap-hold-press 200 200 caps lctl)
+  esc (tap-hold-press 300 300 esc (layer-toggle esc))
+  grv (tap-hold-press 200 200 grv (layer-toggle grv))
+
+  ;; go to the start of the line
+  start home
+
+  ;; go to the end of the line
+  end end
+
+  ;; go back a word
+  back C-left
+
+  ;; go forward a word
+  fwd C-rght
+
+  ;; delete the current line
+  dd (macro home S-end bspc)
+)

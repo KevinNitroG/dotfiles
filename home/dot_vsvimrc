@@ -1,0 +1,80 @@
+let mapleader = " "
+
+set clipboard=unnamed
+set hlsearch
+set ignorecase
+set number
+set relativenumber
+set smartcase
+
+inoremap jk <Esc>
+nnoremap <leader>x :wq<CR>
+
+" Middle Search Result
+nnoremap n nzz
+nnoremap N Nzz
+
+" Yank to Last
+nnoremap Y y$
+
+" Set No Highlight
+nnoremap <Esc> :noh<return>
+
+" Yank All
+nnoremap <leader>y :%y+<return>
+
+" IDK
+nnoremap <leader>D :%d+<return>
+
+" Toggle Wrap
+nnoremap <leader>ow :set wrap!<CR>
+
+" Split
+nnoremap ss :split<CR>
+nnoremap sv :vsplit<CR>
+
+" Close current window
+nnoremap <leader>w :close<CR>
+nnoremap <leader>c :close<CR>
+nnoremap sq :close<CR>
+
+" Move the line up
+nnoremap <A-j> :m .+1<CR>==
+
+" Move the line down
+nnoremap <A-k> :m .-2<CR>==
+
+" Move the line up (Insert Mode)
+inoremap <A-j> <Esc>:m .+1<CR>==gi
+
+" Move the line down (Insert Mode)
+inoremap <A-k> <Esc>:m .-2<CR>==gi
+
+" Move selected lines up (Visual Mode)
+vnoremap <A-j> :m '>+1<CR>gv=gv
+
+" Move selected lines down (Visual Mode)
+vnoremap <A-k> :m '<-2<CR>gv=gv
+
+" Indent backward (Visual Mode)
+vnoremap < <gv
+
+" Indent forward (Visual Mode)
+vnoremap > >gv
+
+" Better Paste (Visual Mode)
+vnoremap p "_dP
+
+" Sort (Visual Mode)
+vnoremap <leader>us :sort<CR>gv<ESC>
+
+" Sort Unique (Visual Mode)
+vnoremap <leader>uu :sort u<CR>gv<ESC>
+
+" Override default x keybind to delete without putting into default register
+nnoremap X "_dd
+vnoremap x "_d
+
+" Tab switching
+nnoremap H :tabprev<CR>
+nnoremap L :tabnext<CR>

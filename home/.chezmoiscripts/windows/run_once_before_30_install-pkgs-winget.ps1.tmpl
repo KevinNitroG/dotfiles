@@ -1,0 +1,15 @@
+{{ if .pkgs.windows.winget }}
+
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+
+if (-not (Get-Command "winget" -ErrorAction SilentlyContinue))
+{
+  Write-Error "Winget hasn't been installed!"
+  exit
+}
+
+Write-Host "INSTALLING WINGET PACKAGES..."
+
+winget install {{ .pkgs.windows.winget | quoteList | join " " }} --accept-source-agreements --accept-package-agreements
+
+{{ end }}

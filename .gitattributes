@@ -1,0 +1,44 @@
+# https://github.com/github-linguist/linguist/blob/1647b5be1658fb15a5e09bf89067f79b392301e2/lib/linguist/languages.yml#L8164
+*.exportedUI linguist-language=xsd linguist-detectable
+
+*config* linguist-language=ini linguist-detectable
+
+*.json linguist-language=json linguist-detectable
+*.json.tmpl linguist-language=json linguist-detectable
+*.toml linguist-language=toml linguist-detectable
+*.toml.tmpl linguist-language=toml linguist-detectable
+*.yaml linguist-language=yml linguist-detectable
+*.yaml.tmpl linguist-language=yml linguist-detectable
+*.yml linguist-language=yml linguist-detectable
+*.yml.tmpl linguist-language=yml linguist-detectable
+
+*.lua.tmpl linguist-language=lua linguist-detectable
+
+*chezmoiignore* linguist-language=gitignore linguist-detectable
+*chezmoiremove* linguist-language=gitignore linguist-detectable
+*gitignore* linguist-language=gitignore linguist-detectable
+*rgignore* linguist-language=gitignore linguist-detectable
+
+*vimrc linguist-language=vim linguist-detectable
+*vsvimrc linguist-language=vim linguist-detectable
+
+*.ps1.tmpl linguist-language=pwsh linguist-detectable
+
+*.sh.tmpl linguist-language=sh linguist-detectable
+*tmux.conf.tmpl linguist-language=sh linguist-detectable
+*zprofile* linguist-language=sh linguist-detectable
+*zshenv* linguist-language=sh linguist-detectable
+*zshrc* linguist-language=sh linguist-detectable
+
+home/.chezmoitemplates/VSCode/keybindings.json linguist-language=jsonc linguist-detectable
+home/dot_config/komorebi/*.json linguist-language=jsonc linguist-detectable
+
+home/dot_ssh/config linguist-language=sshconfig linguist-detectable
+home/dot_config/git/config.tmpl linguist-language=gitconfig linguist-detectable
+home/dot_config/git/os.config.tmpl linguist-language=gitconfig linguist-detectable
+home/dot_config/git/global.gitignore linguist-language=ignore linguist-detectable
+
+home/dot_config/obs/** linguist-generated
+home/AppData/Local/Microsoft/PowerToys/** linguist-generated
+home/dot_config/browser-data/vimium/** linguist-generated
+home/TrafficMonitor/** linguist-generated
