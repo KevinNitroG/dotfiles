@@ -64,7 +64,7 @@
   {{ $catppuccinLightFlavour = promptChoice "Catppuccin flavor for light mode" $catppuccinFlavors "latte" }}
   {{ $catppuccinDarkFlavour = promptChoice "Catppuccin flavor for dark mode" $catppuccinFlavors "mocha" }}
   {{ $catppuccinAccentColor = promptChoice "Catppuccin accent color" $catppuccinAccentColors "lavender" }}
-  {{ if eq $osId "linux-arch" }}
+  {{ if eq $osId "linux-arch" "linux-endeavouros" }}
     {{ $useHyde = promptBool "Use Hyde" true }}
   {{ end }}
 {{ end }}
