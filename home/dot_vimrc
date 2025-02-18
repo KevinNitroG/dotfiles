@@ -91,18 +91,22 @@ call plug#begin()
 " Plug 'sheerun/vim-polyglot'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
-Plug 'christoomey/vim-tmux-navigator'
+if has('win32')
+  Plug 'christoomey/vim-tmux-navigator'
+endif
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'liuchengxu/vim-which-key'
 Plug 'machakann/vim-highlightedyank'
+Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'mg979/vim-visual-multi', { 'branch': 'master' }
 Plug 'prabirshrestha/asyncomplete-buffer.vim'
 Plug 'prabirshrestha/asyncomplete.vim'
 Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'psliwka/vim-smoothie'
+Plug 'qpkorr/vim-bufkill'
 Plug 'ryanoasis/vim-devicons'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'tpope/vim-commentary'
@@ -140,6 +144,26 @@ nnoremap <leader>fk :Maps<CR>
 nnoremap <leader>fm :Marks<CR>
 nnoremap <leader>fr :History<CR>
 nnoremap <leader>fw :Rg<CR>
+
+""""""""""""""""""""""""""""""""""""""""""""
+
+""" qpkorr/vim-bufkill
+
+let g:BufKillCreateMappings = 0
+
+nnoremap <leader>c :BD<cr>
+
+""""""""""""""""""""""""""""""""""""""""""""
+
+""" maxbrunsfeld/vim-yankstack
+let g:yankstack_map_keys = 0
+
+" nnoremap <M-p> <Plug>yankstack_substitute_older_paste
+" nnoremap <M-n> <Plug>yankstack_substitute_newer_paste
+
+" Use this because,... idk vim suck. It's still meta key
+nnoremap <Esc>p <Plug>yankstack_substitute_older_paste
+nnoremap <Esc>n <Plug>yankstack_substitute_newer_paste
 
 """"""""""""""""""""""""""""""""""""""""""""
 
@@ -351,13 +375,20 @@ nnoremap <Leader>gl :<C-u>call gitblame#echo()<CR>
 
 """ christoomey/vim-tmux-navigator
 
-let g:tmux_navigator_no_mappings = 1
+if has('win32')
+  let g:tmux_navigator_no_mappings = 1
 
-nnoremap <silent> <C-h> :<C-U>TmuxNavigateLeft<cr>
-nnoremap <silent> <C-j> :<C-U>TmuxNavigateDown<cr>
-nnoremap <silent> <C-k> :<C-U>TmuxNavigateUp<cr>
-nnoremap <silent> <C-l> :<C-U>TmuxNavigateRight<cr>
-nnoremap <silent> <C-\> :<C-U>TmuxNavigatePrevious<cr>
+  nnoremap <silent> <C-h> :<C-U>TmuxNavigateLeft<cr>
+  nnoremap <silent> <C-j> :<C-U>TmuxNavigateDown<cr>
+  nnoremap <silent> <C-k> :<C-U>TmuxNavigateUp<cr>
+  nnoremap <silent> <C-l> :<C-U>TmuxNavigateRight<cr>
+  nnoremap <silent> <C-\> :<C-U>TmuxNavigatePrevious<cr>
+else
+  nnoremap <silent> <C-h> <C-w>h
+  nnoremap <silent> <C-j> <C-w>j
+  nnoremap <silent> <C-k> <C-w>k
+  nnoremap <silent> <C-l> <C-w>l
+endif
 
 """"""""""""""""""""""""""""""""""""""""""""
 
@@ -408,7 +439,7 @@ nnoremap ss :split<CR>
 nnoremap sv :vsplit<CR>
 
 " Close current window
-nnoremap <leader>w :Bclose<CR>
+nnoremap <leader>w :close<CR>
 nnoremap sq :close<CR>
 
 " Better Down
@@ -485,7 +516,7 @@ xnoremap <silent> <leader>0 "_
 onoremap <silent> <leader>0 "_  
 
 " Close buffer
-nnoremap <leader>c :Bclose<cr>
+" nnoremap <leader>c :Bclose<cr>
 nnoremap <leader>C :bufdo bdelete<cr>
 
 " Resize window
@@ -538,22 +569,22 @@ endfunction
 
 " From amix/vimrc
 " Don't close window, when deleting a buffer
-command! Bclose call <SID>BufcloseCloseIt()
-function! <SID>BufcloseCloseIt()
-    let l:currentBufNum = bufnr("%")
-    let l:alternateBufNum = bufnr("#")
-
-    if buflisted(l:alternateBufNum)
-        buffer #
-    else
-        bnext
-    endif
-
-    if bufnr("%") == l:currentBufNum
-        new
-    endif
-
-    if buflisted(l:currentBufNum)
-        execute("bdelete! ".l:currentBufNum)
-    endif
-endfunction
+" command! Bclose call <SID>BufcloseCloseIt()
+" function! <SID>BufcloseCloseIt()
+"     let l:currentBufNum = bufnr("%")
+"     let l:alternateBufNum = bufnr("#")
+"
+"     if buflisted(l:alternateBufNum)
+"         buffer #
+"     else
+"         bnext
+"     endif
+"
+"     if bufnr("%") == l:currentBufNum
+"         new
+"     endif
+"
+"     if buflisted(l:currentBufNum)
+"         execute("bdelete! ".l:currentBufNum)
+"     endif
+" endfunction
