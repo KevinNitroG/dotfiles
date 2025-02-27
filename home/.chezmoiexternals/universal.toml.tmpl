@@ -62,6 +62,18 @@ url = "https://github.com/catppuccin/discord/raw/main/discord.user.css"
 
 ##########################################
 
+[".config/browser-data/extensions/bypass-paywalls-chrome-clean"]
+type = "git-repo"
+url = "https://gitflic.ru/project/magnolia1234/bypass-paywalls-chrome-clean.git"
+{{ .externalGitArgs }}
+
+[".config/browser-data/extensions/useful-script"]
+type = "git-repo"
+url = "https://github.com/Useful-Scripts-Extension/useful-script.git"
+{{ .externalGitArgs }}
+
+##########################################
+
 ["obsidian/main"]
 type = "git-repo"
 url = "git@github.com:{{ .githubUsername }}/obsidian-vault-main.git"
