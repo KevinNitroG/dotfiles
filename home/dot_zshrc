@@ -39,7 +39,7 @@ plugins=(
 )
 source $ZSH/oh-my-zsh.sh
 
-_catppuccin_zsh_syntax_highlighting_zsh="$ZSH/custom/plugins/zsh-syntax-highlighting/themes/catppuccin-${CATPPUCIN_FLAVOR:-mocha}-zsh-syntax-highlighting.zsh"
+_catppuccin_zsh_syntax_highlighting_zsh="$ZSH/custom/plugins/catppuccin-zsh-syntax-highlighting/themes/catppuccin_${CATPPUCIN_FLAVOR:-mocha}-zsh-syntax-highlighting.zsh"
 if [ -f "$_catppuccin_zsh_syntax_highlighting_zsh" ]; then
   source "$_catppuccin_zsh_syntax_highlighting_zsh"
 fi
@@ -435,3 +435,9 @@ function zvm_after_lazy_keybindings() {
 # RUN SOME STUFF
 fastfetch
 eval "$(starship init zsh)"
+
+## [Completion]
+## Completion scripts setup. Remove the following line to uninstall
+[[ -f /home/kevinnitro/.config/.dart-cli-completion/zsh-config.zsh ]] && . /home/kevinnitro/.config/.dart-cli-completion/zsh-config.zsh || true
+## [/Completion]
+
