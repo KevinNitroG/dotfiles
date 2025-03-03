@@ -3,6 +3,7 @@
 **/*cache*/**
 **/*debug*/**
 **/*obj*/**
+**/.dart_tool/**
 **/.git/**
 **/.husky/_/**
 **/.idea/**
