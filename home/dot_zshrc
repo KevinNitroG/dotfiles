@@ -122,8 +122,13 @@ unsetopt BEEP # Prevents beeps in general
 
 # Ignore command match the regex
 zshaddhistory() {
-  local line=${1%%$'\n'}
-  [[ ! $line =~ "password|secret|private|BBb" ]]
+  emulate -L zsh
+  if ! [[ "$1" =~ (password|secret|private|BBb) ]] ; then
+    print -sr -- "${1%%$'\n'}"
+    fc -p
+  else
+    return 1
+  fi
 }
 
 
