@@ -137,3 +137,14 @@
 [credential "helperselector"]
   selected = manager
 {{ end }}
+
+; https://github.com/denysdovhan/dotfiles/blob/master/home/.gitconfig
+; URL shorthands
+[url "git@github.com:"]
+  insteadOf = "gh:"
+  pushInsteadOf = "github:"
+  pushInsteadOf = "git://github.com/" ; From GIT to SSH
+[url "git@gist.github.com:"]
+  insteadOf = "gst:"
+  pushInsteadOf = "gist:"
+  pushInsteadOf = "git://gist.github.com/" ; From GIT to SSH
