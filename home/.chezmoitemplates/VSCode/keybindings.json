@@ -14,19 +14,15 @@
   },
   // User command prefix with Ctrl Shift u
   {
-    "key": "ctrl+q g",
-    "command": "extension.showGitmoji"
-  },
-  {
-    "key": "ctrl+q s",
+    "key": "ctrl+a s",
     "command": "git.sync"
   },
   {
-    "key": "ctrl+q m",
+    "key": "ctrl+a m",
     "command": "editor.action.toggleMinimap"
   },
   {
-    "key": "ctrl+q h",
+    "key": "ctrl+a h",
     "command": "runCommands",
     "args": {
       "commands": [
@@ -36,31 +32,36 @@
     }
   },
   {
-    "key": "ctrl+q e",
+    "key": "ctrl+a e",
     "command": "markdown.extension.editing.toggleCodeSpan",
     "when": "editorTextFocus && !editorReadonly && editorLangId =~ /^markdown$|^rmd$|^quarto$/"
   },
   {
-    "key": "ctrl+q m",
-    "command": "workbench.action.toggleMaximizedPanel"
-  },
-  {
-    "key": "ctrl+q j",
+    "key": "ctrl+a z",
     "command": "workbench.action.togglePanel"
   },
   {
-    "key": "ctrl+q ctrl+s",
+    "key": "ctrl+a ctrl+k",
     "command": "workbench.action.openGlobalKeybindings"
   },
   {
-    "key": "ctrl+q ctrl+o",
+    "key": "ctrl+a ctrl+o",
     "command": "workbench.action.files.openFile",
     "when": "true"
   },
   {
-    "key": "ctrl+q ctrl+shift+o",
+    "key": "ctrl+a shift+o",
     "command": "workbench.action.files.openFolder",
     "when": "openFolderWorkspaceSupport"
+  },
+  {
+    "key": "ctrl+a",
+    "command": "-extension.vim_ctrl+a"
+  },
+  {
+    "key": "ctrl+a ctrl+a",
+    "command": "extension.vim_ctrl+a",
+    "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)"
   },
   // Override neovim key bidings which override VSCode key bindings
   {
@@ -228,7 +229,7 @@
   {
     "key": "ctrl+shift+w",
     "command": "workbench.action.closeActiveEditor",
-    "when": "vim.mode == 'Normal'"
+    "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)"
   },
   {
     "key": "space shift+c",
@@ -260,6 +261,14 @@
     "key": "space w",
     "command": "workbench.action.closeActiveEditor",
     "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)"
+  },
+  {
+    "key": "space y",
+    "command": "vim.remap",
+    "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)",
+    "args": {
+      "after": [":%y+"]
+    }
   },
   // Neovim: Window - Navigation
   // {
@@ -389,6 +398,11 @@
     "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)"
   },
   {
+    "key": "space l shift+a",
+    "command": "editor.action.sourceAction",
+    "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)"
+  },
+  {
     "key": "space l r",
     "command": "editor.action.rename",
     "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)"
@@ -429,11 +443,11 @@
     "command": "workbench.action.quickOpen",
     "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)"
   },
-  {
-    "key": "space space",
-    "command": "workbench.action.quickOpen",
-    "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)"
-  },
+  // {
+  //   "key": "space space",
+  //   "command": "workbench.action.quickOpen",
+  //   "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)"
+  // },
   {
     "key": "space f w",
     "command": "workbench.action.findInFiles",
@@ -444,13 +458,24 @@
     "command": "workbench.action.openRecent",
     "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)"
   },
+  // Git
   {
     "key": "space g g",
     "command": "runCommands",
-    "when": "vim.mode == 'Normal' && (editorTextFocus || !inputFocus)",
+    "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)",
     "args": {
       "commands": ["workbench.view.scm", "workbench.scm.focus"]
     }
+  },
+  {
+    "key": "space g m",
+    "command": "extension.showGitmoji",
+    "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)"
+  },
+  {
+    "key": "space g t",
+    "command": "gitlens.toggleLineBlame",
+    "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)"
   },
   // File Explorer
   {
