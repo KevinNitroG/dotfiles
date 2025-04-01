@@ -29,6 +29,7 @@ plugins=(
   zsh-autosuggestions
   zsh-syntax-highlighting
   command-not-found
+  zsh-better-npm-completion
 
   history-substring-search # Always below zsh-syntax-highlighting
 
