@@ -133,10 +133,10 @@
   smudge = git-lfs smudge -- %f
   process = git-lfs filter-process
 
-{{ if eq .osId "windows" }}
+{{- if eq .osId "windows" }}
 [credential "helperselector"]
   selected = manager
-{{ end }}
+{{- end }}
 
 ; https://github.com/denysdovhan/dotfiles/blob/master/home/.gitconfig
 ; URL shorthands

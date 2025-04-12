@@ -37,6 +37,7 @@
   {
     "key": "ctrl+a h",
     "command": "runCommands",
+    "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)",
     "args": {
       "commands": [
         "workbench.action.toggleActivityBarVisibility",
@@ -47,25 +48,27 @@
   {
     "key": "ctrl+a e",
     "command": "markdown.extension.editing.toggleCodeSpan",
-    "when": "editorTextFocus && !editorReadonly && editorLangId =~ /^markdown$|^rmd$|^quarto$/"
+    "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && editorTextFocus && !editorReadonly && editorLangId =~ /^markdown$|^rmd$|^quarto$/"
   },
   {
     "key": "ctrl+a z",
-    "command": "workbench.action.togglePanel"
+    "command": "workbench.action.togglePanel",
+    "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)"
   },
   {
     "key": "ctrl+a ctrl+k",
-    "command": "workbench.action.openGlobalKeybindings"
+    "command": "workbench.action.openGlobalKeybindings",
+    "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)"
   },
   {
     "key": "ctrl+a ctrl+o",
     "command": "workbench.action.files.openFile",
-    "when": "true"
+    "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)"
   },
   {
     "key": "ctrl+a shift+o",
     "command": "workbench.action.files.openFolder",
-    "when": "openFolderWorkspaceSupport"
+    "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus) && openFolderWorkspaceSupport"
   },
   {
     "key": "ctrl+a",
@@ -406,7 +409,17 @@
     "when": "listFocus && !inputFocus"
   },
   {
+    "key": "tab",
+    "command": "list.focusDown",
+    "when": "listFocus && !inputFocus"
+  },
+  {
     "key": "ctrl+p",
+    "command": "list.focusUp",
+    "when": "listFocus && !inputFocus"
+  },
+  {
+    "key": "shift+tab",
     "command": "list.focusUp",
     "when": "listFocus && !inputFocus"
   },
@@ -527,6 +540,12 @@
     "command": "gitlens.toggleLineBlame",
     "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)"
   },
+  // AI
+  {
+    "key": "space a c",
+    "command": "workbench.action.chat.open",
+    "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)"
+  },
   // File Explorer
   {
     "key": "space e",
@@ -537,7 +556,7 @@
         "workbench.files.action.focusFilesExplorer"
       ]
     },
-    "when": "vim.mode == 'Normal' && (editorTextFocus || !inputFocus) && !sideBarFocus"
+    "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus) && !sideBarFocus"
   },
   {
     "key": "space e",
@@ -548,11 +567,11 @@
         "workbench.action.focusActiveEditorGroup"
       ]
     },
-    "when": "sideBarFocus && !inputFocus"
+    "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && sideBarFocus && !inputFocus"
   },
   {
     "key": "space e",
-    "when": "vim.mode == 'Normal' && editorTextFocus && foldersViewVisible",
+    "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && editorTextFocus && foldersViewVisible",
     "command": "workbench.action.toggleSidebarVisibility"
   },
   {
