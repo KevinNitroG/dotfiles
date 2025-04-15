@@ -136,11 +136,12 @@ pkgs:
         - '$env:USERPROFILE\scoop\apps\pwsh\current\install-file-context.reg'
         - '$env:USERPROFILE\scoop\apps\7zip\current\install-context.reg'
     choco:
-      - 'internet-download-manager'
-      - 'itunes'
-      - 'warp'
       # - 'everythingpowertoys'
       # - 'ultraviewer'
+      - 'internet-download-manager'
+      - 'itunes'
+      - 'tailscale'
+      - 'warp'
     winget:
       - 'XP8C9QZMS2PC1T' # Brave
       - 'Microsoft.WindowsTerminal' # Windows terminal stable

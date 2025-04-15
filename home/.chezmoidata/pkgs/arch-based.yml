@@ -22,7 +22,7 @@ pkgs:
       - 'neovim'
       - 'visual-studio-code-bin'
 
-      # CLI Power Basics
+      # CLI tools
       # - 'aria2'
       # - 'thefuck'
       # - 'tokei'
