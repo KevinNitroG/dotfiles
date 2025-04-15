@@ -9,3 +9,9 @@ Host github.com
   Port 22
   PreferredAuthentications publickey
   IdentityFile ~/.ssh/id_ed25519
+
+Host ngen
+  HostName ntgnguyen.tailf6edf3.ts.net
+  User ntgnguyen
+  Port 22
+  IdentityFile ~/.ssh/id_ed25519
