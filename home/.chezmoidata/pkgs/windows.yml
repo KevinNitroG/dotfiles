@@ -17,17 +17,18 @@ pkgs:
         - 'main/pwsh'
 
         # Languages,...
-        - 'java/oraclejre8'
-        - 'main/gdb'
-        - 'main/go'
-        - 'main/llvm'
-        - 'main/mingw'
-        - 'main/nodejs'
-        - 'main/python'
-        - 'main/rust'
-        # - 'main/lua'
+        # - 'java/oraclejre8'
         # - 'main/docker'
         # - 'main/docker-compose'
+        # - 'main/gdb'
+        # - 'main/go'
+        # - 'main/llvm'
+        # - 'main/lua'
+        # - 'main/mingw'
+        # - 'main/nodejs'
+        # - 'main/python'
+        # - 'main/rust'
+        - 'main/mise'
 
         # Fonts
         - 'nerd-fonts/JetBrainsMono-NF'
@@ -55,6 +56,7 @@ pkgs:
         - 'main/neovim'
 
         # CLI tools
+        # - 'extra/jqp'
         # - 'extras/terminal-icons'
         # - 'main/actionlint'
         # - 'main/file' # for yazi, but use in git instead
@@ -65,7 +67,6 @@ pkgs:
         # - 'main/oh-my-posh'
         # - 'main/sed'
         # - 'main/touch'
-        # - 'extra/jqp'
         - 'extras/autohotkey'
         - 'extras/keyviz'
         - 'extras/komorebi'
@@ -73,6 +74,7 @@ pkgs:
         - 'extras/posh-git'
         - 'extras/psfzf'
         - 'extras/psreadline'
+        - 'extras/yasb'
         - 'main/adb'
         - 'main/bat'
         - 'main/bottom'
@@ -111,7 +113,7 @@ pkgs:
         # - 'extras/spicetify-themes'
         # - 'main/spicetify-cli'
         # - 'nonportable/parsec-np'
-        - 'extras/anydesk'
+        # - 'extras/anydesk'
         - 'extras/hoppscotch'
         - 'extras/obs-studio'
         - 'extras/powertoys'
@@ -142,7 +144,7 @@ pkgs:
     winget:
       - 'XP8C9QZMS2PC1T' # Brave
       - 'Microsoft.WindowsTerminal' # Windows terminal stable
-      - 'AmN.yasb' # YASB
+      # - 'AmN.yasb' # YASB
     psGallery:
       # - 'DockerCompletion'
       # - 'PsReadLine'

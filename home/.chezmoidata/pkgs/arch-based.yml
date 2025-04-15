@@ -13,13 +13,14 @@ pkgs:
       - 'zsh'
 
       # Terminal
-      - 'alacritty'
+      # - 'alacritty'
+      - 'kitty'
 
       # Text / Code Editor, IDE
-      - 'mysql-workbench'
+      # - 'mysql-workbench'
+      # - 'zed'
       - 'neovim'
       - 'visual-studio-code-bin'
-      # - 'zed'
 
       # CLI Power Basics
       # - 'aria2'
@@ -52,20 +53,21 @@ pkgs:
       - 'zoxide'
 
       # Development, languages, interpreters, compilers, etc
+      # - 'clang'
+      # - 'cmake'
+      # - 'docker'
+      # - 'docker-compose'
       # - 'docker-desktop' # Docker desktop on Arch is not stable
+      # - 'gdb'
       # - 'go'
+      # - 'nodejs'
+      # - 'npm'
       # - 'pnpm'
       # - 'pyenv'
+      # - 'python-pip'
+      # - 'rustup'
       # - 'yarn'
-      - 'clang'
-      - 'cmake'
-      - 'docker'
-      - 'docker-compose'
-      - 'gdb'
-      - 'nodejs'
-      - 'npm'
-      - 'python-pip'
-      - 'rustup'
+      - 'mise'
 
       # Formatter, Linter
       # - 'actionlint'
@@ -83,10 +85,10 @@ pkgs:
       - 'cronie'
 
       # CLI Fun
-      - 'cowsay'
-      - 'fastfetch'
-      - 'figlet' # A program for making large letters out of ordinary text
-      - 'lolcat'
+      # - 'cowsay'
+      # - 'fastfetch'
+      # - 'figlet' # A program for making large letters out of ordinary text
+      # - 'lolcat'
 
       # Apps / Tools
       # - 'authy-desktop-win32-bin'
@@ -107,7 +109,7 @@ pkgs:
       # Other but IDK what it is
       # - 'pacman-contrib' # For paccache
       - 'fuse3' # For rclone mount --daemon
-      - 'gnome-keyring' # For MySQL Workbench
+      - 'gnome-keyring' # For MySQL Workbench,...
       - 'gtk4'
       - 'lsb-release'
       - 'tree'
