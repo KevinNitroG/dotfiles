@@ -1,0 +1,10 @@
+lowercaseKeywords: false
+connections:
+  - alias: coinhub
+    driver: postgresql
+    proto: tcp
+    user: postgres
+    passwd: luckycube
+    host: localhost
+    port: 5432
+    dbName: postgres
