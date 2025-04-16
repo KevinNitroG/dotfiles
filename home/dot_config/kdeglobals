@@ -2,7 +2,7 @@
 BackgroundNormal=#00000000
 
 [General]
-TerminalApplication=/usr/bin/ghostty
+TerminalApplication=/usr/bin/kitty
 
 [Icons]
 Theme=Tela-circle-dracula
