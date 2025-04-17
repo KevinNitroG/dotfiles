@@ -30,6 +30,7 @@ plugins=(
   zsh-syntax-highlighting
   command-not-found
   zsh-better-npm-completion
+  mise
 
   history-substring-search # Always below zsh-syntax-highlighting
 
@@ -71,15 +72,19 @@ declare -A _EVALX_COMMANDS=(
   [source_just_completion]='source <(just --completions zsh)'
   [source_npm_completion]='source <(npm completion)'
   [source_python_venv]='source .venv/bin/activate'
+  [source_railway_completion]='source <(railway completion zsh)'
   [source_warp_cli_completion]='source <(warp-cli generate-completions zsh)'
   [start_docker_desktop_service]='systemctl --user start docker-desktop'
   [start_docker_service]='sudo systemctl start docker.service docker.socket'
   [start_mysql_service]='sudo systemctl start mysqld.service'
   [start_ssh_agent]='eval "$(ssh-agent -s)"'
+  [start_sshd_service]='sudo systemctl start sshd.service'
+  [start_tailscale_service]='sudo systemctl start tailscaled.service'
   [stop_docker_desktop_service]='systemctl --user stop docker-desktop'
   [stop_docker_service]='sudo systemctl stop docker.service docker.socket'
   [stop_mysql_service]='sudo systemctl stop mysqld.service'
-  [source_railway_completion]='source <(railway completion zsh)'
+  [stop_sshd_service]='sudo systemctl stop sshd.service'
+  [stop_tailscale_service]='sudo systemctl stop tailscaled.service'
 )
 
 evalx() {
@@ -100,6 +105,8 @@ clean_all() {
     eval "${_EVALX_COMMANDS[clean_flatpak]}"
   fi
 }
+
+alias ex=evalx
 
 ##########################################
 
