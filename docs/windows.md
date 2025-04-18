@@ -11,7 +11,6 @@
   - [Patch IDM](#patch-idm)
     - [Repack.me](#repackme)
     - [PITVN](#pitvn)
-    - [Old method](#old-method)
   - [Install & Active Office](#install--active-office)
   - [Spotify](#spotify)
   - [Chrome extensions](#chrome-extensions)
@@ -65,33 +64,6 @@ curl https://gist.githubusercontent.com/MuhammadSaim/de84d1ca59952cf1efaa8c061aa
 #### PITVN
 
 - [PITVN](https://docs.google.com/document/d/19MCt6uXlJYJO71L35Tj_PcGvWhL_W-SoYYkcnVA07fU/edit?usp=sharing)
-
-#### Old method
-
-- Patch script
-  ```ps1
-  iex(irm is.gd/idm_reset)
-  ```
-- Disable check for update
-  - `HKEY_CURRENT_USER\Software\DownloadManager`
-  - `CheckUpdtVm`: `10` ->`0`
-- Block host **(admin)**
-  ```ps1
-  v "C:\Windows\System32\drivers\etc\hosts"
-  ```
-  ```diff
-  +  127.0.0.1           tonec.com
-  +  127.0.0.1           www.tonec.com
-  +  127.0.0.1           registeridm.com
-  +  127.0.0.1           www.registeridm.com
-  +  127.0.0.1           secure.registeridm.com
-  +  127.0.0.1           internetdownloadmanager.com
-  +  127.0.0.1           www.internetdownloadmanager.com
-  +  127.0.0.1           secure.internetdownloadmanager.com
-  +  127.0.0.1           mirror.internetdownloadmanager.com
-  +  127.0.0.1           mirror2.internetdownloadmanager.com
-  +  127.0.0.1           mirror3.internetdownloadmanager.com
-  ```
 
 ---
 
