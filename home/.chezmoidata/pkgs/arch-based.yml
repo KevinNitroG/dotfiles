@@ -44,6 +44,7 @@ pkgs:
       - 'ripgrep'
       - 'rsync'
       - 'sd'
+      - 'starship'
       - 'tree'
       - 'unzip'
       - 'wget'
@@ -99,6 +100,8 @@ pkgs:
       - 'rclone'
       - 'spotify'
       - 'vlc'
+      - 'fcitx5'
+      - 'fcitx5-bamboo'
 
       # Fonts
       - 'noto-fonts-emoji'
