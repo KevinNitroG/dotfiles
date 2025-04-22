@@ -2,7 +2,7 @@ Write-Host 'SETTING UP ENV...'
 
 # Get existing paths and merge unique paths
 $ExistingPaths = [System.Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::User) -split ";"
-$NewPaths = @({{- .config.windows.envs.path | quoteList | join ", " | replace "/" "\\" -}}) | Where-Object { $_ -notin $ExistingPaths }
+$NewPaths = @({{- .config.windows.envs.path | quoteList | join ", " | replace "\\\\" "\\" -}}) | Where-Object { $_ -notin $ExistingPaths }
 $UpdatedPath = (@($NewPaths) + $ExistingPaths) -join ";"
 
 # Hashtable of environment variables

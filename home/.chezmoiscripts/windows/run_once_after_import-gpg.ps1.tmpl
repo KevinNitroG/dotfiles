@@ -8,12 +8,10 @@ if (-not (Get-Command gpg -ErrorAction SilentlyContinue)) {
 gpg --import @"
 {{ includeTemplate "gpg/encrypted_pri-ecc.gpg" | decrypt }}
 "@
-EOF
 
 gpg --import @"
 {{ includeTemplate "gpg/encrypted_pub-ecc.gpg" | decrypt }}
 "@
-EOF
 
 $trustCommands = @(
     "5",

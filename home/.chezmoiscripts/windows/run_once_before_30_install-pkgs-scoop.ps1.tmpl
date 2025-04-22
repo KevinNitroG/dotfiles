@@ -8,12 +8,16 @@ if (-not (Get-Command "scoop" -ErrorAction SilentlyContinue))
 
 {{ if .pkgs.windows.scoop.buckets }}
 Write-Host 'ADDING SCOOP BUCKETS...'
-scoop bucket add {{ .pkgs.windows.scoop.buckets | quoteList | join " " }}
+  {{ range $bucket := .pkgs.windows.scoop.buckets }}
+scoop bucket add '{{ $bucket }}'
+  {{ end }}
 {{ end }}
 
 {{ if .pkgs.windows.scoop.pkgs }}
 Write-Host 'INSTALLING SCOOP PACKAGES...'
-scoop install {{ .pkgs.windows.scoop.pkgs | quoteList | join " " }}
+  {{ range $pkg := .pkgs.windows.scoop.pkgs }}
+scoop install '{{ $pkg }}'
+  {{ end }}
 {{ end }}
 
 {{ if .pkgs.windows.scoop.importRegistry }}
