@@ -95,7 +95,7 @@ pkgs:
       # - 'screenkey'
       - 'gammastep'
       - 'obs-studio'
-      - 'qbittorrent-enhanced'
+      # - 'qbittorrent-enhanced'
       - 'rclone'
       - 'spotify'
       - 'vlc'
