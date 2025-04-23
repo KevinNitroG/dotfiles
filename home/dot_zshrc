@@ -445,8 +445,13 @@ function zvm_after_lazy_keybindings() {
 ##########################################
 
 # RUN SOME STUFF
-fastfetch
-eval "$(starship init zsh)"
+if has fastfetch; then
+  fastfetch
+fi
+
+if has starship; then
+  eval "$(starship init zsh)"
+fi
 
 if has mise; then
   eval "$(mise activate zsh)"
