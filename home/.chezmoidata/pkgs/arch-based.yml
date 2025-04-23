@@ -56,8 +56,6 @@ pkgs:
       # Development, languages, interpreters, compilers, etc
       # - 'clang'
       # - 'cmake'
-      # - 'docker'
-      # - 'docker-compose'
       # - 'docker-desktop' # Docker desktop on Arch is not stable
       # - 'gdb'
       # - 'go'
@@ -68,6 +66,8 @@ pkgs:
       # - 'python-pip'
       # - 'rustup'
       # - 'yarn'
+      - 'docker'
+      - 'docker-compose'
       - 'mise'
 
       # Formatter, Linter
