@@ -23,9 +23,6 @@ $NVIM_CONFIGS = @(
   "NvChad"
 )
 
-# Starship config
-. "$env:USERPROFILE/Documents/PowerShell/Scripts/kevinnitro/starship.ps1"
-
 # App manage
 $CHOCO_APPS_TO_UPGRADE = @(
 )
@@ -1671,3 +1668,5 @@ Invoke-Expression (& { (zoxide init powershell --cmd cd | Out-String) })
 
 # Fastfetch
 fastfetch
+
+Invoke-Expression (&starship init powershell)

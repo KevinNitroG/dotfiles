@@ -151,5 +151,4 @@ pkgs:
       # - 'Terminal-Icons'
       # - 'posh-git'
       # - 'posh-wakatime'
-      - 'Catppuccin'
       - 'CompletionPredictor'
