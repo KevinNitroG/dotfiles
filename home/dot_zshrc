@@ -30,7 +30,6 @@ plugins=(
   zsh-syntax-highlighting
   command-not-found
   zsh-better-npm-completion
-  mise
 
   history-substring-search # Always below zsh-syntax-highlighting
 
@@ -449,8 +448,9 @@ function zvm_after_lazy_keybindings() {
 fastfetch
 eval "$(starship init zsh)"
 
-## [Completion]
-## Completion scripts setup. Remove the following line to uninstall
+if has mise; then
+  eval "$(mise activate zsh)"
+fi
+
 [[ -f /home/kevinnitro/.config/.dart-cli-completion/zsh-config.zsh ]] && . /home/kevinnitro/.config/.dart-cli-completion/zsh-config.zsh || true
-## [/Completion]
 

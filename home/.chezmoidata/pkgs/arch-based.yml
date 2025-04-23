@@ -115,6 +115,7 @@ pkgs:
       - 'gtk4'
       - 'lsb-release'
       - 'tree'
+      - 'usage' # For mise
       - 'wtype'
     laptop:
       # - 'gestures'
