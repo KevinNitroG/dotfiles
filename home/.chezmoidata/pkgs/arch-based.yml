@@ -102,6 +102,7 @@ pkgs:
       - 'vlc'
       - 'fcitx5'
       - 'fcitx5-bamboo'
+      - 'fcitx5-configtool'
 
       # Fonts
       - 'noto-fonts-emoji'
