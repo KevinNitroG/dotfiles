@@ -23,7 +23,7 @@ include = ["btop-main/themes/catppuccin_*.theme"]
 type = "archive"
 url = "https://github.com/catppuccin/kitty/archive/refs/heads/main.zip"
 stripComponents = 2
-include = ["kitty-main/themes/*catppuccin.conf"]
+include = ["kitty-main/themes/*{{ .catppuccinFlavor }}.conf"]
 
 [".config/ghostty/themes"]
 type = "archive"
