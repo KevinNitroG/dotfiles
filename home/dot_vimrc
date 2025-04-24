@@ -94,6 +94,8 @@ Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 if has('win32')
   Plug 'christoomey/vim-tmux-navigator'
 endif
+Plug 'LunarWatcher/auto-pairs'
+Plug 'andymass/vim-matchup'
 Plug 'itchyny/lightline.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
