@@ -3,26 +3,26 @@ pkgs:
     universal:
       # Essentials
       # - 'google-chrome'
-      - 'brave-bin'
-      - 'chezmoi'
-      - 'git'
-      - 'kanata-bin' # Change keyboard func
-      - 'lazygit'
-      - 'tmux'
-      - 'wget'
-      - 'zsh'
-      - 'xorg-xhost'
-      - 'os-prober'
+      - "brave-bin"
+      - "chezmoi"
+      - "git"
+      - "kanata-bin" # Change keyboard func
+      - "lazygit"
+      - "tmux"
+      - "wget"
+      - "zsh"
+      - "xorg-xhost"
+      - "os-prober"
 
       # Terminal
       # - 'alacritty'
-      - 'kitty'
+      - "kitty"
 
       # Text / Code Editor, IDE
       # - 'mysql-workbench'
       # - 'zed'
-      - 'neovim'
-      - 'visual-studio-code-bin'
+      - "neovim"
+      - "visual-studio-code-bin"
 
       # CLI tools
       # - 'aria2'
@@ -30,30 +30,31 @@ pkgs:
       # - 'tokei'
       # - 'trash-cli'
       # - 'xsel'
-      - 'atac'
-      - 'bat'
-      - 'doggo'
-      - 'exa'
-      - 'fd'
-      - 'fzf'
-      - 'gh'
-      - 'git-delta'
-      - 'github-cli'
-      - 'glow'
-      - 'jq'
-      - 'lazydocker'
-      - 'rclone'
-      - 'ripgrep'
-      - 'rsync'
-      - 'sd'
-      - 'starship'
-      - 'tree'
-      - 'unzip'
-      - 'wget'
-      - 'xh'
-      - 'yazi'
-      - 'zip'
-      - 'zoxide'
+      - "atac"
+      - "bat"
+      - "doggo"
+      - "exa"
+      - "fd"
+      - "fzf"
+      - "gh"
+      - "git-delta"
+      - "github-cli"
+      - "glow"
+      - "jq"
+      - "just"
+      - "lazydocker"
+      - "rclone"
+      - "ripgrep"
+      - "rsync"
+      - "sd"
+      - "starship"
+      - "tree"
+      - "unzip"
+      - "wget"
+      - "xh"
+      - "yazi"
+      - "zip"
+      - "zoxide"
 
       # Development, languages, interpreters, compilers, etc
       # - 'clang'
@@ -68,19 +69,19 @@ pkgs:
       # - 'python-pip'
       # - 'rustup'
       # - 'yarn'
-      - 'docker'
-      - 'docker-buildx'
-      - 'docker-compose'
-      - 'mise'
+      - "docker"
+      - "docker-buildx"
+      - "docker-compose"
+      - "mise"
 
       # Security Utilities
-      - 'gnupg'
-      - 'openssl'
+      - "gnupg"
+      - "openssl"
 
       # Monitoring, management and stats
       # - 'speedtest-cli'
-      - 'btop'
-      - 'cronie'
+      - "btop"
+      - "cronie"
 
       # CLI Fun
       # - 'cowsay'
@@ -91,35 +92,35 @@ pkgs:
       # Apps / Tools
       # - 'authy-desktop-win32-bin'
       # - 'screenkey'
-      - 'gammastep'
-      - 'obs-studio'
+      - "gammastep"
+      - "obs-studio"
       # - 'qbittorrent-enhanced'
-      - 'rclone'
-      - 'spotify'
-      - 'vlc'
-      - 'fcitx5'
-      - 'fcitx5-bamboo'
-      - 'fcitx5-configtool'
-      - 'grub-customizer'
+      - "rclone"
+      - "spotify"
+      - "vlc"
+      - "fcitx5"
+      - "fcitx5-bamboo"
+      - "fcitx5-configtool"
+      - "grub-customizer"
 
       # Fonts
-      - 'noto-fonts-emoji'
-      - 'ttf-google-sans'
-      - 'ttf-jetbrains-mono-nerd'
-      - 'ttf-nerd-fonts-symbols'
+      - "noto-fonts-emoji"
+      - "ttf-google-sans"
+      - "ttf-jetbrains-mono-nerd"
+      - "ttf-nerd-fonts-symbols"
 
       # Other but IDK what it is
       # - 'pacman-contrib' # For paccache
-      - 'fuse3' # For rclone mount --daemon
-      - 'gnome-keyring' # For MySQL Workbench,...
-      - 'gtk4'
-      - 'lsb-release'
-      - 'tree'
-      - 'usage' # For mise
-      - 'wtype'
+      - "fuse3" # For rclone mount --daemon
+      - "gnome-keyring" # For MySQL Workbench,...
+      - "gtk4"
+      - "lsb-release"
+      - "tree"
+      - "usage" # For mise
+      - "wtype"
     laptop:
       # - 'gestures'
       # - 'libinput-gestures'
-      - 'tlp'
-      - 'tlp-rdw'
-      - 'tlpui'
+      - "tlp"
+      - "tlp-rdw"
+      - "tlpui"
