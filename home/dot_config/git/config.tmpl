@@ -41,7 +41,7 @@
   f = !git save && git done ; finish
   undo = reset HEAD~1 --mixed
   res = reset --hard
-  lg = log --pretty=format:'%C(magenta)%h%Creset -%C(red)%d%Creset %s %C(dim green)(%cr) [%an]' --abbrev-commit ; online log with prettierg
+  lg = !PAGER='delta --line-numbers=false' git log --oneline --abbrev-commit
   lgg = log --graph --decorate --all ; graph log
   subup = submodule update --init --recursive ; submodule recursive update
   wdiff = diff --word-diff ; word diff
