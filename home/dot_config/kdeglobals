@@ -1,5 +1,11 @@
 [Colors:View]
-BackgroundNormal=#00000000
+BackgroundNormal=#1B1A29
+
+[UiSettings]
+ColorScheme=colors
+
+[Wallet]
+Enabled=false
 
 [General]
 TerminalApplication=/usr/bin/kitty
@@ -29,9 +35,3 @@ Sort hidden files last=false
 Sort reversed=false
 Speedbar Width=101
 View Style=DetailTree
-
-[UISettings]
-ColorScheme=Catppuccin-Mocha
-
-[UiSettings]
-ColorScheme=*
