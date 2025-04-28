@@ -33,10 +33,10 @@
 |#
 
 (deflayer default
-  @esc   f1       f2       f3       f4       f5       f6       f7       f8       f9       f10      f11      f12      del
+  esc    f1       f2       f3       f4       f5       f6       f7       f8       f9       f10      f11      f12      del
   @grv   1        2        3        4        5        6        7        8        9        0        -        =        bspc
   tab    q        w        e        r        t        y        u        i        o        p        [        ]        \
-  @caps  a        s        d        f        g        h        j        k        l        ;        '        ret
+  @caps  a        s        d        f        g        h        j        k        l        @;       '        ret
   lsft   z        x        c        v        b        n        m        ,        .        /        rsft
             lmet  lalt                      spc                                  rmet  rctl
 )
@@ -50,19 +50,10 @@
             _     _                          _                                   _        _
 )
 
-(deflayer esc
-  _      _        _        _        _        _        _        _        _        _        _        _        _        _     
-  S-`    S-1      S-2      S-3      S-4      S-5      S-6      S-7      S-8      S-9      S-0      S--      S-=      _
-  _      _        _        _        _        _        _        _        _        _        _        S-[      S-]      S-\
-  _      _        _        _        _        _        _        _        _        _        S-;      S-'      _
-  _      _        _        _        _        _        _        _        S-,      S-.      S-/      _
-            _     _                          _                                   _        _
-)
-
 (defalias
   caps (tap-hold-press 200 200 caps lctl)
-  esc (tap-hold-press 300 300 esc (layer-toggle esc))
   grv (tap-hold-press 200 200 grv (layer-toggle grv))
+  ; (tap-hold-press 200 200 ; lmet)
 
   ;; go to the start of the line
   start home
