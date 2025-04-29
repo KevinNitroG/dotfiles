@@ -43,7 +43,7 @@
 
 (deflayer grv
   _      _        _        _        _        _        _        _        _        _        _        _        _        _     
-  _      _        _        _        @end     _        _        _        _        _        @start   _        _        _
+  _      _        _        _        @end     _        _        _        _        _        @start   _        _        @bspc
   _      _        @fwd     _        _        _        _        _        _        _        S-tab    _        _        _
   _      _        _        @dd      _        _        left     down     up       rght     _        _        _
   _      _        _        C-S-c    C-S-v    @back    tab      _        _        _        _        _
@@ -54,6 +54,8 @@
   caps (tap-hold-press 200 200 caps lctl)
   grv (tap-hold-press 200 200 grv (layer-toggle grv))
   ; (tap-hold-press 200 200 ; lmet)
+
+  bspc C-bspc
 
   ;; go to the start of the line
   start home
