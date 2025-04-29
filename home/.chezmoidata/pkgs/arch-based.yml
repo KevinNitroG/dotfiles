@@ -2,7 +2,7 @@ pkgs:
   archBased:
     universal:
       # Essentials
-      # - 'google-chrome'
+      # - "google-chrome"
       - "brave-bin"
       - "chezmoi"
       - "git"
@@ -15,21 +15,21 @@ pkgs:
       - "os-prober"
 
       # Terminal
-      # - 'alacritty'
+      # - "alacritty"
       - "kitty"
 
       # Text / Code Editor, IDE
-      # - 'mysql-workbench'
-      # - 'zed'
+      # - "mysql-workbench"
+      # - "zed"
       - "neovim"
       - "visual-studio-code-bin"
 
       # CLI tools
-      # - 'aria2'
-      # - 'thefuck'
-      # - 'tokei'
-      # - 'trash-cli'
-      # - 'xsel'
+      # - "aria2"
+      # - "thefuck"
+      # - "tokei"
+      # - "trash-cli"
+      # - "xsel"
       - "atac"
       - "bat"
       - "doggo"
@@ -57,18 +57,18 @@ pkgs:
       - "zoxide"
 
       # Development, languages, interpreters, compilers, etc
-      # - 'clang'
-      # - 'cmake'
-      # - 'docker-desktop' # Docker desktop on Arch is not stable
-      # - 'gdb'
-      # - 'go'
-      # - 'nodejs'
-      # - 'npm'
-      # - 'pnpm'
-      # - 'pyenv'
-      # - 'python-pip'
-      # - 'rustup'
-      # - 'yarn'
+      # - "clang"
+      # - "cmake"
+      # - "docker-desktop" # Docker desktop on Arch is not stable
+      # - "gdb"
+      # - "go"
+      # - "nodejs"
+      # - "npm"
+      # - "pnpm"
+      # - "pyenv"
+      # - "python-pip"
+      # - "rustup"
+      # - "yarn"
       - "docker"
       - "docker-buildx"
       - "docker-compose"
@@ -79,29 +79,30 @@ pkgs:
       - "openssl"
 
       # Monitoring, management and stats
-      # - 'speedtest-cli'
+      # - "speedtest-cli"
       - "btop"
       - "cronie"
 
       # CLI Fun
-      # - 'cowsay'
-      # - 'fastfetch'
-      # - 'figlet' # A program for making large letters out of ordinary text
-      # - 'lolcat'
+      # - "cowsay"
+      # - "fastfetch"
+      # - "figlet" # A program for making large letters out of ordinary text
+      # - "lolcat"
 
       # Apps / Tools
-      # - 'authy-desktop-win32-bin'
-      # - 'screenkey'
-      - "gammastep"
-      - "obs-studio"
-      # - 'qbittorrent-enhanced'
-      - "rclone"
-      - "spotify"
-      - "vlc"
+      # - "authy-desktop-win32-bin"
+      # - "qbittorrent-enhanced"
+      # - "screenkey"
       - "fcitx5"
       - "fcitx5-bamboo"
       - "fcitx5-configtool"
+      - "gammastep"
       - "grub-customizer"
+      - "obs-studio"
+      - "rclone"
+      - "spotify"
+      - "vlc"
+      - "qbittorrent"
 
       # Fonts
       - "noto-fonts-emoji"
@@ -110,7 +111,7 @@ pkgs:
       - "ttf-nerd-fonts-symbols"
 
       # Other but IDK what it is
-      # - 'pacman-contrib' # For paccache
+      # - "pacman-contrib" # For paccache
       - "fuse3" # For rclone mount --daemon
       - "gnome-keyring" # For MySQL Workbench,...
       - "gtk4"
@@ -119,8 +120,8 @@ pkgs:
       - "usage" # For mise
       - "wtype"
     laptop:
-      # - 'gestures'
-      # - 'libinput-gestures'
+      # - "gestures"
+      # - "libinput-gestures"
       - "tlp"
       - "tlp-rdw"
       - "tlpui"
