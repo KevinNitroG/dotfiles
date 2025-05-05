@@ -99,10 +99,11 @@ pkgs:
       - "gammastep"
       - "grub-customizer"
       - "obs-studio"
+      - "qbittorrent"
       - "rclone"
       - "spotify"
+      - "tailscale"
       - "vlc"
-      - "qbittorrent"
 
       # Fonts
       - "noto-fonts-emoji"
