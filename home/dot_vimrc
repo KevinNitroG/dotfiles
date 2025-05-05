@@ -149,6 +149,11 @@ nnoremap <leader>fw :Rg<CR>
 
 """"""""""""""""""""""""""""""""""""""""""""
 
+""" andymass/vim-matchup
+let g:matchup_matchparen_offscreen = {'method': ''}
+
+""""""""""""""""""""""""""""""""""""""""""""
+
 """ qpkorr/vim-bufkill
 
 let g:BufKillCreateMappings = 0
@@ -410,15 +415,15 @@ let g:highlightedyank_highlight_duration = 200
 """ MAPPING
 
 inoremap jk <Esc>
-nnoremap <leader>x :wq<CR>
+" nnoremap <leader>x :wq<CR>
 
 " Save
 nnoremap <C-s> :w<CR>
 inoremap <C-s> <cmd>w<CR>
 
 " Quit
-nnoremap <leader>q :qa!<CR>
-nnoremap <leader>x :wqa!<CR>
+" nnoremap <leader>q :qa!<CR>
+" nnoremap <leader>x :wqa!<CR>
 
 " Middle Search Result
 nnoremap n nzz
@@ -437,8 +442,8 @@ nnoremap <leader>y :%y+<return>
 nnoremap <leader>ow :set wrap!<CR>
 
 " Split
-nnoremap ss :split<CR>
-nnoremap sv :vsplit<CR>
+" nnoremap ss :split<CR>
+" nnoremap sv :vsplit<CR>
 
 " Close current window
 nnoremap <leader>w :close<CR>
