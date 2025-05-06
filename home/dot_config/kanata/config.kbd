@@ -44,9 +44,9 @@
 (deflayer grv
   _      _        _        _        _        _        _        _        _        _        _        _        _        _     
   _      M-1      M-2      M-3      M-4      M-5      M-6      M-7      M-8      M-9      M-0      A-left   A-rght   _
-  _      _        @fwd     _        _        _        _        _        _        _        S-tab    C-S-tab  C-tab    _
+  _      lsft     lctl     lalt     _        _        _        _        _        _        S-tab    C-S-tab  C-tab    _
   _      _        M-s      @dd      _        _        left     down     up       rght     _        _        _
-  _      _        _        C-S-c    C-S-v    @back    tab      _        _        _        _        _
+  _      _        _        C-S-c    C-S-v    _        tab      _        _        _        _        _
   _      _        _                          _                          _        _        _
 )
 
@@ -54,18 +54,6 @@
   caps (tap-hold-press 200 200 caps lctl)
   grv (tap-hold-press 200 200 grv (layer-toggle grv))
   ; (tap-hold-press 200 200 ; lmet)
-
-  ;; go to the start of the line
-  start home
-
-  ;; go to the end of the line
-  end end
-
-  ;; go back a word
-  back C-left
-
-  ;; go forward a word
-  fwd C-rght
 
   ;; delete the current line
   dd (macro home S-end bspc)
