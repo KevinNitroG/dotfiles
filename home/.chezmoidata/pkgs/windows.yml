@@ -102,6 +102,7 @@ pkgs:
         - "main/xh"
         - "main/yazi"
         - "main/yq"
+        - "main/yq"
         - "main/yt-dlp"
         - "main/zoxide"
         - "sysinternals/whois"

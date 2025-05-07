@@ -53,6 +53,7 @@ pkgs:
       - "wget"
       - "xh"
       - "yazi"
+      - "yq" # mise requirements
       - "zip"
       - "zoxide"
 
