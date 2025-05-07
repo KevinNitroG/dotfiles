@@ -104,6 +104,7 @@ pkgs:
       - "spotify"
       - "tailscale"
       - "vlc"
+      - "zathura"
 
       # Fonts
       - "noto-fonts-emoji"
@@ -117,9 +118,12 @@ pkgs:
       - "gnome-keyring" # For MySQL Workbench,...
       - "gtk4"
       - "lsb-release"
+      - "tesseract-data-eng" # For zathura
+      - "tesseract-data-vie" # For zathura
       - "tree"
       - "usage" # For mise
       - "wtype"
+      - "zathura-pdf-mupdf" # For zathura
     laptop:
       # - "gestures"
       # - "libinput-gestures"
