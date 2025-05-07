@@ -30,6 +30,7 @@ plugins=(
   zsh-syntax-highlighting
   command-not-found
   zsh-better-npm-completion
+  gradle
 
   history-substring-search # Always below zsh-syntax-highlighting
 
