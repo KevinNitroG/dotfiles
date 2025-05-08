@@ -7,11 +7,12 @@
 # UPDATE PATH
 typeset -aU path # Avoid recursively lengthen $path in subshell
 export path=(
-  $HOME/.local/share/nvim/mason/bin
+  $HOME/Android/Sdk/platform-tools
   $HOME/.npm-global/bin
   $PNPM_HOME
-  $HOME/.local/share/bin/
-  $HOME/.cargo/bin/
+  $HOME/.local/share/bin
+  $HOME/.cargo/bin
+  $HOME/.local/share/nvim/mason/bin
   $path
 )
 
