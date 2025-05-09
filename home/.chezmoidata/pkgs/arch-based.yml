@@ -99,6 +99,7 @@ pkgs:
       - "fcitx5-configtool"
       - "gammastep"
       - "grub-customizer"
+      - "libreoffice-fresh"
       - "obs-studio"
       - "qbittorrent"
       - "rclone"
