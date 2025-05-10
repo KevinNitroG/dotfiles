@@ -1,0 +1,19 @@
+set surround
+set multiple-cursors
+set commentary
+set argtextobj
+set easymotion
+set textobj-entire
+set ReplaceWithRegister
+set Which-Key
+set highlightedyank
+set NERDTree
+
+source ~/.vimrc
+
+set clipboard+=ideaput
+set ideajoin
+set idearefactormode=keep
+
+nnoremap <leader>c :action CloseContent<cr>
+nnoremap <leader><leader> :action SearchEverywhere<CR>

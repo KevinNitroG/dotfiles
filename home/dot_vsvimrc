@@ -10,10 +10,6 @@ set smartcase
 inoremap jk <Esc>
 nnoremap <leader>x :wq<CR>
 
-" Middle Search Result
-nnoremap n nzz
-nnoremap N Nzz
-
 " Yank to Last
 nnoremap Y y$
 
@@ -29,14 +25,9 @@ nnoremap <leader>D :%d+<return>
 " Toggle Wrap
 nnoremap <leader>ow :set wrap!<CR>
 
-" Split
-nnoremap ss :split<CR>
-nnoremap sv :vsplit<CR>
-
 " Close current window
 nnoremap <leader>w :close<CR>
 nnoremap <leader>c :close<CR>
-nnoremap sq :close<CR>
 
 " Move the line up
 nnoremap <A-j> :m .+1<CR>==
