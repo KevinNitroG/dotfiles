@@ -152,6 +152,7 @@
 - <https://github.com/Cybersnake223/Hypr>
 - <https://github.com/Integralist/dotfiles>
 - <https://github.com/JoosepAlviste/dotfiles>
+- <https://github.com/amitds1997/dotfiles> (setup for arch and mac, git stuff, something is new to me)
 - <https://github.com/asilvadesigns/config>
 - <https://github.com/bahamas10/dotfiles> (YSAP)
 - <https://github.com/chaneyzorn/dotfiles>
