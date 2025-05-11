@@ -58,13 +58,22 @@ sethandler <C-w> a:vim
 sethandler <C-x> a:vim
 sethandler <C-y> a:vim
 
+" which-key settings
+set notimeout
+set timeoutlen=500
+let g:WhichKey_ShowVimActions = "true"
+let g:WhichKey_DefaultDelay = 600
+
+" General desc
+let g:WhichKeyDesc_yank_alle = "<leader>y General | Yank All"
+
 " Neccessary mappings
-nnoremap <leader><leader> <Action>(SearchEverywhere)
+nnoremap <leader><leader> :action SearchEverywhere<CR>
 let g:WhichKeyDesc_search_everywhere = "<leader>9 General | Search Everywhere"
 
 " source
-nnoremap <leader>9 :action IdeaVim.ReloadVimRc.reload
-let g:WhichKeyDesc_reload_config = "<leader>9 Special | Reload Config"
+nnoremap <leader>9 :action IdeaVim.ReloadVimRc.reload<CR>
+let g:WhichKeyDesc_reload_config = "<leader>9 General | Reload Config"
 
 " toggle which-key plugin
 let s:whichKeyEnabled = 0
@@ -81,7 +90,7 @@ function! WhichKeyToggle()
 endfunction
 
 nnoremap <leader>8 :call WhichKeyToggle()<cr>
-let g:WhichKeyDesc_toggle_which_key = "<leader>8 Special | Toggle WhichKey"
+let g:WhichKeyDesc_toggle_which_key = "<leader>8 General | Toggle WhichKey"
 
 " toggle line number relative
 function! NumberToggle()
@@ -96,23 +105,29 @@ nnoremap <leader>or :call NumberToggle()<cr>
 let g:WhichKeyDesc_toggle_relativenumber = "<leader>or Options | Toggle Relative Number"
 
 " Close buffer aka editor
-nnoremap <leader>c <Action>(CloseEditor)
+nnoremap <leader>c :action CloseEditor<CR>
 let g:WhichKeyDesc_close_editor = "<leader>c Close Editor"
-nnoremap <leader>C <Action>(CloseAllEditorsButActive)
+nnoremap <leader>C :action CloseAllEditorsButActive<CR>
 let g:WhichKeyDesc_close_other_editors = "<leader>C General | Close Other Editors"
-nnoremap <leader><C-c> <Action>(CloseAllEditors)
+nnoremap <leader><C-c> :action CloseAllEditors<CR>
 let g:WhichKeyDesc_close_all_editors = "<leader><C-c> General | Close All Editors"
 
 " Navigate
-nnoremap [m <Action>(MethodUp)
+nnoremap [m :action MethodUp<CR>
 let g:WhichKeyDesc_previous_method = "[m Previous | Method Start"
-nnoremap ]m <Action>(MethodDown)
+nnoremap ]m :action MethodDown<CR>
 let g:WhichKeyDesc_next_method = "[m Next | Method Start"
-nnoremap ]d <Action>(GotoNextError)
+nnoremap ]d :action GotoNextError<CR>
 let g:WhichKeyDesc_next_error = "]d General | Next Error"
-nnoremap [d <Action>(GotoPreviousError)
+nnoremap [d :action GotoPreviousError<CR>
 let g:WhichKeyDesc_previous_error = "[d General | Previous Error"
-nnoremap <leader>g] <Action>(JumpToLastChange)
+nnoremap <leader>g] :action JumpToLastChange<CR>
 let g:WhichKeyDesc_jump_to_last_change = "<leader>g] Git | Next Hunk"
-nnoremap <leader>g[ <Action>(JumpToNextChange)
+nnoremap <leader>g[ :action JumpToNextChange<CR>
 let g:WhichKeyDesc_jump_to_next_change = "<leader>g[ Git | Previous Hunk"
+
+" NERDTree
+nnoremap <leader>e :NERDTreeToggle<CR>
+let g:WhichKeyDesc_toggle_nerd_tree = "<leader>e General | Toggle NERDTree"
+nnoremap <C-n> :NERDTreeFocus<CR>
+let g:WhichKeyDesc_focus_nerd_tree = "<leader>e General | Focus NERDTree"
