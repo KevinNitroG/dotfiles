@@ -25,6 +25,7 @@ Places Icons Static Size=16
 
 [MainWindow]
 MenuBar=Disabled
+ToolBarsMovable=Disabled
 
 [MainWindow][Toolbar mainToolBar]
 IconSize=16
@@ -36,8 +37,6 @@ IconSize=16
 [PreviewSettings]
 Plugins=appimagethumbnail,audiothumbnail,comicbookthumbnail,cursorthumbnail,djvuthumbnail,ebookthumbnail,exrthumbnail,imagethumbnail,jpegthumbnail,kraorathumbnail,windowsexethumbnail,windowsimagethumbnail,opendocumentthumbnail,svgthumbnail,ffmpegthumbs
 
-[Search]
-Location=Everywhere
-
 [Toolbar mainToolBar]
 ToolButtonStyle=IconOnly
+

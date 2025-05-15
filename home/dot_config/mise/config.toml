@@ -1,6 +1,7 @@
 [tools]
 node = "latest"
 rust = "latest"
+yq = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []
