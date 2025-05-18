@@ -53,8 +53,8 @@
 (defalias
   caps (tap-hold-press 200 200 caps lctl)
   grv (tap-hold-press 200 200 grv (layer-toggle grv))
-  ; (tap-hold-press 200 200 ; lsft)
-  ' (tap-hold-press 200 200 ' lmet)
+  ; (tap-hold-press 200 200 ; lmet)
+  ' (tap-hold-press 200 200 ' lsft)
 
   ;; delete the current line
   dd (macro home S-end bspc)
