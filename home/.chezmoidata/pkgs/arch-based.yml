@@ -32,12 +32,14 @@ pkgs:
       # - "xsel"
       - "atac"
       - "bat"
+      - "ctags"
       - "doggo"
       - "exa"
       - "fd"
       - "fzf"
       - "gh"
       - "git-delta"
+      - "git-lfs"
       - "github-cli"
       - "glow"
       - "jq"
@@ -126,6 +128,7 @@ pkgs:
       - "usage" # For mise
       - "wtype"
       - "zathura-pdf-mupdf" # For zathura
+
     laptop:
       # - "gestures"
       # - "libinput-gestures"
