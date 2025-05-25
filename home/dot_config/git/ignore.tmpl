@@ -8,6 +8,8 @@ tag
 # Created by https://www.toptal.com/developers/gitignore/api/macos,windows,linux
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,linux
 
+{{ if eq .chezmoi.os "linux" }}
+
 ### Linux ###
 *~
 
@@ -22,6 +24,10 @@ tag
 
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
+
+{{ end }}
+
+{{ if eq .osId "darwin" }}
 
 ### macOS ###
 # General
@@ -56,6 +62,10 @@ Temporary Items
 # iCloud generated files
 *.icloud
 
+{{ end }}
+
+{{ if eq .osId "windows" }}
+
 ### Windows ###
 # Windows thumbnail cache files
 Thumbs.db
@@ -81,5 +91,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+{{ end }}
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,windows,linux
