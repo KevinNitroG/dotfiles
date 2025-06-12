@@ -91,6 +91,7 @@ pkgs:
       # - "fastfetch"
       # - "figlet" # A program for making large letters out of ordinary text
       # - "lolcat"
+      # - "astroterm"
 
       # Apps / Tools
       # - "authy-desktop-win32-bin"
