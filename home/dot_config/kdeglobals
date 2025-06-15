@@ -1,5 +1,5 @@
 [Colors:View]
-BackgroundNormal=#0F1A2A
+BackgroundNormal=#181824FF
 
 [General]
 TerminalApplication=/usr/bin/kitty
