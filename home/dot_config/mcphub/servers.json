@@ -1,34 +1,71 @@
 {
+  "nativeMCPServers": {
+    "mcphub": {
+      "disabled": false,
+      "disabled_resources": [
+        "mcphub://docs",
+        "mcphub://native_server_guide",
+        "mcphub://changelog"
+      ],
+      "disabled_tools": [
+        
+      ],
+      "autoApprove": [
+        
+      ],
+      "disabled_prompts": [
+        "create_native_server"
+      ]
+    },
+    "neovim": {
+      "disabled": false,
+      "autoApprove": [
+        
+      ],
+      "disabled_prompts": [
+        "parrot"
+      ]
+    }
+  },
   "mcpServers": {
-    "kubernetes": {
-      "args": [
-        "mcp-server-kubernetes"
-      ],
-      "command": "npx",
-      "disabled": true
-    },
-    "puppeteer": {
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-puppeteer"
-      ],
-      "command": "npx",
-      "disabled": true
-    },
     "filesystem": {
+      "command": "npx",
       "args": [
         "-y",
         "@modelcontextprotocol/server-filesystem",
         "/home/kevinnitro"
-      ],
-      "command": "npx"
+      ]
     },
     "fetch": {
+      "disabled": false,
+      "command": "uvx",
       "args": [
         "mcp-server-fetch"
-      ],
+      ]
+    },
+    "kubernetes": {
+      "disabled": true,
+      "command": "npx",
+      "args": [
+        "mcp-server-kubernetes"
+      ]
+    },
+    "puppeteer": {
+      "disabled": true,
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-puppeteer"
+      ]
+    },
+    "git": {
+      "disabled": true,
       "command": "uvx",
-      "disabled": false
+      "args": [
+        "mcp-server-git",
+        "--repository",
+        "/home/kevinnitro"
+      ]
     },
     "github": {
       "disabled": false,
@@ -36,32 +73,6 @@
       "headers": {
         "Authorization": "Bearer ${GITHUB_TOKEN}"
       }
-    },
-    "git": {
-      "args": [
-        "mcp-server-git",
-        "--repository",
-        "/home/kevinnitro"
-      ],
-      "command": "uvx",
-      "disabled": true
-    }
-  },
-  "nativeMCPServers": {
-    "neovim": {
-      "autoApprove": [
-        
-      ],
-      "disabled": false
-    },
-    "mcphub": {
-      "autoApprove": [
-        
-      ],
-      "disabled_prompts": [
-        "create_native_server"
-      ],
-      "disabled": false
     }
   }
 }
