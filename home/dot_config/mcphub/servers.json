@@ -1,0 +1,67 @@
+{
+  "mcpServers": {
+    "kubernetes": {
+      "args": [
+        "mcp-server-kubernetes"
+      ],
+      "command": "npx",
+      "disabled": true
+    },
+    "puppeteer": {
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-puppeteer"
+      ],
+      "command": "npx",
+      "disabled": true
+    },
+    "filesystem": {
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/home/kevinnitro"
+      ],
+      "command": "npx"
+    },
+    "fetch": {
+      "args": [
+        "mcp-server-fetch"
+      ],
+      "command": "uvx",
+      "disabled": false
+    },
+    "github": {
+      "disabled": false,
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer ${GITHUB_TOKEN}"
+      }
+    },
+    "git": {
+      "args": [
+        "mcp-server-git",
+        "--repository",
+        "/home/kevinnitro"
+      ],
+      "command": "uvx",
+      "disabled": true
+    }
+  },
+  "nativeMCPServers": {
+    "neovim": {
+      "autoApprove": [
+        
+      ],
+      "disabled": false
+    },
+    "mcphub": {
+      "autoApprove": [
+        
+      ],
+      "disabled_prompts": [
+        "create_native_server"
+      ],
+      "disabled": false
+    }
+  }
+}
