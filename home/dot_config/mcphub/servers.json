@@ -1,33 +1,40 @@
 {
-  "nativeMCPServers": {
-    "neovim": {
-      "disabled_prompts": [
-        "parrot"
-      ],
-      "disabled": false,
-      "autoApprove": [
-        
+  "mcpServers": {
+    "supabase-local": {
+      "disabled": true,
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "http://localhost:54323"
       ]
     },
-    "mcphub": {
-      "disabled_prompts": [
-        "create_native_server"
-      ],
-      "disabled": false,
-      "disabled_resources": [
-        "mcphub://docs",
-        "mcphub://native_server_guide",
-        "mcphub://changelog"
-      ],
-      "disabled_tools": [
-        
-      ],
-      "autoApprove": [
-        
+    "git": {
+      "disabled": true,
+      "command": "uvx",
+      "args": [
+        "mcp-server-git",
+        "--repository",
+        "/home/kevinnitro"
       ]
-    }
-  },
-  "mcpServers": {
+    },
+    "supabase": {
+      "disabled": true,
+      "command": "npx",
+      "args": [
+        "-y",
+        "@supabase/mcp-server-supabase@latest",
+        "--access-token",
+        "${SUPABASE_TOKEN}"
+      ]
+    },
+    "fetch": {
+      "disabled": false,
+      "command": "uvx",
+      "args": [
+        "mcp-server-fetch"
+      ]
+    },
     "filesystem": {
       "command": "npx",
       "args": [
@@ -36,62 +43,66 @@
         "/home/kevinnitro"
       ]
     },
-    "github": {
-      "headers": {
-        "Authorization": "Bearer ${GITHUB_TOKEN}"
-      },
-      "url": "https://api.githubcopilot.com/mcp/",
-      "disabled": false
-    },
-    "supabase-local": {
-      "command": "npx",
+    "vectorcode": {
+      "disabled": true,
+      "command": "uvx",
       "args": [
-        "-y",
-        "@modelcontextprotocol/server-postgres",
-        "http://localhost:54323"
-      ],
-      "disabled": true
-    },
-    "supabase": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@supabase/mcp-server-supabase@latest",
-        "--access-token",
-        "${SUPABASE_TOKEN}"
-      ],
-      "disabled": true
+        "--from=vectorcode",
+        "--with=vectorcode[mcp]",
+        "--index=https://download.pytorch.org/whl/cpu",
+        "--index-strategy=unsafe-best-match",
+        "vectorcode-mcp-server"
+      ]
     },
     "kubernetes": {
+      "disabled": true,
       "command": "npx",
       "args": [
         "mcp-server-kubernetes"
-      ],
-      "disabled": true
-    },
-    "git": {
-      "command": "uvx",
-      "args": [
-        "mcp-server-git",
-        "--repository",
-        "/home/kevinnitro"
-      ],
-      "disabled": true
-    },
-    "fetch": {
-      "command": "uvx",
-      "args": [
-        "mcp-server-fetch"
-      ],
-      "disabled": false
+      ]
     },
     "puppeteer": {
+      "disabled": true,
       "command": "npx",
       "args": [
         "-y",
         "@modelcontextprotocol/server-puppeteer"
+      ]
+    },
+    "github": {
+      "disabled": false,
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer ${GITHUB_TOKEN}"
+      }
+    }
+  },
+  "nativeMCPServers": {
+    "neovim": {
+      "disabled": false,
+      "disabled_prompts": [
+        "parrot"
       ],
-      "disabled": true
+      "autoApprove": [
+        
+      ]
+    },
+    "mcphub": {
+      "disabled": false,
+      "disabled_prompts": [
+        "create_native_server"
+      ],
+      "autoApprove": [
+        
+      ],
+      "disabled_resources": [
+        "mcphub://docs",
+        "mcphub://native_server_guide",
+        "mcphub://changelog"
+      ],
+      "disabled_tools": [
+        
+      ]
     }
   }
 }
