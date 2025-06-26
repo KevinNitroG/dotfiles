@@ -1,94 +1,6 @@
 {
-  "mcpServers": {
-    "supabase-local": {
-      "disabled": true,
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-postgres",
-        "http://localhost:54323"
-      ]
-    },
-    "git": {
-      "disabled": true,
-      "command": "uvx",
-      "args": [
-        "mcp-server-git",
-        "--repository",
-        "/home/kevinnitro"
-      ]
-    },
-    "supabase": {
-      "disabled": true,
-      "command": "npx",
-      "args": [
-        "-y",
-        "@supabase/mcp-server-supabase@latest",
-        "--access-token",
-        "${SUPABASE_TOKEN}"
-      ]
-    },
-    "fetch": {
-      "disabled": false,
-      "command": "uvx",
-      "args": [
-        "mcp-server-fetch"
-      ]
-    },
-    "filesystem": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-filesystem",
-        "/home/kevinnitro"
-      ]
-    },
-    "vectorcode": {
-      "disabled": true,
-      "command": "uvx",
-      "args": [
-        "--from=vectorcode",
-        "--with=vectorcode[mcp]",
-        "--index=https://download.pytorch.org/whl/cpu",
-        "--index-strategy=unsafe-best-match",
-        "vectorcode-mcp-server"
-      ]
-    },
-    "kubernetes": {
-      "disabled": true,
-      "command": "npx",
-      "args": [
-        "mcp-server-kubernetes"
-      ]
-    },
-    "puppeteer": {
-      "disabled": true,
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-puppeteer"
-      ]
-    },
-    "github": {
-      "disabled": false,
-      "url": "https://api.githubcopilot.com/mcp/",
-      "headers": {
-        "Authorization": "Bearer ${GITHUB_TOKEN}"
-      }
-    }
-  },
   "nativeMCPServers": {
-    "neovim": {
-      "disabled": false,
-      "disabled_prompts": [
-        "parrot"
-      ],
-      "autoApprove": [
-        
-      ]
-    },
     "mcphub": {
-      "disabled": false,
       "disabled_prompts": [
         "create_native_server"
       ],
@@ -102,7 +14,127 @@
       ],
       "disabled_tools": [
         
+      ],
+      "disabled": true
+    },
+    "neovim": {
+      "disabled_prompts": [
+        "parrot"
+      ],
+      "autoApprove": [
+        
+      ],
+      "disabled": false
+    }
+  },
+  "mcpServers": {
+    "github": {
+      "headers": {
+        "Authorization": "Bearer ${GITHUB_TOKEN}"
+      },
+      "url": "https://api.githubcopilot.com/mcp/",
+      "disabled": true
+    },
+    "kubernetes": {
+      "command": "npx",
+      "args": [
+        "mcp-server-kubernetes"
+      ],
+      "disabled": true
+    },
+    "time": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-time",
+        "--local-timezone=Asia/Ho_Chi_Minh"
+      ],
+      "disabled": true
+    },
+    "puppeteer": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-puppeteer"
+      ],
+      "disabled": true
+    },
+    "filesystem": {
+      "disabled": false,
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/home/kevinnitro"
+      ],
+      "autoApprove": [
+        
       ]
+    },
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ],
+      "disabled": false
+    },
+    "supabase": {
+      "disabled": false,
+      "command": "npx",
+      "args": [
+        "-y",
+        "@supabase/mcp-server-supabase@latest",
+        "--access-token",
+        "${SUPABASE_TOKEN}"
+      ],
+      "autoApprove": [
+        
+      ]
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-fetch"
+      ],
+      "disabled": true
+    },
+    "supabase-local": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "http://localhost:54323"
+      ],
+      "disabled": true
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "disabled": true
+    },
+    "git": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-git",
+        "--repository",
+        "/home/kevinnitro"
+      ],
+      "disabled": true
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@executeautomation/playwright-mcp-server"
+      ],
+      "disabled": true
+    },
+    "vectorcode": {
+      "command": "vectorcode-mcp-server",
+      "disabled": true
     }
   }
 }
