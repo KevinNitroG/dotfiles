@@ -1,6 +1,8 @@
 [tools]
+go = "latest"
 node = "latest"
 rust = "latest"
+uv = "latest"
 yq = "latest"
 
 [settings]
