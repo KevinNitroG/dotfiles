@@ -58,12 +58,10 @@
 
 ### Neovim
 
-| **Linux**                                         | **Windows**                                           |
-| ------------------------------------------------- | ----------------------------------------------------- |
-| ![Linux Neovim](./assets/images/linux/neovim.png) | ![Windows Neovim](./assets/images/windows/neovim.png) |
+![Neovim image](./assets/images/neovim.png)
 
 > [!NOTE]
-> Neovim config <https://github.com/KevinNitroG/nvim>
+> Neovim config <https://github.com/uitdots/nvim>
 
 ---
 
