@@ -216,6 +216,7 @@ alias cmra='chezmoi re-add'
 # Tmux
 alias t='tmux'
 alias ta='tmux has-session &>/dev/null && tmux attach || tmux new-session'
+alias tks='tmux kill-server'
 
 # ChatGPT gen it for me :(
 yzcd() {
