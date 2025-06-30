@@ -34,7 +34,7 @@
 
 {{ $shell := "" }}
 {{ $terminalFontSize := 13 }}
-{{ $terminalBlur := "0.8" }}
+{{ $opacity := "0.8" }}
 {{ $theme := "dark" }}
 {{ $catppuccinLightFlavour := "latte" }}
 {{ $catppuccinDarkFlavour := "mocha" }}
@@ -59,7 +59,7 @@
 
 {{ if stdinIsATTY }}
   {{ $terminalFontSize = promptInt "Enter terminal font size" 13 }}
-  {{ $terminalBlur = promptString "Enter terminal blur (float)" "0.8" }}
+  {{ $opacity = promptString "Enter terminal blur (float)" "0.8" }}
   {{ $theme = promptChoice "Theme" $themes "dark" }}
   {{ $catppuccinLightFlavour = promptChoice "Catppuccin flavor for light mode" $catppuccinFlavors "latte" }}
   {{ $catppuccinDarkFlavour = promptChoice "Catppuccin flavor for dark mode" $catppuccinFlavors "mocha" }}
@@ -92,13 +92,16 @@
   {{ $catppuccinFlavor = $catppuccinLightFlavour }}
 {{ end }}
 
+{{ $transparent := ne $opacity "1" }}
+
 encryption = "age" # or gpg
 mode = "file" # file, symlink
 progress = true
 
 [data]
 terminalFontSize = {{ $terminalFontSize }}
-terminalBlur = {{ $terminalBlur }}
+opacity = {{ $opacity }}
+transparent = {{ $transparent }}
 theme = {{ $theme | quote }}
 catppuccinLightFlavour = {{ $catppuccinLightFlavour | quote }}
 catppuccinDarkFlavour = {{ $catppuccinDarkFlavour | quote }}

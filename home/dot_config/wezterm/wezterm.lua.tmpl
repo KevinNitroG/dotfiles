@@ -43,7 +43,7 @@ config.font = wezterm.font_with_fallback({
 })
 config.font_size = {{ .terminalFontSize }}
 config.line_height = 1.1
-config.window_background_opacity = {{ .terminalBlur }}
+config.window_background_opacity = {{ .opacity }}
 config.window_decorations = "TITLE | RESIZE" -- INTEGRATED_BUTTONS, RESIZE, TITLE, NONE
 config.window_padding = {
 	left = 5,
@@ -76,7 +76,7 @@ config.default_workspace = "main"
 {{ if eq .osId "window" }}
 config.win32_system_backdrop = "Acrylic" -- Auto, Disabled, Acrylic, Mica, Tabbed
 {{ end }}
-config.window_background_opacity = {{ .terminalBlur }}
+config.window_background_opacity = {{ .opacity }}
 config.initial_cols = 138
 config.initial_rows = 28
 -- config.front_end = "WebGpu" -- OpenGL, WebGpu, Software
