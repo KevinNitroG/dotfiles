@@ -1,9 +1,11 @@
 [tools]
 go = "latest"
+java = "latest"
 node = "latest"
 rust = "latest"
 uv = "latest"
 yq = "latest"
+gradle = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []

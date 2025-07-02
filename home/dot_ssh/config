@@ -1,5 +1,8 @@
 # vim:ft=sshconfig.chezmoitmpl
 
+ForwardX11 yes
+ForwardX11Trusted yes
+
 Host *
   ServerAliveInterval 86400
   ServerAliveCountMax 4
@@ -18,3 +21,8 @@ Host ngen
 Host idx
   HostName idx-as
   User user
+
+Host 192.168.28.*
+  SetEnv TERM=screen-256color # Set term for it
+  StrictHostKeyChecking no # Disable host key verification
+  UserKnownHostsFile /dev/null # Prevent adding to known_hosts file
