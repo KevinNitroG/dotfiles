@@ -69,6 +69,20 @@
   {{ end }}
 {{ end }}
 
+{{ $duckdnsDomains := list
+     "none"
+     "main"
+     "home"
+}}
+{{ $duckdnsDomain := promptChoice "Choose duckdns to setup cron" $duckdnsDomains "none" }}
+{{ if eq $duckdnsDomain "none" }}
+  {{ $duckdnsDomain = "" }}
+{{ else if eq $duckdnsDomain "main" }}
+  {{ $duckdnsDomain = "kevinnitro" }}
+{{ else if eq $duckdnsDomain "home" }}
+  {{ $duckdnsDomain = "kevinnitrohome" }}
+{{ end }}
+
 {{/* Semi prompts or auto */}}
 
 {{ if lookPath "hostnamectl" }}
@@ -113,6 +127,7 @@ sshId = {{ $sshId | quote }}
 osId = {{ $osId | quote }}
 useHyde = {{ $useHyde }}
 isLaptop = {{ $isLaptop }}
+duckdnsDomain = {{ $duckdnsDomain | quote }}
 
 [data.catppuccin]
 accentColors = [ {{ $catppuccinAccentColors | quoteList | join ", " }} ]

@@ -7,7 +7,7 @@ Type=forking
 ; Environment=DISPLAY=:0
 ExecStart=zsh -l -c 'tmux has-sesssion &>/dev/null || tmux new-session -d'
 
-ExecStop=/home/kevinnitro/.config/tmux/plugins/tmux-resurrect/scripts/save.sh
+ExecStop=%h/.config/tmux/plugins/tmux-resurrect/scripts/save.sh
 ExecStop=/usr/bin/tmux kill-server
 KillMode=control-group
 

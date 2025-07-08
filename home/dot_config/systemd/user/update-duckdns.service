@@ -1,0 +1,14 @@
+[Unit]
+Description=Update DuckDNS IP periodically
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/update_duckdns.sh
+
+[Timer]
+OnCalendar=*:0/5
+Persistent=true
+
+[Install]
+WantedBy=timers.target

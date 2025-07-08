@@ -3,10 +3,9 @@ Description=Kanata keyboard remapper
 Documentation=https://github.com/jtroo/kanata
 
 [Service]
-Environment=PATH=/usr/local/bin:/usr/local/sbin:/usr/bin:/bin
 Environment=DISPLAY=:0
 Type=simple
-ExecStart=/usr/bin/sh -c 'exec $$(which kanata) --cfg $${HOME}/.config/kanata/config.kbd'
+ExecStart=/usr/bin/sh -c 'exec $$(which kanata) --cfg %h/.config/kanata/config.kbd'
 Restart=on-failure
 RestartSec=5s
 

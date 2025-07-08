@@ -6,6 +6,10 @@ if ! command -v rclone &>/dev/null; then
   exit
 fi
 
+if ! command -v systemctl &>/dev/null; then
+  exit
+fi
+
 echo "SETUP MOUNTING RCLONE DRIVE..."
 mkdir -p "$HOME/mount/rclone-drives" || true
 systemctl --user start rclone-drives

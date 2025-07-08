@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# shellcheck disable=all
+
+set -eufo pipefail
+
+if ! command -v systemctl &>/dev/null; then
+  exit
+fi
+
+{{ if ne .duckdnsDomain "" }}
+echo 'ENABLING UPDATE DUCKDNS...'
+systemctl --user enable update-duckdns.service
+{{ else }}
+echo 'DISABLING UPDATE DUCKDNS...'
+systemctl --user disable update-duckdns.service
+{{ end }}

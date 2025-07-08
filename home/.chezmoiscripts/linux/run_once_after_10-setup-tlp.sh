@@ -6,6 +6,10 @@ if ! command -v tlp &>/dev/null; then
   exit
 fi
 
+if ! command -v systemctl &>/dev/null; then
+  exit
+fi
+
 echo 'CONFIGURING TLP...'
 sudo rm /etc/tlp.conf || true
 sudo ln -s ~/.config/tlp/tlp.conf /etc/tlp.conf

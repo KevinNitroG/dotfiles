@@ -128,3 +128,6 @@ export JAVA_OPTS='-Xmx8g'
 
 # CUSTOM
 export CATPPUCCIN_FLAVOR='{{ .catppuccinFlavor }}' # For those config can read env
+{{- if ne .duckdnsDomain "" }}
+export DUCKDNS_DOMAIN='{{ .duckdnsDomain }}'
+{{- end }}
