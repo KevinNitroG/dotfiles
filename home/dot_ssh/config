@@ -22,6 +22,11 @@ Host idx
   HostName idx-as
   User user
 
+# My modem?
+Host 192.168.1.1
+  HostKeyAlgorithms=+ssh-rsa
+  PubkeyAcceptedAlgorithms=+ssh-rsa
+
 Host 192.168.28.*
   SetEnv TERM=screen-256color # Set term for it
   StrictHostKeyChecking no # Disable host key verification
