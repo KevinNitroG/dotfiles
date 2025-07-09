@@ -76,6 +76,7 @@ declare -A _EVALX_COMMANDS=(
   [source_docker_completion]='source <(docker completion zsh)'
   [source_just_completion]='source <(just --completions zsh)'
   [source_k3s_completion]='source <(k3s completion zsh)'
+  [source_kubectl_completion]='source <(kubectl completion zsh)'
   [source_npm_completion]='source <(npm completion)'
   [source_python_venv]='source .venv/bin/activate'
   [source_railway_completion]='source <(railway completion zsh)'
@@ -267,6 +268,7 @@ if has kubectl; then
   alias k='kubectl'
 elif has k3s; then
   alias k='k3s kubectl'
+  alias kubectl='k3s kubectl'
 fi
 
 # Others
