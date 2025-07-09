@@ -102,9 +102,8 @@ declare -A _EVALX_COMMANDS=(
 
 evalx() {
   local commands=$(printf "%s\n" "${(@k)_EVALX_COMMANDS}" | fzf --multi)
-  for key in "${commands[@]}"
-  do
-    eval "${_EVALX_COMMANDS[$key]}"
+  printf "%s\n" "${commands[@]}" | while read -r cmd; do
+    eval "${_EVALX_COMMANDS[$cmd]}"
   done
 }
 
