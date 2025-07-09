@@ -266,7 +266,7 @@ fi
 if has kubectl; then
   alias k='kubectl'
 elif has k3s; then
-  alias k='k3s kubectl --'
+  alias k='k3s kubectl'
 fi
 
 # Others
