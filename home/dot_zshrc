@@ -15,6 +15,7 @@ plugins=(
 
   # wakatime
   archlinux
+  command-not-found
   docker
   docker-compose
   dotenv
@@ -22,15 +23,18 @@ plugins=(
   fzf-tab
   gh
   git
+  gradle
+  kubectl
+  minikube
+  mise
   sudo
   tmux
   zoxide
   zsh-256color
   zsh-autosuggestions
-  zsh-syntax-highlighting
-  command-not-found
   zsh-better-npm-completion
-  gradle
+  zsh-syntax-highlighting
+  starship
 
   history-substring-search # Always below zsh-syntax-highlighting
 
@@ -53,6 +57,7 @@ fi
 
 has() {
   command -v $1 >/dev/null
+  # (($+command["$1"])) # the command is the hash table
 }
 
 # EVALX
@@ -255,6 +260,13 @@ if has dolphin; then
   function e() {
     dolphin "$@" &
   }
+fi
+
+# Kubernetes
+if has kubectl; then
+  alias k='kubectl'
+elif has k3s; then
+  alias k='k3s kubectl'
 fi
 
 # Others
@@ -460,13 +472,4 @@ if has fastfetch; then
   fastfetch
 fi
 
-if has starship; then
-  eval "$(starship init zsh)"
-fi
-
-if has mise; then
-  eval "$(mise activate zsh)"
-fi
-
 [[ -f /home/kevinnitro/.config/.dart-cli-completion/zsh-config.zsh ]] && . /home/kevinnitro/.config/.dart-cli-completion/zsh-config.zsh || true
-
