@@ -60,52 +60,7 @@ has() {
   # (($+command["$1"])) # the command is the hash table
 }
 
-# EVALX
-declare -A _EVALX_COMMANDS=(
-  [clean_flatpak]='flatpak uninstall --unused'
-  [clean_pacman]='sudo pacman -Scc'
-  [create_python_venv]='python -m venv .venv'
-  [echo_key_press]='echo $(read -k 1)'
-  [get_my_ip]='curl http://ifconfig.me/ip && echo'
-  [git_clean_repo]='git reflog expire --expire=now --all && git gc --prune=now --aggressive'
-  [git_fetch_prune]='git fetch --prune'
-  [pacman_log]='bat /var/log/pacman.log'
-  [restart_kanata_service]='systemctl --user restart kanata.service'
-  [source_Hyde_completion]='source Hyde.zsh'
-  [source_chezmoi_completion]='source <(chezmoi completion zsh)'
-  [source_docker_completion]='source <(docker completion zsh)'
-  [source_just_completion]='source <(just --completions zsh)'
-  [source_k3s_completion]='source <(k3s completion zsh)'
-  [source_kubectl_completion]='source <(kubectl completion zsh)'
-  [source_npm_completion]='source <(npm completion)'
-  [source_python_venv]='source .venv/bin/activate'
-  [source_railway_completion]='source <(railway completion zsh)'
-  [source_warp_cli_completion]='source <(warp-cli generate-completions zsh)'
-  [start_docker_desktop_service]='systemctl --user start docker-desktop'
-  [start_docker_service]='sudo systemctl start docker.service docker.socket'
-  [start_k3s_agent_service]='sudo systemctl start k3s-agent.service'
-  [start_k3s_service]='sudo systemctl start k3s.service'
-  [start_libvirtd_service]='sudo systemctl start libvirtd.service'
-  [start_mysql_service]='sudo systemctl start mysqld.service'
-  [start_ssh_agent]='eval "$(ssh-agent -s)"'
-  [start_sshd_service]='sudo systemctl start sshd.service'
-  [start_tailscale_service]='sudo systemctl start tailscaled.service'
-  [stop_docker_desktop_service]='systemctl --user stop docker-desktop'
-  [stop_docker_service]='sudo systemctl stop docker.service docker.socket'
-  [stop_k3s_agent_service]='sudo systemctl stop k3s-agent.service'
-  [stop_k3s_service]='sudo systemctl stop k3s.service'
-  [stop_libvirtd_service]='sudo systemctl stop libvirtd.service'
-  [stop_mysql_service]='sudo systemctl stop mysqld.service'
-  [stop_sshd_service]='sudo systemctl stop sshd.service'
-  [stop_tailscale_service]='sudo systemctl stop tailscaled.service'
-)
-
-evalx() {
-  local commands=$(printf "%s\n" "${(@k)_EVALX_COMMANDS}" | fzf --multi)
-  printf "%s\n" "${commands[@]}" | while read -r cmd; do
-    eval "${_EVALX_COMMANDS[$cmd]}"
-  done
-}
+alias ev='source evalx.sh'
 
 clean_all() {
   if has pacman; then
@@ -265,11 +220,8 @@ if has dolphin; then
 fi
 
 # Kubernetes
-if has kubectl; then
-  alias k='kubectl'
-elif has k3s; then
-  alias k='k3s kubectl'
-  alias kubectl='k3s kubectl'
+if has k3s; then
+  alias kk='k3s kubectl'
 fi
 
 # Others
@@ -332,19 +284,20 @@ _fzf_get_path_using_rg() {
   local RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
   local INITIAL_QUERY="${*:-}"
   local input_path=$(
-    fzf --ansi --disabled --query "$INITIAL_QUERY" \
-      --bind "enter:become(echo {1})" \
-      --bind "start:reload:$RG_PREFIX {q}" \
-      --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
-      --bind 'ctrl-s:transform:[[ ! $FZF_PROMPT =~ ripgrep ]] &&
+    fzf --ansi --disabled \
+      --query="$INITIAL_QUERY" \
+      --bind="enter:become(echo {1})" \
+      --bind="start:reload:$RG_PREFIX {q}" \
+      --bind="change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
+      --bind='ctrl-s:transform:[[ ! $FZF_PROMPT =~ ripgrep ]] &&
       echo "rebind(change)+change-prompt(1. ripgrep> )+disable-search+transform-query:echo \{q} > /tmp/rg-fzf-f; cat /tmp/rg-fzf-r" ||
     echo "unbind(change)+change-prompt(2. fzf> )+enable-search+transform-query:echo \{q} > /tmp/rg-fzf-r; cat /tmp/rg-fzf-f"' \
-      --color "hl:-1:underline,hl+:-1:underline:reverse" \
-      --prompt '1. ripgrep> ' \
-      --delimiter : \
-      --header 'CTRL-S: Switch between ripgrep/fzf' \
-      --preview 'bat --color=always {1} --highlight-line {2} --style=plain' \
-      --preview-window 'up,60%,border-bottom,+{2}+3/3'
+      --color='hl:-1:underline,hl+:-1:underline:reverse' \
+      --prompt='1. ripgrep> ' \
+      --delimiter=':' \
+      --header='CTRL-S: Switch between ripgrep/fzf' \
+      --preview='bat --color=always {1} --highlight-line {2} --style=plain' \
+      --preview-window='up,60%,border-bottom,+{2}+3/3'
   )
   echo "$input_path"
 }
