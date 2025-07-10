@@ -11,7 +11,7 @@
 
 # LIST OF PLUGINS TO USE IN OH-MY-ZSH
 plugins=(
-  zsh-vi-mode
+  # zsh-vi-mode
 
   # wakatime
   archlinux
@@ -39,8 +39,8 @@ plugins=(
   history-substring-search # Always below zsh-syntax-highlighting
 
   # Have to load after zsh-vi-mode
-  # fancy-ctrl-z
-  # fzf
+  fancy-ctrl-z
+  fzf
   # zsh-autocomplete
 )
 source $ZSH/oh-my-zsh.sh
@@ -241,6 +241,8 @@ yzcd() {
   rm "$tmp"
 }
 
+bindkey '^d' fdg
+
 # Cd
 alias cdc='cd ~/.config/'
 alias cdcm='cd ~/.local/share/chezmoi/'
@@ -367,7 +369,7 @@ rgg() {
 #   zle reset-prompt
 #   return $ret
 # }
-# zle -N fdg
+zle -N fdg
 #
 # rgg() {
 #   local output=$(__fzf_open_path "$(__fzf_get_path_using_rg)" 'true')
@@ -378,10 +380,10 @@ rgg() {
 #   zle reset-prompt
 #   return $ret
 # }
-# zle -N rgg
-#
-# bindkey '^F' fdg
-# bindkey '^G' rgg
+zle -N rgg
+
+bindkey '^f' fdg
+bindkey '^g' rgg
 
 
 ##########################################
@@ -449,22 +451,23 @@ get_wifi_password() {
 
 # KEYBINDINGS
 
-function zvm_after_init() {
-  zvm_bindkey viins '^p' history-substring-search-up
-  zvm_bindkey viins '^n' history-substring-search-down
-  zvm_bindkey viins '^H' backward-kill-word
-  [ -f "$ZSH/plugins/fzf/fzf.plugin.zsh" ] && source "$ZSH/plugins/fzf/fzf.plugin.zsh"
-  [ -f "$ZSH/plugins/fancy-ctrl-z/fancy-ctrl-z.plugin.zsh" ] && source "$ZSH/plugins/fancy-ctrl-z/fancy-ctrl-z.plugin.zsh"
-}
-
-function zvm_after_lazy_keybindings() {
-  zvm_define_widget rgg
-  zvm_define_widget fdg
-
-  bindkey -M vicmd -s '^d' 'iyzcd\n' # yazi doesn't like to... :v
-  zvm_bindkey vicmd '^g' rgg
-  zvm_bindkey vicmd '^f' fdg
-}
+# Disable these because I no longer use zsh-vi-mode
+# function zvm_after_init() {
+#   zvm_bindkey viins '^p' history-substring-search-up
+#   zvm_bindkey viins '^n' history-substring-search-down
+#   zvm_bindkey viins '^H' backward-kill-word
+#   [ -f "$ZSH/plugins/fzf/fzf.plugin.zsh" ] && source "$ZSH/plugins/fzf/fzf.plugin.zsh"
+#   [ -f "$ZSH/plugins/fancy-ctrl-z/fancy-ctrl-z.plugin.zsh" ] && source "$ZSH/plugins/fancy-ctrl-z/fancy-ctrl-z.plugin.zsh"
+# }
+#
+# function zvm_after_lazy_keybindings() {
+#   zvm_define_widget rgg
+#   zvm_define_widget fdg
+#
+#   bindkey -M vicmd -s '^d' 'iyzcd\n' # yazi doesn't like to... :v
+#   zvm_bindkey vicmd '^g' rgg
+#   zvm_bindkey vicmd '^f' fdg
+# }
 
 ##########################################
 
