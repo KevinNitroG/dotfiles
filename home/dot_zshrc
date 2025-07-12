@@ -203,7 +203,7 @@ alias cdc='cd ~/.config/'
 alias cdcm='cd ~/.local/share/chezmoi/'
 alias cdd='cd ~/Documents/'
 alias cddl='cd ~/Downloads/'
-alias cdg='cd ~/gits/'
+alias cdp='cd ~/projects/'
 alias cdnv='cd ~/.config/nvim/'
 
 # Copy, move
