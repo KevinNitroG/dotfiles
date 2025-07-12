@@ -51,8 +51,8 @@
 )
 
 (defalias
-  lctl (tap-hold-press 100 150 caps lctl)
-  caps (tap-hold-press 200 100 esc lctl)
+  lctl (tap-hold-press 200 200 caps lctl)
+  caps (tap-hold-press 200 200 esc lctl)
   grv (tap-hold-press 200 200 grv (layer-toggle grv))
   ; (tap-hold-press 200 200 ; lmet)
   ' (tap-hold-press 200 200 ' lsft)
