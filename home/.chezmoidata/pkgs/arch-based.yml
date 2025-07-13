@@ -8,11 +8,12 @@ pkgs:
       - "git"
       - "kanata-bin" # Change keyboard func
       - "lazygit"
-      - "tmux"
-      - "wget"
-      - "zsh"
-      - "xorg-xhost"
       - "os-prober"
+      - "tmux"
+      - "tmuxinator"
+      - "wget"
+      - "xorg-xhost"
+      - "zsh"
 
       # Terminal
       # - "alacritty"
