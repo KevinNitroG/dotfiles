@@ -12,9 +12,11 @@
 # LIST OF PLUGINS TO USE IN OH-MY-ZSH
 plugins=(
   # zsh-vi-mode
+  mise
 
   # wakatime
   archlinux
+  argocd
   command-not-found
   docker
   docker-compose
@@ -26,16 +28,15 @@ plugins=(
   gradle
   kubectl
   minikube
-  mise
+  starship
   sudo
   tmux
   tmuxinator
   zoxide
-  zsh-256color
   zsh-autosuggestions
   zsh-better-npm-completion
   zsh-syntax-highlighting
-  starship
+  zsh-256color
 
   history-substring-search # Always below zsh-syntax-highlighting
 
