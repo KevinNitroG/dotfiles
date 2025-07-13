@@ -29,6 +29,7 @@ plugins=(
   mise
   sudo
   tmux
+  tmuxinator
   zoxide
   zsh-256color
   zsh-autosuggestions
