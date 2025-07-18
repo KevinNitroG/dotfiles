@@ -36,7 +36,7 @@
   cob = checkout -b
   db = branch -D
   lsb = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
-  save = !git add -A && git commit -m \"chore(save): $(curl -s -f https://whatthecommit.com/index.txt || \"save point\")\" ; magic commit
+  save = "!git add -A && MSG=$(curl -s -f https://whatthecommit.com/index.txt || 'save point') && git commit -m \"chore(save): ${MSG}\""
   done = push origin HEAD ; lazy to push
   f = !git save && git done ; finish
   undo = reset HEAD~1 --mixed
