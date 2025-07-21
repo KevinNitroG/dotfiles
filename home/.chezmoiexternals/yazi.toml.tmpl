@@ -1,0 +1,43 @@
+[".config/yazi/theme.toml"]
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/yazi/refs/heads/main/themes/mocha/catppuccin-{{ .catppuccinFlavor }}-{{ .catppuccinAccentColor }}.toml"
+
+[".config/yazi/Catppuccin-{{ .catppuccinFlavor }}.tmTheme"]
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/bat/main/themes/Catppuccin%20{{ .catppuccinFlavorTitle }}.tmTheme"
+
+[".config/yazi/plugins/toggle-view.yazi"]
+type = "git-repo"
+url = "https://github.com/dawsers/toggle-view.yazi"
+{{ .externalGitArgs }}
+
+[".config/yazi/plugins/glow.yazi"]
+type = "git-repo"
+url = "https://github.com/Reledia/glow.yazi"
+{{ .externalGitArgs }}
+
+[".config/yazi/plugins/eza-preview.yazi"]
+type = "git-repo"
+url = "https://github.com/sharklasers996/eza-preview.yazi"
+{{ .externalGitArgs }}
+
+[".config/yazi/plugins/relative-motions.yazi"]
+type = "git-repo"
+url = "https://github.com/dedukun/relative-motions.yazi"
+{{ .externalGitArgs }}
+
+[".config/yazi/plugins/compress.yazi"]
+type = "git-repo"
+url = "https://github.com/KKV9/compress.yazi"
+{{ .externalGitArgs }}
+
+[".config/yazi/plugins/what-size.yazi"]
+type = "git-repo"
+url = "https://github.com/pirafrank/what-size.yazi"
+{{ .externalGitArgs }}
+
+[".config/yazi/plugins"]
+type = "archive"
+url = "https://github.com/yazi-rs/plugins/archive/refs/heads/main.zip"
+stripComponents = 1
+include = ["*/git.yazi/**", "*/max-preview.yazi/**"]

@@ -1,0 +1,27 @@
+dynamic_background_opacity yes
+background_opacity {{ .opacity }}
+confirm_os_window_close 0
+cursor_blink_interval 0
+cursor_trail 1
+cursor_trail_decay 0.05 0.15
+cursor_trail_start_threshold 50
+enable_audio_bell no
+font_family JetBrainsMono Nerd Font
+font_size {{ .terminalFontSize }}
+hide_window_decorations no
+wayland_enable_ime yes
+window_alert_on_bell no
+window_padding_width 5
+tab_bar_style powerline
+tab_powerline_style round
+tab_bar_edge top
+
+include themes/{{ .catppuccinFlavor }}.conf
+
+map kitty_mod+f1 show_kitty_env_vars
+map kitty_mod+right set_background_opacity +0.1
+map kitty_mod+left set_background_opacity -0.1
+map kitty_mod+t new_tab_with_cwd
+map kitty_mod+enter new_window_with_cwd
+map kitty_mod+equal change_font_size all +1.0
+map kitty_mod+minus change_font_size all -1.0

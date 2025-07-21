@@ -1,0 +1,16 @@
+{{ $themePath := "" }}
+{{ if eq .osId "windows" }}
+  {{ $themePath = printf "C:/Users/kevinnitro/AppData/Local/glow/Config/themes/catppuccin-%s.json" .catppuccinFlavor }}
+{{ else }}
+  {{ $themePath = printf "~/.config/glow/themes/catppuccin-%s.json" .catppuccinFlavor }}
+{{ end }}
+# style name or JSON path (default "auto")
+style: {{ $themePath }}
+# show local files only; no network (TUI-mode only)
+local: true
+# mouse support (TUI-mode only)
+mouse: true
+# use pager to display markdown
+pager: true
+# word-wrap at width
+width: 80

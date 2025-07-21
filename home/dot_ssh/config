@@ -1,0 +1,33 @@
+# vim:ft=sshconfig.chezmoitmpl
+
+ForwardX11 yes
+ForwardX11Trusted yes
+
+Host *
+  ServerAliveInterval 86400
+  ServerAliveCountMax 4
+  Port 22
+  IdentityFile ~/.ssh/id_ed25519
+
+Host github.com
+  User git
+  PreferredAuthentications publickey
+
+Host ngen
+  HostName ntgnguyen.tailf6edf3.ts.net
+  User ntgnguyen
+  Port 22
+
+Host idx
+  HostName idx-as
+  User user
+
+# My modem?
+Host 192.168.1.1
+  HostKeyAlgorithms=+ssh-rsa
+  PubkeyAcceptedAlgorithms=+ssh-rsa
+
+Host 192.168.28.*
+  SetEnv TERM=screen-256color # Set term for it
+  StrictHostKeyChecking no # Disable host key verification
+  UserKnownHostsFile /dev/null # Prevent adding to known_hosts file

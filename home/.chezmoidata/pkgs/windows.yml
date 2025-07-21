@@ -1,0 +1,155 @@
+pkgs:
+  windows:
+    scoop:
+      buckets:
+        - "main"
+        - "extras"
+        - "nonportable"
+        - "sysinternals"
+        - "java"
+        - "nerd-fonts"
+        - "versions"
+        # - "neorocks-scoop" # https://github.com/nvim-neorocks/rocks-scoop.git
+      pkgs:
+        - "main/git"
+        - "main/chezmoi"
+        - "main/pwsh"
+
+        # Languages,...
+        # - "java/oraclejre8"
+        # - "main/docker"
+        # - "main/docker-compose"
+        # - "main/gdb"
+        # - "main/go"
+        # - "main/llvm"
+        # - "main/lua"
+        # - "main/mingw"
+        # - "main/nodejs"
+        # - "main/python"
+        # - "main/rust"
+        - "main/mise"
+
+        # Fonts
+        - "nerd-fonts/JetBrainsMono-NF"
+        - "nerd-fonts/Noto-NF"
+
+        # Completion
+        - "extras/dockercompletion"
+        - "extras/scoop-completion"
+
+        # Neccessary
+        # - "extras/windows-terminal"
+        # - "main/openssh"
+        # - "main/winget"
+        # - "neorocks-scoop/luarocks" # For nvim lazy, rest.nvim
+        - "extras/winrar"
+        - "main/7zip"
+        - "main/unrar"
+        - "main/wget"
+
+        # Editors
+        # - "extra/sublime-text"
+        # - "extras/alacritty"
+        # - "extras/windows-terminal"
+        - "extras/vscode"
+        - "main/neovim"
+
+        # CLI tools
+        # - "extra/jqp"
+        # - "extras/terminal-icons"
+        # - "main/actionlint"
+        # - "main/file" # for yazi, but use in git instead
+        # - "main/gnupg"
+        # - "main/gpg" # Use default builtin gpg of git
+        # - "main/grep"
+        # - "main/lf"
+        # - "main/oh-my-posh"
+        # - "main/sed"
+        # - "main/touch"
+        - "extras/autohotkey"
+        - "extras/keyviz"
+        - "extras/komorebi"
+        - "extras/lazygit"
+        - "extras/posh-git"
+        - "extras/psfzf"
+        - "extras/psreadline"
+        - "extras/yasb"
+        - "main/adb"
+        - "main/bat"
+        - "main/bottom"
+        - "main/delta"
+        - "main/eza"
+        - "main/fastfetch"
+        - "main/fd"
+        - "main/ffmpeg"
+        - "main/fzf"
+        - "main/gh"
+        - "main/glow"
+        - "main/goodbyedpi"
+        - "main/gzip"
+        - "main/jq"
+        - "main/lazydocker"
+        - "main/poppler"
+        - "main/rclone"
+        - "main/ripgrep"
+        - "main/sd"
+        - "main/starship"
+        - "main/sudo"
+        - "main/tldr"
+        - "main/unar"
+        - "main/vivetool"
+        - "main/wakatime-cli"
+        - "main/xh"
+        - "main/yazi"
+        - "main/yq"
+        - "main/yq"
+        - "main/yt-dlp"
+        - "main/zoxide"
+        - "sysinternals/whois"
+
+        # Others
+        # - "extra/spotify"
+        # - "extras/everything"
+        # - "extras/spicetify-themes"
+        # - "main/spicetify-cli"
+        # - "nonportable/parsec-np"
+        # - "extras/anydesk"
+        - "extras/hoppscotch"
+        - "extras/obs-studio"
+        - "extras/powertoys"
+        - "extras/silentcmd"
+        - "extras/vlc"
+        - "extras/winaero-tweaker"
+
+        # Other for...
+        # - "extras/putty"
+        # - "extras/qbittorrent-enhanced"
+        # - "extras/v2rayn"
+        # - "main/uutils-coreutils"
+        # - "extras/winscp"
+        - "main/openssl"
+        - "nonportable/k-lite-codec-pack-standard-np"
+        - "nonportable/winfsp-np" # For rclone
+      importRegistry:
+        # - '$env:USERPROFILE\scoop\apps\windows-terminal\current\install-context.reg'
+        - '$env:USERPROFILE\scoop\apps\pwsh\current\install-explorer-context.reg'
+        - '$env:USERPROFILE\scoop\apps\pwsh\current\install-file-context.reg'
+        - '$env:USERPROFILE\scoop\apps\7zip\current\install-context.reg'
+    choco:
+      # - "everythingpowertoys"
+      # - "ultraviewer"
+      - "internet-download-manager"
+      - "itunes"
+      - "tailscale"
+      - "warp"
+    winget:
+      - "XP8C9QZMS2PC1T" # Brave
+      - "Microsoft.WindowsTerminal" # Windows terminal stable
+      # - "AmN.yasb" # YASB
+    psGallery:
+      # - "DockerCompletion"
+      # - "PsReadLine"
+      # - "Terminal-Icons"
+      # - "posh-git"
+      # - "posh-wakatime"
+      - "CompletionPredictor"

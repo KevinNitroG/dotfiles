@@ -1,0 +1,59 @@
+# https://alacritty.org/config-alacritty.html
+
+[general]
+import = [
+"themes/catppuccin-{{ .catppuccinFlavor }}.toml"
+]
+live_config_reload = true
+
+[env]
+TERM = "xterm-256color"
+TERMINAL = "alacritty"
+
+[terminal]
+osc52 = "CopyPaste"
+shell = {
+  {{- if eq .osId "windows" -}}
+  program = "pwsh",
+  args = ["-noLogo", "-WorkingDirectory C:/Users/kevinnitro/"]
+  {{- else -}}
+  program = "zsh"
+  {{- end -}}
+}
+
+[window]
+padding = { x = 0, y = 0 }
+dynamic_padding = true
+decorations = "Full" # Full or None
+opacity = {{ .opacity }}
+blur = true
+startup_mode = "Maximized"
+
+[scrolling]
+multiplier = 1
+
+[font]
+normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
+bold = { family = "JetBrainsMono Nerd Font", style = "Bold" }
+italic = { family = "JetBrainsMono Nerd Font", style = "Italic" }
+bold_italic = { family = "JetBrainsMono Nerd Font", style = "Bold Italic" }
+size = {{ .terminalFontSize }}
+
+[colors]
+transparent_background_colors = false
+draw_bold_text_with_bright_colors = false
+
+[cursor]
+style = { shape = "Beam", blinking = "Off" }
+vi_mode_style = { shape = "Block", blinking = "Off" }
+
+[mouse]
+bindings = [{ mouse = "Right", mods = "Control", action = "Paste" }]
+hide_when_typing = true
+
+[keyboard]
+bindings = [
+  { key = "N", mods = "Control|Shift", action = "CreateNewWindow" },
+  # { key = "Back", mods = "Control", chars = "\u001b[127;5u" },
+]
+

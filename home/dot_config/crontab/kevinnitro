@@ -1,0 +1,11 @@
+# vim set ft=crontab
+
+# NOTE: It doesn't work :(
+#
+# Start tmux as user in order to read environment variables
+# @reboot /usr/bin/tmux new-session -d
+
+# NOTE: It doesn't work either
+#
+# Mute and unmute
+# @reboot /home/kevinnitro/.local/bin/pactl-mute-twice.sh

@@ -1,0 +1,165 @@
+{{/* Default static values */}}
+
+{{ $gpgId := "780EDBE72B368638D3DA4691071E9CD8A2D41057" }}
+{{ $agePubKey := "age1xq0t7wyprw8sqn6w5lqw33wl8kgct32djs7r7jmsgxjj8lqe54vsd76td3" }}
+{{ $sshId := "071E9CD8A2D41057" }}
+{{ $themes := list
+     "dark"
+     "light"
+}}
+{{ $catppuccinFlavors := list
+     "latte"
+     "frappe"
+     "macchiato"
+     "mocha"
+}}
+{{ $catppuccinAccentColors := list
+     "blue"
+     "flamingo"
+     "green"
+     "lavender"
+     "maroon"
+     "mauve"
+     "peach"
+     "pink"
+     "red"
+     "rosewater"
+     "sapphire"
+     "sky"
+     "teal"
+     "yellow"
+}}
+
+{{/* Default dynamic values */}}
+
+{{ $shell := "" }}
+{{ $terminalFontSize := 13 }}
+{{ $opacity := "0.8" }}
+{{ $theme := "dark" }}
+{{ $catppuccinLightFlavour := "latte" }}
+{{ $catppuccinDarkFlavour := "mocha" }}
+{{ $catppuccinAccentColor := "lavender" }}
+{{ $useHyde := false }}
+{{ $isLaptop := false }}
+
+{{/* Pre auto */}}
+
+{{ $osId := .chezmoi.os }}
+{{ if (and (eq .chezmoi.os "linux") (hasKey .chezmoi.osRelease "id")) }}
+  {{ $osId = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id }}
+{{ end }}
+
+{{ if eq $osId "windows" }}
+  {{ $shell = "pwsh" }}
+{{ else }}
+  {{ $shell = "zsh" }}
+{{ end }}
+
+{{/* Prompts */}}
+
+{{ if stdinIsATTY }}
+  {{ $terminalFontSize = promptInt "Enter terminal font size" 13 }}
+  {{ $opacity = promptString "Enter terminal blur (float)" "0.8" }}
+  {{ $theme = promptChoice "Theme" $themes "dark" }}
+  {{ $catppuccinLightFlavour = promptChoice "Catppuccin flavor for light mode" $catppuccinFlavors "latte" }}
+  {{ $catppuccinDarkFlavour = promptChoice "Catppuccin flavor for dark mode" $catppuccinFlavors "mocha" }}
+  {{ $catppuccinAccentColor = promptChoice "Catppuccin accent color" $catppuccinAccentColors "lavender" }}
+  {{ if eq $osId "linux-arch" "linux-endeavouros" }}
+    {{ $useHyde = promptBool "Use Hyde" true }}
+  {{ end }}
+{{ end }}
+
+{{ $duckdnsDomains := list
+     "none"
+     "main"
+     "home"
+}}
+{{ $duckdnsDomain := promptChoice "Choose duckdns to setup cron" $duckdnsDomains "none" }}
+{{ if eq $duckdnsDomain "none" }}
+  {{ $duckdnsDomain = "" }}
+{{ else if eq $duckdnsDomain "main" }}
+  {{ $duckdnsDomain = "kevinnitro" }}
+{{ else if eq $duckdnsDomain "home" }}
+  {{ $duckdnsDomain = "kevinnitrohome" }}
+{{ end }}
+
+{{/* Semi prompts or auto */}}
+
+{{ if lookPath "hostnamectl" }}
+  {{ if eq (output "hostnamectl" "chassis") "laptop" }}
+    {{ $isLaptop = true }}
+  {{ end }}
+{{ else if lookPath "wmic" }}
+  {{ if eq (output "wmic" "computersystem" "get" "PCSystemType" "/VALUE" | trim) "PCSystemType=2" }}
+    {{ $isLaptop = true }}
+  {{ end }}
+{{ else if stdinIsATTY }}
+  {{ $isLaptop = promptBoolOnce . "isLaptop" "Is this a laptop" false }}
+{{ end }}
+
+{{/* Post auto */}}
+
+{{ $catppuccinFlavor := "" }}
+{{ if eq $theme "dark" }}
+  {{ $catppuccinFlavor = $catppuccinDarkFlavour }}
+{{ else }}
+  {{ $catppuccinFlavor = $catppuccinLightFlavour }}
+{{ end }}
+
+{{ $transparent := ne $opacity "1" }}
+
+encryption = "age" # or gpg
+mode = "file" # file, symlink
+progress = true
+
+[data]
+terminalFontSize = {{ $terminalFontSize }}
+opacity = {{ $opacity }}
+transparent = {{ $transparent }}
+theme = {{ $theme | quote }}
+catppuccinLightFlavour = {{ $catppuccinLightFlavour | quote }}
+catppuccinDarkFlavour = {{ $catppuccinDarkFlavour | quote }}
+catppuccinFlavor = {{ $catppuccinFlavor | quote }}
+catppuccinFlavorTitle = {{ $catppuccinFlavor | title | quote }}
+catppuccinAccentColor = {{ $catppuccinAccentColor | quote }}
+gpgId = {{ $gpgId | quote }}
+sshId = {{ $sshId | quote }}
+osId = {{ $osId | quote }}
+useHyde = {{ $useHyde }}
+isLaptop = {{ $isLaptop }}
+duckdnsDomain = {{ $duckdnsDomain | quote }}
+
+[data.catppuccin]
+accentColors = [ {{ $catppuccinAccentColors | quoteList | join ", " }} ]
+flavors = [ {{ $catppuccinFlavors | quoteList | join ", " }} ]
+
+[age]
+identity = "~/.age-key.txt"
+recipient = {{ $agePubKey | quote }}
+
+[gpg]
+recipient = {{ $gpgId | quote }}
+args = ["--quiet"]
+
+[git]
+autoAdd = true # Add changes to the source state after any change
+autoCommit = false
+autoPush = false
+
+[cd]
+command = {{ $shell | quote }}
+
+[completion]
+custom = true
+
+[edit]
+command = "nvim"
+
+[diff]
+command = "delta"
+pager = "delta"
+args = ["--paging=never"]
+
+[merge]
+command = "nvim"
+args = ["-d", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Source {{ "}}" }}", "{{ "{{" }} .Target {{ "}}" }}"]

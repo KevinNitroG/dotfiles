@@ -1,0 +1,139 @@
+pkgs:
+  archBased:
+    universal:
+      # Essentials
+      # - "google-chrome"
+      - "brave-bin"
+      - "chezmoi"
+      - "git"
+      - "kanata-bin" # Change keyboard func
+      - "lazygit"
+      - "os-prober"
+      - "tmux"
+      - "tmuxinator"
+      - "wget"
+      - "xorg-xhost"
+      - "zsh"
+
+      # Terminal
+      # - "alacritty"
+      - "kitty"
+
+      # Text / Code Editor, IDE
+      # - "mysql-workbench"
+      # - "zed"
+      - "neovim"
+      - "visual-studio-code-bin"
+
+      # CLI tools
+      # - "aria2"
+      # - "thefuck"
+      # - "tokei"
+      # - "trash-cli"
+      # - "xsel"
+      - "atac"
+      - "bat"
+      - "ctags"
+      - "doggo"
+      - "exa"
+      - "fd"
+      - "fzf"
+      - "gh"
+      - "git-delta"
+      - "git-lfs"
+      - "github-cli"
+      - "glow"
+      - "jq"
+      - "just"
+      - "lazydocker"
+      - "rclone"
+      - "ripgrep"
+      - "rsync"
+      - "sd"
+      - "starship"
+      - "tree"
+      - "unzip"
+      - "wget"
+      - "xh"
+      - "yazi"
+      - "yq" # mise requirements
+      - "zip"
+      - "zoxide"
+
+      # Development, languages, interpreters, compilers, etc
+      # - "clang"
+      # - "cmake"
+      # - "docker-desktop" # Docker desktop on Arch is not stable
+      # - "gdb"
+      # - "go"
+      # - "nodejs"
+      # - "npm"
+      # - "pnpm"
+      # - "pyenv"
+      # - "python-pip"
+      # - "rustup"
+      # - "yarn"
+      - "docker"
+      - "docker-buildx"
+      - "docker-compose"
+      - "mise"
+
+      # Security Utilities
+      - "gnupg"
+      - "openssl"
+
+      # Monitoring, management and stats
+      # - "speedtest-cli"
+      - "btop"
+      - "cronie"
+
+      # CLI Fun
+      # - "cowsay"
+      # - "fastfetch"
+      # - "figlet" # A program for making large letters out of ordinary text
+      # - "lolcat"
+      # - "astroterm"
+
+      # Apps / Tools
+      # - "authy-desktop-win32-bin"
+      # - "qbittorrent-enhanced"
+      # - "screenkey"
+      - "fcitx5"
+      - "fcitx5-bamboo"
+      - "fcitx5-configtool"
+      - "gammastep"
+      - "grub-customizer"
+      - "libreoffice-fresh"
+      - "obs-studio"
+      - "qbittorrent"
+      - "rclone"
+      - "spotify"
+      - "tailscale"
+      - "vlc"
+      - "zathura"
+
+      # Fonts
+      - "noto-fonts-emoji"
+      - "ttf-google-sans"
+      - "ttf-jetbrains-mono-nerd"
+      - "ttf-nerd-fonts-symbols"
+
+      # Other but IDK what it is
+      # - "pacman-contrib" # For paccache
+      - "fuse3" # For rclone mount --daemon
+      - "gnome-keyring" # For MySQL Workbench,...
+      - "gtk4"
+      - "lsb-release"
+      - "tesseract-data-eng" # For zathura
+      - "tesseract-data-vie" # For zathura
+      - "tree"
+      - "usage" # For mise
+      - "wtype"
+      - "zathura-pdf-mupdf" # For zathura
+
+    laptop:
+      # - "gestures"
+      # - "libinput-gestures"
+      - "tlp"
+      - "tlp-rdw"
+      - "tlpui"

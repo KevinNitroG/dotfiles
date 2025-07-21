@@ -1,0 +1,435 @@
+# HELP
+# - https://unix.stackexchange.com/a/487889/612293 - .zshenv, .zprofile, .zshrc,...
+
+##########################################
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+
+##########################################
+
+# LIST OF PLUGINS TO USE IN OH-MY-ZSH
+plugins=(
+  # zsh-vi-mode
+  mise
+
+  # wakatime
+  archlinux
+  argocd
+  command-not-found
+  docker
+  docker-compose
+  dotenv
+  extract
+  fzf-tab
+  gh
+  git
+  gradle
+  kubectl
+  minikube
+  starship
+  sudo
+  tmux
+  tmuxinator
+  zoxide
+  zsh-autosuggestions
+  zsh-better-npm-completion
+  zsh-syntax-highlighting
+  zsh-256color
+
+  history-substring-search # Always below zsh-syntax-highlighting
+
+  # Have to load after zsh-vi-mode
+  fancy-ctrl-z
+  fzf
+  # zsh-autocomplete
+)
+source $ZSH/oh-my-zsh.sh
+
+_catppuccin_zsh_syntax_highlighting_zsh="$ZSH/custom/plugins/catppuccin-zsh-syntax-highlighting/themes/catppuccin_${CATPPUCIN_FLAVOR:-mocha}-zsh-syntax-highlighting.zsh"
+if [ -f "$_catppuccin_zsh_syntax_highlighting_zsh" ]; then
+  source "$_catppuccin_zsh_syntax_highlighting_zsh"
+fi
+
+
+##########################################
+
+# UTILS
+
+has() {
+  command -v $1 >/dev/null
+  # (($+command["$1"])) # the command is the hash table
+}
+
+alias ev='source evalx.sh'
+
+clean_all() {
+  if has pacman; then
+    printf "\nCLEAN PACMAN..."
+    eval "${_EVALX_COMMANDS[clean_pacman]}"
+  fi
+  if has flatpak; then
+    printf "\nCLEAN FLATPAK..."
+    eval "${_EVALX_COMMANDS[clean_flatpak]}"
+  fi
+}
+
+alias ex=evalx
+
+##########################################
+
+# ZSH CONFIG
+HISTDUP=erase
+HISTFILE=~/.zsh_history
+HISTORY_SUBSTRING_SEARCH_PREFIXED=1
+HISTSIZE=5000
+SAVEHIST=$HISTSIZE
+setopt SHARE_HISTORY
+setopt APPENDHISTORY
+setopt GLOBDOTS # Include hidden dir tab complete
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE # Ignore command start with space
+setopt HIST_SAVE_NO_DUPS
+setopt IGNOREEOF # Prevents <C-d> from quitting the shell
+setopt PROMPT_SUBST # Enable scripting in the prompt
+setopt SHAREHISTORY # Share history across shell
+unsetopt BEEP # Prevents beeps in general
+
+# Ignore command match the regex
+zshaddhistory() {
+  emulate -L zsh
+  if ! [[ "$1" =~ (password|secret|private|BBb) ]] ; then
+    print -sr -- "${1%%$'\n'}"
+    fc -p
+  else
+    return 1
+  fi
+}
+
+
+##########################################
+
+# ZSH STYLE
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' menu no
+zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':completion:*:git-checkout:*' sort false
+zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+zstyle ':fzf-tab:*' use-fzf-default-opts yes
+zstyle ':fzf-tab:*' switch-group '<' '>'
+zstyle ':fzf-tab:complete:cd:*' popup-pad 30 0
+zstyle ':fzf-tab:*' popup-min-size 120 10
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'eza -1 --color=always --icons=always $realpath'
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always --icons=always $realpath'
+# zstyle ':autocomplete:tab:*' fzf-completion yes
+
+
+##########################################
+
+# ALIAS / FUNCTION
+
+# Apps
+if [[ -e "$HOME/.local/bin/appx.sh" ]]; then
+  alias ia="$HOME/.local/bin/appx.sh -i"
+  alias ua="$HOME/.local/bin/appx.sh -u -f"
+  alias uaa="$HOME/.local/bin/appx.sh -U"
+fi
+
+# Ls
+if has eza; then
+  EZA_OPTS=(
+    '--colour=always'
+    '--group-directories-first'
+    '--icons=auto'
+    '--ignore-glob=".DS_Store|.idea|.venv|.vs|__pycache__|cache|debug|.git|node_modules|venv"'
+    '-s Name'
+  )
+  alias l="eza -lh $EZA_OPTS" # long list
+  alias ls="exa -1 $EZA_OPTS" # Normal ls
+  alias ll="exa -lhag $EZA_OPTS" # Long list all
+  alias ld="eza -lhD $EZA_OPTS" # long list dirs
+  alias lt="eza -T $EZA_OPTS" # list folder as tree
+  alias llt="eza -lagT $EZA_OPTS" # list folder as tree
+else
+  alias ls='ls -A --color=auto'
+  alias ll='ls -lAg --color=auto'
+fi
+
+# Change directory
+alias ..='cd ..'
+alias ...='cd ../..'
+alias .3='cd ../../..'
+alias .4='cd ../../../..'
+alias .5='cd ../../../../..'
+
+# Make directory
+alias mkdir='mkdir -p'
+
+# Chezmoi
+cmc() {
+  { [ -n "$1" ] && chezmoi git "commit -m \"$1\"" || chezmoi git "commit"; } && chezmoi git push
+}
+cms() {
+  chezmoi re-add
+  chezmoi git "f" || { echo 'No "f" alias for git!'; cmc; }
+}
+alias cm='chezmoi'
+alias cma='chezmoi add'
+alias cme='chezmoi edit'
+alias cmra='chezmoi re-add'
+
+# Tmux
+alias t='tmux'
+alias ta='tmux has-session &>/dev/null && tmux attach || tmux new-session'
+alias tks='tmux kill-server'
+
+# ChatGPT gen it for me :(
+yzcd() {
+  local tmp=$(mktemp)
+  yazi "$@" --cwd-file="$tmp"
+  local cwd=$(<"$tmp")
+  if [[ -n "$cwd" && "$cwd" != "$PWD" ]]; then
+    cd "$cwd"
+  fi
+  rm "$tmp"
+}
+
+bindkey '^d' fdg
+
+# Cd
+alias cdc='cd ~/.config/'
+alias cdcm='cd ~/.local/share/chezmoi/'
+alias cdd='cd ~/Documents/'
+alias cddl='cd ~/Downloads/'
+alias cdp='cd ~/projects/'
+alias cdnv='cd ~/.config/nvim/'
+
+# Copy, move
+if has rsync; then
+  alias rcp='rsync --recursive --times --progress --stats --human-readable'
+  alias rmv='rsync --recursive --times --progress --stats --human-readable --remove-source-files'
+fi
+
+# Explorer
+if has dolphin; then
+  function e() {
+    dolphin "$@" &
+  }
+fi
+
+# Kubernetes
+if has k3s; then
+  alias kk='k3s kubectl'
+fi
+
+# Others
+alias c='clear'
+alias cls='clear'
+alias csl='clear'
+alias ldk='lazydocker'
+alias lg='NVIM_NO_IDE=1 lazygit'
+alias rl='source ~/.zshrc'
+alias sv='sudo -E nvim'
+alias v='nvim'
+alias yz='yazi'
+alias ip='ip -c'
+
+
+##########################################
+
+# TMUX
+
+# if [ -n "$TMUX" ]; then
+#    enable-fzf-tab
+# fi
+
+
+##########################################
+
+# FZF
+
+_fzf_open_path() {
+  local input_path=$1
+  if [ ! -n "$input_path" ]; then
+    return 1
+  fi
+  declare -A cmds=(
+    [bat]='bat $input_path'
+    [cat]='cat $input_path'
+    [cd]='[[ -f "$input_path" ]] && input_path=$(dirname "$input_path"); cd $input_path'
+    [nvim]='nvim $input_path'
+    [remove]='rm -rf $input_path'
+    [echo]='echo $input_path'
+  )
+  local cmd=$(printf "%s\n" "${(@k)cmds}" | fzf --prompt 'Select command> ')
+  eval "${cmds[$cmd]}"
+}
+
+_fzf_get_path_using_fd() {
+  local input_path=$(
+    fd --type file |
+    fzf --prompt 'Files> ' \
+      --header 'CTRL-S: Switch between Files/Directories' \
+      --bind 'ctrl-s:transform:[[ ! $FZF_PROMPT =~ Files ]] &&
+        echo "change-prompt(Files> )+reload(fd --type file)" ||
+    echo "change-prompt(Directories> )+reload(fd --type directory)"' \
+      --preview '[[ $FZF_PROMPT =~ Files ]] && bat --color=always --style=plain {} || tree -C {}'
+  )
+  echo "$input_path"
+}
+
+_fzf_get_path_using_rg() {
+  rm -f /tmp/rg-fzf-{r,f}
+  local RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+  local INITIAL_QUERY="${*:-}"
+  local input_path=$(
+    fzf --ansi --disabled \
+      --query="$INITIAL_QUERY" \
+      --bind="enter:become(echo {1})" \
+      --bind="start:reload:$RG_PREFIX {q}" \
+      --bind="change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
+      --bind='ctrl-s:transform:[[ ! $FZF_PROMPT =~ ripgrep ]] &&
+      echo "rebind(change)+change-prompt(1. ripgrep> )+disable-search+transform-query:echo \{q} > /tmp/rg-fzf-f; cat /tmp/rg-fzf-r" ||
+    echo "unbind(change)+change-prompt(2. fzf> )+enable-search+transform-query:echo \{q} > /tmp/rg-fzf-r; cat /tmp/rg-fzf-f"' \
+      --color='hl:-1:underline,hl+:-1:underline:reverse' \
+      --prompt='1. ripgrep> ' \
+      --delimiter=':' \
+      --header='CTRL-S: Switch between ripgrep/fzf' \
+      --preview='bat --color=always {1} --highlight-line {2} --style=plain' \
+      --preview-window='up,60%,border-bottom,+{2}+3/3'
+  )
+  echo "$input_path"
+}
+
+fdg() {
+  _fzf_open_path "$(_fzf_get_path_using_fd)"
+}
+
+rgg() {
+  _fzf_open_path "$(_fzf_get_path_using_rg)"
+}
+
+
+# NOTE: this is for ... inplace but nah. This is trash
+
+# fdg() {
+#   local output=$(__fzf_open_path "$(__fzf_get_path_using_fd)" 'true')
+#   if [[ -n "$LBUFFER" ]]; then
+#     LBUFFER+="${output}"
+#   fi
+#   local ret=$?
+#   zle reset-prompt
+#   return $ret
+# }
+zle -N fdg
+#
+# rgg() {
+#   local output=$(__fzf_open_path "$(__fzf_get_path_using_rg)" 'true')
+#   if [[ -n "$LBUFFER" ]]; then
+#     LBUFFER+="${output}"
+#   fi
+#   local ret=$?
+#   zle reset-prompt
+#   return $ret
+# }
+zle -N rgg
+
+bindkey '^f' fdg
+bindkey '^g' rgg
+
+
+##########################################
+
+# BAT
+
+alias -g -- -h='-h 2>&1 | bat --language=help --style=plain'
+alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
+
+alias bathelp='bat --plain --language=help'
+help() {
+  "$@" --help 2>&1 | bathelp
+}
+
+
+##########################################
+
+# WIFI
+# Source: https://gist.github.com/guyzmo/146423d0cf7d3c0a46e10eeb66883905
+
+connect_wifi() {
+  local ssid
+  local conn
+
+  nmcli device wifi rescan >/dev/null
+  ssid=$(nmcli device wifi list | tail -n +2 | grep -v '^  *\B--\B' | fzf -m | sed 's/^ *\*//' | awk '{print $1}')
+
+  if [ "x$ssid" != "x" ]; then
+    # check if the SSID has already a connection setup
+    conn=$(nmcli con | grep "$ssid" | awk '{print $1}' | uniq)
+    if [ "x$conn" = "x$ssid" ]; then
+      echo "Please wait while switching to known network $ssid…"
+      # if yes, bring up that connection
+      nmcli con up id "$conn"
+    else
+      echo "Please wait while connecting to new network $ssid…"
+      # if not connect to it and ask for the password
+      nmcli device wifi connect "$ssid"
+    fi
+  fi
+}
+
+get_current_wifi_password() {
+  nmcli device wifi show-password
+}
+
+get_wifi_password() {
+  local ssid
+  ssid=$(nmcli --colors=no --fields=NAME --terse connection show |
+    fzf --preview='nmcli -s -g 802-11-wireless-security.psk connection show {} || echo "Cannot get password!"'
+    --preview-window='right,70%,border-left'
+  )
+
+  if [[ -z "$ssid" ]]; then
+    echo "No SSID was selected!"
+    return
+  fi
+  local password=$(nmcli -s -g 802-11-wireless-security.psk connection show $ssid)
+  echo "SSID: $ssid"
+  echo "PASSWORD: $password"
+}
+
+
+##########################################
+
+# KEYBINDINGS
+
+# Disable these because I no longer use zsh-vi-mode
+# function zvm_after_init() {
+#   zvm_bindkey viins '^p' history-substring-search-up
+#   zvm_bindkey viins '^n' history-substring-search-down
+#   zvm_bindkey viins '^H' backward-kill-word
+#   [ -f "$ZSH/plugins/fzf/fzf.plugin.zsh" ] && source "$ZSH/plugins/fzf/fzf.plugin.zsh"
+#   [ -f "$ZSH/plugins/fancy-ctrl-z/fancy-ctrl-z.plugin.zsh" ] && source "$ZSH/plugins/fancy-ctrl-z/fancy-ctrl-z.plugin.zsh"
+# }
+#
+# function zvm_after_lazy_keybindings() {
+#   zvm_define_widget rgg
+#   zvm_define_widget fdg
+#
+#   bindkey -M vicmd -s '^d' 'iyzcd\n' # yazi doesn't like to... :v
+#   zvm_bindkey vicmd '^g' rgg
+#   zvm_bindkey vicmd '^f' fdg
+# }
+
+##########################################
+
+# RUN SOME STUFF
+if has fastfetch; then
+  fastfetch
+fi
+
+[[ -f /home/kevinnitro/.config/.dart-cli-completion/zsh-config.zsh ]] && . /home/kevinnitro/.config/.dart-cli-completion/zsh-config.zsh || true

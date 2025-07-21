@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+set -eufo pipefail
+
+DISTRO=$(lsb_release -i | awk '{print $NF}')
+
+case "$DISTRO" in
+"Arch") ;;
+*)
+  exit 0
+  ;;
+esac
+
+##########################################
+
+echo 'UPDATING SOURCES...'
+sudo pacman -Sy
+
+if ! command -v yay &>/dev/null; then
+  echo 'INSTALLING YAY...'
+  sudo pacman -S --needed git base-devel --noconfirm
+  git clone https://aur.archlinux.org/yay-bin.git
+  cd yay-bin
+  makepkg -si
+  cd ..
+fi
+
+##########################################
+
+{{ $pkgs := .pkgs.archBased.universal }}
+{{ if .isLaptop }}
+{{ $pkgs := concat $pkgs .pkgs.archBased.laptop }}
+{{ end }}
+
+{{ if $pkgs }}
+echo 'INSTALLING PACKAGES...'
+yay -S {{ $pkgs | quoteList | join " " }} --needed --noconfirm
+{{ end }}
+
+##########################################
+
+echo 'SETTING UP SERVICES...'
+systemctl list-unit-files "cronie.service" &>/dev/null && sudo systemctl enable --now cronie.service

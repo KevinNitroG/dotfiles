@@ -1,0 +1,150 @@
+; Ref: https://github.com/garybernhardt/dotfiles/blob/main/.gitconfig
+
+[include]
+  path = ~/.config/delta/catppuccin.gitconfig
+
+[user]
+  name = Kevin Nitro
+  email = trannguyenthaibinh46@gmail.com
+  signingkey = {{ .sshId }}
+
+[github]
+  user = KevinNitroG
+
+[core]
+  editor = nvim
+  longpaths = true
+  pager = delta
+  excludesFile = ~/.config/git/ignore
+
+[color]
+  ui = always
+  interactive = always
+
+[safe]
+  directory = ~/gits
+  directory = E:/gits
+  directory = ~/scoop/*
+
+[alias]
+  gcc = !git reflog expire --all --expire=now && git gc --prune=now --aggressive ; clean local reflog: https://stackoverflow.com/a/2116892/23173098
+  aa = add -A
+  au = add -u
+  amend = commit -a --amend --no-edit
+  s = status --porcelain
+  co = checkout
+  cob = checkout -b
+  db = branch -D
+  lsb = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
+  save = "!git add -A && MSG=$(curl -s -f https://whatthecommit.com/index.txt || 'save point') && git commit -m \"chore(save): ${MSG}\""
+  done = push origin HEAD ; lazy to push
+  f = !git save && git done ; finish
+  undo = reset HEAD~1 --mixed
+  res = reset --hard
+  lg = !PAGER='delta --line-numbers=false' git log --oneline --abbrev-commit
+  lgg = log --graph --decorate --all ; graph log
+  subup = submodule update --init --recursive ; submodule recursive update
+  wdiff = diff --word-diff ; word diff
+  rdiff = diff --submodule=diff ; recursive
+  pdiff = diff --word-diff=color --word-diff-regex=. ; precise
+  discard = !git checkout -- . && git submodule foreach git checkout -- .
+  head = r -1
+  h = head
+  ski = stash --keep-index
+  cp = cherry-pick
+  pf = push --force-with-lease
+  pr = pull rebase
+  editconfig = config --global --edit
+
+  ; ref: https://github.com/stevearc/dotfiles/blob/master/.gitconfig
+  po = !bash ~/.config/git/githelpers.sh push_current_branch
+  pof = !bash ~/.config/git/githelpers.sh push_current_branch --force-with-lease
+  dopr = !bash ~/.config/git/githelpers.sh create_pull_request
+  popr = !git po && sleep 1 && git dopr
+  findpr = !bash ~/.config/git/githelpers.sh find_pull_request
+  fix = !bash ~/.config/git/githelpers.sh commit_fix
+  uu = !bash ~/.config/git/githelpers.sh update_master
+  l = !bash ~/.config/git/githelpers.sh pretty_git_log_paged
+  la = !git l --all
+  r = !git rcp -20
+  ra = !git la -20
+  rc = !bash ~/.config/git/githelpers.sh contextual_git_log
+  rcp = !bash ~/.config/git/githelpers.sh contextual_git_log_paged
+
+  prev = checkout @^
+  next = !git checkout $(git rev-list --children --all | grep ^$(git rev-parse HEAD) | cut -f 2 -d ' ')
+
+[gpg]
+ 	; format = ssh
+  program = gpg
+
+[commit]
+  gpgsign = true
+
+[help]
+  autoCorrect = prompt
+
+[log]
+  date = iso
+
+[init]
+  defaultBranch = main
+
+[push]
+  autoSetupRemote = true
+
+[pull]
+  rebase = true
+
+[rebase]
+  autoStash = true
+
+[rerere]
+  enabled = true
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  features = catppuccin-{{ .catppuccinFlavor }}
+  navigate = true
+  {{ .theme }} = true
+  side-by-side = true
+  line-numbers = true
+  show-syntax-themes = true
+  hyperlinks = true
+  ; hyperlinks-file-link-format = "vscode://file/{path}:{line}"
+
+[merge]
+  conflictstyle = diff3
+
+[diff]
+  colorMoved = default
+
+[submodule]
+  fetchJobs = 8
+
+[remote]
+  pushDefault = origin
+
+[filter "lfs"]
+  required = true
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
+
+{{- if eq .osId "windows" }}
+[credential "helperselector"]
+  selected = manager
+{{- end }}
+
+; https://github.com/denysdovhan/dotfiles/blob/master/home/.gitconfig
+; URL shorthands
+[url "git@github.com:"]
+  insteadOf = "gh:"
+  pushInsteadOf = "github:"
+  pushInsteadOf = "git://github.com/" ; From GIT to SSH
+[url "git@gist.github.com:"]
+  insteadOf = "gst:"
+  pushInsteadOf = "gist:"
+  pushInsteadOf = "git://gist.github.com/" ; From GIT to SSH

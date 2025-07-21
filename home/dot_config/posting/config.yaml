@@ -1,0 +1,6 @@
+theme: catppuccin-mocha
+response:
+  prettify_json: true
+heading:
+  show_host: false
+  show_version: false

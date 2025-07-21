@@ -1,0 +1,20 @@
+{{- $palette := index .catppuccin.palettes .catppuccinFlavor -}}
+{{- $accentColor := index $palette .catppuccinAccentColor -}}
+
+[theme]
+background = "{{ $palette.base }}"
+primary = "{{ $palette.text }}"
+secondary = "{{ $palette.teal }}"
+title = "{{ $accentColor }}"
+playing = "{{ $palette.green }}"
+playing_bg = "{{ $palette.base }}"
+highlight = "{{ $palette.text }}"
+highlight_bg = "{{ $palette.overlay0 }}"
+playing_selected = "{{ $palette.green }}"
+error = "{{ $palette.base }}"
+error_bg = "{{ $palette.red }}"
+statusbar = "{{ $accentColor }}"
+statusbar_bg = "{{ $palette.surface0 }}"
+statusbar_progress = "{{ $accentColor }}"
+cmdline = "{{ $accentColor }}"
+cmdline_bg = "{{ $palette.mantle }}"

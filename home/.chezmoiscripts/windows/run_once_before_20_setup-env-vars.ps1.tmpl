@@ -1,0 +1,19 @@
+Write-Host 'SETTING UP ENV...'
+
+# Get existing paths and merge unique paths
+$ExistingPaths = [System.Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::User) -split ";"
+$NewPaths = @({{- .config.windows.envs.path | quoteList | join ", " | replace "\\\\" "\\" -}}) | Where-Object { $_ -notin $ExistingPaths }
+$UpdatedPath = (@($NewPaths) + $ExistingPaths) -join ";"
+
+# Hashtable of environment variables
+$SetupEnv = @{
+  {{- range $k, $v := .config.windows.envs.others -}}
+  {{- $k -}} = '{{- $v -}}';
+  {{- end -}}
+  Path = $UpdatedPath
+}
+
+# Set environment variables
+$SetupEnv.GetEnumerator() | ForEach-Object {
+  [System.Environment]::SetEnvironmentVariable($_.Key, $_.Value, [System.EnvironmentVariableTarget]::User)
+}

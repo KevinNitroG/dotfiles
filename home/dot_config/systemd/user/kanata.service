@@ -1,0 +1,50 @@
+[Unit]
+Description=Kanata keyboard remapper
+Documentation=https://github.com/jtroo/kanata
+Wants=modprobe@uinput.service
+After=modprobe@uinput.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/kanata --cfg %h/.config/kanata/config.kbd
+Restart=no
+# Security
+CapabilityBoundingSet=
+DeviceAllow=/dev/uinput rw
+DeviceAllow=char-input
+DeviceAllow=/dev/stdin
+DevicePolicy=strict
+PrivateDevices=true
+BindPaths=/dev/uinput
+BindReadOnlyPaths=/dev/stdin
+BindReadOnlyPaths=/dev/input/
+BindReadOnlyPaths=%h/.config/kanata
+InaccessiblePaths=/dev/shm
+LockPersonality=true
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateNetwork=true
+PrivateUsers=true
+#ProtectClock=true # Disabled as per original example notes
+ProtectHome=read-only
+ProtectHostname=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectSystem=strict
+ProtectControlGroups=true
+RestrictAddressFamilies=AF_UNIX # Allow only Unix sockets, deny others like network
+RestrictNamespaces=true
+SystemCallArchitectures=native
+SystemCallErrorNumber=EPERM
+SystemCallFilter=@system-service
+SystemCallFilter=~@privileged @resources
+RemoveIPC=true
+IPAddressDeny=any
+RestrictSUIDSGID=true
+RestrictRealtime=true
+MemoryDenyWriteExecute=true
+UMask=0077
+
+[Install]
+WantedBy=default.target

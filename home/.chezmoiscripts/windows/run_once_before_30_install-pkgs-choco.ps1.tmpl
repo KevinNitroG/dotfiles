@@ -1,0 +1,27 @@
+{{ if .pkgs.windows.choco }}
+
+# Self-elevate the script if required
+if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
+  if ([int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber) -ge 6000) {
+    $CommandLine = "-File `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments
+    Start-Process -Wait -FilePath PowerShell.exe -Verb Runas -ArgumentList $CommandLine
+    Exit
+  }
+}
+
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+
+if (-not (Get-Command "choco" -ErrorAction SilentlyContinue))
+{
+  Write-Error "Choco hasn't been installed!"
+  exit
+}
+
+{{ if .pkgs.windows.choco }}
+Write-Host "INSTALLING CHOCO PACKAGES..."
+  {{ range $pkg := .pkgs.windows.choco }}
+choco install '{{ $pkg }}' -y
+  {{ end }}
+{{ end }}
+
+{{ end }}

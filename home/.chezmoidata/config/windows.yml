@@ -1,0 +1,28 @@
+config:
+  windows:
+    envs:
+      path:
+        - '%LOCALAPPDATA%\nvim-data\mason\bin'
+        - '%LOCALAPPDATA%\mise\shims'
+        - '%USERPROFILE%\scoop\apps\git\current\usr\bin'
+        - '%USERPROFILE%\.local\bin'
+      others:
+        YAZI_CONFIG_HOME: '%USERPROFILE%\.config\yazi'
+        YAZI_FILE_ONE: '%USERPROFILE%\scoop\apps\git\current\usr\bin\file.exe'
+        KOMOREBI_CONFIG_HOME: '%USERPROFILE%\.config\komorebi'
+        # CARGO_HOME: 'E:\packages\cargo'
+        # npm_config_cache: 'E:\cache\npm'
+        # PIP_CACHE_DIR: 'E:\cache\pip'
+        # VCPKG_BINARY_CACHE: 'E:\packages\vcpkg'
+        # FZF_DEFAULT_OPTS: '--height=~80% --layout=reverse --border --exit-0 --cycle --margin=2,40 --padding=1'
+    features:
+      enable:
+        # - 'Microsoft-Hyper-V-All'
+        # - 'HypervisorPlatform'
+        # - 'NetFx4Extended-ASPNET45'
+        - "VirtualMachinePlatform"
+        - "Microsoft-Windows-Subsystem-Linux"
+        - "NetFx3"
+        - "NetFx4-AdvSrvs"
+      disable:
+        - "MicrosoftWindowsPowerShellV2"

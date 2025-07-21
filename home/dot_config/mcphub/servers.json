@@ -1,0 +1,149 @@
+{
+  "mcpServers": {
+    "context7": {
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ],
+      "autoApprove": [],
+      "command": "npx",
+      "disabled": false
+    },
+    "ddg-search": {
+      "args": [
+        "duckduckgo-mcp-server"
+      ],
+      "command": "uvx",
+      "disabled": true
+    },
+    "fetch": {
+      "args": [
+        "mcp-server-fetch"
+      ],
+      "command": "uvx",
+      "disabled": true
+    },
+    "filesystem": {
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/home/kevinnitro"
+      ],
+      "autoApprove": [],
+      "command": "npx",
+      "disabled": true
+    },
+    "git": {
+      "args": [
+        "mcp-server-git",
+        "--repository",
+        "/home/kevinnitro"
+      ],
+      "command": "uvx",
+      "disabled": true
+    },
+    "github": {
+      "disabled": true,
+      "headers": {
+        "Authorization": "Bearer ${GITHUB_TOKEN}"
+      },
+      "url": "https://api.githubcopilot.com/mcp/"
+    },
+    "kubernetes": {
+      "args": [
+        "mcp-server-kubernetes"
+      ],
+      "command": "npx",
+      "disabled": true
+    },
+    "playwright": {
+      "args": [
+        "-y",
+        "@executeautomation/playwright-mcp-server"
+      ],
+      "command": "npx",
+      "disabled": true
+    },
+    "puppeteer": {
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-puppeteer"
+      ],
+      "command": "npx",
+      "disabled": true
+    },
+    "sequential-thinking": {
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "command": "npx",
+      "disabled": true
+    },
+    "supabase": {
+      "args": [
+        "-y",
+        "@supabase/mcp-server-supabase@latest",
+        "--access-token",
+        "${SUPABASE_TOKEN}"
+      ],
+      "autoApprove": [],
+      "command": "npx",
+      "disabled": true
+    },
+    "supabase-local": {
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "http://localhost:54323"
+      ],
+      "command": "npx",
+      "disabled": true
+    },
+    "tavily": {
+      "args": [
+        "-y",
+        "tavily-mcp@0.1.2"
+      ],
+      "command": "npx",
+      "disabled": true,
+      "env": {
+        "TAVILY_API_KEY": "${TAVILY_API_KEY}"
+      }
+    },
+    "time": {
+      "args": [
+        "mcp-server-time",
+        "--local-timezone=Asia/Ho_Chi_Minh"
+      ],
+      "command": "uvx",
+      "disabled": true
+    },
+    "vectorcode": {
+      "command": "vectorcode-mcp-server",
+      "disabled": true
+    }
+  },
+  "nativeMCPServers": {
+    "mcphub": {
+      "autoApprove": [],
+      "disabled": true,
+      "disabled_prompts": [
+        "create_native_server"
+      ],
+      "disabled_resources": [
+        "mcphub://docs",
+        "mcphub://native_server_guide",
+        "mcphub://changelog"
+      ],
+      "disabled_tools": []
+    },
+    "neovim": {
+      "autoApprove": [],
+      "disabled": false,
+      "disabled_prompts": [
+        "parrot"
+      ]
+    }
+  }
+}

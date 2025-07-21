@@ -1,0 +1,17 @@
+[Unit]
+Description=tmux default session (detached)
+Documentation=man:tmux(1)
+
+[Service]
+Type=forking
+; Environment=DISPLAY=:0
+ExecStart=zsh -l -c 'tmux has-sesssion &>/dev/null || tmux new-session -d'
+
+ExecStop=%h/.config/tmux/plugins/tmux-resurrect/scripts/save.sh
+ExecStop=/usr/bin/tmux kill-server
+KillMode=control-group
+
+RestartSec=2
+
+[Install]
+WantedBy=default.target

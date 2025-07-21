@@ -1,0 +1,83 @@
+{{ if eq .osId "windows" }}
+["AppData/Local/nvim"]
+{{ else }}
+[".config/nvim"]
+{{ end }}
+type = "git-repo"
+url = "git@github.com:uitdots/nvim.git"
+
+{{ if eq .osId "windows" }}
+["vimfile"]
+{{ else }}
+[".vim"]
+{{ end }}
+type = "git-repo"
+url = "git@github.com:uitdots/vim.git"
+
+{{ if eq .osId "windows" }}
+["AppData/Roaming/alacritty/themes"]
+{{ else }}
+[".config/alacritty/themes"]
+{{ end }}
+type = "archive"
+url = "https://github.com/catppuccin/alacritty/archive/refs/heads/main.zip"
+stripComponents = 1
+include = ["alacritty-main/catppuccin-*.toml"]
+
+{{ if eq .osId "windows" }}
+["AppData/Roaming/bat/themes"]
+{{ else }}
+[".config/bat/themes"]
+{{ end }}
+type = "archive"
+url = "https://github.com/catppuccin/bat/archive/refs/heads/main.zip"
+stripComponents = 2
+include = ["bat-main/themes/Catppuccin *.tmTheme"]
+
+[".config/delta/catppuccin.gitconfig"]
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/delta/refs/heads/main/catppuccin.gitconfig"
+
+{{ if eq .osId "windows" }}
+["AppData/Local/glow/Config/themes"]
+{{ else }}
+[".config/glow/themes"]
+{{ end }}
+type = "archive"
+url = "https://github.com/catppuccin/glamour/archive/refs/heads/main.zip"
+stripComponents = 2
+include = ["glamour-main/themes/catppuccin-*.json"]
+
+[".config/k9s/skins/catppuccin-{{ .catppuccinFlavor }}{{ if .transparent }}-transparent{{ end }}.yaml"]
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/k9s/refs/heads/main/dist/catppuccin-{{ .catppuccinFlavor }}{{ if .transparent }}-transparent{{ end }}.yaml"
+
+[".config/atac/key_bindings.toml"]
+type = "file"
+url = "https://raw.githubusercontent.com/Julien-cpsn/ATAC/main/example_resources/key_bindings/vim_key_bindings.toml"
+
+[".config/browser-data/stylus/catppuccin-youtube-music.user.css"]
+type = "file"
+url = "https://github.com/catppuccin/youtubemusic/raw/main/src/youtubemusic.user.css"
+
+[".config/browser-data/stylus/catppuccin-discord.user.css"]
+type = "file"
+url = "https://github.com/catppuccin/discord/raw/main/discord.user.css"
+
+##########################################
+
+[".config/browser-data/extensions/bypass-paywalls-chrome-clean"]
+type = "archive"
+url = "https://gitflic.ru/project/magnolia1234/bpc_uploads/blob/raw?file=bypass-paywalls-chrome-clean-master.zip"
+stripComponents = 1
+
+[".config/browser-data/extensions/useful-script"]
+type = "git-repo"
+url = "https://github.com/Useful-Scripts-Extension/useful-script.git"
+{{ .externalGitArgs }}
+
+##########################################
+
+[".config/git/githelpers.sh"]
+type = "file"
+url = "https://raw.githubusercontent.com/stevearc/dotfiles/master/.githelpers"

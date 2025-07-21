@@ -1,0 +1,28 @@
+#:schema https://raw.githubusercontent.com/HyDE-Project/HyDE/refs/heads/master/Configs/.local/share/hyde/schema/config.toml.json
+
+# Configuration file for HyDE
+# Environment variables should be on top
+# Updated config.toml file can be found at $HOME/.local/share/hyde/config.toml
+
+GDK_SCALE = 1.25
+QT_AUTO_SCREEN_SCALE_FACTOR = 1.25
+BROWSER = "brave"
+EDITOR = "nvim"
+
+[hyprland]
+browser = "brave"
+document_font_size = 12
+editor = "nvim"
+font_size = 11
+monospace_font = "JetBrainsMono Nerd Font"
+monospace_font_size = 11
+
+[rofi]
+emoji.style = 2
+
+[volume]
+boost = true
+boost_limit = 120
+
+[waybar]
+scale = 12

@@ -1,0 +1,16 @@
+[tools]
+go = "latest"
+java = "latest"
+node = "latest"
+rust = "latest"
+uv = "latest"
+yq = "latest"
+gradle = "latest"
+minikube = "latest"
+kubectl = "latest"
+kubectx = "latest"
+kubens = "latest"
+helm = "latest"
+
+[settings]
+idiomatic_version_file_enable_tools = []

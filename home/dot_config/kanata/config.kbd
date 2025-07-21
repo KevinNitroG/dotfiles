@@ -1,0 +1,62 @@
+;; Ref: https://github.com/jtroo/kanata/issues/437#issuecomment-1584721072
+
+(defcfg
+  #|
+  This configuration will process all keys pressed inside of kanata, even if
+  they are not mapped in defsrc. This is so that certain actions can activate
+  at the right time for certain input sequences. By default, unmapped keys are
+  not processed through kanata due to a Windows issue related to AltGr. If you
+  use AltGr in your keyboard, you will likely want to follow the simple.kbd
+  file while unmapping lctl and ralt from defsrc.
+  |#
+  process-unmapped-keys no
+)
+
+(defsrc
+  esc    f1       f2       f3       f4       f5       f6       f7       f8       f9       f10      f11      f12      del
+  grv    1        2        3        4        5        6        7        8        9        0        -        =        bspc
+  tab    q        w        e        r        t        y        u        i        o        p        [        ]        \
+  caps   a        s        d        f        g        h        j        k        l        ;        '        ret
+  lsft   z        x        c        v        b        n        m        ,        .        /        rsft
+  lctl   lmet  lalt                          spc                        ralt     rmet     rctl
+)
+
+#|
+(deflayer blank
+  _      _        _        _        _        _        _        _        _        _        _        _        _        _     
+  _      _        _        _        _        _        _        _        _        _        _        _        _        _
+  _      _        _        _        _        _        _        _        _        _        _        _        _        _
+  _      _        _        _        _        _        _        _        _        _        _        _        _
+  _      _        _        _        _        _        _        _        _        _        _        _
+  _      _        _                          _                          _        _        _
+)
+|#
+
+(deflayer default
+  @esc   f1       f2       f3       f4       f5       f6       f7       f8       f9       f10      f11      f12      del
+  @grv   1        2        3        4        5        6        7        8        9        0        -        =        bspc
+  tab    q        w        e        r        t        y        u        i        o        p        [        ]        \
+  @caps  a        s        d        f        g        h        j        k        l        @;       @'       ret
+  lsft   z        x        c        v        b        n        m        ,        .        /        rsft
+  lctl   lmet  lalt                          spc                        ralt     rmet  rctl
+)
+
+(deflayer grv
+  _      _        _        _        _        _        _        _        _        _        _        _        _        _     
+  _      M-1      M-2      M-3      M-4      M-5      M-6      M-7      M-8      M-9      M-0      A-left   A-rght   _
+  _      lsft     lctl     lalt     _        _        _        _        _        _        S-tab    C-S-tab  C-tab    _
+  _      _        M-s      @dd      _        _        left     down     up       rght     _        _        _
+  _      _        _        C-S-c    C-S-v    _        tab      _        _        _        _        _
+  _      _        _                          ret                        _        _        _
+)
+
+(defalias
+  esc caps
+  caps (tap-hold-press 200 200 esc lctl)
+  grv (tap-hold-press 200 200 grv (layer-toggle grv))
+  ; (tap-hold-press 200 200 ; lmet)
+  ' (tap-hold-press 200 200 ' lsft)
+
+  ;; delete the current line
+  dd (macro home S-end bspc)
+)

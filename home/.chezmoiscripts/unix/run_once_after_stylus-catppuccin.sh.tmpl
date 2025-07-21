@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# {{ now | date "2006-01-02" }}
+
+accent_color='{{- .catppuccinAccentColor -}}'
+light_flavor='{{- .catppuccinLightFlavour -}}'
+dark_flavor='{{- .catppuccinDarkFlavour -}}'
+
+echo "UPDATING STYLUS CATPPUCCIN"
+
+~/.local/bin/stylus-catppuccin.sh $accent_color $light_flavor $dark_flavor

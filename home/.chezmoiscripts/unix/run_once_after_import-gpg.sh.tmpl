@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# https://security.stackexchange.com/a/274431
+
+if ! command -v gpg &>/dev/null; then
+  exit
+fi
+
+gpg --import <<EOF
+{{ includeTemplate "gpg/encrypted_pri-ecc.gpg" | decrypt }}
+EOF
+
+gpg --import <<EOF
+{{ includeTemplate "gpg/encrypted_pub-ecc.gpg" | decrypt }}
+EOF
+
+(
+  echo 5
+  echo y
+  echo save
+) |
+  gpg --command-fd 0 --no-tty --no-greeting -q --edit-key '{{ .gpgId }}' trust

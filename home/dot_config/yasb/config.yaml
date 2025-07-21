@@ -1,0 +1,230 @@
+watch_stylesheet: true
+watch_config: true
+debug: false
+
+komorebi:
+  start_command: 'komorebic start && AutoHotkey ~/.config/autohotkey/main.ahk'
+  stop_command: 'komorebic stop && taskkill /IM AutoHotkey64.exe /F'
+  reload_command: 'komorebic stop && taskkill /IM AutoHotkey64.exe /F && komorebic start && AutoHotkey ~/.config/autohotkey/main.ahk'
+
+bars:
+  status-bar:
+    enabled: true
+    screens: ['*']
+    class_name: 'yasb-bar'
+    alignment:
+      position: 'top'
+      center: false
+    blur_effect:
+      enabled: false
+      acrylic: false
+      dark_mode: true
+      round_corners: true
+      border_color: None
+    window_flags:
+      always_on_top: false
+      windows_app_bar: true
+    dimensions:
+      width: '100%'
+      height: 34
+    padding:
+      top: 4
+      left: 6
+      bottom: 0
+      right: 6
+    widgets:
+      left:
+        - 'cpu'
+        - 'memory'
+        - 'clock'
+        - 'komorebi_workspaces'
+        - 'komorebi_active_layout'
+      center:
+        - 'active_window'
+      right:
+        - 'media'
+        - 'traffic'
+        - 'battery'
+        - 'power_menu'
+widgets:
+  media:
+    type: 'yasb.media.MediaWidget'
+    options:
+      label: "<span>\uf001</span> {title}"
+      label_alt: "<span>\uf001</span> {artist}"
+      hide_empty: true
+      max_field_size:
+        label: 20
+        label_alt: 20
+      show_thumbnail: false
+      controls_only: false
+      controls_left: true
+      thumbnail_alpha: 0
+      thumbnail_padding: 0
+      thumbnail_corner_radius: 0
+      icons:
+        prev_track: "\ue892"
+        next_track: "\ue893"
+        play: "\ue768"
+        pause: "\ue769"
+
+  clock:
+    type: 'yasb.clock.ClockWidget'
+    options:
+      label: '{%I:%M %p}'
+      label_alt: '{%A, %d %B %Y %H:%M:%S}'
+      timezones: [] #Looking up time zone info from registry
+
+  komorebi_workspaces:
+    type: 'komorebi.workspaces.WorkspaceWidget'
+    options:
+      label_offline: "\u26a1 Offline"
+      label_workspace_btn: '{index}'
+      label_workspace_active_btn: '{index}'
+      label_workspace_populated_btn: '{index}'
+      label_default_name: '{index}'
+      label_zero_index: false
+      hide_empty_workspaces: true
+      hide_if_offline: false
+      animation: true
+      container_padding:
+        top: 0
+        left: 0
+        bottom: 0
+        right: 0
+
+  komorebi_active_layout:
+    type: 'komorebi.active_layout.ActiveLayoutWidget'
+    options:
+      hide_if_offline: true
+      label: '{icon}'
+      layouts:
+        [
+          'bsp',
+          'columns',
+          'rows',
+          'grid',
+          'vertical_stack',
+          'horizontal_stack',
+          'ultrawide_vertical_stack',
+          'right_main_vertical_stack',
+        ]
+      layout_icons:
+        bsp: 'BSP'
+        columns: 'COLS'
+        rows: 'ROWS'
+        grid: 'GRID'
+        vertical_stack: 'V-STACK'
+        horizontal_stack: 'H-STACK'
+        ultrawide_vertical_stack: 'W-STACK'
+        right_main_vertical_stack: 'RMV-STACK'
+        monocle: 'MONOCLE'
+        maximised: 'MAX'
+        floating: 'FLOATING'
+        paused: 'PAUSED'
+      callbacks:
+        on_left: 'next_layout'
+        on_middle: 'toggle_monocle'
+        on_right: 'prev_layout'
+      container_padding:
+        top: 0
+        left: 0
+        bottom: 0
+        right: 0
+
+  power_menu:
+    type: 'yasb.power_menu.PowerMenuWidget'
+    options:
+      label: "\uf011"
+      uptime: True
+      blur: False
+      blur_background: True
+      animation_duration: 250 # Milisecond
+      button_row: 5 # Number of buttons in row, min 1 max 5
+      buttons:
+        signout: ["\udb80\udf43", 'Sign out']
+        shutdown: ["\uf011", 'Shut Down']
+        restart: ["\uead2", 'Restart']
+        hibernate: ["\uf28e", 'Hibernate']
+        cancel: ["\udb81\udf3a", 'Cancel']
+
+  active_window:
+    type: 'yasb.active_window.ActiveWindowWidget'
+    options:
+      label: '{win[title]}'
+      label_alt: ''
+      label_no_window: ''
+      label_icon: false
+      label_icon_size: 12
+      max_length: 36
+      max_length_ellipsis: '...'
+      monitor_exclusive: true
+
+  battery:
+    type: 'yasb.battery.BatteryWidget'
+    options:
+      label: '<span>{icon}</span>{percent}%'
+      label_alt: '{icon} {percent}% | time: {time_remaining}'
+      charging_options:
+        icon_format: '{charging_icon}'
+
+  cpu:
+    type: 'yasb.cpu.CpuWidget'
+    options:
+      label: "<span>\uf4bc</span> {info[percent][total]}%"
+      label_alt: "<span>\uf437</span> {info[histograms][cpu_percent]}"
+      update_interval: 2000
+      histogram_icons:
+        - '\u2581' # 0%
+        - '\u2581' # 10%
+        - '\u2582' # 20%
+        - '\u2583' # 30%
+        - '\u2584' # 40%
+        - '\u2585' # 50%
+        - '\u2586' # 60%
+        - '\u2587' # 70%
+        - '\u2588' # 80%+
+      histogram_num_columns: 8
+      callbacks:
+        on_right: 'exec cmd /c Taskmgr'
+
+  memory:
+    type: 'yasb.memory.MemoryWidget'
+    options:
+      label: "<span>\uf4bc</span> {virtual_mem_used}/{virtual_mem_total}"
+      label_alt: "<span>\uf4bc</span> VIRT: {virtual_mem_percent}% SWAP: {swap_mem_percent}%"
+      update_interval: 5000
+      callbacks:
+        on_left: 'toggle_label'
+        on_middle: 'do_nothing'
+        on_right: 'do_nothing'
+      memory_thresholds:
+        low: 25
+        medium: 50
+    high: 90
+
+  update:
+    type: 'yasb.update_check.UpdateCheckWidget'
+    options:
+      winget_update:
+        enabled: true
+        label: "<span>\uf0ab</span>{count}"
+        interval: 180
+        exclude: []
+      windows_update:
+        enabled: true
+        label: "<span>\uf0ab</span>{count}"
+        interval: 240
+        exclude: []
+
+  traffic:
+    type: 'yasb.traffic.TrafficWidget'
+    options:
+      label: "\ueab4 {download_speed} | \ueab7 {upload_speed}"
+      label_alt: 'Download {download_speed} | Upload {upload_speed}'
+      update_interval: 5000
+      hide_if_offline: true
+      max_label_length: 10
+      callbacks:
+        on_left: 'toggle_label'
+        on_right: 'exec cmd /c Taskmgr'

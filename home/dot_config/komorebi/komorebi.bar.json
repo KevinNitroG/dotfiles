@@ -1,0 +1,77 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LGUG2Z/komorebi/master/schema.bar.json",
+  "monitor": {
+    "index": 0,
+    "work_area_offset": {
+      "left": 0,
+      "top": 50,
+      "right": 0,
+      "bottom": 50
+    }
+  },
+  "font_family": "Google Sans",
+  "left_widgets": [
+    {
+      "Komorebi": {
+        "workspaces": {
+          "enable": true,
+          "hide_empty_workspaces": true,
+          "display": "IconAndText"
+        },
+        "layout": {
+          "enable": true
+        },
+        "focused_window": {
+          "enable": true,
+          "display": "IconAndText"
+        }
+      }
+    }
+  ],
+  "right_widgets": [
+    {
+      "Media": {
+        "enable": true
+      }
+    },
+    {
+      "Network": {
+        "enable": true,
+        "show_total_data_transmitted": false,
+        "show_network_activity": true,
+        "data_refresh_interval": 5,
+        "show_default_interface": false,
+        "network_activity_fill_characters": 8
+      }
+    },
+    {
+      "Cpu": {
+        "enable": true,
+        "data_refresh_interval": 5
+      }
+    },
+    {
+      "Memory": {
+        "enable": true
+      }
+    },
+    {
+      "Time": {
+        "enable": true,
+        "format": "TwelveHour"
+      }
+    },
+    {
+      "Date": {
+        "enable": false,
+        "format": "DateMonthYear"
+      }
+    },
+    {
+      "Battery": {
+        "enable": true,
+        "data_refresh_interval": 30
+      }
+    }
+  ]
+}

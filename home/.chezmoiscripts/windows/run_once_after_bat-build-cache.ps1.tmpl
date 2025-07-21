@@ -1,0 +1,11 @@
+# themeConfigFile hash: {{ include (joinPath .chezmoi.homeDir "AppData/Roaming/bat/themes" (printf "Catppuccin %s.tmTheme" (.catppuccinFlavor | title))) | sha256sum }}
+
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+
+if (-not (Get-Command "bat" -ErrorAction SilentlyContinue))
+{
+  exit
+}
+
+Write-Host 'BUILDING BAT CACHE...'
+bat cache --build

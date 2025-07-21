@@ -1,0 +1,22 @@
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+
+# Check if gpg is available
+if (-not (Get-Command gpg -ErrorAction SilentlyContinue)) {
+    exit
+}
+
+gpg --import @"
+{{ includeTemplate "gpg/encrypted_pri-ecc.gpg" | decrypt }}
+"@
+
+gpg --import @"
+{{ includeTemplate "gpg/encrypted_pub-ecc.gpg" | decrypt }}
+"@
+
+$trustCommands = @(
+    "5",
+    "y",
+    "save"
+) | ForEach-Object { "$_`n" } | Out-String
+
+$trustCommands | gpg --command-fd 0 --no-tty --no-greeting -q --edit-key '{{ .gpgId }}' trust

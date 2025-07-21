@@ -1,0 +1,17 @@
+[Colors:View]
+BackgroundNormal=#181824FF
+
+[General]
+TerminalApplication=/usr/bin/kitty
+
+[Icons]
+Theme=Tela-circle-dracula
+
+[KDE]
+widgetStyle=kvantum
+
+[UiSettings]
+ColorScheme=colors
+
+[Wallet]
+Enabled=false

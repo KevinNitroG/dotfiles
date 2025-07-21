@@ -1,0 +1,9 @@
+# {{ now | date "2006-01-02" }}
+
+$accent_color='{{- .catppuccinAccentColor -}}'
+$light_flavor='{{- .catppuccinLightFlavour -}}'
+$dark_flavor='{{- .catppuccinDarkFlavour -}}'
+
+Write-Host 'UPDATING STYLUS CATPPUCCIN'
+
+~/.local/bin/stylus-catppuccin.ps1 -accent_color $accent_color -light_flavor $light_flavor -dark_flavor $dark_flavor
