@@ -2,9 +2,10 @@
 
 FZF_DEFAULT_OPTS+="
 --bind ctrl-a:toggle-all
+--bind ?:toggle-preview
 --header-first
 --preview-label INFO
---preview-window right,70%
+--preview-window right,80%
 "
 
 show_help() {
@@ -79,16 +80,16 @@ _pacman_manage() {
   local action=$1
   case "$action" in
   'install')
-    pacman -Slq | fzf --multi --header 'INSTALL APPS' --preview 'pacman -Sii {1}' | xargs -ro sudo pacman -S --needed
+    pacman -Sl | awk '{print $1"/"$2}' | fzf --multi --header 'INSTALL APPS' --preview 'pacman -Sii {1} | bat -fpl yaml' | xargs -ro sudo pacman -S --needed
     ;;
   'update')
-    pacman -Quq | fzf --multi --header 'UPDATE APPS' --preview 'pacman -Sii {1}' | xargs -ro sudo pacman -S --needed
+    pacman -Quq | fzf --multi --header 'UPDATE APPS' --preview 'pacman -Sii {1} | bat -fpl yaml' | xargs -ro sudo pacman -S --needed
     ;;
   'uninstall')
-    pacman -Qq | fzf --multi --header 'UNINSTALL APPS' --preview 'pacman -Qii {1}' | xargs -ro sudo pacman -Rs --confirm
+    pacman -Qq | fzf --multi --header 'UNINSTALL APPS' --preview 'pacman -Qii {1} | bat -fpl yaml' | xargs -ro sudo pacman -Rs --confirm
     ;;
   'uninstall-clean')
-    pacman -Qq | fzf --multi --header 'UNINSTALL APPS' --preview 'pacman -Qii {1}' | xargs -ro yay -Rssucn --confirm
+    pacman -Qq | fzf --multi --header 'UNINSTALL APPS' --preview 'pacman -Qii {1} | bat -fpl yaml' | xargs -ro yay -Rssucn --confirm
     ;;
   'fetch')
     sudo pacman -Sy
@@ -100,16 +101,16 @@ _yay_manage() {
   local action=$1
   case "$action" in
   'install')
-    yay -Slq | sort -u | fzf --multi --header 'INSTALL APPS' --preview 'yay -Sii {1}' | xargs -ro yay -S --needed
+    yay -Sl | awk '{print $1"/"$2}' | fzf --multi --header 'INSTALL APPS' --preview 'yay -Sii {1} | bat -fpl yaml' | xargs -ro yay -S --needed
     ;;
   'update')
-    yay -Quq | fzf --multi --header 'UPDATE APPS' --preview 'yay -Sii {1}' | xargs -ro yay -S --needed
+    yay -Quq | fzf --multi --header 'UPDATE APPS' --preview 'yay -Sii {1} | bat -fpl yaml' | xargs -ro yay -S --needed
     ;;
   'uninstall')
-    yay -Qq | fzf --multi --header 'UNINSTALL APPS' --preview 'yay -Qii {1}' | xargs -ro yay -Rs --confirm
+    yay -Qq | fzf --multi --header 'UNINSTALL APPS' --preview 'yay -Qii {1} | bat -fpl yaml' | xargs -ro yay -Rs --confirm
     ;;
   'uninstall-clean')
-    yay -Qq | fzf --multi --header 'UNINSTALL APPS' --preview 'yay -Qii {1}' | xargs -ro yay -Rssucn --confirm
+    yay -Qq | fzf --multi --header 'UNINSTALL APPS' --preview 'yay -Qii {1} | bat -fpl yaml' | xargs -ro yay -Rssucn --confirm
     ;;
   'fetch')
     yay -Sy
