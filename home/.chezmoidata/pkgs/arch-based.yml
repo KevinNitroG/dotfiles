@@ -9,6 +9,7 @@ pkgs:
       - "kanata-bin" # Change keyboard func
       - "lazygit"
       - "os-prober"
+      - "tldr"
       - "tmux"
       - "tmuxinator"
       - "wget"
@@ -17,12 +18,14 @@ pkgs:
 
       # Terminal
       # - "alacritty"
+      # - "ghostty"
       - "kitty"
 
       # Text / Code Editor, IDE
       # - "mysql-workbench"
       # - "zed"
       - "neovim"
+      - "vim"
       - "visual-studio-code-bin"
 
       # CLI tools
@@ -34,9 +37,10 @@ pkgs:
       - "atac"
       - "bat"
       - "ctags"
-      - "doggo"
+      - "dog"
       - "exa"
       - "fd"
+      - "fx"
       - "fzf"
       - "gh"
       - "git-delta"
@@ -46,6 +50,7 @@ pkgs:
       - "jq"
       - "just"
       - "lazydocker"
+      - "lazysql"
       - "rclone"
       - "ripgrep"
       - "rsync"
@@ -86,13 +91,17 @@ pkgs:
       # - "speedtest-cli"
       - "btop"
       - "cronie"
+      - "dysk"
+      - "gdu"
 
       # CLI Fun
-      # - "cowsay"
-      # - "fastfetch"
-      # - "figlet" # A program for making large letters out of ordinary text
-      # - "lolcat"
-      # - "astroterm"
+      - "asciinema"
+      - "asciinema-agg-bin"
+      - "astroterm"
+      - "cowsay"
+      - "fastfetch"
+      - "figlet" # A program for making large letters out of ordinary text
+      - "lolcat"
 
       # Apps / Tools
       # - "authy-desktop-win32-bin"
@@ -112,6 +121,9 @@ pkgs:
       - "vlc"
       - "zathura"
 
+      # Utils
+      - "bc"
+
       # Fonts
       - "noto-fonts-emoji"
       - "ttf-google-sans"
@@ -130,7 +142,6 @@ pkgs:
       - "usage" # For mise
       - "wtype"
       - "zathura-pdf-mupdf" # For zathura
-
     laptop:
       # - "gestures"
       # - "libinput-gestures"
