@@ -26,6 +26,7 @@ plugins=(
   gh
   git
   gradle
+  helm
   kubectl
   minikube
   starship

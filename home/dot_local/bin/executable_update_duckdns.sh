@@ -1,4 +1,4 @@
-#!/bin/env sh
+#!/bin/env zsh
 
 if [ -f "$HOME/.zshenv" ]; then
   # shellcheck disable=SC1091

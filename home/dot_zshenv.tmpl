@@ -60,17 +60,21 @@ export WATCH_INTERVAL='5000'
 # https://github.com/catppuccin/fzf - not use background for transparent
 # NOTE: With border left option, it cannot show preview-label
 export FZF_DEFAULT_OPTS="
---color fg+:#f9e2af
---color fg:#cdd6f4
---color header:#cba6f7
---color hl+:#eba0ac
---color hl:#f38ba8
---color info:#89b4fa
---color marker:#89b4fa
---color pointer:#eba0ac
---color prompt:#eba0ac
---color spinner:#f5e0dc
---color border:#b4befe
+--color bg+:#313244
+--color bg:#1E1E2E
+--color spinner:#F5E0DC
+--color hl:#F38BA8
+--color fg:#CDD6F4
+--color header:#F38BA8
+--color info:#CBA6F7
+--color pointer:#F5E0DC
+--color marker:#B4BEFE
+--color fg+:#CDD6F4
+--color prompt:#CBA6F7
+--color hl+:#F38BA8
+--color selected-bg:#45475A
+--color border:#6C7086
+--color label:#CDD6F4
 --border
 --cycle
 --height ~100%
@@ -87,7 +91,6 @@ export FZF_DEFAULT_OPTS="
 "
 # --bind one:accept # For accept if there's only 1
 export FZF_DEFAULT_COMMAND="rg --files --no-ignore-vcs --hidden --ignore-file $HOME/ripgrep/ignore"
-
 
 ##########################################
 
