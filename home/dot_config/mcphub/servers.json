@@ -7,7 +7,7 @@
       ],
       "autoApprove": [],
       "command": "npx",
-      "disabled": false
+      "disabled": true
     },
     "ddg-search": {
       "args": [
@@ -31,7 +31,7 @@
       ],
       "autoApprove": [],
       "command": "npx",
-      "disabled": true
+      "disabled": false
     },
     "git": {
       "args": [
@@ -120,6 +120,7 @@
       "disabled": true
     },
     "vectorcode": {
+      "args": [],
       "command": "vectorcode-mcp-server",
       "disabled": true
     }

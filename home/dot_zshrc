@@ -25,6 +25,7 @@ plugins=(
   fzf-tab
   gh
   git
+  golang
   gradle
   helm
   kubectl
