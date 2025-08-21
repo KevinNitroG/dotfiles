@@ -32,6 +32,7 @@ plugins=(
   minikube
   starship
   sudo
+  terraform
   tmux
   tmuxinator
   zoxide
