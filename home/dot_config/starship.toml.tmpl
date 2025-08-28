@@ -4,7 +4,9 @@ format = """
 [](surface0)\
 $os\
 $username\
-[](bg:peach fg:surface0)\
+[](bg:red fg:surface0)\
+$hostname\
+[](bg:peach fg:red)\
 $directory\
 [](fg:peach bg:yellow)\
 $git_branch\
@@ -14,23 +16,26 @@ $c\
 $rust\
 $golang\
 $nodejs\
+$deno\
 $php\
+$gradle\
 $java\
 $kotlin\
-$haskell\
 $python\
 [](fg:green bg:blue)\
 $docker_context\
-$conda\
+$kubernetes\
+$helm\
 [](fg:blue bg:lavender)\
 $cmd_duration\
+$sudo\
 [ ](fg:lavender)\
 $line_break$character"""
 
 command_timeout = 2000
 palette = 'catppuccin'
 
-{{ $palette := index .catppuccin.palettes .catppuccinFlavor }}
+{{- $palette := index .catppuccin.palettes .catppuccinFlavor }}
 [palettes.catppuccin]
 rosewater = {{ $palette.rosewater | quote }}
 flamingo = {{ $palette.flamingo | quote }}
@@ -64,36 +69,41 @@ disabled = false
 style = "bg:surface0 fg:text"
 
 [os.symbols]
-Windows = "󰍲"
-Ubuntu = "󰕈"
-SUSE = ""
-Raspbian = "󰐿"
-Mint = "󰣭"
-Macos = "󰀵"
-Manjaro = ""
-Linux = "󰌽"
-Gentoo = "󰣨"
-Fedora = "󰣛"
 Alpine = ""
 Amazon = ""
 Android = ""
 Arch = "󰣇"
 Artix = "󰣇"
-EndeavourOS = ""
 CentOS = ""
 Debian = "󰣚"
-Redhat = "󱄛"
-RedHatEnterprise = "󱄛"
+EndeavourOS = ""
+Fedora = "󰣛"
+Gentoo = "󰣨"
+Linux = "󰌽"
+Macos = "󰀵"
+Manjaro = ""
+Mint = "󰣭"
 Pop = ""
+Raspbian = "󰐿"
+RedHatEnterprise = "󱄛"
+Redhat = "󱄛"
+SUSE = ""
+Ubuntu = "󰕈"
+Windows = "󰍲"
 
 [username]
 show_always = true
 style_user = "bg:surface0 fg:text"
-style_root = "bg:surface0 fg:text"
+style_root = "bold bg:surface0 fg:maroon"
 format = '[ $user ]($style)'
 
+[hostname]
+ssh_only = false
+style = "bg:red fg:base"
+format = "[ ($ssh_symbol )$hostname ]($style)"
+
 [directory]
-style = "fg:surface0 bg:peach"
+style = "fg:base bg:peach"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
@@ -103,76 +113,86 @@ truncation_symbol = "…/"
 "Downloads" = " "
 "Music" = "󰝚 "
 "Pictures" = " "
-"Developer" = "󰲋 "
+"projects" = " "
+"homelab" = "󱃾 "
+"nvim" = " "
+".vim" = " "
+"chezmoi" = "󰘓 "
 
 [git_branch]
 symbol = ""
 style = "bg:yellow"
-format = '[[ $symbol $branch ](fg:surface0 bg:yellow)]($style)'
+format = '[[ $symbol $branch ](fg:base bg:yellow)]($style)'
 
 [git_status]
 style = "bg:yellow"
-format = '[[($all_status$ahead_behind )](fg:surface0 bg:yellow)]($style)'
+format = '[[($all_status$ahead_behind )](fg:base bg:yellow)]($style)'
 
 [nodejs]
 symbol = ""
 style = "bg:text"
-format = '[[ $symbol( $version) ](fg:surface0 bg:green)]($style)'
+format = '[[ $symbol( $version) ](fg:base bg:green)]($style)'
 
 [c]
 symbol = " "
 style = "bg:text"
-format = '[[ $symbol( $version) ](fg:surface0 bg:green)]($style)'
+format = '[[ $symbol( $version) ](fg:base bg:green)]($style)'
 
 [rust]
 symbol = ""
 style = "bg:text"
-format = '[[ $symbol( $version) ](fg:surface0 bg:green)]($style)'
+format = '[[ $symbol( $version) ](fg:base bg:green)]($style)'
 
 [golang]
 symbol = ""
 style = "bg:text"
-format = '[[ $symbol( $version) ](fg:surface0 bg:green)]($style)'
+format = '[[ $symbol( $version) ](fg:base bg:green)]($style)'
 
 [php]
 symbol = ""
 style = "bg:text"
-format = '[[ $symbol( $version) ](fg:surface0 bg:green)]($style)'
+format = '[[ $symbol( $version) ](fg:base bg:green)]($style)'
 
 [java]
 symbol = " "
 style = "bg:text"
-format = '[[ $symbol( $version) ](fg:surface0 bg:green)]($style)'
+format = '[[ $symbol( $version) ](fg:base bg:green)]($style)'
 
 [kotlin]
 symbol = ""
 style = "bg:text"
-format = '[[ $symbol( $version) ](fg:surface0 bg:green)]($style)'
-
-[haskell]
-symbol = ""
-style = "bg:text"
-format = '[[ $symbol( $version) ](fg:surface0 bg:green)]($style)'
+format = '[[ $symbol( $version) ](fg:base bg:green)]($style)'
 
 [python]
 symbol = ""
 style = "bg:text"
-format = '[[ $symbol( $pyenv_prefix)( $version)( \($virtualenv\)) ](fg:surface0 bg:green)]($style)'
+format = '[[ $symbol( $pyenv_prefix)( $version)( \($virtualenv\)) ](fg:base bg:green)]($style)'
 
 [docker_context]
 symbol = ""
 style = "bg:blue"
-format = '[[ $symbol( $context) ](fg:#surface0 bg:blue)]($style)'
+format = '[[ $symbol( $context) ](fg:base bg:blue)]($style)'
+
+[kubernetes]
+style = "bg:blue"
+format = '[[ $symbol( $context)( \($namespace\)) ](fg:base bg:blue)]($style)'
+disabled = false
+symbol ="󱃾"
 
 [conda]
 style = "bg:blue"
-format = '[[ $symbol( $environment) ](fg:#surface0 bg:blue)]($style)'
+format = '[[ $symbol( $environment) ](fg:#base bg:blue)]($style)'
 
 [time]
 disabled = true
 time_format = "%R"
 style = "bg:color_bg1"
-format = '[[  $time ](fg:surface0 bg:lavender)]($style)'
+format = '[[  $time ](fg:base bg:lavender)]($style)'
+
+[sudo]
+style = "fg:base bg:lavender"
+disabled = false
+format = "[ $symbol]($style)"
 
 [cmd_duration]
 disabled = false
@@ -180,8 +200,7 @@ min_time = 2_000
 show_milliseconds = false
 show_notifications = false
 min_time_to_notify = 300_000
-style = "bg:color_bg1"
-format = '[[   $duration ](fg:surface0 bg:lavender)]($style)'
+format = '[   $duration ](fg:surface0 bg:lavender)'
 
 [line_break]
 disabled = false

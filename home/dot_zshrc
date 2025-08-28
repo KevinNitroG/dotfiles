@@ -22,6 +22,7 @@ plugins=(
   docker-compose
   dotenv
   extract
+  fluxcd
   fzf-tab
   gh
   git
@@ -189,6 +190,7 @@ alias cmra='chezmoi re-add'
 alias t='tmux'
 alias ta='tmux has-session &>/dev/null && tmux attach || tmux new-session'
 alias tks='tmux kill-server'
+alias tll='tmuxinator local'
 
 # ChatGPT gen it for me :(
 yzcd() {
