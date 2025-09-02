@@ -22,7 +22,7 @@ Host idx
   HostName idx-as
   User user
 
-Host kevblink
+Host kevblink-local
   HostName 192.168.28.25
   User kevinnitro
 
