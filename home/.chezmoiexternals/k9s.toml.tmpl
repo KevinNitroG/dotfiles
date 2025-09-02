@@ -1,0 +1,17 @@
+[".config/k9s/skins/catppuccin-{{ .catppuccinFlavor }}{{ if .transparent }}-transparent{{ end }}.yaml"]
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/k9s/refs/heads/main/dist/catppuccin-{{ .catppuccinFlavor }}{{ if .transparent }}-transparent{{ end }}.yaml"
+
+[".config/k9s/plugins/"]
+type = "archive"
+url = "https://github.com/derailed/k9s/archive/refs/heads/master.zip"
+stripComponents = 2
+include = [
+  "k9s-master/plugins/argocd.yaml",
+  "k9s-master/plugins/cert-manager.yaml",
+  "k9s-master/plugins/flux.yaml",
+  "k9s-master/plugins/helm-default-values.yaml",
+  "k9s-master/plugins/helm-values.yaml",
+  "k9s-master/plugins/log-jq.yaml",
+  "k9s-master/plugins/log-loki.yaml"
+]
