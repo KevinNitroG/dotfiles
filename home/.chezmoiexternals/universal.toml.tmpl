@@ -15,38 +15,40 @@ type = "git-repo"
 url = "git@github.com:uitdots/vim.git"
 
 {{ if eq .osId "windows" }}
-["AppData/Roaming/alacritty/themes"]
+["AppData/Roaming/alacritty/catppuccin.toml"]
 {{ else }}
-[".config/alacritty/themes"]
+[".config/alacritty/catppuccin.toml"]
 {{ end }}
-type = "archive"
-url = "https://github.com/catppuccin/alacritty/archive/refs/heads/main.zip"
-stripComponents = 1
-include = ["alacritty-main/catppuccin-*.toml"]
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/alacritty/refs/heads/main/catppuccin-{{ .catppuccinFlavor }}.toml"
 
 {{ if eq .osId "windows" }}
-["AppData/Roaming/bat/themes"]
+["AppData/Roaming/bat/themes/Catppuccin {{ .catppuccinFlavor | title }}.tmTheme"]
 {{ else }}
-[".config/bat/themes"]
+[".config/bat/themes/Catppuccin {{ .catppuccinFlavor | title }}.tmTheme"]
 {{ end }}
-type = "archive"
-url = "https://github.com/catppuccin/bat/archive/refs/heads/main.zip"
-stripComponents = 2
-include = ["bat-main/themes/Catppuccin *.tmTheme"]
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/bat/refs/heads/main/themes/Catppuccin {{ .catppuccinFlavor | title }}.tmTheme"
 
 [".config/delta/catppuccin.gitconfig"]
 type = "file"
 url = "https://raw.githubusercontent.com/catppuccin/delta/refs/heads/main/catppuccin.gitconfig"
 
 {{ if eq .osId "windows" }}
-["AppData/Local/glow/Config/themes"]
+["AppData/Local/glow/Config/catppuccin.json"]
 {{ else }}
-[".config/glow/themes"]
+[".config/glow/catppuccin.json"]
 {{ end }}
-type = "archive"
-url = "https://github.com/catppuccin/glamour/archive/refs/heads/main.zip"
-stripComponents = 2
-include = ["glamour-main/themes/catppuccin-*.json"]
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/glamour/main/themes/catppuccin-{{ .catppuccinFlavor }}.json"
+
+{{ if eq .osId "windows" }}
+["AppData/Roaming/mpv/mpv/catppuccin.conf"]
+{{ else }}
+[".config/mpv/catppuccin.conf"]
+{{ end }}
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/mpv/main/themes/{{ .catppuccinFlavor }}/{{ .catppuccinAccentColor }}.conf"
 
 [".config/atac/key_bindings.toml"]
 type = "file"

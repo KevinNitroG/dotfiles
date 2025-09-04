@@ -240,6 +240,7 @@ alias lg='NVIM_NO_IDE=1 lazygit'
 alias rl='source ~/.zshrc'
 alias sv='sudo -E nvim'
 alias v='nvim'
+alias nv='NVIM_NO_IDE=1 nvim'
 alias yz='yazi'
 alias ip='ip -c'
 

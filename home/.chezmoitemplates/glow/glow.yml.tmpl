@@ -1,9 +1,9 @@
-{{ $themePath := "" }}
-{{ if eq .osId "windows" }}
-  {{ $themePath = printf "C:/Users/kevinnitro/AppData/Local/glow/Config/themes/catppuccin-%s.json" .catppuccinFlavor }}
-{{ else }}
-  {{ $themePath = printf "~/.config/glow/themes/catppuccin-%s.json" .catppuccinFlavor }}
-{{ end }}
+{{- $themePath := "" }}
+{{- if eq .osId "windows" }}
+  {{- $themePath = "~/AppData/Local/glow/Config/themes/catppuccin.json" }}
+{{- else }}
+  {{- $themePath = "~/.config/glow/catppuccin.json" }}
+{{- end }}
 # style name or JSON path (default "auto")
 style: {{ $themePath }}
 # show local files only; no network (TUI-mode only)
