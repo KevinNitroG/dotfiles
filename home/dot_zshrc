@@ -186,6 +186,9 @@ alias cma='chezmoi add'
 alias cme='chezmoi edit'
 alias cmra='chezmoi re-add'
 
+# Git
+alias gca='git commit -a'
+
 # Tmux
 alias t='tmux'
 alias ta='tmux has-session &>/dev/null && tmux attach || tmux new-session'

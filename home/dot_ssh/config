@@ -22,6 +22,10 @@ Host idx
   HostName idx-as
   User user
 
+# Host kevblink
+#   HostName ssh-kevblink.kevinnitro.id.vn
+#   User kevinnitro
+
 Host kevblink-local
   HostName 192.168.28.25
   User kevinnitro
