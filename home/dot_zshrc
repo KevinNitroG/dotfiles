@@ -89,8 +89,9 @@ HISTFILE=~/.zsh_history
 HISTORY_SUBSTRING_SEARCH_PREFIXED=1
 HISTSIZE=5000
 SAVEHIST=$HISTSIZE
-setopt SHARE_HISTORY
 setopt APPENDHISTORY
+setopt CORRECT
+setopt CORRECT_ALL
 setopt GLOBDOTS # Include hidden dir tab complete
 setopt HIST_FIND_NO_DUPS
 setopt HIST_IGNORE_ALL_DUPS
@@ -99,6 +100,7 @@ setopt HIST_IGNORE_SPACE # Ignore command start with space
 setopt HIST_SAVE_NO_DUPS
 setopt IGNOREEOF # Prevents <C-d> from quitting the shell
 setopt PROMPT_SUBST # Enable scripting in the prompt
+setopt SHARE_HISTORY
 setopt SHAREHISTORY # Share history across shell
 unsetopt BEEP # Prevents beeps in general
 
