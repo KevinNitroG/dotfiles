@@ -1,8 +1,5 @@
 # vim:ft=sshconfig.chezmoitmpl
 
-ForwardX11 yes
-ForwardX11Trusted yes
-
 Host *
   ServerAliveInterval 86400
   ServerAliveCountMax 4
@@ -26,10 +23,6 @@ Host idx
 #   HostName ssh-kevblink.kevinnitro.id.vn
 #   User kevinnitro
 
-Host kevblink-local
-  HostName 192.168.28.25
-  User kevinnitro
-
 # My modem?
 Host 192.168.1.1
   HostKeyAlgorithms=+ssh-rsa
@@ -39,3 +32,11 @@ Host 192.168.28.*
   SetEnv TERM=screen-256color # Set term for it
   StrictHostKeyChecking no # Disable host key verification
   UserKnownHostsFile /dev/null # Prevent adding to known_hosts file
+
+Host kevblink
+  User kevinnitro
+  HostName 192.168.28.25
+
+Host kevblink-cloudflare
+  User kevinnitro
+  HostName 192.0.1.1
