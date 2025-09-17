@@ -2,7 +2,7 @@
 BackgroundNormal=#181824FF
 
 [General]
-TerminalApplication=/usr/bin/kitty
+TerminalApplication=kitty
 
 [Icons]
 Theme=Tela-circle-dracula
