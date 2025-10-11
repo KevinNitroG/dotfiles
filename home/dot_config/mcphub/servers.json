@@ -1,25 +1,18 @@
 {
   "mcpServers": {
     "context7": {
-      "args": [
-        "-y",
-        "@upstash/context7-mcp"
-      ],
+      "args": ["-y", "@upstash/context7-mcp"],
       "autoApprove": [],
       "command": "npx",
       "disabled": true
     },
     "ddg-search": {
-      "args": [
-        "duckduckgo-mcp-server"
-      ],
+      "args": ["duckduckgo-mcp-server"],
       "command": "uvx",
       "disabled": true
     },
     "fetch": {
-      "args": [
-        "mcp-server-fetch"
-      ],
+      "args": ["mcp-server-fetch"],
       "command": "uvx",
       "disabled": true
     },
@@ -34,11 +27,7 @@
       "disabled": false
     },
     "git": {
-      "args": [
-        "mcp-server-git",
-        "--repository",
-        "/home/kevinnitro"
-      ],
+      "args": ["mcp-server-git", "--repository", "/home/kevinnitro"],
       "command": "uvx",
       "disabled": true
     },
@@ -50,33 +39,35 @@
       "url": "https://api.githubcopilot.com/mcp/"
     },
     "kubernetes": {
-      "args": [
-        "mcp-server-kubernetes"
-      ],
+      "args": ["mcp-server-kubernetes"],
       "command": "npx",
       "disabled": true
     },
+    "mcp-atlassian": {
+      "args": ["--with", "pydantic==2.11.9", "mcp-atlassian"],
+      "command": "uvx",
+      "disabled": false,
+      "env": {
+        "CONFLUENCE_API_TOKEN": "${ATLASSIAN_API_KEY}",
+        "CONFLUENCE_URL": "https://buggilies-se358.atlassian.net/wiki",
+        "CONFLUENCE_USERNAME": "trannguyenthaibinh46@gmail.com",
+        "JIRA_API_TOKEN": "${ATLASSIAN_API_KEY}",
+        "JIRA_URL": "https://buggilies-se358.atlassian.net",
+        "JIRA_USERNAME": "trannguyenthaibinh46@gmail.com"
+      }
+    },
     "playwright": {
-      "args": [
-        "-y",
-        "@executeautomation/playwright-mcp-server"
-      ],
+      "args": ["-y", "@executeautomation/playwright-mcp-server"],
       "command": "npx",
       "disabled": true
     },
     "puppeteer": {
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-puppeteer"
-      ],
+      "args": ["-y", "@modelcontextprotocol/server-puppeteer"],
       "command": "npx",
       "disabled": true
     },
     "sequential-thinking": {
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-sequential-thinking"
-      ],
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
       "command": "npx",
       "disabled": true
     },
@@ -101,10 +92,7 @@
       "disabled": true
     },
     "tavily": {
-      "args": [
-        "-y",
-        "tavily-mcp@0.1.2"
-      ],
+      "args": ["-y", "tavily-mcp@0.1.2"],
       "command": "npx",
       "disabled": true,
       "env": {
@@ -112,10 +100,7 @@
       }
     },
     "time": {
-      "args": [
-        "mcp-server-time",
-        "--local-timezone=Asia/Ho_Chi_Minh"
-      ],
+      "args": ["mcp-server-time", "--local-timezone=Asia/Ho_Chi_Minh"],
       "command": "uvx",
       "disabled": true
     },
@@ -129,9 +114,7 @@
     "mcphub": {
       "autoApprove": [],
       "disabled": true,
-      "disabled_prompts": [
-        "create_native_server"
-      ],
+      "disabled_prompts": ["create_native_server"],
       "disabled_resources": [
         "mcphub://docs",
         "mcphub://native_server_guide",
@@ -142,9 +125,7 @@
     "neovim": {
       "autoApprove": [],
       "disabled": false,
-      "disabled_prompts": [
-        "parrot"
-      ]
+      "disabled_prompts": ["parrot"]
     }
   }
 }
