@@ -1,12 +1,5 @@
 {
   "mcpServers": {
-    "memory": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-memory"
-      ]
-    },
     "context7": {
       "args": [
         "-y",
@@ -70,7 +63,7 @@
         "mcp-atlassian"
       ],
       "command": "uvx",
-      "disabled": false,
+      "disabled": true,
       "env": {
         "CONFLUENCE_API_TOKEN": "${ATLASSIAN_API_KEY}",
         "CONFLUENCE_URL": "https://buggilies-se358.atlassian.net/wiki",
@@ -79,6 +72,14 @@
         "JIRA_URL": "https://buggilies-se358.atlassian.net",
         "JIRA_USERNAME": "trannguyenthaibinh46@gmail.com"
       }
+    },
+    "memory": {
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ],
+      "command": "npx",
+      "disabled": true
     },
     "playwright": {
       "args": [
@@ -165,7 +166,7 @@
     },
     "neovim": {
       "autoApprove": [],
-      "disabled": false,
+      "disabled": true,
       "disabled_prompts": [
         "parrot"
       ]
