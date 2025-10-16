@@ -13,6 +13,7 @@
 plugins=(
   # zsh-vi-mode
   mise
+  # direnv
 
   # wakatime
   archlinux
@@ -441,6 +442,10 @@ get_wifi_password() {
 # RUN SOME STUFF
 if has fastfetch; then
   fastfetch
+fi
+
+if has just; then
+  eval "$(just --completions zsh)"
 fi
 
 [[ -f /home/kevinnitro/.config/.dart-cli-completion/zsh-config.zsh ]] && . /home/kevinnitro/.config/.dart-cli-completion/zsh-config.zsh || true

@@ -1,3 +1,7 @@
+[plugins]
+nix = "https://github.com/mise-plugins/mise-nix.git"
+# nix = "https://github.com/jbadeau/mise-nix.git"
+
 [tools]
 go = "latest"
 java = "latest"
@@ -11,6 +15,7 @@ kubectl = "latest"
 kubectx = "latest"
 kubens = "latest"
 helm = "latest"
+just = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []
