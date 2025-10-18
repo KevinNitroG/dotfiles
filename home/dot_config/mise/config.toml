@@ -1,15 +1,15 @@
-[plugins]
+#:schema https://mise.jdx.dev/schema/mise.json
+
+[alias]
 nix = "https://github.com/mise-plugins/mise-nix.git"
 # nix = "https://github.com/jbadeau/mise-nix.git"
 
 [tools]
 go = "latest"
-java = "latest"
 node = "latest"
 rust = "latest"
 uv = "latest"
 yq = "latest"
-gradle = "latest"
 minikube = "latest"
 kubectl = "latest"
 kubectx = "latest"
@@ -19,3 +19,7 @@ just = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []
+experimental = true
+
+[hooks]
+enter = "mise i -q"
