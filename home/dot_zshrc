@@ -249,6 +249,7 @@ alias v='nvim'
 alias nv='NVIM_NO_IDE=1 nvim'
 alias yz='yazi'
 alias ip='ip -c'
+alias z='zathura'
 
 
 ##########################################
