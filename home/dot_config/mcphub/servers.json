@@ -5,9 +5,12 @@
         "-y",
         "@upstash/context7-mcp"
       ],
-      "autoApprove": [],
+      "autoApprove": [
+        "resolve-library-id",
+        "get-library-docs"
+      ],
       "command": "npx",
-      "disabled": true
+      "disabled": false
     },
     "ddg-search": {
       "args": [
@@ -81,14 +84,6 @@
       "command": "npx",
       "disabled": true
     },
-    "playwright": {
-      "args": [
-        "-y",
-        "@executeautomation/playwright-mcp-server"
-      ],
-      "command": "npx",
-      "disabled": true
-    },
     "puppeteer": {
       "args": [
         "-y",
@@ -147,6 +142,16 @@
     "vectorcode": {
       "args": [],
       "command": "vectorcode-mcp-server",
+      "disabled": true
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest"],
+      "disabled": true
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@playwright/mcp@latest"],
       "disabled": true
     }
   },
