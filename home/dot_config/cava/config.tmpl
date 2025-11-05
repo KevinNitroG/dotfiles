@@ -3,12 +3,10 @@
 # vim: ft=toml.chezmoitmpl
 
 [color]
-{{- if not .transparent }}
+{{- if not .transparent -}}
 background = '{{ $palette.base }}'
 {{- end }}
-
 gradient = 1
-
 gradient_color_1 = '{{ $palette.teal }}'
 gradient_color_2 = '{{ $palette.sky }}'
 gradient_color_3 = '{{ $palette.sapphire }}'
