@@ -9,37 +9,37 @@ on   = [ "c", "a" ]
 run  = "plugin compress"
 desc = "Archive selected files"
 
-# max-preview
-[[mgr.prepend_keymap]]
-on   = "T"
-run  = "plugin max-preview"
-desc = "Maximize or restore preview"
-
 # relative-motions
 [[mgr.prepend_keymap]]
 on =  ["M"] 
 run = "plugin relative-motions"
 desc = "Trigger a new relative motion"
 
-### eza-preview
-[[mgr.prepend_keymap]]
-on   = "E"
-run  = "plugin eza-preview"
-desc = "Toggle tree/list dir preview" 
-
-### toggle-view
+### toggle-pane
 [[mgr.prepend_keymap]]
 on   = "<A-1>"
-run  = "plugin toggle-view --args=parent"
-desc = "Toggle parent" 
+run  = "plugin toggle-pane max-parent"
+desc = "Toggle max parent"
+[[mgr.prepend_keymap]]
+on   = "<C-1>"
+run  = "plugin toggle-pane min-parent"
+desc = "Toggle min parent"
 [[mgr.prepend_keymap]]
 on   = "<A-2>"
-run  = "plugin toggle-view --args=current"
+run  = "plugin toggle-pane max-current"
 desc = "Toggle current"
 [[mgr.prepend_keymap]]
+on   = "<C-2>"
+run  = "plugin toggle-pane min-current"
+desc = "Toggle min current"
+[[mgr.prepend_keymap]]
 on   = "<A-3>"
-run  = "plugin toggle-view --args=preview"
+run  = "plugin toggle-pane max-preview"
 desc = "Toggle preview" 
+[[mgr.prepend_keymap]]
+on   = "<C-3>"
+run  = "plugin toggle-pane min-preview"
+desc = "Toggle min preview"
 
 ### what-size
 [[mgr.prepend_keymap]]
@@ -51,6 +51,12 @@ desc = "Calc size of selection or cwd"
 on   = [".", "S"]
 run  = "plugin what-size --args='--clipboard'"
 desc = "Calc size of selection or cwd & copy to clipboard"
+
+### ouch
+[[mgr.prepend_keymap]]
+on   = "O"
+run  = "plugin ouch"
+desc = "Compress with ouch"
 
 # Config for yazi
 
@@ -85,5 +91,10 @@ desc = "go to to pictures directory"
 
 [[mgr.prepend_keymap]]
 on   = [ "g", "d" ]
+run  = "cd $HOME/Downloads/"
+desc = "go to to downloads directory"
+
+[[mgr.prepend_keymap]]
+on   = [ "g", "D" ]
 run  = "cd {{ .chezmoi.sourceDir }}"
 desc = "go to to dotfiles management"
