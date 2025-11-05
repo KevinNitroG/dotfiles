@@ -3,7 +3,7 @@
 # vim: ft=toml.chezmoitmpl
 
 [color]
-{{- if .transparent }}
+{{- if not .transparent }}
 background = '{{ $palette.base }}'
 {{- end }}
 
