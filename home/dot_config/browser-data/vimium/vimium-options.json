@@ -1,6 +1,6 @@
 {
   "hideHud": true,
-  "keyMappings": "# Insert your preferred key mappings here.\n\nmapKey <c-;> <c-[>\nmap ' Marks.activateGotoMode\n\nmap H previousTab\nmap L nextTab\nmap J goBack\nmap K goForward\n\nunmap <<\nunmap >>\nmap , moveTabLeft\nmap . moveTabRight",
+  "keyMappings": "# Insert your preferred key mappings here.\n\nmapKey <c-;> <c-[>\nmap ' Marks.activateGotoMode\n\nmap H previousTab\nmap L nextTab\nmap J goBack\nmap K goForward\n\nunmap <<\nunmap >>\nmap , moveTabLeft\nmap . moveTabRight\n\nunmap o\nunmap O\nunmap b",
   "linkHintCharacters": "asdfjklghertyuicvn",
   "scrollStepSize": 80,
   "grabBackFocus": true,
@@ -42,6 +42,10 @@
     {
       "passKeys": "",
       "pattern": "https?://*.cloudworkstations.dev/*"
+    },
+    {
+      "passKeys": "",
+      "pattern": "https?://ssh-kevblink.kevinnitro.id.vn/*"
     }
   ]
 }

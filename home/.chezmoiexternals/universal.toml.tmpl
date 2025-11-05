@@ -14,6 +14,10 @@ url = "git@github.com:uitdots/nvim.git"
 type = "git-repo"
 url = "git@github.com:uitdots/vim.git"
 
+[".config/eza/theme.yml"]
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/eza/refs/heads/main/themes/{{ .catppuccinFlavor }}/catppuccin-{{ .catppuccinFlavor }}-{{ .catppuccinAccentColor }}.yml"
+
 {{ if eq .osId "windows" }}
 ["AppData/Roaming/alacritty/catppuccin.toml"]
 {{ else }}

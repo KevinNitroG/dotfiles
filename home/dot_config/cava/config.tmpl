@@ -1,0 +1,19 @@
+{{- $palette := index .catppuccin.palettes .catppuccinFlavor -}}
+
+# vim: ft=toml.chezmoitmpl
+
+[color]
+{{- if .transparent }}
+background = '{{ $palette.base }}'
+{{- end }}
+
+gradient = 1
+
+gradient_color_1 = '{{ $palette.teal }}'
+gradient_color_2 = '{{ $palette.sky }}'
+gradient_color_3 = '{{ $palette.sapphire }}'
+gradient_color_4 = '{{ $palette.blue }}'
+gradient_color_5 = '{{ $palette.mauve }}'
+gradient_color_6 = '{{ $palette.pink }}'
+gradient_color_7 = '{{ $palette.maroon }}'
+gradient_color_8 = '{{ $palette.red }}'

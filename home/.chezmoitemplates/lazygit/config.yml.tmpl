@@ -37,9 +37,9 @@ gui:
 git:
   parseEmoji: true
 {{- if ne .chezmoi.os "windows" }}
-  paging:
-    pager: delta --paging=never
-    colorArg: always
+  pagers:
+    - pager: delta --paging=never
+      colorArg: always
 {{- end }}
 customCommands:
   - key: 'E'
