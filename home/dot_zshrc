@@ -449,4 +449,11 @@ if has just; then
   eval "$(just --completions zsh)"
 fi
 
-[[ -f /home/kevinnitro/.config/.dart-cli-completion/zsh-config.zsh ]] && . /home/kevinnitro/.config/.dart-cli-completion/zsh-config.zsh || true
+if [[ -f ~/.config/.dart-cli-completion/zsh-config.zsh ]]; then
+  source ~/.config/.dart-cli-completion/zsh-config.zsh
+fi
+
+autoload -U +X bashcompinit && bashcompinit
+if has mc; then
+  complete -o nospace -C mc mc
+fi
