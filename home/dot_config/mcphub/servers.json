@@ -1,16 +1,21 @@
 {
   "mcpServers": {
+    "chrome-devtools": {
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@latest"
+      ],
+      "command": "npx",
+      "disabled": true
+    },
     "context7": {
       "args": [
         "-y",
         "@upstash/context7-mcp"
       ],
-      "autoApprove": [
-        "resolve-library-id",
-        "get-library-docs"
-      ],
+      "autoApprove": [],
       "command": "npx",
-      "disabled": false
+      "disabled": true
     },
     "ddg-search": {
       "args": [
@@ -84,6 +89,46 @@
       "command": "npx",
       "disabled": true
     },
+    "playwright": {
+      "args": [
+        "-y",
+        "@playwright/mcp@latest",
+        "--config",
+        "${HOME}/.config/playwright-mcp.json"
+      ],
+      "autoApprove": [
+        "browser_close",
+        "browser_resize",
+        "browser_console_messages",
+        "browser_handle_dialog",
+        "browser_evaluate",
+        "browser_file_upload",
+        "browser_fill_form",
+        "browser_install",
+        "browser_press_key",
+        "browser_type",
+        "browser_navigate",
+        "browser_navigate_back",
+        "browser_network_requests",
+        "browser_take_screenshot",
+        "browser_snapshot",
+        "browser_click",
+        "browser_drag",
+        "browser_hover",
+        "browser_select_option",
+        "browser_tabs",
+        "browser_wait_for"
+      ],
+      "command": "npx",
+      "disabled": false,
+      "disabled_tools": [
+        "browser_install"
+      ],
+      "env": {
+        "WAYLAND_DISPLAY": "${WAYLAND_DISPLAY}",
+        "XDG_RUNTIME_DIR": "${XDG_RUNTIME_DIR}"
+      }
+    },
     "puppeteer": {
       "args": [
         "-y",
@@ -142,16 +187,6 @@
     "vectorcode": {
       "args": [],
       "command": "vectorcode-mcp-server",
-      "disabled": true
-    },
-    "chrome-devtools": {
-      "command": "npx",
-      "args": ["-y", "chrome-devtools-mcp@latest"],
-      "disabled": true
-    },
-    "playwright": {
-      "command": "npx",
-      "args": ["-y", "@playwright/mcp@latest"],
       "disabled": true
     }
   },

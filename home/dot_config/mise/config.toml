@@ -20,6 +20,7 @@ just = "latest"
 flux2 = "latest"
 "pipx:ansible" = "latest"
 "pipx:ansible-core" = "latest"
+mc = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []
