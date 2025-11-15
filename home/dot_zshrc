@@ -457,3 +457,6 @@ autoload -U +X bashcompinit && bashcompinit
 if has mc; then
   complete -o nospace -C mc mc
 fi
+if has vectorcode ; then
+  eval "$(vectorcode -s zsh)"
+fi
