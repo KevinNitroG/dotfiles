@@ -51,7 +51,7 @@
       "disabled": true
     },
     "github": {
-      "disabled": true,
+      "disabled": false,
       "headers": {
         "Authorization": "Bearer ${GITHUB_TOKEN}"
       },
@@ -117,10 +117,11 @@
         "browser_hover",
         "browser_select_option",
         "browser_tabs",
-        "browser_wait_for"
+        "browser_wait_for",
+        "browser_run_code"
       ],
       "command": "npx",
-      "disabled": false,
+      "disabled": true,
       "disabled_tools": [
         "browser_install"
       ],
@@ -186,6 +187,13 @@
     },
     "vectorcode": {
       "args": [],
+      "autoApprove": [
+        "ls",
+        "query",
+        "vectorise",
+        "files_rm",
+        "files_ls"
+      ],
       "command": "vectorcode-mcp-server",
       "disabled": true
     }
@@ -205,10 +213,25 @@
       "disabled_tools": []
     },
     "neovim": {
-      "autoApprove": [],
+      "autoApprove": [
+        "execute_lua",
+        "execute_command",
+        "read_file",
+        "move_item",
+        "read_multiple_files",
+        "delete_items",
+        "find_files",
+        "list_directory",
+        "write_file",
+        "edit_file"
+      ],
       "disabled": true,
       "disabled_prompts": [
         "parrot"
+      ],
+      "disabled_tools": [
+        "execute_command",
+        "execute_lua"
       ]
     }
   }
