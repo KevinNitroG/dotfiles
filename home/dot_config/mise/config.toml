@@ -25,6 +25,7 @@ mc = "latest"
 "npm:mcp-hub" = "latest"
 yarn = "latest"
 "npm:typescript" = "latest"
+"go:gotest.tools/gotestsum" = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []

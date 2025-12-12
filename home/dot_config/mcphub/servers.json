@@ -35,7 +35,7 @@
       "args": [
         "-y",
         "@modelcontextprotocol/server-filesystem",
-        "/home/kevinnitro"
+        "${HOME}"
       ],
       "autoApprove": [],
       "command": "npx",
@@ -45,17 +45,28 @@
       "args": [
         "mcp-server-git",
         "--repository",
-        "/home/kevinnitro"
+        "${HOME}"
       ],
       "command": "uvx",
       "disabled": true
     },
     "github": {
-      "disabled": false,
+      "disabled": true,
       "headers": {
         "Authorization": "Bearer ${GITHUB_TOKEN}"
       },
       "url": "https://api.githubcopilot.com/mcp/"
+    },
+    "google-sheets": {
+      "args": [
+        "mcp-google-sheets@latest"
+      ],
+      "command": "uvx",
+      "disabled": true,
+      "env": {
+        "CREDENTIALS_PATH": "${HOME}/.config/mcp/mcp-google-sheet/credentials.json",
+        "TOKEN_PATH": "${HOME}/.config/mcp/mcp-google-sheet/token.json"
+      }
     },
     "kubernetes": {
       "args": [

@@ -26,6 +26,7 @@ $python\
 $docker_context\
 $kubernetes\
 $helm\
+$terraform\
 [](fg:blue bg:lavender)\
 $cmd_duration\
 $sudo\
@@ -105,7 +106,6 @@ format = "[ ($ssh_symbol )$hostname ]($style)"
 [directory]
 style = "fg:base bg:peach"
 format = "[ $path ]($style)"
-truncation_length = 3
 truncation_symbol = "…/"
 
 [directory.substitutions]
@@ -113,7 +113,8 @@ truncation_symbol = "…/"
 "Downloads" = " "
 "Music" = "󰝚 "
 "Pictures" = " "
-"projects" = " "
+"code" = " "
+"projects" = " "
 "homelab" = "󱃾 "
 "nvim" = " "
 ".vim" = " "
@@ -146,7 +147,7 @@ format = '[[ $symbol( $version) ](fg:base bg:green)]($style)'
 [golang]
 symbol = ""
 style = "bg:text"
-format = '[[ $symbol( $version) ](fg:base bg:green)]($style)'
+format = '[[ $symbol( $version)( $mod_version) ](fg:base bg:green)]($style)'
 
 [php]
 symbol = ""
@@ -178,6 +179,11 @@ style = "bg:blue"
 format = '[[ $symbol( $context)( \($namespace\)) ](fg:base bg:blue)]($style)'
 disabled = false
 symbol ="󱃾"
+
+[terraform]
+style = "bg:blue"
+format = '[[ $symbol( $version)( \($workspace\)) ](fg:base bg:blue)]($style)'
+symbol = ""
 
 [conda]
 style = "bg:blue"
