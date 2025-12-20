@@ -287,7 +287,7 @@ _fzf_get_path_using_fd() {
     fd --type file |
     fzf --prompt 'Files> ' \
       --header 'CTRL-S: Switch between Files/Directories' \
-      --bind 'ctrl-s:transform:[[ ! $FZF_PROMPT =~ Files ]] &&
+    --bind 'ctrl-s:transform:[[ ! $FZF_PROMPT =~ Files ]] &&
         echo "change-prompt(Files> )+reload(fd --type file)" ||
     echo "change-prompt(Directories> )+reload(fd --type directory)"' \
       --preview '[[ $FZF_PROMPT =~ Files ]] && bat --color=always --style=plain {} || tree -C {}'
@@ -305,7 +305,7 @@ _fzf_get_path_using_rg() {
       --bind="enter:become(echo {1})" \
       --bind="start:reload:$RG_PREFIX {q}" \
       --bind="change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
-      --bind='ctrl-s:transform:[[ ! $FZF_PROMPT =~ ripgrep ]] &&
+    --bind='ctrl-s:transform:[[ ! $FZF_PROMPT =~ ripgrep ]] &&
       echo "rebind(change)+change-prompt(1. ripgrep> )+disable-search+transform-query:echo \{q} > /tmp/rg-fzf-f; cat /tmp/rg-fzf-r" ||
     echo "unbind(change)+change-prompt(2. fzf> )+enable-search+transform-query:echo \{q} > /tmp/rg-fzf-r; cat /tmp/rg-fzf-f"' \
       --color='hl:-1:underline,hl+:-1:underline:reverse' \
@@ -456,6 +456,10 @@ fi
 autoload -U +X bashcompinit && bashcompinit
 if has mc; then
   complete -o nospace -C mc mc
+fi
+
+if has pnpm; then
+  eval "$(pnpm completion zsh)"
 fi
 
 # This is slow

@@ -206,7 +206,7 @@
         "files_ls"
       ],
       "command": "vectorcode-mcp-server",
-      "disabled": true
+      "disabled": false
     }
   },
   "nativeMCPServers": {

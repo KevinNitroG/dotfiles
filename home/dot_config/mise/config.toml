@@ -26,6 +26,9 @@ mc = "latest"
 yarn = "latest"
 "npm:typescript" = "latest"
 "go:gotest.tools/gotestsum" = "latest"
+"npm:@openapitools/openapi-generator-cli" = "latest"
+"npm:@google/gemini-cli" = "latest"
+pnpm = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = []

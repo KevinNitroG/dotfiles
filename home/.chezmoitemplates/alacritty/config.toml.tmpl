@@ -10,19 +10,19 @@ TERMINAL = "alacritty"
 
 [terminal]
 osc52 = "CopyPaste"
+{{ if eq .osId "windows" -}}
 shell = {
-  {{- if eq .osId "windows" -}}
   program = "pwsh",
-  args = ["-noLogo", "-WorkingDirectory C:/Users/kevinnitro/"]
-  {{- else -}}
-  program = "zsh"
-  {{- end -}}
-}
+  args = ["-noLogo", "-WorkingDirectory {{- .chezmoi.homeDir -}}"]
+  }
+{{- else -}}
+shell = { program = "zsh" }
+{{- end }}
 
 [window]
 padding = { x = 0, y = 0 }
 dynamic_padding = true
-decorations = "Full" # Full or None
+decorations = "Full"
 opacity = {{ .opacity }}
 blur = true
 startup_mode = "Maximized"
@@ -31,10 +31,10 @@ startup_mode = "Maximized"
 multiplier = 1
 
 [font]
-normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
-bold = { family = "JetBrainsMono Nerd Font", style = "Bold" }
-italic = { family = "JetBrainsMono Nerd Font", style = "Italic" }
-bold_italic = { family = "JetBrainsMono Nerd Font", style = "Bold Italic" }
+normal = { family = "Maple Mono NF", style = "Regular" }
+bold = { family = "Maple Mono NF", style = "Bold" }
+italic = { family = "Maple Mono NF", style = "Italic" }
+bold_italic = { family = "Maple Mono NF", style = "Bold Italic" }
 size = {{ .terminalFontSize }}
 
 [colors]
@@ -54,4 +54,3 @@ bindings = [
   { key = "N", mods = "Control|Shift", action = "CreateNewWindow" },
   # { key = "Back", mods = "Control", chars = "\u001b[127;5u" },
 ]
-
