@@ -15,7 +15,7 @@
       ],
       "autoApprove": [],
       "command": "npx",
-      "disabled": true
+      "disabled": false
     },
     "ddg-search": {
       "args": [
@@ -206,7 +206,7 @@
         "files_ls"
       ],
       "command": "vectorcode-mcp-server",
-      "disabled": false
+      "disabled": true
     }
   },
   "nativeMCPServers": {

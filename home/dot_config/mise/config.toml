@@ -30,6 +30,19 @@ yarn = "latest"
 "npm:@google/gemini-cli" = "latest"
 pnpm = "latest"
 
+[tools."github:cloudnative-pg/cloudnative-pg"]
+version = "latest"
+
+[tools."github:cloudnative-pg/cloudnative-pg".platforms]
+macos-arm64 = { asset_pattern = "kubectl-cnpg_{version}_darwin_arm64.tar.gz" }
+macos-x64 = { asset_pattern = "kubectl-cnpg_{version}_darwin_x86_64.tar.gz" }
+linux-x64 = { asset_pattern = "kubectl-cnpg_{version}_linux_x86_64.tar.gz" }
+linux-arm64 = { asset_pattern = "kubectl-cnpg_{version}_linux_arm64.tar.gz" }
+linux-ppc64le = { asset_pattern = "kubectl-cnpg_{version}_linux_ppc64le.tar.gz" }
+linux-s390x = { asset_pattern = "kubectl-cnpg_{version}_linux_s390x.tar.gz" }
+windows-x64 = { asset_pattern = "kubectl-cnpg_{version}_windows_x86_64.tar.gz" }
+windows-arm64 = { asset_pattern = "kubectl-cnpg_{version}_windows_arm64.tar.gz" }
+
 [settings]
 idiomatic_version_file_enable_tools = []
 experimental = true
