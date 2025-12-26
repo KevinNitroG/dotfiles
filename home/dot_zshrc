@@ -462,6 +462,10 @@ if has pnpm; then
   eval "$(pnpm completion zsh)"
 fi
 
+if has kubectl-cnpg; then
+  eval "$(kubectl-cnpg completion zsh)"
+fi
+
 # This is slow
 # if has vectorcode ; then
 #   eval "$(vectorcode -s zsh)"
