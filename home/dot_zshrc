@@ -18,6 +18,7 @@ plugins=(
   # wakatime
   archlinux
   argocd
+  bazel
   command-not-found
   docker
   docker-compose
@@ -38,10 +39,10 @@ plugins=(
   tmux
   tmuxinator
   zoxide
+  zsh-256color
   zsh-autosuggestions
   zsh-better-npm-completion
   zsh-syntax-highlighting
-  zsh-256color
 
   history-substring-search # Always below zsh-syntax-highlighting
 

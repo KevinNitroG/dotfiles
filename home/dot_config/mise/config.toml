@@ -1,6 +1,6 @@
 #:schema https://mise.jdx.dev/schema/mise.json
 
-[alias]
+[tool_alias]
 nix = "https://github.com/mise-plugins/mise-nix.git"
 # nix = "https://github.com/jbadeau/mise-nix.git"
 
@@ -29,6 +29,7 @@ yarn = "latest"
 "npm:@openapitools/openapi-generator-cli" = "latest"
 "npm:@google/gemini-cli" = "latest"
 pnpm = "latest"
+"npm:nx" = "latest"
 
 [tools."github:cloudnative-pg/cloudnative-pg"]
 version = "latest"
@@ -44,7 +45,7 @@ windows-x64 = { asset_pattern = "kubectl-cnpg_{version}_windows_x86_64.tar.gz" }
 windows-arm64 = { asset_pattern = "kubectl-cnpg_{version}_windows_arm64.tar.gz" }
 
 [settings]
-idiomatic_version_file_enable_tools = []
+idiomatic_version_file_enable_tools = ["node"]
 experimental = true
 pipx.uvx = true
 
