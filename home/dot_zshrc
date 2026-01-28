@@ -442,10 +442,6 @@ get_wifi_password() {
 ##########################################
 
 # RUN SOME STUFF
-if has fastfetch; then
-  fastfetch
-fi
-
 if has just; then
   eval "$(just --completions zsh)"
 fi
@@ -465,6 +461,14 @@ fi
 
 if has kubectl-cnpg; then
   eval "$(kubectl-cnpg completion zsh)"
+fi
+
+if has trexanh; then
+  trexanh --cached
+fi
+
+if has fastfetch; then
+  fastfetch
 fi
 
 # This is slow
