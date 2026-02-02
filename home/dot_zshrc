@@ -463,9 +463,9 @@ if has kubectl-cnpg; then
   eval "$(kubectl-cnpg completion zsh)"
 fi
 
-if has trexanh; then
-  trexanh --cached
-fi
+# if has trexanh; then
+#   trexanh --cached
+# fi
 
 if has fastfetch; then
   fastfetch

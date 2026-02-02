@@ -44,6 +44,18 @@ linux-s390x = { asset_pattern = "kubectl-cnpg_{version}_linux_s390x.tar.gz" }
 windows-x64 = { asset_pattern = "kubectl-cnpg_{version}_windows_x86_64.tar.gz" }
 windows-arm64 = { asset_pattern = "kubectl-cnpg_{version}_windows_arm64.tar.gz" }
 
+[tools."github:jonas-grgt/ktea"]
+version = "latest"
+
+[tools."github:jonas-grgt/ktea".platforms]
+macos-arm64 = { asset_pattern = "ktea_{version}_darwin_arm64.tar.gz" }
+macos-x64 = { asset_pattern = "ktea_{version}_darwin_amd64.tar.gz" }
+linux-x64 = { asset_pattern = "ktea_{version}_linux_amd64.tar.gz" }
+linux-arm64 = { asset_pattern = "ktea_{version}_linux_arm64.tar.gz" }
+linux-armv7 = { asset_pattern = "ktea_{version}_linux_arm.tar.gz" }
+windows-x64 = { asset_pattern = "ktea_{version}_windows_amd64.tar.gz" }
+windows-arm64 = { asset_pattern = "ktea_{version}_windows_arm64.tar.gz" }
+
 [settings]
 idiomatic_version_file_enable_tools = ["node"]
 experimental = true
