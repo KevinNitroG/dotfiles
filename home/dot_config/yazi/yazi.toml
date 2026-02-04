@@ -19,7 +19,6 @@ prepend_previewers = [
   { mime = "application/zstd", run = "ouch" },
   { mime = "application/java-archive", run = "ouch" },
   { url = "*.md", run = 'piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark "$1"' },
-  { url = "*", run = 'piper -- echo "$1"' },
 ]
 prepend_fetchers = [
   { id = "git", name = "*", run = "git" },
