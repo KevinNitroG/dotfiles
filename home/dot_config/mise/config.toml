@@ -30,6 +30,8 @@ yarn = "latest"
 "npm:@google/gemini-cli" = "latest"
 pnpm = "latest"
 "npm:nx" = "latest"
+python = "3.13.12"
+"pipx:markitdown" = { version = "latest", extras = "all" }
 
 [tools."github:cloudnative-pg/cloudnative-pg"]
 version = "latest"
@@ -55,6 +57,17 @@ linux-arm64 = { asset_pattern = "ktea_{version}_linux_arm64.tar.gz" }
 linux-armv7 = { asset_pattern = "ktea_{version}_linux_arm.tar.gz" }
 windows-x64 = { asset_pattern = "ktea_{version}_windows_amd64.tar.gz" }
 windows-arm64 = { asset_pattern = "ktea_{version}_windows_arm64.tar.gz" }
+
+[tools."github:grafana/alloy"]
+version = "latest"
+rename_exe = "alloy"
+
+[tools."github:grafana/alloy".platforms]
+macos-arm64 = { asset_pattern = "alloy-darwin-arm64.zip" }
+macos-x64 = { asset_pattern = "alloy-darwin-amd64.zip" }
+linux-x64 = { asset_pattern = "alloy-linux-amd64.zip" }
+linux-arm64 = { asset_pattern = "alloy-linux-arm64.zip" }
+windows-x64 = { asset_pattern = "alloy-windows-amd64.exe.zip" }
 
 [settings]
 idiomatic_version_file_enable_tools = ["node"]
