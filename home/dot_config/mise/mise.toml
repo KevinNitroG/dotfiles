@@ -1,0 +1,68 @@
+#:schema https://mise.jdx.dev/schema/mise.json
+
+[tool_alias]
+nix = "https://github.com/mise-plugins/mise-nix.git"
+# nix = "https://github.com/jbadeau/mise-nix.git"
+
+[tools]
+"github:Canop/dysk" = "latest"
+"github:cloudnative-pg/cloudnative-pg" = "latest"
+"github:dlvhdr/gh-dash" = "latest"
+"github:dlvhdr/gh-enhance" = "latest"
+"github:felangga/chiko" = "latest"
+"github:grafana/alloy" = "latest"
+"github:jonas-grgt/ktea" = "latest"
+"github:jorgerojas26/lazysql" = "latest"
+"github:zaghaghi/openapi-tui" = "latest"
+"go:github.com/abenz1267/gomvp" = "latest"
+"go:github.com/isaacphi/mcp-language-server" = "latest"
+"go:gotest.tools/gotestsum" = "latest"
+"npm:@google/gemini-cli" = "latest"
+"npm:@openapitools/openapi-generator-cli" = "latest"
+"npm:mcp-hub" = "latest"
+"npm:nx" = "latest"
+"npm:typescript" = "latest"
+"pipx:ansible" = "latest"
+"pipx:ansible-core" = "latest"
+"pipx:markitdown" = { version = "latest", extras = "all" }
+"pipx:pgcli" = "latest"
+doggo = "latest"
+dust = "latest"
+fd = "latest"
+flux2 = "latest"
+fx = "latest"
+fzf = "latest"
+gdu = "latest"
+gh = "latest"
+glow = "latest"
+go = "latest"
+helm = "latest"
+htmlq = "latest"
+jq = "latest"
+jqp = "latest"
+just = "latest"
+k9s = "latest"
+kubectl = "latest"
+kubectx = "latest"
+kubens = "latest"
+lazydocker = "latest"
+lazygit = "latest"
+mc = "latest"
+minikube = "latest"
+node = "latest"
+pnpm = "latest"
+python = "3.13.12"
+rg = "latest"
+rust = "latest"
+uv = "latest"
+xh = "latest"
+yarn = "latest"
+yq = "latest"
+
+[settings]
+idiomatic_version_file_enable_tools = ["node"]
+experimental = true
+pipx.uvx = true
+
+[hooks]
+enter = "mise i -q"
