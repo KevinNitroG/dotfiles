@@ -43,6 +43,7 @@ plugins=(
   zsh-autosuggestions
   zsh-better-npm-completion
   zsh-syntax-highlighting
+  nx-completion
 
   history-substring-search # Always below zsh-syntax-highlighting
 
