@@ -1,0 +1,122 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "theme": "catppuccin",
+  "model": "github-copilot/claude-sonnet-4.5",
+  "small_model": "github-copilot/gpt-4.1",
+  "autoupdate": false,
+  "mcp": {
+    "chrome-devtools": {
+      "type": "local",
+      "command": ["pnpm", "dlx", "chrome-devtools-mcp@latest"],
+      "enabled": false,
+    },
+    "context7": {
+      "type": "local",
+      "command": ["pnpm", "dlx", "@upstash/context7-mcp"],
+      "enabled": false,
+    },
+    "ddg-search": {
+      "type": "local",
+      "command": ["uvx", "duckduckgo-mcp-server"],
+      "enabled": false,
+    },
+    "fetch": {
+      "type": "local",
+      "command": ["uvx", "mcp-server-fetch"],
+      "enabled": false,
+    },
+    "filesystem": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "${HOME}",
+      ],
+      "enabled": false,
+    },
+    "git": {
+      "type": "local",
+      "command": ["uvx", "mcp-server-git", "--repository", "${HOME}"],
+      "enabled": false,
+    },
+    "github": {
+      "type": "remote",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "enabled": false,
+      "headers": {
+        "Authorization": "Bearer ${GITHUB_TOKEN}",
+      },
+    },
+    "google-sheets": {
+      "type": "local",
+      "command": ["uvx", "mcp-google-sheets@latest"],
+      "enabled": false,
+      "environment": {
+        "CREDENTIALS_PATH": "${HOME}/.config/mcp/mcp-google-sheet/credentials.json",
+        "TOKEN_PATH": "${HOME}/.config/mcp/mcp-google-sheet/token.json",
+      },
+    },
+    "kubernetes": {
+      "type": "local",
+      "command": ["npx", "mcp-server-kubernetes"],
+      "enabled": false,
+    },
+    "memory": {
+      "type": "local",
+      "command": ["pnpm", "dlx", "@modelcontextprotocol/server-memory"],
+      "enabled": false,
+    },
+    "playwright": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@playwright/mcp@latest",
+        "--config",
+        "${HOME}/.config/playwright-mcp.json",
+      ],
+      "enabled": false,
+      "environment": {
+        "WAYLAND_DISPLAY": "${WAYLAND_DISPLAY}",
+        "XDG_RUNTIME_DIR": "${XDG_RUNTIME_DIR}",
+      },
+    },
+    "puppeteer": {
+      "type": "local",
+      "command": ["pnpm", "dlx", "@modelcontextprotocol/server-puppeteer"],
+      "enabled": false,
+    },
+    "sequential-thinking": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking",
+      ],
+      "enabled": false,
+    },
+    "tavily": {
+      "type": "local",
+      "command": ["pnpm", "dlx", "tavily-mcp@0.1.2"],
+      "enabled": false,
+      "environment": {
+        "TAVILY_API_KEY": "${TAVILY_API_KEY}",
+      },
+    },
+    "time": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "mcp-server-time",
+        "--local-timezone=Asia/Ho_Chi_Minh",
+      ],
+      "enabled": false,
+    },
+  },
+  "plugin": [
+    "opencode-wakatime@latest",
+    "@franlol/opencode-md-table-formatter@latest",
+    "opencode-gemini-auth@latest",
+  ],
+}

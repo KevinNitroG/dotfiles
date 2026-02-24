@@ -10,6 +10,13 @@
   file while unmapping lctl and ralt from defsrc.
   |#
   process-unmapped-keys no
+  ;;linux-dev-names-include (
+  ;;  "sonix-m75-keyboard"
+  ;;  "sonix-m75"
+  ;;  "dell-privacy-driver"
+  ;;  "dell-wmi-hotkeys"
+  ;;)
+  linux-dev-names-exclude ("Lotus-Uinput-Server")
 )
 
 (defsrc
