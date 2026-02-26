@@ -1,9 +1,29 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "theme": "catppuccin",
-  "model": "github-copilot/claude-sonnet-4.5",
+  "model": "github-copilot/claude-sonnet-4.6",
   "small_model": "github-copilot/gpt-4.1",
   "autoupdate": false,
+  "compaction": {
+    "reserved": 0,
+  },
+  "agent": {
+    "compaction": {
+      "model": "google/gemini-2.5-flash",
+    },
+    "build": {
+      "model": "github-copilot/claude-sonnet-4.6",
+    },
+    "plan": {
+      "model": "github-copilot/gemini-3.1-pro-preview",
+    },
+    "general": {
+      "model": "github-copilot/gpt-5-mini",
+    },
+    "explore": {
+      "model": "github-copilot/gpt-5-mini",
+    },
+  },
   "mcp": {
     "chrome-devtools": {
       "type": "local",
@@ -118,5 +138,6 @@
     "opencode-wakatime@latest",
     "@franlol/opencode-md-table-formatter@latest",
     "opencode-gemini-auth@latest",
+    "@tarquinen/opencode-dcp@latest",
   ],
 }

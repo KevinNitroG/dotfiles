@@ -58,6 +58,7 @@ uv = "latest"
 xh = "latest"
 yarn = "latest"
 yq = "latest"
+opencode = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["node"]
