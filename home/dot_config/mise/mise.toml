@@ -59,6 +59,8 @@ xh = "latest"
 yarn = "latest"
 yq = "latest"
 opencode = "latest"
+"npm:ctx7" = "latest"
+"npm:skills" = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["node"]
