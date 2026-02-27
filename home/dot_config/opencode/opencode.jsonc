@@ -1,6 +1,5 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "theme": "catppuccin",
   "model": "github-copilot/claude-sonnet-4.6",
   "small_model": "github-copilot/gpt-4.1",
   "autoupdate": false,
@@ -10,6 +9,10 @@
   "agent": {
     "compaction": {
       "model": "google/gemini-2.5-flash",
+      "options": {
+        "thinkingBudget": 0,
+        "includeThoughts": false,
+      },
     },
     "build": {
       "model": "github-copilot/claude-sonnet-4.6",
@@ -139,5 +142,14 @@
     "@franlol/opencode-md-table-formatter@latest",
     "opencode-gemini-auth@latest",
     "@tarquinen/opencode-dcp@latest",
+    "@mohak34/opencode-notifier@latest",
+    "opencode-mystatus@latest",
+    // "cc-safety-net@latest",
   ],
+  "command": {
+    "mystatus": {
+      "description": "Query quota usage for all AI accounts",
+      "template": "Use the mystatus tool to query quota usage. Return the result as-is without modification.",
+    },
+  },
 }
