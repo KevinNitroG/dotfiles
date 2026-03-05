@@ -1,0 +1,4 @@
+//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+@buf:registry=https://buf.build/gen/npm/v1
+strict-ssl=false
+prefix=/home/kevinnitro/.npm-global
