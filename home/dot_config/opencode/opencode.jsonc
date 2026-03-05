@@ -30,37 +30,85 @@
   "mcp": {
     "chrome-devtools": {
       "type": "local",
-      "command": ["pnpm", "dlx", "chrome-devtools-mcp@latest"],
+      "command": [
+        "mise",
+        "exec",
+        "npm:chrome-devtools-mcp@latest",
+        "--",
+        "chrome-devtools-mcp",
+      ],
       "enabled": false,
     },
     "context7": {
       "type": "local",
-      "command": ["pnpm", "dlx", "@upstash/context7-mcp"],
+      "command": [
+        "mise",
+        "exec",
+        "npm:@upstash/context7-mcp@latest",
+        "--",
+        "context7-mcp",
+      ],
       "enabled": false,
     },
     "ddg-search": {
       "type": "local",
-      "command": ["uvx", "duckduckgo-mcp-server"],
+      "command": [
+        "mise",
+        "exec",
+        "pip:duckduckgo-mcp-server@latest",
+        "--",
+        "duckduckgo-mcp-server",
+      ],
+      "enabled": false,
+    },
+    "brave-search": {
+      "type": "local",
+      "command": [
+        "mise",
+        "exec",
+        "npm:@brave/brave-search-mcp-server@latest",
+        "--",
+        "brave-search-mcp-server",
+      ],
+      "environment": {
+        "BRAVE_SEARCH_API_KEY": "${BRAVE_SEARCH_API_KEY}",
+      },
       "enabled": false,
     },
     "fetch": {
       "type": "local",
-      "command": ["uvx", "mcp-server-fetch"],
+      "command": [
+        "mise",
+        "exec",
+        "pip:fetch-mcp-server@latest",
+        "--",
+        "fetch-mcp-server",
+      ],
       "enabled": false,
     },
     "filesystem": {
       "type": "local",
       "command": [
-        "npx",
-        "-y",
-        "@modelcontextprotocol/server-filesystem",
+        "mise",
+        "exec",
+        "npm:@modelcontextprotocol/server-filesystem@latest",
+        "--",
+        "mcp-server-filesystem",
         "${HOME}",
       ],
       "enabled": false,
     },
     "git": {
       "type": "local",
-      "command": ["uvx", "mcp-server-git", "--repository", "${HOME}"],
+      "command": [
+        "mise",
+        "exec",
+        "pip:mcp-server-git@latest",
+        "--",
+        "mcp-server-git",
+        "--repository",
+        "${HOME}",
+      ],
       "enabled": false,
     },
     "github": {
@@ -73,7 +121,13 @@
     },
     "google-sheets": {
       "type": "local",
-      "command": ["uvx", "mcp-google-sheets@latest"],
+      "command": [
+        "mise",
+        "exec",
+        "pip:mcp-google-sheets@latest",
+        "--",
+        "mcp-google-sheets",
+      ],
       "enabled": false,
       "environment": {
         "CREDENTIALS_PATH": "${HOME}/.config/mcp/mcp-google-sheet/credentials.json",
@@ -82,20 +136,34 @@
     },
     "kubernetes": {
       "type": "local",
-      "command": ["npx", "mcp-server-kubernetes"],
+      "command": [
+        "mise",
+        "exec",
+        "npm:mcp-server-kubernetes@latest",
+        "--",
+        "mcp-server-kubernetes",
+      ],
       "enabled": false,
     },
     "memory": {
       "type": "local",
-      "command": ["pnpm", "dlx", "@modelcontextprotocol/server-memory"],
+      "command": [
+        "mise",
+        "exec",
+        "npm:@modelcontextprotocol/server-memory@latest",
+        "--",
+        "server-memory",
+      ],
       "enabled": false,
     },
     "playwright": {
       "type": "local",
       "command": [
-        "npx",
-        "-y",
-        "@playwright/mcp@latest",
+        "mise",
+        "exec",
+        "npm:@playwright/mcp@latest",
+        "--",
+        "playwright-mcp",
         "--config",
         "${HOME}/.config/playwright-mcp.json",
       ],
@@ -107,21 +175,29 @@
     },
     "puppeteer": {
       "type": "local",
-      "command": ["pnpm", "dlx", "@modelcontextprotocol/server-puppeteer"],
+      "command": [
+        "mise",
+        "exec",
+        "npm:@modelcontextprotocol/server-puppeteer@latest",
+        "--",
+        "server-puppeteer",
+      ],
       "enabled": false,
     },
     "sequential-thinking": {
       "type": "local",
       "command": [
-        "npx",
-        "-y",
-        "@modelcontextprotocol/server-sequential-thinking",
+        "mise",
+        "exec",
+        "npm:@modelcontextprotocol/server-sequential-thinking@latest",
+        "--",
+        "server-sequential-thinking",
       ],
       "enabled": false,
     },
     "tavily": {
       "type": "local",
-      "command": ["pnpm", "dlx", "tavily-mcp@0.1.2"],
+      "command": ["mise", "exec", "npm:tavily-mcp@latest", "--", "tavily-mcp"],
       "enabled": false,
       "environment": {
         "TAVILY_API_KEY": "${TAVILY_API_KEY}",
@@ -130,7 +206,10 @@
     "time": {
       "type": "local",
       "command": [
-        "uvx",
+        "mise",
+        "exec",
+        "pip:mcp-server-time@latest",
+        "--",
         "mcp-server-time",
         "--local-timezone=Asia/Ho_Chi_Minh",
       ],
