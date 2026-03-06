@@ -55,7 +55,7 @@
       "command": [
         "mise",
         "exec",
-        "pip:duckduckgo-mcp-server@latest",
+        "pipx:duckduckgo-mcp-server@latest",
         "--",
         "duckduckgo-mcp-server",
       ],
@@ -80,7 +80,7 @@
       "command": [
         "mise",
         "exec",
-        "pip:fetch-mcp-server@latest",
+        "npm:fetch-mcp-server@latest",
         "--",
         "fetch-mcp-server",
       ],
@@ -103,7 +103,7 @@
       "command": [
         "mise",
         "exec",
-        "pip:mcp-server-git@latest",
+        "pipx:mcp-server-git@latest",
         "--",
         "mcp-server-git",
         "--repository",
@@ -124,7 +124,7 @@
       "command": [
         "mise",
         "exec",
-        "pip:mcp-google-sheets@latest",
+        "pipx:mcp-google-sheets@latest",
         "--",
         "mcp-google-sheets",
       ],
@@ -208,7 +208,7 @@
       "command": [
         "mise",
         "exec",
-        "pip:mcp-server-time@latest",
+        "pipx:mcp-server-time@latest",
         "--",
         "mcp-server-time",
         "--local-timezone=Asia/Ho_Chi_Minh",
