@@ -51,7 +51,7 @@
       "disabled": true
     },
     "github": {
-      "disabled": true,
+      "disabled": false,
       "headers": {
         "Authorization": "Bearer ${GITHUB_TOKEN}"
       },

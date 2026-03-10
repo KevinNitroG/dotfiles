@@ -62,6 +62,7 @@ opencode = "latest"
 "npm:ctx7" = "latest"
 "npm:skills" = "latest"
 "go:github.com/dolmen-go/docker-list-context" = "latest"
+"github:dlvhdr/diffnav" = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["node"]

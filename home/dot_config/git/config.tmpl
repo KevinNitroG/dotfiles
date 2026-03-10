@@ -14,7 +14,6 @@
 [core]
   editor = nvim
   longpaths = true
-  pager = delta
   excludesFile = ~/.config/git/ignore
 
 [color]
@@ -117,6 +116,12 @@
 
 [merge]
   conflictstyle = diff3
+
+[pager]
+  diff = diffnav
+  show = diffnav
+  log  = delta
+  reflog = delta
 
 [diff]
   colorMoved = default
