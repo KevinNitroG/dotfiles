@@ -1,5 +1,19 @@
 {
   "mcpServers": {
+    "Framelink_Figma_MCP": {
+      "args": [
+        "exec",
+        "npm:figma-developer-mcp@latest",
+        "--",
+        "figma-developer-mcp",
+        "--stdio"
+      ],
+      "command": "mise",
+      "disabled": true,
+      "env": {
+        "FIGMA_API_KEY": "${FIGMA_API_KEY}"
+      }
+    },
     "chrome-devtools": {
       "args": [
         "-y",
@@ -15,7 +29,7 @@
       ],
       "autoApprove": [],
       "command": "npx",
-      "disabled": false
+      "disabled": true
     },
     "ddg-search": {
       "args": [
@@ -102,8 +116,10 @@
     },
     "playwright": {
       "args": [
-        "-y",
-        "@playwright/mcp@latest",
+        "exec",
+        "npm:@playwright/mcp@latest",
+        "--",
+        "playwright-mcp",
         "--config",
         "${HOME}/.config/playwright-mcp.json"
       ],
@@ -131,7 +147,7 @@
         "browser_wait_for",
         "browser_run_code"
       ],
-      "command": "npx",
+      "command": "mise",
       "disabled": true,
       "disabled_tools": [
         "browser_install"

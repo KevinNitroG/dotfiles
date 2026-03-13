@@ -3,9 +3,6 @@
   "model": "github-copilot/claude-sonnet-4.6",
   "small_model": "github-copilot/gpt-4.1",
   "autoupdate": false,
-  "compaction": {
-    "reserved": 0,
-  },
   "agent": {
     "compaction": {
       "model": "google/gemini-2.5-flash",
@@ -71,7 +68,7 @@
         "brave-search-mcp-server",
       ],
       "environment": {
-        "BRAVE_SEARCH_API_KEY": "${BRAVE_SEARCH_API_KEY}",
+        "BRAVE_SEARCH_API_KEY": "{env:BRAVE_SEARCH_API_KEY}",
       },
       "enabled": false,
     },
@@ -94,20 +91,7 @@
         "npm:@modelcontextprotocol/server-filesystem@latest",
         "--",
         "mcp-server-filesystem",
-        "${HOME}",
-      ],
-      "enabled": false,
-    },
-    "git": {
-      "type": "local",
-      "command": [
-        "mise",
-        "exec",
-        "pipx:mcp-server-git@latest",
-        "--",
-        "mcp-server-git",
-        "--repository",
-        "${HOME}",
+        "~/",
       ],
       "enabled": false,
     },
@@ -116,7 +100,7 @@
       "url": "https://api.githubcopilot.com/mcp/",
       "enabled": false,
       "headers": {
-        "Authorization": "Bearer ${GITHUB_TOKEN}",
+        "Authorization": "Bearer {env:GITHUB_TOKEN}",
       },
     },
     "google-sheets": {
@@ -165,12 +149,12 @@
         "--",
         "playwright-mcp",
         "--config",
-        "${HOME}/.config/playwright-mcp.json",
+        "/home/kevinnitro/.config/playwright-mcp.json",
       ],
       "enabled": false,
       "environment": {
-        "WAYLAND_DISPLAY": "${WAYLAND_DISPLAY}",
-        "XDG_RUNTIME_DIR": "${XDG_RUNTIME_DIR}",
+        "WAYLAND_DISPLAY": "{env:WAYLAND_DISPLAY}",
+        "XDG_RUNTIME_DIR": "{env:XDG_RUNTIME_DIR}",
       },
     },
     "puppeteer": {
@@ -200,7 +184,7 @@
       "command": ["mise", "exec", "npm:tavily-mcp@latest", "--", "tavily-mcp"],
       "enabled": false,
       "environment": {
-        "TAVILY_API_KEY": "${TAVILY_API_KEY}",
+        "TAVILY_API_KEY": "{env:TAVILY_API_KEY}",
       },
     },
     "time": {
@@ -215,6 +199,26 @@
       ],
       "enabled": false,
     },
+    "Framelink_Figma_MCP": {
+      "type": "local",
+      "command": [
+        "mise",
+        "exec",
+        "npm:figma-developer-mcp@latest",
+        "--",
+        "figma-developer-mcp",
+        "--stdio",
+      ],
+      "enabled": false,
+      "environment": {
+        "FIGMA_API_KEY": "{env:FIGMA_API_KEY}",
+      },
+    },
+    "shadcn": {
+      "type": "local",
+      "command": ["mise", "exec", "npm:shadcn@latest", "--", "shadcn", "mcp"],
+      "enabled": false,
+    },
   },
   "plugin": [
     "opencode-wakatime@latest",
@@ -223,6 +227,8 @@
     "@tarquinen/opencode-dcp@latest",
     "@mohak34/opencode-notifier@latest",
     "opencode-mystatus@latest",
+    "kdco/background-agents@latest",
+    "opencode-pty@latest",
     // "cc-safety-net@latest",
   ],
   "command": {
