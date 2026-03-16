@@ -1663,9 +1663,6 @@ function evalx
 # Thefuck
 # Invoke-Expression "$(thefuck --alias)"
 
-# Zoxide
-Invoke-Expression (& { (zoxide init powershell --cmd cd | Out-String) })
-
 # Fastfetch
 fastfetch
 
@@ -1681,3 +1678,6 @@ if (Test-Path($ChocolateyProfile)) {
   Import-Module "$ChocolateyProfile"
 }
 mise activate pwsh | Out-String | Invoke-Expression
+
+# Zoxide
+Invoke-Expression (& { (zoxide init powershell --cmd cd | Out-String) })

@@ -36,16 +36,19 @@ DetectHiddenWindows true
 ^#!+r::Reload
 
 ; --- CAPSLOCK AND CONTROL ---
-CapsLock:: {
-  Send "{Blind}{LControl down}"
+*CapsLock:: {
+    Send "{LControl down}"
 }
 
-CapsLock up:: {
-  Send "{Blind}{LControl Up}"
-  if (A_PriorKey == "CapsLock" and A_TimeSincePriorHotkey < 400)
-  {
-    Send "{Esc}"
-  }
+*CapsLock up:: {
+    Send "{LControl Up}"
+
+    if (A_PriorKey=="CapsLock"){
+        if (A_TimeSincePriorHotkey < 1000)
+            Suspend "1"
+            Send "{Esc}"
+            Suspend "0"
+        }
 }
 
 Esc:: {
