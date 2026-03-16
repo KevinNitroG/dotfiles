@@ -44,8 +44,12 @@ CapsLock up:: {
   Send "{Blind}{LControl Up}"
   if (A_PriorKey == "CapsLock" and A_TimeSincePriorHotkey < 400)
   {
-    SetCapsLockState !GetKeyState("CapsLock", "T")
+    Send "{Esc}"
   }
+}
+
+Esc:: {
+  SetCapsLockState !GetKeyState("CapsLock", "T")
 }
 
 ; --- RUN APP VIA KEYBOARD SHORTCUT ---
