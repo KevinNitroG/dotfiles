@@ -35,14 +35,17 @@
   padding: 0;
 }
 .yasb-bar {
-  padding: 0 6px;
+  padding: 0 16px;
   margin: 0;
-  background-color: var(--base);
+  /* background-color: var(--base); */
+  background-color: transparent;
   border-radius: 12px;
 }
 .widget {
-  padding: 0 8px;
-  margin: 0;
+  padding: 0 16px;
+  margin: 0 4px;
+  background-color: var(--base);
+  border-radius: 16px;
 }
 .widget .label {
   padding: 2px 2px 1px 2px;
@@ -91,7 +94,8 @@
   width: 40px;
 }
 .komorebi-active-layout {
-  padding: 0 0px 0 0;
+  padding: 0;
+  border-radius: 64px;
 }
 
 .komorebi-active-layout .label {
