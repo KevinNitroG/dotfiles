@@ -1,0 +1,4 @@
+{
+  "$schema": "https://raw.githubusercontent.com/NoeFabris/opencode-antigravity-auth/refs/heads/main/assets/antigravity.schema.json",
+  "account_selection_strategy": "hybrid"
+}

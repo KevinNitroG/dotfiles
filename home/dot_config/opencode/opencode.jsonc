@@ -1,6 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "github-copilot/claude-sonnet-4.6",
+  "model": "github-copilot/claude-haiku-4.5",
   "small_model": "github-copilot/gpt-4.1",
   "autoupdate": false,
   "agent": {
@@ -8,22 +8,33 @@
       "model": "google/gemini-2.5-flash",
       "options": {
         "thinkingBudget": 0,
-        "includeThoughts": false
-      }
+        "includeThoughts": false,
+      },
     },
     "build": {
-      "model": "github-copilot/claude-sonnet-4.6"
+      "model": "google/antigravity-claude-sonnet-4-6",
     },
     "plan": {
-      "model": "github-copilot/gemini-3.1-pro-preview"
+      "model": "google/antigravity-gemini-3.1-pro",
     },
     "general": {
-      "disable": true
+      "disable": true,
+      "model": "google/gemini-2.5-pro",
     },
     "explore": {
-      "disable": true
-    }
+      "disable": true,
+      "model": "google/gemini-2.5-pro",
+    },
   },
+  "plugin": [
+    "opencode-wakatime@latest",
+    "opencode-antigravity-auth@latest",
+    "@tarquinen/opencode-dcp@latest",
+    "@mohak34/opencode-notifier@latest",
+    "kdco/background-agents@latest",
+    "opencode-pty@latest",
+    "oh-my-opencode-slim@latest",
+  ],
   "mcp": {
     "chrome-devtools": {
       "type": "local",
@@ -32,9 +43,9 @@
         "exec",
         "npm:chrome-devtools-mcp@latest",
         "--",
-        "chrome-devtools-mcp"
+        "chrome-devtools-mcp",
       ],
-      "enabled": false
+      "enabled": false,
     },
     "context7": {
       "type": "local",
@@ -43,9 +54,9 @@
         "exec",
         "npm:@upstash/context7-mcp@latest",
         "--",
-        "context7-mcp"
+        "context7-mcp",
       ],
-      "enabled": false
+      "enabled": false,
     },
     "ddg-search": {
       "type": "local",
@@ -54,9 +65,9 @@
         "exec",
         "pipx:duckduckgo-mcp-server@latest",
         "--",
-        "duckduckgo-mcp-server"
+        "duckduckgo-mcp-server",
       ],
-      "enabled": false
+      "enabled": false,
     },
     "brave-search": {
       "type": "local",
@@ -65,12 +76,12 @@
         "exec",
         "npm:@brave/brave-search-mcp-server@latest",
         "--",
-        "brave-search-mcp-server"
+        "brave-search-mcp-server",
       ],
       "environment": {
-        "BRAVE_SEARCH_API_KEY": "{env:BRAVE_SEARCH_API_KEY}"
+        "BRAVE_SEARCH_API_KEY": "{env:BRAVE_SEARCH_API_KEY}",
       },
-      "enabled": false
+      "enabled": false,
     },
     "fetch": {
       "type": "local",
@@ -79,9 +90,9 @@
         "exec",
         "npm:mcp-fetch-server@latest",
         "--",
-        "mcp-fetch-server"
+        "mcp-fetch-server",
       ],
-      "enabled": false
+      "enabled": false,
     },
     "filesystem": {
       "type": "local",
@@ -91,17 +102,17 @@
         "npm:@modelcontextprotocol/server-filesystem@latest",
         "--",
         "mcp-server-filesystem",
-        "~/"
+        "~/",
       ],
-      "enabled": false
+      "enabled": false,
     },
     "github": {
       "type": "remote",
       "url": "https://api.githubcopilot.com/mcp/",
       "enabled": false,
       "headers": {
-        "Authorization": "Bearer {env:GITHUB_TOKEN}"
-      }
+        "Authorization": "Bearer {env:GITHUB_TOKEN}",
+      },
     },
     "google-sheets": {
       "type": "local",
@@ -110,13 +121,13 @@
         "exec",
         "pipx:mcp-google-sheets@latest",
         "--",
-        "mcp-google-sheets"
+        "mcp-google-sheets",
       ],
       "enabled": false,
       "environment": {
         "CREDENTIALS_PATH": "${HOME}/.config/mcp/mcp-google-sheet/credentials.json",
-        "TOKEN_PATH": "${HOME}/.config/mcp/mcp-google-sheet/token.json"
-      }
+        "TOKEN_PATH": "${HOME}/.config/mcp/mcp-google-sheet/token.json",
+      },
     },
     "kubernetes": {
       "type": "local",
@@ -125,9 +136,9 @@
         "exec",
         "npm:mcp-server-kubernetes@latest",
         "--",
-        "mcp-server-kubernetes"
+        "mcp-server-kubernetes",
       ],
-      "enabled": false
+      "enabled": false,
     },
     "memory": {
       "type": "local",
@@ -136,9 +147,9 @@
         "exec",
         "npm:@modelcontextprotocol/server-memory@latest",
         "--",
-        "server-memory"
+        "server-memory",
       ],
-      "enabled": false
+      "enabled": false,
     },
     "playwright": {
       "type": "local",
@@ -149,13 +160,13 @@
         "--",
         "playwright-mcp",
         "--config",
-        "/home/kevinnitro/.config/playwright-mcp.json"
+        "/home/kevinnitro/.config/playwright-mcp.json",
       ],
       "enabled": false,
       "environment": {
         "WAYLAND_DISPLAY": "{env:WAYLAND_DISPLAY}",
-        "XDG_RUNTIME_DIR": "{env:XDG_RUNTIME_DIR}"
-      }
+        "XDG_RUNTIME_DIR": "{env:XDG_RUNTIME_DIR}",
+      },
     },
     "puppeteer": {
       "type": "local",
@@ -164,9 +175,9 @@
         "exec",
         "npm:@modelcontextprotocol/server-puppeteer@latest",
         "--",
-        "server-puppeteer"
+        "server-puppeteer",
       ],
-      "enabled": false
+      "enabled": false,
     },
     "sequential-thinking": {
       "type": "local",
@@ -175,23 +186,17 @@
         "exec",
         "npm:@modelcontextprotocol/server-sequential-thinking@latest",
         "--",
-        "server-sequential-thinking"
+        "server-sequential-thinking",
       ],
-      "enabled": false
+      "enabled": false,
     },
     "tavily": {
       "type": "local",
-      "command": [
-        "mise",
-        "exec",
-        "npm:tavily-mcp@latest",
-        "--",
-        "tavily-mcp"
-      ],
+      "command": ["mise", "exec", "npm:tavily-mcp@latest", "--", "tavily-mcp"],
       "enabled": false,
       "environment": {
-        "TAVILY_API_KEY": "{env:TAVILY_API_KEY}"
-      }
+        "TAVILY_API_KEY": "{env:TAVILY_API_KEY}",
+      },
     },
     "time": {
       "type": "local",
@@ -201,9 +206,9 @@
         "pipx:mcp-server-time@latest",
         "--",
         "mcp-server-time",
-        "--local-timezone=Asia/Ho_Chi_Minh"
+        "--local-timezone=Asia/Ho_Chi_Minh",
       ],
-      "enabled": false
+      "enabled": false,
     },
     "Framelink_Figma_MCP": {
       "type": "local",
@@ -213,41 +218,186 @@
         "npm:figma-developer-mcp@latest",
         "--",
         "figma-developer-mcp",
-        "--stdio"
+        "--stdio",
       ],
       "enabled": false,
       "environment": {
-        "FIGMA_API_KEY": "{env:FIGMA_API_KEY}"
-      }
+        "FIGMA_API_KEY": "{env:FIGMA_API_KEY}",
+      },
     },
     "shadcn": {
       "type": "local",
-      "command": [
-        "mise",
-        "exec",
-        "npm:shadcn@latest",
-        "--",
-        "shadcn",
-        "mcp"
-      ],
-      "enabled": false
-    }
+      "command": ["mise", "exec", "npm:shadcn@latest", "--", "shadcn", "mcp"],
+      "enabled": false,
+    },
   },
-  "plugin": [
-    "opencode-wakatime@latest",
-    "opencode-gemini-auth@latest",
-    "@tarquinen/opencode-dcp@latest",
-    "@mohak34/opencode-notifier@latest",
-    "kdco/background-agents@latest",
-    "opencode-pty@latest",
-    "opencode-antigravity-auth@latest",
-    "oh-my-opencode-slim"
-  ],
-  "command": {
-    "mystatus": {
-      "description": "Query quota usage for all AI accounts",
-      "template": "Use the mystatus tool to query quota usage. Return the result as-is without modification.",
-      "model": "github-copilot/gpt-4.1"
-    }
-  }
+  "provider": {
+    "google": {
+      "models": {
+        "antigravity-gemini-3-pro": {
+          "name": "Gemini 3 Pro (Antigravity)",
+          "limit": {
+            "context": 1048576,
+            "output": 65535,
+          },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"],
+          },
+          "variants": {
+            "low": {
+              "thinkingLevel": "low",
+            },
+            "high": {
+              "thinkingLevel": "high",
+            },
+          },
+        },
+        "antigravity-gemini-3.1-pro": {
+          "name": "Gemini 3.1 Pro (Antigravity)",
+          "limit": {
+            "context": 1048576,
+            "output": 65535,
+          },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"],
+          },
+          "variants": {
+            "low": {
+              "thinkingLevel": "low",
+            },
+            "high": {
+              "thinkingLevel": "high",
+            },
+          },
+        },
+        "antigravity-gemini-3-flash": {
+          "name": "Gemini 3 Flash (Antigravity)",
+          "limit": {
+            "context": 1048576,
+            "output": 65536,
+          },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"],
+          },
+          "variants": {
+            "minimal": {
+              "thinkingLevel": "minimal",
+            },
+            "low": {
+              "thinkingLevel": "low",
+            },
+            "medium": {
+              "thinkingLevel": "medium",
+            },
+            "high": {
+              "thinkingLevel": "high",
+            },
+          },
+        },
+        "antigravity-claude-sonnet-4-6": {
+          "name": "Claude Sonnet 4.6 (Antigravity)",
+          "limit": {
+            "context": 200000,
+            "output": 64000,
+          },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"],
+          },
+        },
+        "antigravity-claude-opus-4-6-thinking": {
+          "name": "Claude Opus 4.6 Thinking (Antigravity)",
+          "limit": {
+            "context": 200000,
+            "output": 64000,
+          },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"],
+          },
+          "variants": {
+            "low": {
+              "thinkingConfig": {
+                "thinkingBudget": 8192,
+              },
+            },
+            "max": {
+              "thinkingConfig": {
+                "thinkingBudget": 32768,
+              },
+            },
+          },
+        },
+        "gemini-2.5-flash": {
+          "name": "Gemini 2.5 Flash (Gemini CLI)",
+          "limit": {
+            "context": 1048576,
+            "output": 65536,
+          },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"],
+          },
+        },
+        "gemini-2.5-pro": {
+          "name": "Gemini 2.5 Pro (Gemini CLI)",
+          "limit": {
+            "context": 1048576,
+            "output": 65536,
+          },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"],
+          },
+        },
+        "gemini-3-flash-preview": {
+          "name": "Gemini 3 Flash Preview (Gemini CLI)",
+          "limit": {
+            "context": 1048576,
+            "output": 65536,
+          },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"],
+          },
+        },
+        "gemini-3-pro-preview": {
+          "name": "Gemini 3 Pro Preview (Gemini CLI)",
+          "limit": {
+            "context": 1048576,
+            "output": 65535,
+          },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"],
+          },
+        },
+        "gemini-3.1-pro-preview": {
+          "name": "Gemini 3.1 Pro Preview (Gemini CLI)",
+          "limit": {
+            "context": 1048576,
+            "output": 65535,
+          },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"],
+          },
+        },
+        "gemini-3.1-pro-preview-customtools": {
+          "name": "Gemini 3.1 Pro Preview Custom Tools (Gemini CLI)",
+          "limit": {
+            "context": 1048576,
+            "output": 65535,
+          },
+          "modalities": {
+            "input": ["text", "image", "pdf"],
+            "output": ["text"],
+          },
+        },
+      },
+    },
+  },
 }
