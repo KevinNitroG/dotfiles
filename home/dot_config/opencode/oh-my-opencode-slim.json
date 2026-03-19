@@ -14,12 +14,12 @@
         "mcps": []
       },
       "librarian": {
-        "model": "google/gemini-3-flash-preview",
+        "model": "github-copilot/claude-haiku-4.5",
         "skills": [],
         "mcps": ["websearch", "context7", "grep_app"]
       },
       "explorer": {
-        "model": "google/gemini-2.5-pro",
+        "model": "github-copilot/claude-haiku-4.5",
         "skills": [],
         "mcps": []
       },
