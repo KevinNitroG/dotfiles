@@ -1,0 +1,38 @@
+{
+  "$schema": "https://unpkg.com/oh-my-opencode-slim@latest/oh-my-opencode-slim.schema.json",
+  "preset": "own",
+  "presets": {
+    "own": {
+      "orchestrator": {
+        "model": "github-copilot/claude-haiku-4.5",
+        "skills": ["*"],
+        "mcps": ["websearch"]
+      },
+      "oracle": {
+        "model": "github-copilot/claude-haiku-4.5",
+        "skills": [],
+        "mcps": []
+      },
+      "librarian": {
+        "model": "github-copilot/claude-haiku-4.5",
+        "skills": [],
+        "mcps": ["websearch", "context7", "grep_app"]
+      },
+      "explorer": {
+        "model": "github-copilot/claude-haiku-4.5",
+        "skills": [],
+        "mcps": []
+      },
+      "designer": {
+        "model": "github-copilot/claude-sonnet-4.5",
+        "skills": ["agent-browser"],
+        "mcps": []
+      },
+      "fixer": {
+        "model": "github-copilot/claude-haiku-4.5",
+        "skills": [],
+        "mcps": []
+      }
+    }
+  }
+}

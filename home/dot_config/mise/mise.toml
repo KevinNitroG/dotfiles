@@ -63,6 +63,8 @@ opencode = "latest"
 "npm:skills" = "latest"
 "go:github.com/dolmen-go/docker-list-context" = "latest"
 "github:dlvhdr/diffnav" = "latest"
+"npm:oh-my-opencode-slim" = "latest"
+bun = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["node"]

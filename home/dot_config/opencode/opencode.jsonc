@@ -8,21 +8,21 @@
       "model": "google/gemini-2.5-flash",
       "options": {
         "thinkingBudget": 0,
-        "includeThoughts": false,
-      },
+        "includeThoughts": false
+      }
     },
     "build": {
-      "model": "github-copilot/claude-sonnet-4.6",
+      "model": "github-copilot/claude-sonnet-4.6"
     },
     "plan": {
-      "model": "github-copilot/gemini-3.1-pro-preview",
+      "model": "github-copilot/gemini-3.1-pro-preview"
     },
     "general": {
-      "model": "github-copilot/gpt-5-mini",
+      "disable": true
     },
     "explore": {
-      "model": "github-copilot/gpt-5-mini",
-    },
+      "disable": true
+    }
   },
   "mcp": {
     "chrome-devtools": {
@@ -32,9 +32,9 @@
         "exec",
         "npm:chrome-devtools-mcp@latest",
         "--",
-        "chrome-devtools-mcp",
+        "chrome-devtools-mcp"
       ],
-      "enabled": false,
+      "enabled": false
     },
     "context7": {
       "type": "local",
@@ -43,9 +43,9 @@
         "exec",
         "npm:@upstash/context7-mcp@latest",
         "--",
-        "context7-mcp",
+        "context7-mcp"
       ],
-      "enabled": false,
+      "enabled": false
     },
     "ddg-search": {
       "type": "local",
@@ -54,9 +54,9 @@
         "exec",
         "pipx:duckduckgo-mcp-server@latest",
         "--",
-        "duckduckgo-mcp-server",
+        "duckduckgo-mcp-server"
       ],
-      "enabled": false,
+      "enabled": false
     },
     "brave-search": {
       "type": "local",
@@ -65,23 +65,23 @@
         "exec",
         "npm:@brave/brave-search-mcp-server@latest",
         "--",
-        "brave-search-mcp-server",
+        "brave-search-mcp-server"
       ],
       "environment": {
-        "BRAVE_SEARCH_API_KEY": "{env:BRAVE_SEARCH_API_KEY}",
+        "BRAVE_SEARCH_API_KEY": "{env:BRAVE_SEARCH_API_KEY}"
       },
-      "enabled": false,
+      "enabled": false
     },
     "fetch": {
       "type": "local",
       "command": [
         "mise",
         "exec",
-        "npm:fetch-mcp-server@latest",
+        "npm:mcp-fetch-server@latest",
         "--",
-        "fetch-mcp-server",
+        "mcp-fetch-server"
       ],
-      "enabled": false,
+      "enabled": false
     },
     "filesystem": {
       "type": "local",
@@ -91,17 +91,17 @@
         "npm:@modelcontextprotocol/server-filesystem@latest",
         "--",
         "mcp-server-filesystem",
-        "~/",
+        "~/"
       ],
-      "enabled": false,
+      "enabled": false
     },
     "github": {
       "type": "remote",
       "url": "https://api.githubcopilot.com/mcp/",
       "enabled": false,
       "headers": {
-        "Authorization": "Bearer {env:GITHUB_TOKEN}",
-      },
+        "Authorization": "Bearer {env:GITHUB_TOKEN}"
+      }
     },
     "google-sheets": {
       "type": "local",
@@ -110,13 +110,13 @@
         "exec",
         "pipx:mcp-google-sheets@latest",
         "--",
-        "mcp-google-sheets",
+        "mcp-google-sheets"
       ],
       "enabled": false,
       "environment": {
         "CREDENTIALS_PATH": "${HOME}/.config/mcp/mcp-google-sheet/credentials.json",
-        "TOKEN_PATH": "${HOME}/.config/mcp/mcp-google-sheet/token.json",
-      },
+        "TOKEN_PATH": "${HOME}/.config/mcp/mcp-google-sheet/token.json"
+      }
     },
     "kubernetes": {
       "type": "local",
@@ -125,9 +125,9 @@
         "exec",
         "npm:mcp-server-kubernetes@latest",
         "--",
-        "mcp-server-kubernetes",
+        "mcp-server-kubernetes"
       ],
-      "enabled": false,
+      "enabled": false
     },
     "memory": {
       "type": "local",
@@ -136,9 +136,9 @@
         "exec",
         "npm:@modelcontextprotocol/server-memory@latest",
         "--",
-        "server-memory",
+        "server-memory"
       ],
-      "enabled": false,
+      "enabled": false
     },
     "playwright": {
       "type": "local",
@@ -149,13 +149,13 @@
         "--",
         "playwright-mcp",
         "--config",
-        "/home/kevinnitro/.config/playwright-mcp.json",
+        "/home/kevinnitro/.config/playwright-mcp.json"
       ],
       "enabled": false,
       "environment": {
         "WAYLAND_DISPLAY": "{env:WAYLAND_DISPLAY}",
-        "XDG_RUNTIME_DIR": "{env:XDG_RUNTIME_DIR}",
-      },
+        "XDG_RUNTIME_DIR": "{env:XDG_RUNTIME_DIR}"
+      }
     },
     "puppeteer": {
       "type": "local",
@@ -164,9 +164,9 @@
         "exec",
         "npm:@modelcontextprotocol/server-puppeteer@latest",
         "--",
-        "server-puppeteer",
+        "server-puppeteer"
       ],
-      "enabled": false,
+      "enabled": false
     },
     "sequential-thinking": {
       "type": "local",
@@ -175,17 +175,23 @@
         "exec",
         "npm:@modelcontextprotocol/server-sequential-thinking@latest",
         "--",
-        "server-sequential-thinking",
+        "server-sequential-thinking"
       ],
-      "enabled": false,
+      "enabled": false
     },
     "tavily": {
       "type": "local",
-      "command": ["mise", "exec", "npm:tavily-mcp@latest", "--", "tavily-mcp"],
+      "command": [
+        "mise",
+        "exec",
+        "npm:tavily-mcp@latest",
+        "--",
+        "tavily-mcp"
+      ],
       "enabled": false,
       "environment": {
-        "TAVILY_API_KEY": "{env:TAVILY_API_KEY}",
-      },
+        "TAVILY_API_KEY": "{env:TAVILY_API_KEY}"
+      }
     },
     "time": {
       "type": "local",
@@ -195,9 +201,9 @@
         "pipx:mcp-server-time@latest",
         "--",
         "mcp-server-time",
-        "--local-timezone=Asia/Ho_Chi_Minh",
+        "--local-timezone=Asia/Ho_Chi_Minh"
       ],
-      "enabled": false,
+      "enabled": false
     },
     "Framelink_Figma_MCP": {
       "type": "local",
@@ -207,35 +213,41 @@
         "npm:figma-developer-mcp@latest",
         "--",
         "figma-developer-mcp",
-        "--stdio",
+        "--stdio"
       ],
       "enabled": false,
       "environment": {
-        "FIGMA_API_KEY": "{env:FIGMA_API_KEY}",
-      },
+        "FIGMA_API_KEY": "{env:FIGMA_API_KEY}"
+      }
     },
     "shadcn": {
       "type": "local",
-      "command": ["mise", "exec", "npm:shadcn@latest", "--", "shadcn", "mcp"],
-      "enabled": false,
-    },
+      "command": [
+        "mise",
+        "exec",
+        "npm:shadcn@latest",
+        "--",
+        "shadcn",
+        "mcp"
+      ],
+      "enabled": false
+    }
   },
   "plugin": [
     "opencode-wakatime@latest",
-    "@franlol/opencode-md-table-formatter@latest",
     "opencode-gemini-auth@latest",
     "@tarquinen/opencode-dcp@latest",
     "@mohak34/opencode-notifier@latest",
-    "opencode-mystatus@latest",
     "kdco/background-agents@latest",
     "opencode-pty@latest",
-    // "cc-safety-net@latest",
+    "opencode-antigravity-auth@latest",
+    "oh-my-opencode-slim"
   ],
   "command": {
     "mystatus": {
       "description": "Query quota usage for all AI accounts",
       "template": "Use the mystatus tool to query quota usage. Return the result as-is without modification.",
-      "model": "github-copilot/gpt-4.1",
-    },
-  },
+      "model": "github-copilot/gpt-4.1"
+    }
+  }
 }
