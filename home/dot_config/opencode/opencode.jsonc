@@ -12,10 +12,10 @@
       },
     },
     "build": {
-      "model": "github-copilot/claude-sonnet-4.6",
+      "model": "github-copilot/claude-sonnet-4.5",
     },
     "plan": {
-      "model": "github-copilot/gemini-3.1-pro-preview",
+      "model": "google/gemini-2.5-pro",
     },
     "general": {
       "disable": true,

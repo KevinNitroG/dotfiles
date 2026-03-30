@@ -65,6 +65,7 @@ opencode = "latest"
 "github:dlvhdr/diffnav" = "latest"
 "npm:oh-my-opencode-slim" = "latest"
 bun = "latest"
+"github:wakatime/wakatime-cli" = { version = "latest", rename_exe = "wakatime-cli" }
 
 [settings]
 idiomatic_version_file_enable_tools = ["node"]
@@ -73,3 +74,6 @@ pipx.uvx = true
 
 [hooks]
 enter = "mise i -q"
+
+[shell_alias]
+renovate = "mise exec npm:renovate npm:node@24 -- renovate"

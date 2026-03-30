@@ -5,11 +5,13 @@
     "own": {
       "orchestrator": {
         "model": "github-copilot/claude-haiku-4.5",
+        "variant": "thinking",
         "skills": ["*"],
         "mcps": ["websearch"]
       },
       "oracle": {
         "model": "github-copilot/claude-haiku-4.5",
+        "variant": "thinking",
         "skills": [],
         "mcps": []
       },
@@ -30,6 +32,7 @@
       },
       "fixer": {
         "model": "github-copilot/claude-haiku-4.5",
+        "variant": "thinking",
         "skills": [],
         "mcps": []
       }
