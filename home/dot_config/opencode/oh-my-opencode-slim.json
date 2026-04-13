@@ -1,6 +1,20 @@
 {
   "$schema": "https://unpkg.com/oh-my-opencode-slim@latest/oh-my-opencode-slim.schema.json",
   "preset": "own",
+  "council": {
+    "master": {
+      "model": "github-copilot/claude-sonnet-4.5",
+      "variant": "thinking"
+    },
+    "presets": {
+      "default": {
+        "default": {
+          "model": "github-copilot/claude-sonnet-4.5",
+          "variant": "thinking"
+        }
+      }
+    }
+  },
   "presets": {
     "own": {
       "orchestrator": {

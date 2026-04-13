@@ -35,7 +35,6 @@ fzf = "latest"
 gdu = "latest"
 gh = "latest"
 glow = "latest"
-go = "latest"
 helm = "latest"
 htmlq = "latest"
 jq = "latest"
@@ -66,6 +65,8 @@ opencode = "latest"
 "npm:oh-my-opencode-slim" = "latest"
 bun = "latest"
 "github:wakatime/wakatime-cli" = { version = "latest", rename_exe = "wakatime-cli" }
+ast-grep = "latest"
+"github:camilo-zuluaga/zui" = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = ["node"]
@@ -76,4 +77,5 @@ pipx.uvx = true
 enter = "mise i -q"
 
 [shell_alias]
-renovate = "mise exec npm:renovate npm:node@24 -- renovate"
+renovate = "mise exec npm:renovate@latest npm:node@24 -- renovate"
+"renovate-config-validator" = "mise exec npm:renovate@latest npm:node@24 -- renovate-config-validator"

@@ -1,13 +1,24 @@
+# yaml-language-server: $schema=https://www.gh-dash.dev/schema.json
 prSections:
-  - title: My Pull Requests
+  - title: My Open PRs
     filters: is:open author:@me
   - title: Needs My Review
     filters: is:open review-requested:@me
+  - title: My PRs
+    filters: author:@me
+  - title: Open PRs
+    filters: is:open
   - title: Involved
     filters: is:open involves:@me -author:@me
 issuesSections:
-  - title: My Issues
+  - title: My Open Issues
     filters: is:open author:@me
+  - title: Needs My Attention
+    filters: is:open assignee:@me -author:@me
+  - title: Open Issues
+    filters: is:open
+  - title: Created by My PRs
+    filters: is:open linked:pr author:@me
   - title: Assigned
     filters: is:open assignee:@me
   - title: Involved
@@ -47,13 +58,18 @@ defaults:
         hidden: false
   refetchIntervalMinutes: 30
 keybindings:
-  issues: []
-  prs: []
-repoPaths: {}
+  universal:
+    - key: g
+      name: lazygit
+      command: cd {{ "{{" }} .RepoPath {{ "}}" }} && lazygit
+  prs:
+    - key: S
+      name: squash merge
+      command: gh pr merge {{ "{{" }} .PrNumber {{ "}}" }} --repo {{ "{{" }} .RepoName {{ "}}" }} --squash --delete-branch
 theme:
   ui:
     table:
-      showSeparator: true
+      showSeparator: false
 colors:
   text:
     {{- $palette := index .catppuccin.palettes .catppuccinFlavor }}
