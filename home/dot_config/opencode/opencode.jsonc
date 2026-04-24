@@ -6,11 +6,7 @@
   "default_agent": "build",
   "agent": {
     "compaction": {
-      "model": "google/gemini-2.5-flash",
-      "options": {
-        "thinkingBudget": 0,
-        "includeThoughts": false,
-      },
+      "model": "github-copilot/claude-haiku-4.5",
     },
     "build": {
       "model": "github-copilot/claude-haiku-4.5",
@@ -36,6 +32,7 @@
     "kdco/background-agents@latest",
     "opencode-pty@latest",
     "oh-my-opencode-slim@latest",
+    "file:///home/kevinnitro/.local/share/mise/installs/npm-oh-my-opencode-slim/latest/lib/node_modules/oh-my-opencode-slim/dist/index.js",
   ],
   "mcp": {
     "chrome-devtools": {

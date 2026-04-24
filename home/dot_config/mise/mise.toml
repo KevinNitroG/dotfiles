@@ -10,7 +10,6 @@ nix = "https://github.com/mise-plugins/mise-nix.git"
 "github:dlvhdr/gh-dash" = "latest"
 "github:dlvhdr/gh-enhance" = "latest"
 "github:felangga/chiko" = "latest"
-"github:grafana/alloy" = "latest"
 "github:jonas-grgt/ktea" = "latest"
 "github:jorgerojas26/lazysql" = "latest"
 "github:zaghaghi/openapi-tui" = "latest"
@@ -64,9 +63,17 @@ opencode = "latest"
 "github:dlvhdr/diffnav" = "latest"
 "npm:oh-my-opencode-slim" = "latest"
 bun = "latest"
-"github:wakatime/wakatime-cli" = { version = "latest", rename_exe = "wakatime-cli" }
 ast-grep = "latest"
 "github:camilo-zuluaga/zui" = "latest"
+"github:grafana/alloy"= { version = "latest", rename_exe = "alloy" }
+
+[tools."github:wakatime/wakatime-cli"]
+version = "latest"
+rename_exe = "wakatime-cli"
+
+[tools."github:grafana/mcp-grafana"]
+version = "0.11.6"
+asset_pattern = "mcp-grafana_{{os(macos='Darwin', linux='Linux', windows='Windows')}}_{{arch(x64='x86_64', arm64='arm64')}}.*"
 
 [settings]
 idiomatic_version_file_enable_tools = ["node"]
