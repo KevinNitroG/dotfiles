@@ -16,23 +16,19 @@
     },
     "general": {
       "disable": true,
-      "model": "google/gemini-2.5-pro",
     },
     "explore": {
       "disable": true,
-      "model": "google/gemini-2.5-pro",
     },
   },
   "plugin": [
     "opencode-wakatime@latest",
-    // "opencode-antigravity-auth@latest",
     "@tarquinen/opencode-dcp@latest",
     "opencode-gemini-auth@latest",
     "@mohak34/opencode-notifier@latest",
     "kdco/background-agents@latest",
     "opencode-pty@latest",
-    "oh-my-opencode-slim@latest",
-    "file:///home/kevinnitro/.local/share/mise/installs/npm-oh-my-opencode-slim/latest/lib/node_modules/oh-my-opencode-slim/dist/index.js",
+    "oh-my-opencode-slim",
   ],
   "mcp": {
     "chrome-devtools": {
@@ -230,4 +226,5 @@
       "enabled": false,
     },
   },
+  "lsp": true,
 }

@@ -117,6 +117,10 @@
 
 [merge]
   conflictstyle = diff3
+  tool = codediff
+
+[mergetool "codediff"]
+  cmd = nvim "$MERGED" -c "CodeDiff merge \"$MERGED\""
 
 [pager]
   diff = diffnav
@@ -126,6 +130,10 @@
 
 [diff]
   colorMoved = default
+  tool = codediff
+
+[difftool "codediff"]
+  cmd = nvim \"$LOCAL\" \"$REMOTE\" +\"CodeDiff file $LOCAL $REMOTE\"
 
 [submodule]
   fetchJobs = 8
