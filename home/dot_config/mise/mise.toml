@@ -66,6 +66,7 @@ bun = "latest"
 ast-grep = "latest"
 "github:camilo-zuluaga/zui" = "latest"
 "github:grafana/alloy" = { version = "latest", rename_exe = "alloy" }
+claude = "latest"
 
 [tools."github:wakatime/wakatime-cli"]
 version = "latest"

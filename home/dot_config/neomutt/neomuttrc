@@ -1,0 +1,22 @@
+set charset = "utf-8"
+set send_charset = "utf-8"
+set date_format = "%d-%m-%Y %H:%M"
+set smart_wrap = yes
+set tilde = yes
+
+set sidebar_visible = yes
+
+set menu_scroll = yes
+set mail_check_stats = yes
+
+set spool_file = "+Main/INBOX"
+set record = "+Main/[Gmail]/Sent Mail"
+set postponed = "+Main/[Gmail]/Drafts"
+set trash = "+Main/[Gmail]/Bin"
+
+folder-hook '+Main/*' 'source "~/.config/neomutt/accounts/trannguyenthaibinh46_gmail_com.muttrc"'
+source "~/.config/neomutt/accounts/trannguyenthaibinh46_gmail_com.muttrc"
+macro index,pager <F1> '<change-folder>+Gmail/INBOX<enter>' "Gmail"
+
+source "~/.config/neomutt/vim-keys.muttrc"
+source "~/.config/neomutt/theme.muttrc"

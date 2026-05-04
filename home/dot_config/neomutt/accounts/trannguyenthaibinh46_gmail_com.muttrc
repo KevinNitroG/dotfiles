@@ -1,0 +1,37 @@
+# vim:ft=muttrc:
+set from = "trannguyenthaibinh46@gmail.com"
+set realname = "Trần Nguyễn Thái Bình"
+set use_from = yes
+set use_envelope_from = yes
+
+# Gmail IMAP Settings
+set imap_user = "trannguyenthaibinh46@gmail.com"
+set imap_pass = "$TRANNGUYENTHAIBINH46_GMAIL_APP_PASSWORD"
+set folder = "imaps://imap.gmail.com/"
+set imap_check_subscribed = yes
+set imap_idle = yes
+set imap_keepalive = 300
+set mail_check = 60
+set header_cache = ~/.cache/neomutt/trannguyenthaibinh46_gmail_com/headers
+set message_cachedir = ~/.cache/neomutt/trannguyenthaibinh46_gmail_com/bodies
+
+set spoolfile = "imaps://imap.gmail.com/INBOX"
+set record = "imaps://imap.gmail.com/[Gmail]/Sent Mail"
+set postponed = "imaps://imap.gmail.com/[Gmail]/Drafts"
+set trash = "imaps://imap.gmail.com/[Gmail]/Bin"
+
+mailboxes "imaps://imap.gmail.com/INBOX" \
+          "imaps://imap.gmail.com/[Gmail]/All Mail" \
+          "imaps://imap.gmail.com/[Gmail]/Sent Mail" \
+          "imaps://imap.gmail.com/[Gmail]/Drafts" \
+          "imaps://imap.gmail.com/[Gmail]/Bin" \
+          "imaps://imap.gmail.com/[Gmail]/Spam" \
+          "imaps://imap.gmail.com/[Gmail]/Important"
+
+set smtp_url = "smtps://your-email@gmail.com@smtp.gmail.com/"
+set smtp_pass = "$TRANNGUYENTHAIBINH46_GMAIL_APP_PASSWORD"
+set ssl_force_tls = yes
+set ssl_starttls = yes
+
+send-hook . 'set smtp_url = "smtps://trannguyenthaibinh46@gmail.com@smtp.gmail.com/"'
+send-hook . 'set from = "trannguyenthaibinh46@gmail.com"'

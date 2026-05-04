@@ -25,6 +25,14 @@ include = ["kitty-main/themes/*{{ .catppuccinFlavor }}.conf"]
 type = "file"
 url = "https://raw.githubusercontent.com/catppuccin/ghostty/refs/heads/main/themes/catppuccin-{{ .catppuccinFlavor }}.conf"
 
+[".config/neomutt/vim-keys.muttrc"]
+type = "file"
+url = "https://raw.githubusercontent.com/neomutt/neomutt/refs/heads/main/contrib/vim-keys/vim-keys.rc"
+
+[".config/neomutt/themes/catppuccin{{ if eq .catppuccinFlavor "latte" }}-latte{{ end }}.muttrc"]
+type = "file"
+url = "https://raw.githubusercontent.com/catppuccin/neomutt/refs/heads/main/{{ if eq .catppuccinFlavor "latte" }}latte-{{ end }}neomuttrc"
+
 ##########################################
 
 {{ end }}
