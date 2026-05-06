@@ -4,7 +4,6 @@ set realname = "Trần Nguyễn Thái Bình"
 set use_from = yes
 set use_envelope_from = yes
 
-# Gmail IMAP Settings
 set imap_user = "trannguyenthaibinh46@gmail.com"
 set imap_pass = "$TRANNGUYENTHAIBINH46_GMAIL_APP_PASSWORD"
 set folder = "imaps://imap.gmail.com/"

@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+
+{{range $name, $command := .zsh.completions}}
+{{ $command }} > ~/.zsh/completions/_{{ $name }} || echo "Failed to generate completion for {{ $name }}"
+{{end}}

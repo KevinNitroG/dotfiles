@@ -155,6 +155,14 @@ function __evalx_set_function() {
   function __evalx_stop_tailscale_service() {
     sudo systemctl stop tailscaled.service
   }
+
+  function __evalx_source_mc_completion() {
+    complete -o nospace -C mc mc
+  }
+
+  function __evalx_source_rc_completion() {
+    source <(rc completions zsh)
+  }
 }
 
 function __evalx_set_options() {
@@ -195,7 +203,8 @@ function __evalx_set_options() {
   __evalx_options['stop mysql service']='__evalx_stop_mysql_service'
   __evalx_options['stop sshd service']='__evalx_stop_sshd_service'
   __evalx_options['stop tailscale service']='__evalx_stop_tailscale_service'
-
+  __evalx_options['source mc completion']='__evalx_source_mc_completion'
+  __evalx_options['source rc completion']='__evalx_source_rc_completion'
 }
 
 # ${__evalx_options['source Hyde completion']}

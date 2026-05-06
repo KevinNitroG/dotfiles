@@ -3,6 +3,10 @@ set send_charset = "utf-8"
 set date_format = "%d-%m-%Y %H:%M"
 set smart_wrap = yes
 set tilde = yes
+set sort = threads
+set sort_aux = reverse-last-date-received
+set read_inc = 1000
+set write_inc = 1000
 
 set sidebar_visible = yes
 
@@ -18,5 +22,6 @@ folder-hook '+Main/*' 'source "~/.config/neomutt/accounts/trannguyenthaibinh46_g
 source "~/.config/neomutt/accounts/trannguyenthaibinh46_gmail_com.muttrc"
 macro index,pager <F1> '<change-folder>+Gmail/INBOX<enter>' "Gmail"
 
+source "~/.config/neomutt/macro.muttrc"
 source "~/.config/neomutt/vim-keys.muttrc"
 source "~/.config/neomutt/theme.muttrc"

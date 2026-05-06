@@ -1,0 +1,6 @@
+# vim:ft=muttrc:
+bind index,pager \CN sidebar-next
+bind index,pager \CP sidebar-prev
+bind index,pager \CO sidebar-open
+bind index,pager \CB sidebar-toggle-visible
+macro index,pager <F12> '<enter-command>source ~/.config/neomutt/neomuttrc<enter>' 'Reload Config'

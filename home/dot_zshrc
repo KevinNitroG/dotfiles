@@ -444,26 +444,8 @@ get_wifi_password() {
 
 ##########################################
 
-# RUN SOME STUFF
-if has just; then
-  eval "$(just --completions zsh)"
-fi
-
 if [[ -f ~/.config/.dart-cli-completion/zsh-config.zsh ]]; then
   source ~/.config/.dart-cli-completion/zsh-config.zsh
-fi
-
-autoload -U +X bashcompinit && bashcompinit
-if has mc; then
-  complete -o nospace -C mc mc
-fi
-
-if has pnpm; then
-  eval "$(pnpm completion zsh)"
-fi
-
-if has kubectl-cnpg; then
-  eval "$(kubectl-cnpg completion zsh)"
 fi
 
 # if has trexanh; then
@@ -474,7 +456,6 @@ if has fastfetch; then
   fastfetch
 fi
 
-# This is slow
-# if has vectorcode ; then
-#   eval "$(vectorcode -s zsh)"
-# fi
+fpath=(~/.zsh/completions $fpath)
+autoload -Uz compinit && compinit
+autoload -Uz +X bashcompinit && bashcompinit

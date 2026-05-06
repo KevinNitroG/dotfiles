@@ -1,0 +1,13 @@
+zsh:
+  completions:
+    chezmoi: chezmoi completion zsh
+    # docker: docker completion zsh
+    just: just --completions zsh
+    k3s: k3s completion zsh
+    # kubectl: kubectl completion zsh
+    # npm: npm completion
+    # railway: railway completion zsh
+    warp-cli: warp-cli generate-completions zsh
+    rc: rc completions zsh
+    pnpm: pnpm completion zsh
+    kubectl-cnpg: kubectl-cnpg completion zsh

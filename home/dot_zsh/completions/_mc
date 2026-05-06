@@ -1,0 +1,5 @@
+# vim:ft=zsh
+_mc_completion() {
+    eval "$(mc --autocompletion)"
+}
+_mc_completion "$@"
