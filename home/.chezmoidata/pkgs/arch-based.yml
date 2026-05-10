@@ -2,154 +2,155 @@ pkgs:
   archBased:
     universal:
       # Essentials
-      # - "google-chrome"
-      - "brave-bin"
-      - "chezmoi"
-      - "git"
-      - "kanata-bin" # Change keyboard func
-      - "lazygit"
-      - "os-prober"
-      - "tldr"
-      - "tmux"
-      - "tmuxinator"
-      - "wget"
-      - "xorg-xhost"
-      - "zsh"
+      # - google-chrome
+      - brave-bin
+      - chezmoi
+      - git
+      - kanata-bin # Change keyboard func
+      - lazygit
+      - os-prober
+      - tldr
+      - tmux
+      - tmuxinator
+      - wget
+      - xorg-xhost
+      - zsh
 
       # Terminal
-      # - "alacritty"
-      # - "ghostty"
-      - "kitty"
+      # - alacritty
+      # - ghostty
+      - kitty
 
       # Text / Code Editor, IDE
-      # - "mysql-workbench"
-      # - "zed"
-      - "neovim"
-      - "vim"
-      - "visual-studio-code-bin"
+      # - mysql-workbench
+      # - zed
+      - neovim
+      - vim
+      - visual-studio-code-bin
 
       # CLI tools
-      # - "aria2"
-      # - "duf"
-      # - "thefuck"
-      # - "tokei"
-      # - "trash-cli"
-      # - "xsel"
-      - "atac"
-      - "bat"
-      - "ctags"
-      - "dog"
-      - "dust"
-      - "exa"
-      - "fd"
-      - "fx"
-      - "fzf"
-      - "gh"
-      - "git-delta"
-      - "git-lfs"
-      - "github-cli"
-      - "glow"
-      - "gping"
-      - "jq"
-      - "just"
-      - "lazydocker"
-      - "lazysql-bin"
-      - "ov"
-      - "procs"
-      - "rclone"
-      - "ripgrep"
-      - "rsync"
-      - "sd"
-      - "starship"
-      - "tree"
-      - "unzip"
-      - "wget"
-      - "xh"
-      - "yazi"
-      - "yq" # mise requirements
-      - "zip"
-      - "zoxide"
+      # - aria2
+      # - duf
+      # - thefuck
+      # - tokei
+      # - trash-cli
+      # - xsel
+      - atac
+      - bat
+      - ctags
+      - dog
+      - dust
+      - exa
+      - fd
+      - fx
+      - fzf
+      - gh
+      - git-delta
+      - git-lfs
+      - github-cli
+      - glow
+      - gping
+      - jq
+      - just
+      - lazydocker
+      - lazysql-bin
+      - ov
+      - procs
+      - rclone
+      - ripgrep
+      - rsync
+      - sd
+      - starship
+      - tree
+      - unzip
+      - wget
+      - xh
+      - yazi
+      - yq # mise requirements
+      - zip
+      - zoxide
 
       # Development, languages, interpreters, compilers, etc
-      # - "clang"
-      # - "cmake"
-      # - "docker-desktop" # Docker desktop on Arch is not stable
-      # - "gdb"
-      # - "go"
-      # - "nodejs"
-      # - "npm"
-      # - "pnpm"
-      # - "pyenv"
-      # - "python-pip"
-      # - "rustup"
-      # - "yarn"
-      - "docker"
-      - "docker-buildx"
-      - "docker-compose"
-      - "mise"
+      # - clang
+      # - cmake
+      # - docker-desktop # Docker desktop on Arch is not stable
+      # - gdb
+      # - go
+      # - nodejs
+      # - npm
+      # - pnpm
+      # - pyenv
+      # - python-pip
+      # - rustup
+      # - yarn
+      - docker
+      - docker-buildx
+      - docker-compose
+      - mise
+      - inotify-tools
 
       # Security Utilities
-      - "gnupg"
-      - "openssl"
+      - gnupg
+      - openssl
 
       # Monitoring, management and stats
-      # - "speedtest-cli"
-      - "btop"
-      - "cronie"
-      - "dysk"
-      - "gdu"
+      # - speedtest-cli
+      - btop
+      - cronie
+      - dysk
+      - gdu
 
       # CLI Fun
-      - "asciinema"
-      - "asciinema-agg-bin"
-      - "astroterm"
-      - "cowsay"
-      - "fastfetch"
-      - "figlet" # A program for making large letters out of ordinary text
-      - "lolcat"
+      - asciinema
+      - asciinema-agg-bin
+      - astroterm
+      - cowsay
+      - fastfetch
+      - figlet # A program for making large letters out of ordinary text
+      - lolcat
 
       # Apps / Tools
-      # - "authy-desktop-win32-bin"
-      # - "qbittorrent-enhanced"
-      # - "screenkey"
-      - "fcitx5"
-      - "fcitx5-bamboo"
-      - "fcitx5-configtool"
-      - "gammastep"
-      - "grub-customizer"
-      - "libreoffice-fresh"
-      - "obs-studio"
-      - "qbittorrent"
-      - "rclone"
-      - "spotify"
-      - "tailscale"
-      - "vlc"
-      - "zathura"
+      # - authy-desktop-win32-bin
+      # - qbittorrent-enhanced
+      # - screenkey
+      - fcitx5
+      - fcitx5-bamboo
+      - fcitx5-configtool
+      - gammastep
+      - grub-customizer
+      - libreoffice-fresh
+      - obs-studio
+      - qbittorrent
+      - rclone
+      - spotify
+      - tailscale
+      - vlc
+      - zathura
 
       # Utils
-      - "bc"
+      - bc
 
       # Fonts
-      - "noto-fonts-emoji"
-      - "ttf-google-sans"
-      - "ttf-jetbrains-mono-nerd"
-      - "ttf-nerd-fonts-symbols"
+      - noto-fonts-emoji
+      - ttf-google-sans
+      - ttf-jetbrains-mono-nerd
+      - ttf-nerd-fonts-symbols
 
       # Other but IDK what it is
-      # - "pacman-contrib" # For paccache
-      - "fuse3" # For rclone mount --daemon
-      - "gnome-keyring" # For MySQL Workbench,...
-      - "gtk4"
-      - "lsb-release"
-      - "tesseract-data-eng" # For zathura
-      - "tesseract-data-vie" # For zathura
-      - "tree"
-      - "usage" # For mise
-      - "wtype"
-      - "zathura-pdf-mupdf" # For zathura
+      # - pacman-contrib # For paccache
+      - fuse3 # For rclone mount --daemon
+      - gnome-keyring # For MySQL Workbench,...
+      - gtk4
+      - lsb-release
+      - tesseract-data-eng # For zathura
+      - tesseract-data-vie # For zathura
+      - tree
+      - usage # For mise
+      - wtype
+      - zathura-pdf-mupdf # For zathura
     laptop:
-      # - "gestures"
-      # - "libinput-gestures"
-      - "tlp"
-      - "tlp-rdw"
-      - "tlpui"
+      # - gestures
+      # - libinput-gestures
+      - tlp
+      - tlp-rdw
+      - tlpui
