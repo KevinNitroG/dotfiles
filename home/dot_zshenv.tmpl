@@ -130,6 +130,13 @@ export JAVA_OPTS='-Xmx8g'
 
 ##########################################
 
+# Opencode
+
+OPENCODE_ENABLE_EXA='1'
+OPENCODE_EXPERIMENTAL=true
+
+##########################################
+
 # CUSTOM
 export CATPPUCCIN_FLAVOR='{{ .catppuccinFlavor }}' # For those config can read env
 {{- if ne .duckdnsDomain "" }}

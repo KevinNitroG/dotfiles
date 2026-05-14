@@ -1,5 +1,4 @@
-"$schema" = "https://yazi-rs.github.io/schemas/keymap.json"
-
+#:schema https://raw.githubusercontent.com/yazi-rs/schemas/refs/heads/main/schemas/yazi.json
 [mgr]
 show_hidden = true
 show_symlink = true
@@ -20,10 +19,10 @@ prepend_previewers = [
   { mime = "application/java-archive", run = "ouch" },
   { url = "*.md", run = 'piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark "$1"' },
 ]
-prepend_fetchers = [
-  { id = "git", name = "*", run = "git" },
-  { id = "git", name = "*/", run = "git" },
-]
+# prepend_fetchers = [
+#   { id = "git", name = "*", run = "git", group = "git" },
+#   { id = "git", name = "*/", run = "git", group = "git" },
+# ]
 
 
 [opener]

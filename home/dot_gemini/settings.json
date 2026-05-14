@@ -1,0 +1,61 @@
+{
+  "general": {
+    "enablePromptCompletion": true,
+    "preferredEditor": "neovim",
+    "vimMode": true,
+    "previewFeatures": true,
+    "defaultApprovalMode": "auto_edit",
+    "enableAutoUpdate": false,
+    "enableNotifications": true
+  },
+  "ui": {
+    "hideBanner": true,
+    "theme": "Shades Of Purple",
+    "footer": {
+      "items": [
+        "workspace",
+        "git-branch",
+        "sandbox",
+        "model-name",
+        "quota",
+        "context-used",
+        "memory-usage",
+        "token-count"
+      ],
+      "hideContextPercentage": false
+    },
+    "inlineThinkingMode": "full",
+    "showStatusInTitle": false,
+    "useAlternateBuffer": true,
+    "useBackgroundColor": true,
+    "loadingPhrases": "all"
+  },
+  "security": {
+    "auth": {
+      "selectedType": "oauth-personal"
+    },
+    "enablePermanentToolApproval": true,
+    "autoAddToPolicyByDefault": true
+  },
+  "tools": {
+    "useRipgrep": true
+  },
+  "output": {
+    "format": "text"
+  },
+  "ide": {
+    "enabled": false
+  },
+  "model": {
+    "compressionThreshold": 0.8,
+    "disableLoopDetection": true
+  },
+  "context": {
+    "loadMemoryFromIncludeDirectories": true
+  },
+  "experimental": {
+    "useOSC52Paste": true,
+    "useOSC52Copy": true,
+    "directWebFetch": true
+  }
+}

@@ -6,13 +6,13 @@
   "default_agent": "build",
   "agent": {
     "compaction": {
-      "model": "github-copilot/claude-haiku-4.5",
+      "model": "openrouter/openrouter/free",
     },
     "build": {
       "model": "github-copilot/claude-haiku-4.5",
     },
     "plan": {
-      "model": "google/gemini-2.5-pro",
+      "model": "google/gemini-3.1-flash-lite-preview",
     },
     "general": {
       "disable": true,
@@ -30,6 +30,10 @@
     "opencode-pty@latest",
     "oh-my-opencode-slim",
   ],
+  "permission": {
+    "websearch": "allow",
+    "webfetch": "allow",
+  },
   "mcp": {
     "chrome-devtools": {
       "type": "local",
@@ -51,6 +55,9 @@
         "--",
         "context7-mcp",
       ],
+      "environment": {
+        "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}",
+      },
       "enabled": false,
     },
     "ddg-search": {

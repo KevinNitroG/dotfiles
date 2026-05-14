@@ -2,6 +2,15 @@
   "$schema": "https://opencode.ai/tui.json",
   "theme": "catppuccin",
   "plugin": [
-    "oh-my-opencode-slim"
+    "oh-my-opencode-slim",
+    [
+      "opencode-vim@latest",
+      {
+        "autoUpdate": true,
+        "vim": {
+          "defaultMode": "insert"
+        }
+      }
+    ]
   ]
 }

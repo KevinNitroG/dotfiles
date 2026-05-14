@@ -9,6 +9,8 @@ x-scheme-handler/mailto=brave-browser.desktop
 hoppscotch=hoppscotch-handler.desktop
 x-scheme-handler/jetbrains=jetbrains-toolbox.desktop
 x-scheme-handler/tonsite=org.telegram.desktop.desktop
+x-scheme-handler/claude-cli=claude-code-url-handler.desktop
+x-scheme-handler/claude=claude.desktop
 
 [Added Associations]
 x-scheme-handler/tonsite=org.telegram.desktop.desktop;

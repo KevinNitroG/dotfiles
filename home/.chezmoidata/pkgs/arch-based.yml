@@ -35,31 +35,31 @@ pkgs:
       # - tokei
       # - trash-cli
       # - xsel
-      - atac
+      # - atac
       - bat
       - ctags
-      - dog
-      - dust
+      # - dog
+      # - dust
       - exa
-      - fd
-      - fx
+      # - fd
+      # - fx
       - fzf
       - gh
       - git-delta
       - git-lfs
-      - github-cli
-      - glow
-      - gping
+      # - github-cli
+      # - glow
+      # - gping
       - jq
       - just
-      - lazydocker
-      - lazysql-bin
-      - ov
+      # - lazydocker
+      # - lazysql-bin
+      # - ov
       - procs
       - rclone
       - ripgrep
       - rsync
-      - sd
+      # - sd
       - starship
       - tree
       - unzip
