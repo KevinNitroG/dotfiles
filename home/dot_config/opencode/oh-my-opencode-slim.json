@@ -2,15 +2,20 @@
   "$schema": "https://unpkg.com/oh-my-opencode-slim@latest/oh-my-opencode-slim.schema.json",
   "preset": "own",
   "council": {
+    "default_preset": "own",
     "master": {
-      "model": "github-copilot/claude-sonnet-4.5",
-      "variant": "thinking"
+      "model": "opencode/deepseek-v4-flash-free"
     },
     "presets": {
-      "default": {
-        "default": {
-          "model": "github-copilot/claude-sonnet-4.5",
-          "variant": "thinking"
+      "own": {
+        "alpha": {
+          "model": "opencode/deepseek-v4-flash-free"
+        },
+        "beta": {
+          "model": "opencode/big-pickle"
+        },
+        "gamma": {
+          "model": "opencode/nemotron-3-super-free"
         }
       }
     }
@@ -18,37 +23,38 @@
   "presets": {
     "own": {
       "orchestrator": {
-        "model": "github-copilot/claude-haiku-4.5",
-        "variant": "thinking",
+        "model": "opencode/deepseek-v4-flash-free",
         "skills": ["*"],
         "mcps": ["websearch"]
       },
       "oracle": {
-        "model": "github-copilot/claude-haiku-4.5",
+        "model": "opencode/deepseek-v4-flash-free",
         "variant": "thinking",
         "skills": [],
         "mcps": []
       },
       "librarian": {
-        "model": "github-copilot/claude-haiku-4.5",
+        "model": "opencode/deepseek-v4-flash-free",
         "skills": [],
         "mcps": ["websearch", "context7", "grep_app"]
       },
       "explorer": {
-        "model": "github-copilot/claude-haiku-4.5",
+        "model": "opencode/deepseek-v4-flash-free",
         "skills": [],
         "mcps": []
       },
       "designer": {
-        "model": "github-copilot/claude-sonnet-4.5",
+        "model": "opencode/deepseek-v4-flash-free",
         "skills": ["agent-browser"],
         "mcps": []
       },
       "fixer": {
-        "model": "github-copilot/claude-haiku-4.5",
-        "variant": "thinking",
+        "model": "opencode/deepseek-v4-flash-free",
         "skills": [],
         "mcps": []
+      },
+      "council": {
+        "model": "opencode/deepseek-v4-flash-free"
       }
     }
   }

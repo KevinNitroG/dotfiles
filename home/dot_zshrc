@@ -43,6 +43,7 @@ plugins=(
   zsh-autosuggestions
   zsh-better-npm-completion
   zsh-syntax-highlighting
+  # gitignore
   # nx-completion
 
   history-substring-search # Always below zsh-syntax-highlighting
@@ -240,6 +241,7 @@ fi
 if has k3s; then
   alias kk='k3s kubectl'
 fi
+alias k='kubecolor'
 
 # Others
 alias c='clear'

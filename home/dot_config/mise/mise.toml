@@ -68,6 +68,14 @@ ast-grep = "latest"
 "github:grafana/alloy" = { version = "latest", rename_exe = "alloy" }
 claude = "latest"
 "github:rustfs/cli" = "latest"
+websocat = "latest"
+go = "latest"
+"pipx:codecov-cli" = "latest"
+"npm:@mermaid-js/mermaid-cli" = "latest"
+typst = "latest"
+dotnet = "latest"
+lazyssh = "latest"
+kubecolor = "latest"
 
 [tools."github:wakatime/wakatime-cli"]
 version = "latest"
@@ -78,7 +86,7 @@ version = "0.11.6"
 asset_pattern = "mcp-grafana_{{os(macos='Darwin', linux='Linux', windows='Windows')}}_{{arch(x64='x86_64', arm64='arm64')}}.*"
 
 [settings]
-idiomatic_version_file_enable_tools = ["node"]
+idiomatic_version_file_enable_tools = ["dotnet"]
 experimental = true
 pipx.uvx = true
 

@@ -1,18 +1,18 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "github-copilot/claude-haiku-4.5",
+  "model": "opencode/deepseek-v4-flash-free",
   "small_model": "github-copilot/gpt-4.1",
   "autoupdate": false,
   "default_agent": "build",
   "agent": {
     "compaction": {
-      "model": "openrouter/openrouter/free",
+      "model": "opencode/deepseek-v4-flash-free",
     },
     "build": {
-      "model": "github-copilot/claude-haiku-4.5",
+      "model": "opencode/deepseek-v4-flash-free",
     },
     "plan": {
-      "model": "google/gemini-3.1-flash-lite-preview",
+      "model": "opencode/deepseek-v4-flash-free",
     },
     "general": {
       "disable": true,
@@ -22,13 +22,14 @@
     },
   },
   "plugin": [
-    "opencode-wakatime@latest",
+    // "opencode-wakatime@latest",
     "@tarquinen/opencode-dcp@latest",
     "opencode-gemini-auth@latest",
     "@mohak34/opencode-notifier@latest",
-    "kdco/background-agents@latest",
+    // "kdco/background-agents@latest",
     "opencode-pty@latest",
     "oh-my-opencode-slim",
+    "opencode-vim@latest",
   ],
   "permission": {
     "websearch": "allow",
@@ -43,19 +44,35 @@
         "npm:chrome-devtools-mcp@latest",
         "--",
         "chrome-devtools-mcp",
+        "--no-usage-statistics",
+        "--autoConnect=true",
+        "--userDataDir=/home/kevinnitro/.config/BraveSoftware/Brave-Browser",
+        "--experimentalScreencast=true",
+        "--experimentalDevtools=true",
       ],
       "enabled": false,
     },
-    "context7": {
+    "chrome-devtools-isolate": {
       "type": "local",
       "command": [
         "mise",
         "exec",
-        "npm:@upstash/context7-mcp@latest",
+        "npm:chrome-devtools-mcp@latest",
         "--",
-        "context7-mcp",
+        "chrome-devtools-mcp",
+        "--no-usage-statistics",
+        "--executablePath",
+        "/usr/bin/brave",
+        "--isolated=true",
+        "--experimentalScreencast=true",
+        "--experimentalDevtools=true",
       ],
-      "environment": {
+      "enabled": false,
+    },
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
         "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}",
       },
       "enabled": false,

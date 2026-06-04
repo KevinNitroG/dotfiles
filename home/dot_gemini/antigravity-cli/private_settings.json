@@ -1,0 +1,17 @@
+{
+  "altScreenMode": "always",
+  "enableTelemetry": false,
+  "notifications": true,
+  "runningLightSpeed": "fast",
+  "showFeedbackSurvey": false,
+  "statusLine": {
+    "type": "",
+    "command": "",
+    "enabled": true
+  },
+  "trustedWorkspaces": [
+    "/home/kevinnitro/.config/nvim",
+    "/home/kevinnitro/projects/notopia/notopia",
+    "/home/kevinnitro/.local/share/chezmoi"
+  ]
+}
