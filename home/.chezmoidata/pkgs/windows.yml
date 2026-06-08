@@ -114,7 +114,7 @@ pkgs:
         # - "main/spicetify-cli"
         # - "nonportable/parsec-np"
         # - "extras/anydesk"
-        - "extras/hoppscotch"
+        # - "extras/hoppscotch"
         - "extras/obs-studio"
         - "extras/powertoys"
         - "extras/silentcmd"
@@ -135,6 +135,12 @@ pkgs:
         - '$env:USERPROFILE\scoop\apps\pwsh\current\install-explorer-context.reg'
         - '$env:USERPROFILE\scoop\apps\pwsh\current\install-file-context.reg'
         - '$env:USERPROFILE\scoop\apps\7zip\current\install-context.reg'
+        - '$env:USERPROFILE\scoop\apps\vscode\current\install-github-integration.reg'
+        - '$env:USERPROFILE\scoop\apps\vscode\current\install-associations.reg'
+        - '$env:USERPROFILE\scoop\apps\vscode\current\install-github-integration.reg'
+        - '$env:USERPROFILE\scoop\apps\vscode\current\install-context.reg'
+        - '$env:USERPROFILE\scoop\apps\git\current\install-associations.reg'
+        - '$env:USERPROFILE\scoop\apps\git\current\install-context.reg'
     choco:
       # - "everythingpowertoys"
       # - "ultraviewer"
@@ -153,3 +159,7 @@ pkgs:
       # - "posh-git"
       # - "posh-wakatime"
       - "CompletionPredictor"
+
+# need to run this too
+# $env:USERPROFILE\scoop\apps\obs-studio\current\data\obs-plugins\win-dshow\virtualcam-install.bat
+# Invoke-Expression -Command "& `"C:\Users\trann\scoop\apps\powertoys\current\install-context.ps1`""
