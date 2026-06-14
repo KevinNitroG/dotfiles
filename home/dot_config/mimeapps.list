@@ -11,6 +11,9 @@ x-scheme-handler/jetbrains=jetbrains-toolbox.desktop
 x-scheme-handler/tonsite=org.telegram.desktop.desktop
 x-scheme-handler/claude-cli=claude-code-url-handler.desktop
 x-scheme-handler/claude=claude.desktop
+video/mp4=mpv.desktop
+video/x-matroska=mpv.desktop
+video/webm=mpv.desktop
 
 [Added Associations]
 x-scheme-handler/tonsite=org.telegram.desktop.desktop;

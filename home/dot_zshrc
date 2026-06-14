@@ -88,33 +88,27 @@ alias ex=evalx
 ##########################################
 
 # ZSH CONFIG
-HISTDUP=erase
 HISTFILE=~/.zsh_history
 HISTORY_SUBSTRING_SEARCH_PREFIXED=1
-HISTSIZE=5000
-SAVEHIST=$HISTSIZE
-setopt APPENDHISTORY
-# setopt CORRECT
-# setopt CORRECT_ALL
-setopt GLOBDOTS # Include hidden dir tab complete
-setopt HIST_FIND_NO_DUPS
-setopt HIST_IGNORE_ALL_DUPS
-setopt HIST_IGNORE_DUPS
-setopt HIST_IGNORE_SPACE # Ignore command start with space
-setopt HIST_SAVE_NO_DUPS
-setopt IGNOREEOF # Prevents <C-d> from quitting the shell
-setopt PROMPT_SUBST # Enable scripting in the prompt
-setopt SHARE_HISTORY
-setopt SHAREHISTORY # Share history across shell
-unsetopt BEEP # Prevents beeps in general
+SAVEHIST=5000
+HISTSIZE=6000 # SAVEHIST * 120%
 
-# Ignore command match the regex
+setopt SHARE_HISTORY          # Share history across all open sessions
+setopt HIST_EXPIRE_DUPS_FIRST # Expire duplicates first when cutting down history
+setopt HIST_IGNORE_ALL_DUPS   # Clear old duplicates, keeping only the newest unique command
+setopt HIST_SAVE_NO_DUPS      # Do not write duplicate commands to the history file
+setopt HIST_FIND_NO_DUPS      # Do not display duplicates when searching
+setopt HIST_IGNORE_SPACE      # Do not record commands starting with a space
+
+setopt GLOBDOTS               # Include hidden files in autocomplete
+setopt PROMPT_SUBST           # Enable evaluation in prompt
+setopt IGNOREEOF              # Prevents Ctrl-D from exiting the shell
+unsetopt BEEP                 # Silence terminal bells
+
+# Prevents sensitive words from being written to history
 zshaddhistory() {
   emulate -L zsh
-  if ! [[ "$1" =~ (password|secret|private|BBb) ]] ; then
-    print -sr -- "${1%%$'\n'}"
-    fc -p
-  else
+  if [[ "$1" =~ (password|secret|private|BBb) ]] || [[ "$1" == \ * ]]; then
     return 1
   fi
 }
@@ -241,7 +235,10 @@ fi
 if has k3s; then
   alias kk='k3s kubectl'
 fi
-alias k='kubecolor'
+if has kubecolor; then
+  compdef kubecolor=kubectl
+  alias k='kubecolor'
+fi
 
 # Others
 alias c='clear'
@@ -457,6 +454,18 @@ fi
 if has fastfetch; then
   fastfetch
 fi
+
+# if has register-python-argcomplete; then
+#   eval $(register-python-argcomplete ansible)
+#   eval $(register-python-argcomplete ansible-config)
+#   eval $(register-python-argcomplete ansible-console)
+#   eval $(register-python-argcomplete ansible-doc)
+#   eval $(register-python-argcomplete ansible-galaxy)
+#   eval $(register-python-argcomplete ansible-inventory)
+#   eval $(register-python-argcomplete ansible-playbook)
+#   eval $(register-python-argcomplete ansible-pull)
+#   eval $(register-python-argcomplete ansible-vault)
+# fi
 
 fpath=(~/.zsh/completions $fpath)
 autoload -Uz compinit && compinit

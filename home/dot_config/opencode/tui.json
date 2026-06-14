@@ -2,7 +2,6 @@
   "$schema": "https://opencode.ai/tui.json",
   "theme": "catppuccin",
   "plugin": [
-    "oh-my-opencode-slim",
     [
       "opencode-vim@latest",
       {
@@ -11,6 +10,7 @@
           "defaultMode": "insert"
         }
       }
-    ]
+    ],
+    "oh-my-opencode-slim"
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://unpkg.com/oh-my-opencode-slim@latest/oh-my-opencode-slim.schema.json",
+  "$schema": "https://raw.githubusercontent.com/alvinunreal/oh-my-opencode-slim/refs/heads/master/oh-my-opencode-slim.schema.json",
   "preset": "own",
   "council": {
     "default_preset": "own",
