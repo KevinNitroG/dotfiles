@@ -3,12 +3,9 @@
   "theme": "catppuccin",
   "plugin": [
     [
-      "opencode-vim@latest",
+      "vimcode@git+https://github.com/oribarilan/vimcode.git@latest",
       {
-        "autoUpdate": true,
-        "vim": {
-          "defaultMode": "insert"
-        }
+        "modeIndicator": "none"
       }
     ],
     "oh-my-opencode-slim"

@@ -1,0 +1,8 @@
+#compdef mc
+# vim:ft=zsh
+_mc() {
+  compadd -Q -- ${(f)"$(mc "${(@)words[2,CURRENT-1]}" --generate-bash-completion 2>/dev/null)"}
+}
+_mc "$@"
+
+# mc version: {{- output "mc" "--version" | replaceAllRegex "\n" " " }}

@@ -53,6 +53,7 @@ plugins=(
   fzf
   # zsh-autocomplete
 )
+fpath=(~/.zsh/completions $fpath)
 source $ZSH/oh-my-zsh.sh
 
 _catppuccin_zsh_syntax_highlighting_zsh="$ZSH/custom/plugins/catppuccin-zsh-syntax-highlighting/themes/catppuccin_${CATPPUCIN_FLAVOR:-mocha}-zsh-syntax-highlighting.zsh"
@@ -447,10 +448,6 @@ if [[ -f ~/.config/.dart-cli-completion/zsh-config.zsh ]]; then
   source ~/.config/.dart-cli-completion/zsh-config.zsh
 fi
 
-# if has trexanh; then
-#   trexanh --cached
-# fi
-
 if has fastfetch; then
   fastfetch
 fi
@@ -467,6 +464,4 @@ fi
 #   eval $(register-python-argcomplete ansible-vault)
 # fi
 
-fpath=(~/.zsh/completions $fpath)
 autoload -Uz compinit && compinit
-autoload -Uz +X bashcompinit && bashcompinit
