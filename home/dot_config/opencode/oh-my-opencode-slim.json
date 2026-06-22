@@ -4,12 +4,12 @@
   "council": {
     "default_preset": "own",
     "master": {
-      "model": "opencode/deepseek-v4-flash-free"
+      "model": "opencode/mimo-v2.5-free"
     },
     "presets": {
       "own": {
         "alpha": {
-          "model": "opencode/deepseek-v4-flash-free"
+          "model": "opencode/mimo-v2.5-free"
         },
         "beta": {
           "model": "opencode/big-pickle"
@@ -23,38 +23,38 @@
   "presets": {
     "own": {
       "orchestrator": {
-        "model": "opencode/deepseek-v4-flash-free",
+        "model": "opencode/mimo-v2.5-free",
         "skills": ["*"],
         "mcps": ["websearch"]
       },
       "oracle": {
-        "model": "opencode/deepseek-v4-flash-free",
+        "model": "opencode/mimo-v2.5-free",
         "variant": "thinking",
         "skills": [],
         "mcps": []
       },
       "librarian": {
-        "model": "opencode/deepseek-v4-flash-free",
+        "model": "opencode/mimo-v2.5-free",
         "skills": [],
         "mcps": ["websearch", "context7", "grep_app"]
       },
       "explorer": {
-        "model": "opencode/deepseek-v4-flash-free",
+        "model": "opencode/mimo-v2.5-free",
         "skills": [],
         "mcps": []
       },
       "designer": {
-        "model": "opencode/deepseek-v4-flash-free",
+        "model": "opencode/mimo-v2.5-free",
         "skills": ["agent-browser"],
         "mcps": []
       },
       "fixer": {
-        "model": "opencode/deepseek-v4-flash-free",
+        "model": "opencode/mimo-v2.5-free",
         "skills": [],
         "mcps": []
       },
       "council": {
-        "model": "opencode/deepseek-v4-flash-free"
+        "model": "opencode/mimo-v2.5-free"
       }
     }
   }

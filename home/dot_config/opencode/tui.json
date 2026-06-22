@@ -1,13 +1,5 @@
 {
   "$schema": "https://opencode.ai/tui.json",
   "theme": "catppuccin",
-  "plugin": [
-    [
-      "vimcode@git+https://github.com/oribarilan/vimcode.git@latest",
-      {
-        "modeIndicator": "none"
-      }
-    ],
-    "oh-my-opencode-slim"
-  ]
+  "plugin": ["oh-my-opencode-slim"]
 }

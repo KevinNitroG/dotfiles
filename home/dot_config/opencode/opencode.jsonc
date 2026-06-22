@@ -1,37 +1,36 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "opencode/deepseek-v4-flash-free",
-  "small_model": "github-copilot/gpt-4.1",
+  "model": "opencode/mimo-v2.5-free",
+  "small_model": "opencode/mimo-v2.5-free",
   "autoupdate": false,
   "default_agent": "build",
   "agent": {
     "compaction": {
-      "model": "opencode/deepseek-v4-flash-free"
+      "model": "opencode/mimo-v2.5-free",
     },
     "build": {
-      "model": "opencode/deepseek-v4-flash-free"
+      "model": "opencode/mimo-v2.5-free",
     },
     "plan": {
-      "model": "opencode/deepseek-v4-flash-free"
+      "model": "opencode/mimo-v2.5-free",
     },
     "general": {
-      "disable": true
+      "disable": true,
     },
     "explore": {
-      "disable": true
-    }
+      "disable": true,
+    },
   },
   "plugin": [
     "@tarquinen/opencode-dcp@latest",
     "opencode-gemini-auth@latest",
     "@mohak34/opencode-notifier@latest",
     "opencode-pty@latest",
-    "opencode-vim@latest",
-    "oh-my-opencode-slim"
+    "oh-my-opencode-slim",
   ],
   "permission": {
     "websearch": "allow",
-    "webfetch": "allow"
+    "webfetch": "allow",
   },
   "mcp": {
     "chrome-devtools": {
@@ -46,9 +45,9 @@
         "--autoConnect=true",
         "--userDataDir=/home/kevinnitro/.config/BraveSoftware/Brave-Browser",
         "--experimentalScreencast=true",
-        "--experimentalDevtools=true"
+        "--experimentalDevtools=true",
       ],
-      "enabled": false
+      "enabled": false,
     },
     "chrome-devtools-isolate": {
       "type": "local",
@@ -63,17 +62,17 @@
         "/usr/bin/brave",
         "--isolated=true",
         "--experimentalScreencast=true",
-        "--experimentalDevtools=true"
+        "--experimentalDevtools=true",
       ],
-      "enabled": false
+      "enabled": false,
     },
     "context7": {
       "type": "remote",
       "url": "https://mcp.context7.com/mcp",
       "headers": {
-        "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
+        "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}",
       },
-      "enabled": false
+      "enabled": false,
     },
     "ddg-search": {
       "type": "local",
@@ -82,9 +81,9 @@
         "exec",
         "pipx:duckduckgo-mcp-server@latest",
         "--",
-        "duckduckgo-mcp-server"
+        "duckduckgo-mcp-server",
       ],
-      "enabled": false
+      "enabled": false,
     },
     "brave-search": {
       "type": "local",
@@ -93,12 +92,12 @@
         "exec",
         "npm:@brave/brave-search-mcp-server@latest",
         "--",
-        "brave-search-mcp-server"
+        "brave-search-mcp-server",
       ],
       "environment": {
-        "BRAVE_SEARCH_API_KEY": "{env:BRAVE_SEARCH_API_KEY}"
+        "BRAVE_SEARCH_API_KEY": "{env:BRAVE_SEARCH_API_KEY}",
       },
-      "enabled": false
+      "enabled": false,
     },
     "fetch": {
       "type": "local",
@@ -107,9 +106,9 @@
         "exec",
         "npm:mcp-fetch-server@latest",
         "--",
-        "mcp-fetch-server"
+        "mcp-fetch-server",
       ],
-      "enabled": false
+      "enabled": false,
     },
     "filesystem": {
       "type": "local",
@@ -119,17 +118,17 @@
         "npm:@modelcontextprotocol/server-filesystem@latest",
         "--",
         "mcp-server-filesystem",
-        "~/"
+        "~/",
       ],
-      "enabled": false
+      "enabled": false,
     },
     "github": {
       "type": "remote",
       "url": "https://api.githubcopilot.com/mcp/",
       "enabled": false,
       "headers": {
-        "Authorization": "Bearer {env:GITHUB_TOKEN}"
-      }
+        "Authorization": "Bearer {env:GITHUB_TOKEN}",
+      },
     },
     "google-sheets": {
       "type": "local",
@@ -138,13 +137,13 @@
         "exec",
         "pipx:mcp-google-sheets@latest",
         "--",
-        "mcp-google-sheets"
+        "mcp-google-sheets",
       ],
       "enabled": false,
       "environment": {
         "CREDENTIALS_PATH": "${HOME}/.config/mcp/mcp-google-sheet/credentials.json",
-        "TOKEN_PATH": "${HOME}/.config/mcp/mcp-google-sheet/token.json"
-      }
+        "TOKEN_PATH": "${HOME}/.config/mcp/mcp-google-sheet/token.json",
+      },
     },
     "kubernetes": {
       "type": "local",
@@ -153,9 +152,9 @@
         "exec",
         "npm:mcp-server-kubernetes@latest",
         "--",
-        "mcp-server-kubernetes"
+        "mcp-server-kubernetes",
       ],
-      "enabled": false
+      "enabled": false,
     },
     "memory": {
       "type": "local",
@@ -164,9 +163,9 @@
         "exec",
         "npm:@modelcontextprotocol/server-memory@latest",
         "--",
-        "server-memory"
+        "server-memory",
       ],
-      "enabled": false
+      "enabled": false,
     },
     "playwright": {
       "type": "local",
@@ -177,13 +176,13 @@
         "--",
         "playwright-mcp",
         "--config",
-        "/home/kevinnitro/.config/playwright-mcp.json"
+        "/home/kevinnitro/.config/playwright-mcp.json",
       ],
       "enabled": false,
       "environment": {
         "WAYLAND_DISPLAY": "{env:WAYLAND_DISPLAY}",
-        "XDG_RUNTIME_DIR": "{env:XDG_RUNTIME_DIR}"
-      }
+        "XDG_RUNTIME_DIR": "{env:XDG_RUNTIME_DIR}",
+      },
     },
     "puppeteer": {
       "type": "local",
@@ -192,9 +191,9 @@
         "exec",
         "npm:@modelcontextprotocol/server-puppeteer@latest",
         "--",
-        "server-puppeteer"
+        "server-puppeteer",
       ],
-      "enabled": false
+      "enabled": false,
     },
     "sequential-thinking": {
       "type": "local",
@@ -203,23 +202,17 @@
         "exec",
         "npm:@modelcontextprotocol/server-sequential-thinking@latest",
         "--",
-        "server-sequential-thinking"
+        "server-sequential-thinking",
       ],
-      "enabled": false
+      "enabled": false,
     },
     "tavily": {
       "type": "local",
-      "command": [
-        "mise",
-        "exec",
-        "npm:tavily-mcp@latest",
-        "--",
-        "tavily-mcp"
-      ],
+      "command": ["mise", "exec", "npm:tavily-mcp@latest", "--", "tavily-mcp"],
       "enabled": false,
       "environment": {
-        "TAVILY_API_KEY": "{env:TAVILY_API_KEY}"
-      }
+        "TAVILY_API_KEY": "{env:TAVILY_API_KEY}",
+      },
     },
     "time": {
       "type": "local",
@@ -229,9 +222,9 @@
         "pipx:mcp-server-time@latest",
         "--",
         "mcp-server-time",
-        "--local-timezone=Asia/Ho_Chi_Minh"
+        "--local-timezone=Asia/Ho_Chi_Minh",
       ],
-      "enabled": false
+      "enabled": false,
     },
     "Framelink_Figma_MCP": {
       "type": "local",
@@ -241,25 +234,18 @@
         "npm:figma-developer-mcp@latest",
         "--",
         "figma-developer-mcp",
-        "--stdio"
+        "--stdio",
       ],
       "enabled": false,
       "environment": {
-        "FIGMA_API_KEY": "{env:FIGMA_API_KEY}"
-      }
+        "FIGMA_API_KEY": "{env:FIGMA_API_KEY}",
+      },
     },
     "shadcn": {
       "type": "local",
-      "command": [
-        "mise",
-        "exec",
-        "npm:shadcn@latest",
-        "--",
-        "shadcn",
-        "mcp"
-      ],
-      "enabled": false
-    }
+      "command": ["mise", "exec", "npm:shadcn@latest", "--", "shadcn", "mcp"],
+      "enabled": false,
+    },
   },
-  "lsp": true
+  "lsp": true,
 }
