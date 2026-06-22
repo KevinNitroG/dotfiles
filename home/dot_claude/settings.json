@@ -4,29 +4,6 @@
     "defaultMode": "acceptEdits"
   },
   "model": "opus",
-  "statusLine": {
-    "type": "command",
-    "command": "bash ~/.claude/statusline-command.sh"
-  },
-  "enabledPlugins": {
-    "gopls-lsp@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true,
-    "claude-code-wakatime@wakatime": true
-  },
-  "extraKnownMarketplaces": {
-    "wakatime": {
-      "source": {
-        "source": "git",
-        "url": "https://github.com/wakatime/claude-code-wakatime.git"
-      }
-    }
-  },
-  "effortLevel": "medium",
-  "tui": "fullscreen",
-  "theme": "auto",
-  "preferredNotifChannel": "auto",
-  "inputNeededNotifEnabled": true,
-  "agentPushNotifEnabled": true,
   "hooks": {
     "Stop": [
       {
@@ -60,17 +37,30 @@
           }
         ]
       }
-    ],
-    "PostToolUseFailure": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "command -v notify-send >/dev/null 2>&1 && notify-send 'Claude' 'A tool call failed' --icon=dialog-error --urgency=critical; { command -v paplay >/dev/null 2>&1 && [ -f /usr/share/sounds/freedesktop/stereo/dialog-error.oga ] && paplay /usr/share/sounds/freedesktop/stereo/dialog-error.oga; } 2>/dev/null; true",
-            "async": true
-          }
-        ]
-      }
     ]
-  }
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash ~/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "gopls-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "claude-code-wakatime@wakatime": true,
+    "pyright-lsp@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "wakatime": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/wakatime/claude-code-wakatime.git"
+      }
+    }
+  },
+  "effortLevel": "medium",
+  "tui": "fullscreen",
+  "theme": "auto",
+  "preferredNotifChannel": "auto",
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true
 }
