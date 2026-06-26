@@ -23,7 +23,6 @@
   },
   "plugin": [
     "@tarquinen/opencode-dcp@latest",
-    "opencode-gemini-auth@latest",
     "@mohak34/opencode-notifier@latest",
     "opencode-pty@latest",
     "oh-my-opencode-slim",

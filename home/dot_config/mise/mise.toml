@@ -74,6 +74,8 @@ typst = "latest"
 dotnet = "latest"
 lazyssh = "latest"
 kubecolor = "latest"
+railway = "latest"
+rtk = "latest"
 
 [tools."github:wakatime/wakatime-cli"]
 version = "latest"
