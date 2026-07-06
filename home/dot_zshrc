@@ -465,3 +465,6 @@ fi
 # fi
 
 autoload -Uz compinit && compinit
+autoload -Uz bashcompinit && bashcompinit
+
+complete -C "$(command -v aws_completer)" aws

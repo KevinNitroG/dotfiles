@@ -34,12 +34,12 @@
         "mcps": []
       },
       "librarian": {
-        "model": "opencode/mimo-v2.5-free",
+        "model": "opencode/deepseek-v4-flash-free",
         "skills": [],
         "mcps": ["websearch", "context7", "grep_app"]
       },
       "explorer": {
-        "model": "opencode/mimo-v2.5-free",
+        "model": "opencode/deepseek-v4-flash-free",
         "skills": [],
         "mcps": []
       },

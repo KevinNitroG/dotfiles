@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "shell": "zsh",
   "model": "opencode/mimo-v2.5-free",
   "small_model": "opencode/mimo-v2.5-free",
   "autoupdate": false,

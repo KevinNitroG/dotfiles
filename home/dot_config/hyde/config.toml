@@ -9,7 +9,8 @@ browser = "brave"
 # document_font_size = 12
 editor = "nvim"
 # font_size = 11
-# monospace_font = "JetBrainsMono Nerd Font"
+font = "Google Sans"
+monospace_font = "JetBrainsMono Nerd Font"
 # monospace_font_size = 11
 
 [rofi]
