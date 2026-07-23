@@ -14,6 +14,12 @@ x-scheme-handler/claude=claude.desktop
 video/mp4=mpv.desktop
 video/x-matroska=mpv.desktop
 video/webm=mpv.desktop
+audio/mpeg=mpv.desktop
+audio/x-wav=mpv.desktop
+audio/ogg=mpv.desktop
+audio/flac=mpv.desktop
+audio/x-matroska=mpv.desktop
+audio/mp4=mpv.desktop
 
 [Added Associations]
 x-scheme-handler/tonsite=org.telegram.desktop.desktop;

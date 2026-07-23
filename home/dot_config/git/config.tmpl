@@ -136,7 +136,8 @@
   cmd = nvim \"$LOCAL\" \"$REMOTE\" +\"CodeDiff file $LOCAL $REMOTE\"
 
 [submodule]
-  fetchJobs = 8
+  recurse = true
+  fetchJobs = 4
 
 [remote]
   pushDefault = origin

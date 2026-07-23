@@ -3,9 +3,6 @@
   "preset": "own",
   "council": {
     "default_preset": "own",
-    "master": {
-      "model": "opencode/mimo-v2.5-free"
-    },
     "presets": {
       "own": {
         "alpha": {

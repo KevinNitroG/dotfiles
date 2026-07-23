@@ -23,6 +23,7 @@
     },
   },
   "plugin": [
+    "opencode-wakatime@latest",
     "@tarquinen/opencode-dcp@latest",
     "@mohak34/opencode-notifier@latest",
     "opencode-pty@latest",

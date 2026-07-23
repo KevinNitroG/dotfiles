@@ -80,7 +80,7 @@ _pacman_manage() {
   local action=$1
   case "$action" in
   'install')
-    pacman -Sl | awk '{print $1"/"$2}' | fzf --multi --header 'INSTALL APPS' --preview 'pacman -Sii {1} | bat -fpl yaml' | xargs -ro sudo pacman -S --needed
+    pacman -Sl | cut -d' ' -f2 | sort | uniq | fzf --multi --header 'INSTALL APPS' --preview 'pacman -Sii {1} | bat -fpl yaml' | xargs -ro sudo pacman -S --needed
     ;;
   'update')
     pacman -Quq | fzf --multi --header 'UPDATE APPS' --preview 'pacman -Sii {1} | bat -fpl yaml' | xargs -ro sudo pacman -S --needed
@@ -101,7 +101,7 @@ _yay_manage() {
   local action=$1
   case "$action" in
   'install')
-    yay -Sl | awk '{print $1"/"$2}' | fzf --multi --header 'INSTALL APPS' --preview 'yay -Sii {1} | bat -fpl yaml' | xargs -ro yay -S --needed
+    yay -Sl | cut -d' ' -f2 | sort | uniq | fzf --multi --header 'INSTALL APPS' --preview 'yay -Sii {1} | bat -fpl yaml' | xargs -ro yay -S --needed
     ;;
   'update')
     yay -Quq | fzf --multi --header 'UPDATE APPS' --preview 'yay -Sii {1} | bat -fpl yaml' | xargs -ro yay -S --needed

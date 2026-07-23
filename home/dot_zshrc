@@ -154,8 +154,8 @@ if has eza; then
     '-s Name'
   )
   alias l="eza -lh $EZA_OPTS" # long list
-  alias ls="exa -1 $EZA_OPTS" # Normal ls
-  alias ll="exa -lhag $EZA_OPTS" # Long list all
+  alias ls="eza -1 $EZA_OPTS" # Normal ls
+  alias ll="eza -lhag $EZA_OPTS" # Long list all
   alias ld="eza -lhD $EZA_OPTS" # long list dirs
   alias lt="eza -T $EZA_OPTS" # list folder as tree
   alias llt="eza -lagT $EZA_OPTS" # list folder as tree

@@ -76,6 +76,13 @@ lazyssh = "latest"
 kubecolor = "latest"
 railway = "latest"
 rtk = "latest"
+"github:vercel-labs/agent-browser" = "latest"
+awscli = { version = "latest", symlink_bins = "true" }
+awscli-local = { version = "latest", extras = "ver1" }
+terraform = "latest"
+"npm:@earendil-works/pi-coding-agent" = "latest"
+"npm:mem0ai" = "latest"
+"github:localstack/lstk" = "latest"
 
 [tools."github:wakatime/wakatime-cli"]
 version = "latest"

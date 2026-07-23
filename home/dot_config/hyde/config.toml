@@ -18,7 +18,7 @@ emoji.style = 2
 
 [volume]
 boost = true
-boost_limit = 120
+boost_limit = 150
 
 [waybar]
 scale = 12
