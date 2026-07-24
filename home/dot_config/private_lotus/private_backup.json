@@ -1,0 +1,1120 @@
+{
+  "meta": {
+    "version": 1,
+    "timestamp": "2026-07-24T22:40:36.582342",
+    "components": ["config", "macros", "keymaps", "rules"]
+  },
+  "config": {
+    "Mode": "Preedit",
+    "InputMethod": "Telex",
+    "OutputCharset": "Unicode",
+    "ModeMenuKey": {
+      "0": "grave"
+    },
+    "CycleModeKey": "",
+    "W2U": "Disabled",
+    "BracketTransform": "Disabled",
+    "SpellCheck": "False",
+    "EnableMacro": "True",
+    "CapitalizeMacro": "False",
+    "AutoCapitalizeAfterPunctuation": "False",
+    "DoubleSpaceToPeriod": "False",
+    "DoubleHyphenToEmDash": "False",
+    "AutoNonVnRestore": "True",
+    "ModernStyle": "True",
+    "FreeMarking": "True",
+    "DdFreeStyle": "True",
+    "FixUinputWithAck": "False",
+    "UseLotusIcons": "False",
+    "EnableDictionary": "False",
+    "EnableCustomKeymap": "False",
+    "ShowModeSmooth": "True",
+    "ShortcutSmooth": "1",
+    "ShowModeUinput": "True",
+    "ShortcutUinput": "2",
+    "ShowModeSuperSmooth": "True",
+    "ShortcutSuperSmooth": "a",
+    "ShowModeMinecraft": "True",
+    "ShortcutMinecraft": "3",
+    "ShowModeSurroundingText": "True",
+    "ShortcutSurroundingText": "4",
+    "ShowModePreedit": "True",
+    "ShortcutPreedit": "q",
+    "ShowModeEmoji": "True",
+    "ShortcutEmoji": "w",
+    "ShowModeOff": "True",
+    "ShortcutOff": "e",
+    "ShowModeDefault": "True",
+    "ShortcutDefault": "r",
+    "EnableMacroInOffMode": "False",
+    "ModeOrder": "Smooth,Uinput,Minecraft,SurroundingText,Preedit,Emoji,Off,SuperSmooth,Default",
+    "TimeFormat": "%H:%M",
+    "DateFormat": "%d/%m/%Y",
+    "IconTheme": "Auto"
+  },
+  "macros": [
+    {
+      "Key": "mssv",
+      "Value": "23520161"
+    },
+    {
+      "Key": "bk",
+      "Value": "Bách Khoa"
+    },
+    {
+      "Key": "hcm",
+      "Value": "Hồ Chí Minh"
+    },
+    {
+      "Key": "ppp",
+      "Value": "PowerPoint"
+    },
+    {
+      "Key": "tntb",
+      "Value": "Trần Nguyễn Thái Bình"
+    },
+    {
+      "Key": "vn",
+      "Value": "Việt Nam"
+    },
+    {
+      "Key": "attt",
+      "Value": "an toàn thông tin"
+    },
+    {
+      "Key": "ace",
+      "Value": "anh chị em"
+    },
+    {
+      "Key": "ae",
+      "Value": "anh em"
+    },
+    {
+      "Key": "av",
+      "Value": "anh văn"
+    },
+    {
+      "Key": "bt",
+      "Value": "bài tập"
+    },
+    {
+      "Key": "btvn",
+      "Value": "bài tập về nhà"
+    },
+    {
+      "Key": "bs",
+      "Value": "bác sĩ"
+    },
+    {
+      "Key": "bth",
+      "Value": "bình thường"
+    },
+    {
+      "Key": "bc",
+      "Value": "bước"
+    },
+    {
+      "Key": "bn",
+      "Value": "bạn"
+    },
+    {
+      "Key": "bxh",
+      "Value": "bảng xếp hạng"
+    },
+    {
+      "Key": "bpt",
+      "Value": "bất phương trình"
+    },
+    {
+      "Key": "bdt",
+      "Value": "bất đẳng thức"
+    },
+    {
+      "Key": "bv",
+      "Value": "bệnh viện"
+    },
+    {
+      "Key": "bd",
+      "Value": "bồi dưỡng"
+    },
+    {
+      "Key": "ck",
+      "Value": "chuyển khoản"
+    },
+    {
+      "Key": "cb",
+      "Value": "chuẩn bị"
+    },
+    {
+      "Key": "cmsn",
+      "Value": "chúc mừng sinh nhật"
+    },
+    {
+      "Key": "chw",
+      "Value": "chương"
+    },
+    {
+      "Key": "ctr",
+      "Value": "chương trình"
+    },
+    {
+      "Key": "ct",
+      "Value": "chông thức"
+    },
+    {
+      "Key": "clc",
+      "Value": "chất lượng cao"
+    },
+    {
+      "Key": "cn",
+      "Value": "chủ nhật"
+    },
+    {
+      "Key": "cc",
+      "Value": "chứng chỉ"
+    },
+    {
+      "Key": "cm",
+      "Value": "chứng minh"
+    },
+    {
+      "Key": "cmnd",
+      "Value": "chứng minh nhân dân"
+    },
+    {
+      "Key": "cccd",
+      "Value": "căn cước công dân"
+    },
+    {
+      "Key": "cmt",
+      "Value": "comment"
+    },
+    {
+      "Key": "cv",
+      "Value": "công việc"
+    },
+    {
+      "Key": "cvs",
+      "Value": "computer vision"
+    },
+    {
+      "Key": "cky",
+      "Value": "cuối kỳ"
+    },
+    {
+      "Key": "cs",
+      "Value": "cuộc sống"
+    },
+    {
+      "Key": "csc",
+      "Value": "computer science"
+    },
+    {
+      "Key": "cđ",
+      "Value": "cuộc đời"
+    },
+    {
+      "Key": "cmm",
+      "Value": "cách mạng"
+    },
+    {
+      "Key": "clb",
+      "Value": "câu lạc bộ"
+    },
+    {
+      "Key": "cdan",
+      "Value": "công dân"
+    },
+    {
+      "Key": "cnghe",
+      "Value": "công nghệ"
+    },
+    {
+      "Key": "cnpm",
+      "Value": "công nghệ phần mềm"
+    },
+    {
+      "Key": "pm",
+      "Value": "phần mềm"
+    },
+    {
+      "Key": "cntt",
+      "Value": "công nghệ thông tin"
+    },
+    {
+      "Key": "ctsv",
+      "Value": "công tác sinh viên"
+    },
+    {
+      "Key": "cx",
+      "Value": "cũng"
+    },
+    {
+      "Key": "csdl",
+      "Value": "cơ sở dữ liệu"
+    },
+    {
+      "Key": "csat",
+      "Value": "cảnh sát"
+    },
+    {
+      "Key": "ctdl",
+      "Value": "cấu trúc dữ liệu"
+    },
+    {
+      "Key": "ctrr",
+      "Value": "cấu trúc rời rạc"
+    },
+    {
+      "Key": "cht",
+      "Value": "cộng hoá trị"
+    },
+    {
+      "Key": "ds",
+      "Value": "danh sách"
+    },
+    {
+      "Key": "dslk",
+      "Value": "danh sách liên kết"
+    },
+    {
+      "Key": "de",
+      "Value": "data engineer"
+    },
+    {
+      "Key": "dsc",
+      "Value": "data science"
+    },
+    {
+      "Key": "dl",
+      "Value": "dữ liệu"
+    },
+    {
+      "Key": "fs",
+      "Value": "fullstack"
+    },
+    {
+      "Key": "gđ",
+      "Value": "gia đình"
+    },
+    {
+      "Key": "gd",
+      "Value": "giáo dục"
+    },
+    {
+      "Key": "gdqpan",
+      "Value": "giáo dục quốc phòng - an ninh"
+    },
+    {
+      "Key": "gdcd",
+      "Value": "giáo dục công dân"
+    },
+    {
+      "Key": "gdtx",
+      "Value": "giáo dục thường xuyên"
+    },
+    {
+      "Key": "gv",
+      "Value": "giáo viên"
+    },
+    {
+      "Key": "gvv",
+      "Value": "giảng viên"
+    },
+    {
+      "Key": "h",
+      "Value": "giờ"
+    },
+    {
+      "Key": "gk",
+      "Value": "giữa kỳ"
+    },
+    {
+      "Key": "j",
+      "Value": "gì"
+    },
+    {
+      "Key": "ht",
+      "Value": "hiện tại"
+    },
+    {
+      "Key": "hđ",
+      "Value": "hoạt động"
+    },
+    {
+      "Key": "hd",
+      "Value": "hướng dẫn"
+    },
+    {
+      "Key": "hbh",
+      "Value": "hình bình hành"
+    },
+    {
+      "Key": "hcn",
+      "Value": "hình chữ nhật"
+    },
+    {
+      "Key": "hvuong",
+      "Value": "hình vuông"
+    },
+    {
+      "Key": "hcv",
+      "Value": "học viên"
+    },
+    {
+      "Key": "hc",
+      "Value": "học"
+    },
+    {
+      "Key": "hv",
+      "Value": "hội viên"
+    },
+    {
+      "Key": "hn",
+      "Value": "hôm nay"
+    },
+    {
+      "Key": "hq",
+      "Value": "hôm qua"
+    },
+    {
+      "Key": "hw",
+      "Value": "hương"
+    },
+    {
+      "Key": "hdsd",
+      "Value": "hướng dẫn sử dụng"
+    },
+    {
+      "Key": "sd",
+      "Value": "sử dụng"
+    },
+    {
+      "Key": "hp",
+      "Value": "hạnh phúc"
+    },
+    {
+      "Key": "hpt",
+      "Value": "hệ phương trình"
+    },
+    {
+      "Key": "httt",
+      "Value": "hệ thống thông tin"
+    },
+    {
+      "Key": "tn",
+      "Value": "tin nhắn"
+    },
+    {
+      "Key": "htl",
+      "Value": "hệ thức lượng"
+    },
+    {
+      "Key": "hdh",
+      "Value": "hệ điều hành"
+    },
+    {
+      "Key": "hk",
+      "Value": "học kỳ"
+    },
+    {
+      "Key": "hs",
+      "Value": "học sinh"
+    },
+    {
+      "Key": "sv",
+      "Value": "sinh viên"
+    },
+    {
+      "Key": "hsg",
+      "Value": "học sinh giỏi"
+    },
+    {
+      "Key": "hh",
+      "Value": "hỗn hợp"
+    },
+    {
+      "Key": "hcc",
+      "Value": "hợp chất"
+    },
+    {
+      "Key": "ib",
+      "Value": "inbox"
+    },
+    {
+      "Key": "khdl",
+      "Value": "khoa học dữ liệu"
+    },
+    {
+      "Key": "khmt",
+      "Value": "khoa học máy tính"
+    },
+    {
+      "Key": "kh",
+      "Value": "khoa học"
+    },
+    {
+      "Key": "khtn",
+      "Value": "khoa học tự nhiên"
+    },
+    {
+      "Key": "kc",
+      "Value": "khoảng cách"
+    },
+    {
+      "Key": "km",
+      "Value": "khuyến mãi"
+    },
+    {
+      "Key": "ko",
+      "Value": "không"
+    },
+    {
+      "Key": "kcj",
+      "Value": "không có gì"
+    },
+    {
+      "Key": "kl",
+      "Value": "khối lượng"
+    },
+    {
+      "Key": "kloai",
+      "Value": "kim loại"
+    },
+    {
+      "Key": "kd",
+      "Value": "kinh doanh"
+    },
+    {
+      "Key": "kn",
+      "Value": "kinh nghiệm"
+    },
+    {
+      "Key": "kt",
+      "Value": "kiểm tra"
+    },
+    {
+      "Key": "ktx",
+      "Value": "ký túc xá"
+    },
+    {
+      "Key": "kb",
+      "Value": "kết bạn"
+    },
+    {
+      "Key": "kluan",
+      "Value": "kết luận"
+    },
+    {
+      "Key": "kq",
+      "Value": "kết quả"
+    },
+    {
+      "Key": "knnn",
+      "Value": "kỹ năng nghề nghiệp"
+    },
+    {
+      "Key": "ktpm",
+      "Value": "kỹ thuật phần mềm"
+    },
+    {
+      "Key": "lk",
+      "Value": "liên kết"
+    },
+    {
+      "Key": "lq",
+      "Value": "liên quan"
+    },
+    {
+      "Key": "lpht",
+      "Value": "lớp phó học tập"
+    },
+    {
+      "Key": "lpkl",
+      "Value": "lớp phó kỷ luật"
+    },
+    {
+      "Key": "mt",
+      "Value": "máy tính"
+    },
+    {
+      "Key": "mxh",
+      "Value": "mạng xã hội"
+    },
+    {
+      "Key": "xh",
+      "Value": "xã hội"
+    },
+    {
+      "Key": "mk",
+      "Value": "mật khẩu"
+    },
+    {
+      "Key": "mn",
+      "Value": "mọi người"
+    },
+    {
+      "Key": "ng",
+      "Value": "người"
+    },
+    {
+      "Key": "mqh",
+      "Value": "mối quan hệ"
+    },
+    {
+      "Key": "qh",
+      "Value": "quan hệ"
+    },
+    {
+      "Key": "ms",
+      "Value": "mới"
+    },
+    {
+      "Key": "nckh",
+      "Value": "nghiên cứu khoa học"
+    },
+    {
+      "Key": "nvqs",
+      "Value": "nghĩa vụ quân sự"
+    },
+    {
+      "Key": "qs",
+      "Value": "quân sự"
+    },
+    {
+      "Key": "qp",
+      "Value": "quốc phòng"
+    },
+    {
+      "Key": "ngto",
+      "Value": "nguyên tố"
+    },
+    {
+      "Key": "ngtu",
+      "Value": "nguyên tử"
+    },
+    {
+      "Key": "ngta",
+      "Value": "người ta"
+    },
+    {
+      "Key": "ny",
+      "Value": "người yêu"
+    },
+    {
+      "Key": "nyc",
+      "Value": "người yêu cũ"
+    },
+    {
+      "Key": "ngc",
+      "Value": "ngược"
+    },
+    {
+      "Key": "nv",
+      "Value": "nhiệm vụ"
+    },
+    {
+      "Key": "ntd",
+      "Value": "nhà tuyển dụng"
+    },
+    {
+      "Key": "nvien",
+      "Value": "nhân viên"
+    },
+    {
+      "Key": "nvat",
+      "Value": "nhân vật"
+    },
+    {
+      "Key": "ntn",
+      "Value": "như thế nào"
+    },
+    {
+      "Key": "nhma",
+      "Value": "nhưng mà"
+    },
+    {
+      "Key": "nmlt",
+      "Value": "nhập môn lập trình"
+    },
+    {
+      "Key": "lt",
+      "Value": "lập trình"
+    },
+    {
+      "Key": "ltr",
+      "Value": "lớp trưởng"
+    },
+    {
+      "Key": "nt",
+      "Value": "nhắn tin"
+    },
+    {
+      "Key": "ns",
+      "Value": "nói"
+    },
+    {
+      "Key": "nch",
+      "Value": "nói chuyện"
+    },
+    {
+      "Key": "nc",
+      "Value": "nước"
+    },
+    {
+      "Key": "nd",
+      "Value": "nội dung"
+    },
+    {
+      "Key": "ndan",
+      "Value": "nhân dân"
+    },
+    {
+      "Key": "nx",
+      "Value": "nữa"
+    },
+    {
+      "Key": "pk",
+      "Value": "phong kiến"
+    },
+    {
+      "Key": "pkim",
+      "Value": "phi kim"
+    },
+    {
+      "Key": "pl",
+      "Value": "pháp luật"
+    },
+    {
+      "Key": "pldc",
+      "Value": "pháp luật đại cương"
+    },
+    {
+      "Key": "pdt",
+      "Value": "phòng đào tạo"
+    },
+    {
+      "Key": "phw",
+      "Value": "phương"
+    },
+    {
+      "Key": "pp",
+      "Value": "phương pháp"
+    },
+    {
+      "Key": "ptr",
+      "Value": "phương trình"
+    },
+    {
+      "Key": "pt",
+      "Value": "phát triển"
+    },
+    {
+      "Key": "ptvp",
+      "Value": "phương trình vi phân"
+    },
+    {
+      "Key": "pko",
+      "Value": "phải không"
+    },
+    {
+      "Key": "pttm",
+      "Value": "phẫu thuật thẩm mỹ"
+    },
+    {
+      "Key": "prj",
+      "Value": "project"
+    },
+    {
+      "Key": "qk",
+      "Value": "quá khứ"
+    },
+    {
+      "Key": "qc",
+      "Value": "quảng cáo"
+    },
+    {
+      "Key": "qg",
+      "Value": "quốc gia"
+    },
+    {
+      "Key": "r",
+      "Value": "rồi"
+    },
+    {
+      "Key": "s",
+      "Value": "sao"
+    },
+    {
+      "Key": "sh",
+      "Value": "sinh hoạt"
+    },
+    {
+      "Key": "shcn",
+      "Value": "sinh hoạt chủ nhiệm"
+    },
+    {
+      "Key": "shcd",
+      "Value": "sinh hoạt công dân"
+    },
+    {
+      "Key": "sn",
+      "Value": "sinh nhật"
+    },
+    {
+      "Key": "sgk",
+      "Value": "sách giáo khoa"
+    },
+    {
+      "Key": "sx",
+      "Value": "sản xuất"
+    },
+    {
+      "Key": "sbd",
+      "Value": "số báo danh"
+    },
+    {
+      "Key": "stk",
+      "Value": "số tài khoản"
+    },
+    {
+      "Key": "tk",
+      "Value": "tài khoản"
+    },
+    {
+      "Key": "sdt",
+      "Value": "số điện thoại"
+    },
+    {
+      "Key": "dt",
+      "Value": "điện thoại"
+    },
+    {
+      "Key": "dthw",
+      "Value": "dễ thương"
+    },
+    {
+      "Key": "sk",
+      "Value": "sự kiện"
+    },
+    {
+      "Key": "tp",
+      "Value": "thành phố"
+    },
+    {
+      "Key": "tmdt",
+      "Value": "thương mại điện tử"
+    },
+    {
+      "Key": "tgg",
+      "Value": "thế giới"
+    },
+    {
+      "Key": "tg",
+      "Value": "thời gian"
+    },
+    {
+      "Key": "tkb",
+      "Value": "thời khoá biểu"
+    },
+    {
+      "Key": "tb",
+      "Value": "trung bình"
+    },
+    {
+      "Key": "thcs",
+      "Value": "trung học cơ sở"
+    },
+    {
+      "Key": "thpt",
+      "Value": "trung học phổ thông"
+    },
+    {
+      "Key": "dh",
+      "Value": "đại học"
+    },
+    {
+      "Key": "thptqg",
+      "Value": "trung học phổ thông quốc gia"
+    },
+    {
+      "Key": "trr",
+      "Value": "truyền"
+    },
+    {
+      "Key": "tr",
+      "Value": "trường"
+    },
+    {
+      "Key": "ttnt",
+      "Value": "trí tuệ nhân tạo"
+    },
+    {
+      "Key": "trc",
+      "Value": "trước"
+    },
+    {
+      "Key": "th",
+      "Value": "trường hợp"
+    },
+    {
+      "Key": "thh",
+      "Value": "thực hành"
+    },
+    {
+      "Key": "trl",
+      "Value": "trả lời"
+    },
+    {
+      "Key": "tdung",
+      "Value": "tác dụng"
+    },
+    {
+      "Key": "td",
+      "Value": "thể dục"
+    },
+    {
+      "Key": "tc",
+      "Value": "tính chất"
+    },
+    {
+      "Key": "tbao",
+      "Value": "tế bào"
+    },
+    {
+      "Key": "tslg",
+      "Value": "tỉ số lượng giác"
+    },
+    {
+      "Key": "lg",
+      "Value": "lượng"
+    },
+    {
+      "Key": "vv",
+      "Value": "vui vẻ"
+    },
+    {
+      "Key": "vd",
+      "Value": "ví dụ"
+    },
+    {
+      "Key": "vb",
+      "Value": "văn bản"
+    },
+    {
+      "Key": "vde",
+      "Value": "vấn đề"
+    },
+    {
+      "Key": "vly",
+      "Value": "vật lý"
+    },
+    {
+      "Key": "v",
+      "Value": "vậy"
+    },
+    {
+      "Key": "vs",
+      "Value": "với"
+    },
+    {
+      "Key": "vk",
+      "Value": "vợ"
+    },
+    {
+      "Key": "xl",
+      "Value": "xin lỗi"
+    },
+    {
+      "Key": "xstk",
+      "Value": "xác suất thống kê"
+    },
+    {
+      "Key": "xd",
+      "Value": "xây dựng"
+    },
+    {
+      "Key": "yt",
+      "Value": "youtube"
+    },
+    {
+      "Key": "ytm",
+      "Value": "youtube music"
+    },
+    {
+      "Key": "spot",
+      "Value": "spotify"
+    },
+    {
+      "Key": "fb",
+      "Value": "facebook"
+    },
+    {
+      "Key": "mess",
+      "Value": "messenger"
+    },
+    {
+      "Key": "yc",
+      "Value": "yêu cầu"
+    },
+    {
+      "Key": "dkhien",
+      "Value": "điều khiển"
+    },
+    {
+      "Key": "dkien",
+      "Value": "điều kiện"
+    },
+    {
+      "Key": "dky",
+      "Value": "đăng ký"
+    },
+    {
+      "Key": "drl",
+      "Value": "điểm rèn luyện"
+    },
+    {
+      "Key": "dtb",
+      "Value": "điểm trung bình"
+    },
+    {
+      "Key": "dht",
+      "Value": "điện hoá trị"
+    },
+    {
+      "Key": "dgnl",
+      "Value": "đánh giá năng lực"
+    },
+    {
+      "Key": "dk",
+      "Value": "đúng không"
+    },
+    {
+      "Key": "dr",
+      "Value": "đúng rồi"
+    },
+    {
+      "Key": "dkhp",
+      "Value": "đăng ký học phần"
+    },
+    {
+      "Key": "đ",
+      "Value": "đường"
+    },
+    {
+      "Key": "dc",
+      "Value": "được"
+    },
+    {
+      "Key": "dstt",
+      "Value": "đại số tuyến tính"
+    },
+    {
+      "Key": "dths",
+      "Value": "đồ thị hàm số"
+    },
+    {
+      "Key": "dltt",
+      "Value": "độc lập tuyến tính"
+    },
+    {
+      "Key": "dv",
+      "Value": "động vật"
+    },
+    {
+      "Key": "utxt",
+      "Value": "ưu tiên xét tuyển"
+    },
+    {
+      "Key": "baa",
+      "Value": "business analyst"
+    },
+    {
+      "Key": "tt",
+      "Value": "thuyết trình"
+    },
+    {
+      "Key": "thg",
+      "Value": "thằng"
+    },
+    {
+      "Key": "ts",
+      "Value": "tới"
+    },
+    {
+      "Key": "tsinh",
+      "Value": "tuyển sinh"
+    },
+    {
+      "Key": "std",
+      "Value": "số tự động"
+    },
+    {
+      "Key": "cnay",
+      "Value": "cái này"
+    },
+    {
+      "Key": "cno",
+      "Value": "chúng nó"
+    },
+    {
+      "Key": "mđ",
+      "Value": "mấy đứa"
+    },
+    {
+      "Key": "kcnc",
+      "Value": "khu công nghệ cao"
+    },
+    {
+      "Key": "skhoe",
+      "Value": "sức khoẻ"
+    },
+    {
+      "Key": "cty",
+      "Value": "công ty"
+    },
+    {
+      "Key": "sp",
+      "Value": "sản phẩm"
+    },
+    {
+      "Key": "dcs",
+      "Value": "đảng cộng sản"
+    },
+    {
+      "Key": "stt",
+      "Value": "số thứ thự"
+    },
+    {
+      "Key": "ph",
+      "Value": "phụ huynh"
+    },
+    {
+      "Key": "bh",
+      "Value": "bao giờ"
+    },
+    {
+      "Key": "kltn",
+      "Value": "khoá luận tốt nghiệp"
+    },
+    {
+      "Key": "pv",
+      "Value": "phỏng vấn"
+    }
+  ],
+  "keymaps": [],
+  "rules": [
+    {
+      "App": "obsidian",
+      "Mode": "2"
+    },
+    {
+      "App": "brave-browser",
+      "Mode": "5"
+    },
+    {
+      "App": "Alacritty",
+      "Mode": "3"
+    }
+  ]
+}
