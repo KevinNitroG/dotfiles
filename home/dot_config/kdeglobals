@@ -1,5 +1,22 @@
+[Colors:Button]
+BackgroundNormal=24,24,36
+ForegroundNormal=255,255,255
+
+[Colors:Selection]
+BackgroundNormal=37,36,55
+ForegroundNormal=255,255,255
+
+[Colors:Tooltip]
+BackgroundNormal=24,24,36
+ForegroundNormal=255,255,255
+
 [Colors:View]
-BackgroundNormal=#020A1BFF
+BackgroundNormal=24,24,36
+ForegroundNormal=255,255,255
+
+[Colors:Window]
+BackgroundNormal=24,24,36
+ForegroundNormal=255,255,255
 
 [General]
 TerminalApplication=kitty

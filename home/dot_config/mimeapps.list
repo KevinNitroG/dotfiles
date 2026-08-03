@@ -10,7 +10,7 @@ hoppscotch=hoppscotch-handler.desktop
 x-scheme-handler/jetbrains=jetbrains-toolbox.desktop
 x-scheme-handler/tonsite=org.telegram.desktop.desktop
 x-scheme-handler/claude-cli=claude-code-url-handler.desktop
-x-scheme-handler/claude=claude.desktop
+x-scheme-handler/claude=com.anthropic.Claude.desktop
 video/mp4=mpv.desktop
 video/x-matroska=mpv.desktop
 video/webm=mpv.desktop
@@ -20,6 +20,8 @@ audio/ogg=mpv.desktop
 audio/flac=mpv.desktop
 audio/x-matroska=mpv.desktop
 audio/mp4=mpv.desktop
+application/pdf=org.pwmt.zathura.desktop
 
 [Added Associations]
 x-scheme-handler/tonsite=org.telegram.desktop.desktop;
+x-scheme-handler/claude=com.anthropic.Claude.desktop;

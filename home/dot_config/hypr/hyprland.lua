@@ -27,7 +27,7 @@ hl.config({
 		gaps_out = 0,
 	},
 	decoration = {
-		blur = { enabled = true },
+		blur = { enabled = true, size = 4 },
 		shadow = { enabled = false },
 	},
 	input = {
@@ -53,6 +53,12 @@ hl.config({
 	misc = {
 		key_press_enables_dpms = true,
 		mouse_move_enables_dpms = false,
+		disable_hyprland_logo = true,
+		disable_splash_rendering = true,
+	},
+	render = {
+		new_render_scheduling = true,
+		direct_scanout = 2,
 	},
 })
 

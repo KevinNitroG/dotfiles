@@ -83,6 +83,8 @@ terraform = "latest"
 "npm:@earendil-works/pi-coding-agent" = "latest"
 "npm:mem0ai" = "latest"
 "github:localstack/lstk" = "latest"
+sops = "latest"
+cmctl = "latest"
 
 [tools."github:wakatime/wakatime-cli"]
 version = "latest"
