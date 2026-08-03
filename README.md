@@ -167,4 +167,7 @@ Click to expand
   - <https://github.com/siduck/dotfiles>
   - <https://github.com/stevearc/dotfiles>
   - <https://github.com/wincent/wincent> (Old dotfiles 😱)
+- Nix
+  - <https://git.aquaticservers.com/aqua/AquaticOS> (Hyprland)
+  - <https://codeberg.org/HirschBerge/hyprlua> (Temp lua hyprland)
   </details>
