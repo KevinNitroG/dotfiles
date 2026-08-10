@@ -21,7 +21,6 @@ nix = "https://github.com/mise-plugins/mise-nix.git"
 "npm:mcp-hub" = "latest"
 "npm:nx" = "latest"
 "npm:typescript" = "latest"
-"pipx:ansible-core" = { version = "latest", uvx_args = "--with ansible --with argcomplete" }
 "pipx:markitdown" = { version = "latest", extras = "all" }
 "pipx:pgcli" = "latest"
 doggo = "latest"
@@ -80,8 +79,6 @@ rtk = "latest"
 awscli = { version = "latest", symlink_bins = "true" }
 awscli-local = { version = "latest", extras = "ver1" }
 terraform = "latest"
-"npm:@earendil-works/pi-coding-agent" = "latest"
-"npm:mem0ai" = "latest"
 "github:localstack/lstk" = "latest"
 sops = "latest"
 cmctl = "latest"

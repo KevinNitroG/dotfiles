@@ -3,10 +3,11 @@ pkgs:
     universal:
       # Essentials
       # - google-chrome
+      - chromium
       - brave-bin
       - chezmoi
       - git
-      - kanata-bin # Change keyboard func
+      - kanata-bin
       - lazygit
       - os-prober
       - tldr
@@ -17,7 +18,7 @@ pkgs:
       - zsh
 
       # Terminal
-      # - alacritty
+      - alacritty
       # - ghostty
       - kitty
 
@@ -38,22 +39,21 @@ pkgs:
       # - atac
       - bat
       - ctags
-      # - dog
-      # - dust
+      - dust
       - exa
-      # - fd
+      - fd
       # - fx
       - fzf
       - gh
       - git-delta
       - git-lfs
-      # - github-cli
-      # - glow
+      - github-cli
+      - glow
       # - gping
       - jq
       - just
-      # - lazydocker
-      # - lazysql-bin
+      - lazydocker
+      - lazysql-bin
       # - ov
       - procs
       - rclone
@@ -75,13 +75,13 @@ pkgs:
       # - cmake
       # - docker-desktop # Docker desktop on Arch is not stable
       # - gdb
-      # - go
-      # - nodejs
-      # - npm
+      - go
+      - nodejs
+      - npm
       # - pnpm
       # - pyenv
       # - python-pip
-      # - rustup
+      - rustup
       # - yarn
       - docker
       - docker-buildx
@@ -100,6 +100,10 @@ pkgs:
       - dysk
       - gdu
 
+      # Network
+      - doggo
+      # - dog
+
       # CLI Fun
       - asciinema
       - asciinema-agg-bin
@@ -114,9 +118,10 @@ pkgs:
       # - qbittorrent-enhanced
       # - screenkey
       - fcitx5
-      - fcitx5-bamboo
       - fcitx5-configtool
-      - gammastep
+      - fcitx5-lotus-bin
+      # - fcitx5-bamboo
+      # - gammastep
       - grub-customizer
       - libreoffice-fresh
       - obs-studio
@@ -127,6 +132,12 @@ pkgs:
       - vlc
       - zathura
 
+      # App Utils
+      - wayscriber-bin # aur: Live overlay for drawing, annotating with zoom, hiding text, and capturing screenshots on Linux. Can be used as whiteboard or blackboard
+      - hyprwhspr # aur: Native speech-to-text for Linux - Fast, accurate, private, and hackable system-wide dictation
+      - tesseract-data-eng # For zathura
+      - tesseract-data-vie # For zathura
+
       # Utils
       - bc
 
@@ -135,6 +146,7 @@ pkgs:
       - ttf-google-sans
       - ttf-jetbrains-mono-nerd
       - ttf-nerd-fonts-symbols
+      - maplemono-nf
 
       # Other but IDK what it is
       # - pacman-contrib # For paccache
@@ -142,8 +154,6 @@ pkgs:
       - gnome-keyring # For MySQL Workbench,...
       - gtk4
       - lsb-release
-      - tesseract-data-eng # For zathura
-      - tesseract-data-vie # For zathura
       - tree
       - usage # For mise
       - wtype

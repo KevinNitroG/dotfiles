@@ -23,11 +23,10 @@ hl.monitor({ output = "HDMI-A-1", mode = "preferred", position = "auto", scale =
 
 hl.config({
 	general = {
-		gaps_in = 0,
-		gaps_out = 0,
+		resize_on_border = true,
 	},
 	decoration = {
-		blur = { enabled = true, size = 4 },
+		blur = { enabled = true, size = 10 },
 		shadow = { enabled = false },
 	},
 	input = {
@@ -61,6 +60,19 @@ hl.config({
 		direct_scanout = 2,
 	},
 })
+
+-- Unbind F10-F12 (volume keys from HyDE)
+hl.unbind("F10")
+hl.unbind("F11")
+hl.unbind("F12")
+
+-- Wayscriber: Annotate Screen
+hl.bind("ALT + D", function()
+	hl.exec_cmd("pkill -SIGUSR1 wayscriber || hyde-shell app -- wayscriber --daemon")
+end)
+
+-- hyprwhspr: Speech-to-text
+hl.bind("SUPER + ALT + D", hl.dsp.exec_cmd("/usr/lib/hyprwhspr/config/hyprland/hyprwhspr-tray.sh record"))
 
 hl.permission({ binary = "fcitx5-lotus-server", type = "keyboard", mode = "allow" })
 
@@ -135,7 +147,7 @@ hl.window_rule({
 
 hl.window_rule({
 	name = "obsidian",
-	match = { initial_class = "^(obsidian)$" },
+	match = { class = "^(md\\.Obsidian)$" },
 	opacity = "1 override 1 override 1",
 	workspace = "3 silent",
 	fullscreen = true,
@@ -179,8 +191,6 @@ end)
 hl.bind("SUPER + BackSpace", hl.dsp.exec_cmd(hyde.sh.session.logout.launcher()))
 
 hl.bind("ALT + CONTROL_R", hl.dsp.exec_cmd(hyde.sh.waybar("--hide")))
-
-hl.bind("SUPER + SHIFT + S", hl.dsp.exec_cmd(hyde.sh.screenshot.snip()))
 
 hl.on("hyprland.start", function()
 	hl.exec_cmd('eval "$(ssh-agent -s)"')
