@@ -31,37 +31,44 @@ pkgs:
 
       # CLI tools
       # - aria2
+      # - atac
       # - duf
+      # - fx
+      # - gping
+      # - ov
+      # - sd
       # - thefuck
       # - tokei
       # - trash-cli
       # - xsel
-      # - atac
       - bat
       - ctags
+      - diffnav
       - dust
       - exa
       - fd
-      # - fx
       - fzf
       - gh
+      - gh-dash-bin
+      - gh-enhance-bin
       - git-delta
       - git-lfs
       - github-cli
       - glow
-      # - gping
+      - htmlq
       - jq
       - jqp-bin # aur
-      - htmlq
       - just
+      - ktea # kafka
       - lazydocker
       - lazysql-bin
-      # - ov
+      - openapi-tui
+      - pgcli
       - procs
       - rclone
       - ripgrep
       - rsync
-      # - sd
+      - rustfs
       - starship
       - tree
       - unzip
@@ -71,6 +78,13 @@ pkgs:
       - yq # mise requirements
       - zip
       - zoxide
+
+      # Kubernetes
+      - fluxcd
+      - helm
+      - kubecolor
+      - kubectl
+      # - cmctl
 
       # Development, languages, interpreters, compilers, etc
       # - clang
@@ -93,13 +107,16 @@ pkgs:
       - docker-compose
       - mise
       - inotify-tools
-
-      - kubecolor
-      - kubectl
+      - websocat
+      - aws-cli-v2
+      - lstk # localstack cli
+      - mermaid-cli
 
       # Security Utilities
       - gnupg
       - openssl
+      - sops
+      - age
 
       # Monitoring, management and stats
       # - speedtest-cli
@@ -141,11 +158,14 @@ pkgs:
       - vlc
       - zathura
       - markitdown-bin # aur
+      - wakatime
 
       # AI
       - opencode
       - claude # aur
       - rtk-bin # aur
+      - ast-grep-bin
+      - agent-browser-bin
 
       # App Utils
       - wayscriber-bin # aur: Live overlay for drawing, annotating with zoom, hiding text, and capturing screenshots on Linux. Can be used as whiteboard or blackboard
