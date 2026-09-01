@@ -9,7 +9,7 @@
           "model": "opencode/mimo-v2.5-free"
         },
         "beta": {
-          "model": "opencode/big-pickle"
+          "model": "opencode/mimo-v2.5-free"
         },
         "gamma": {
           "model": "opencode/nemotron-3-super-free"
@@ -26,12 +26,11 @@
       },
       "oracle": {
         "model": "opencode/mimo-v2.5-free",
-        "variant": "thinking",
         "skills": [],
         "mcps": []
       },
       "librarian": {
-        "model": "opencode/deepseek-v4-flash-free",
+        "model": "opencode/mimo-v2.5-free",
         "skills": [],
         "mcps": ["websearch", "context7", "grep_app"]
       },

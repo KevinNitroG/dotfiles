@@ -43,6 +43,10 @@ hl.config({
 	cursor = {
 		inactive_timeout = 10,
 	},
+	dwindle = {
+		preserve_split = true,
+		force_split = 2,
+	},
 	xwayland = {
 		force_zero_scaling = true,
 	},
@@ -191,6 +195,44 @@ end)
 hl.bind("SUPER + BackSpace", hl.dsp.exec_cmd(hyde.sh.session.logout.launcher()))
 
 hl.bind("ALT + CONTROL_R", hl.dsp.exec_cmd(hyde.sh.waybar("--hide")))
+
+hl.gesture({
+	fingers = 4,
+	direction = "up",
+	action = function()
+		hl.dispatch(hl.dsp.workspace.toggle_special())
+	end,
+})
+
+hl.gesture({
+	fingers = 4,
+	direction = "down",
+	action = function()
+		hl.exec_cmd("playerctl play-pause")
+	end,
+})
+
+hl.gesture({
+	fingers = 4,
+	direction = "right",
+	action = function()
+		hl.exec_cmd("playerctl next")
+	end,
+})
+
+hl.gesture({
+	fingers = 4,
+	direction = "left",
+	action = function()
+		hl.exec_cmd("playerctl previous")
+	end,
+})
+
+hl.gesture({
+	fingers = 3,
+	direction = "horizontal",
+	action = "workspace",
+})
 
 hl.on("hyprland.start", function()
 	hl.exec_cmd('eval "$(ssh-agent -s)"')

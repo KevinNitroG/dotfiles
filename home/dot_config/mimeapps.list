@@ -24,4 +24,3 @@ application/pdf=org.pwmt.zathura.desktop
 
 [Added Associations]
 x-scheme-handler/tonsite=org.telegram.desktop.desktop;
-x-scheme-handler/claude=com.anthropic.Claude.desktop;

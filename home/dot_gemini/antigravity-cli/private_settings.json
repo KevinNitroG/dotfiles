@@ -1,6 +1,7 @@
 {
   "altScreenMode": "always",
   "enableTelemetry": false,
+  "model": "Gemini 3.6 Flash (Medium)",
   "notifications": true,
   "runningLightSpeed": "fast",
   "showFeedbackSurvey": false,
@@ -12,6 +13,7 @@
   "trustedWorkspaces": [
     "/home/kevinnitro/.config/nvim",
     "/home/kevinnitro/projects/notopia/notopia",
-    "/home/kevinnitro/.local/share/chezmoi"
+    "/home/kevinnitro/.local/share/chezmoi",
+    "/home/kevinnitro/projects/obsidian-note"
   ]
 }
