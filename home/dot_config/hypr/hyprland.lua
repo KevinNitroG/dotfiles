@@ -108,7 +108,7 @@ hl.window_rule({
 
 hl.window_rule({
 	name = "spotify-rule",
-	match = { title = "^(Spotify)$" },
+	match = { class = "^(Spotify)$" },
 	workspace = "9 silent",
 })
 
@@ -126,9 +126,10 @@ hl.window_rule({
 })
 
 hl.window_rule({
-	name = "coding-opacity",
+	name = "vscode",
 	match = { class = "^(code-oss|[Cc]ode)$" },
 	opacity = "1 override 1 override 1",
+	workspace = "7 silent",
 })
 
 hl.window_rule({
@@ -197,16 +198,22 @@ hl.bind("SUPER + BackSpace", hl.dsp.exec_cmd(hyde.sh.session.logout.launcher()))
 hl.bind("ALT + CONTROL_R", hl.dsp.exec_cmd(hyde.sh.waybar("--hide")))
 
 hl.gesture({
-	fingers = 4,
-	direction = "up",
+	fingers = 3,
+	direction = "horizontal",
+	action = "workspace",
+})
+
+hl.gesture({
+	fingers = 3,
+	direction = "down",
 	action = function()
 		hl.dispatch(hl.dsp.workspace.toggle_special())
 	end,
 })
 
 hl.gesture({
-	fingers = 4,
-	direction = "down",
+	fingers = 3,
+	direction = "up",
 	action = function()
 		hl.exec_cmd("playerctl play-pause")
 	end,
@@ -214,9 +221,17 @@ hl.gesture({
 
 hl.gesture({
 	fingers = 4,
-	direction = "right",
+	direction = "down",
 	action = function()
-		hl.exec_cmd("playerctl next")
+		hl.dispatch(hl.dsp.exec_cmd(hyde.sh.volumecontrol("-o", "d")))
+	end,
+})
+
+hl.gesture({
+	fingers = 4,
+	direction = "up",
+	action = function()
+		hl.dispatch(hl.dsp.exec_cmd(hyde.sh.volumecontrol("-o", "i")))
 	end,
 })
 
@@ -229,9 +244,11 @@ hl.gesture({
 })
 
 hl.gesture({
-	fingers = 3,
-	direction = "horizontal",
-	action = "workspace",
+	fingers = 4,
+	direction = "right",
+	action = function()
+		hl.exec_cmd("playerctl next")
+	end,
 })
 
 hl.on("hyprland.start", function()
