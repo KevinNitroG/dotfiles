@@ -16,6 +16,7 @@ python = "3.13.12"
 "pipx:codecov-cli" = "latest"
 "npm:typescript" = "latest"
 cmctl = "latest"
+pnpm = "latest"
 
 [tools."github:wakatime/wakatime-cli"]
 version = "latest"

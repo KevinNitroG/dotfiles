@@ -185,9 +185,9 @@ hl.bind("SUPER + T", hl.dsp.exec_cmd("kitty"))
 
 hl.bind("SUPER + M", hl.dsp.exec_cmd("spotify"))
 
-hl.bind("SUPER + O", hl.dsp.exec_cmd("obsidian"))
+hl.bind("SUPER + N", hl.dsp.exec_cmd("obsidian"))
 
-hl.bind("SUPER + SHIFT + O", function()
+hl.bind("SUPER + O", function()
 	hl.timer(function()
 		hl.dispatch(hl.dsp.dpms({ action = "disable" }))
 	end, { timeout = 500, type = "oneshot" })
