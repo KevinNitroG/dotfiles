@@ -102,10 +102,16 @@
   {
     "key": "ctrl+a",
     "command": "-extension.vim_ctrl+a",
+    "when": "vim.mode == 'Normal'",
   },
   {
     "key": "ctrl+a ctrl+[",
     "command": "workbench.action.toggleSidebarVisibility",
+    "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)",
+  },
+  {
+    "key": "ctrl+a ctrl+]",
+    "command": "workbench.action.toggleAuxiliaryBar",
     "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)",
   },
   {
@@ -266,22 +272,22 @@
   {
     "key": "ctrl+up",
     "command": "workbench.action.increaseViewHeight",
-    "when": "vim.active && vim.mode == 'Normal'",
+    "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)",
   },
   {
     "key": "ctrl+down",
     "command": "workbench.action.decreaseViewHeight",
-    "when": "vim.active && vim.mode == 'Normal'",
+    "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)",
   },
   {
     "key": "ctrl+left",
     "command": "workbench.action.decreaseViewWidth",
-    "when": "vim.active && vim.mode == 'Normal'",
+    "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)",
   },
   {
     "key": "ctrl+right",
     "command": "workbench.action.increaseViewWidth",
-    "when": "vim.active && vim.mode == 'Normal'",
+    "when": "vim.mode == 'Normal' && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)",
   },
   // Neovim: Coding
   {
@@ -305,7 +311,6 @@
     "command": "editor.action.addSelectionToPreviousFindMatch",
     "when": "(vim.mode == 'Normal' || vim.mode == 'Visual') && vim.mode != 'OperatorPendingMode' && vim.mode != 'SearchInProgressMode' && vim.mode != 'CommandlineInProgress' && (editorTextFocus || !inputFocus)",
   },
-  // NOTE: K -> showHover now lives in vim.normalModeKeyBindingsNonRecursive
   // Neovim: Select list suggestion
   {
     "key": "ctrl+n",
@@ -336,6 +341,28 @@
     "key": "shift+tab",
     "command": "list.focusUp",
     "when": "listFocus && !inputFocus",
+  },
+  // Completion
+  {
+    "key": "tab",
+    "command": "selectNextSuggestion",
+    "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus",
+  },
+  {
+    "key": "shift+tab",
+    "command": "selectPrevSuggestion",
+    "when": "suggestWidgetMultipleSuggestions && suggestWidgetVisible && textInputFocus && !inSnippetMode",
+  },
+  // Accept inline suggestion (copilot, tabnine, etc.)
+  {
+    "key": "alt+f",
+    "command": "editor.action.inlineSuggest.acceptNextWord",
+    "when": "inlineSuggestionVisible && !editorReadonly",
+  },
+  {
+    "key": "alt+l",
+    "command": "editor.action.inlineSuggest.acceptNextLine",
+    "when": "inlineSuggestionVisible && !editorReadonly",
   },
   {
     "key": "ctrl+e",
@@ -425,5 +452,9 @@
   {
     "key": "alt+z",
     "command": "-editor.action.toggleWordWrap",
+  },
+  {
+    "key": "ctrl+alt+n",
+    "command": "-extension.advancedNewFile",
   },
 ]
