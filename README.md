@@ -241,9 +241,14 @@ _([docs](https://www.chezmoi.io/install))_
   iex "&{$(irm 'https://get.chezmoi.io/ps1')} -- init --apply --ssh --depth 1 --purge-binary KevinNitroG"
   ```
 
-You will be asked for `profiles` — answer `personal` on a personal machine, or
-`personal,itcgroup` on a work machine that also uses the personal GitHub
-account.
+You will be asked to pick `profiles` from a list — `personal` on a personal
+machine, or both `personal` and `itcgroup` on a work machine that also uses the
+personal GitHub account. To script it, note that `promptMultichoice` separates
+values with `/`:
+
+```sh
+chezmoi init --promptDefaults --promptMultichoice profiles=personal/itcgroup
+```
 
 ### 5. Commit signing
 

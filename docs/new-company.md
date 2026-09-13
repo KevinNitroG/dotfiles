@@ -140,10 +140,19 @@ profile and age identity need a re-init:
 
 ```sh
 chezmoi init
-# at the "profiles" prompt, answer: personal,acmecorp
+# at the "profiles" prompt, select both: personal and acmecorp
 chezmoi diff       # review
 chezmoi apply
 ```
+
+Non-interactively (`promptMultichoice` uses `/` as its separator):
+
+```sh
+chezmoi init --promptDefaults --promptMultichoice profiles=personal/acmecorp
+```
+
+The new company only appears in that list once it is in `$knownProfiles` in
+`home/.chezmoi.toml.tmpl` (step 3a) — chezmoi rejects anything else.
 
 Verify:
 
