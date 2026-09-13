@@ -18,6 +18,7 @@
 <div align=center>
   <img alt="Arch" src="https://img.shields.io/badge/Arch-89b4fa?logo=arch-linux&logoColor=white&style=for-the-badge"/>
   <img alt="EndeavourOS" src="https://img.shields.io/badge/endeavour%20os-b4befe?logo=endeavouros&logoColor=white&style=for-the-badge"/>
+  <img alt="CachyOS" src="https://img.shields.io/badge/cachy%20os-00AA88?logo=cachyos&logoColor=white&style=for-the-badge"/>
   <img alt="Ubuntu" src="https://img.shields.io/badge/Ubuntu-fab387?logo=ubuntu&logoColor=white&style=for-the-badge"/>
   <img alt="Windows" src="https://img.shields.io/badge/Windows-74c7ec?style=for-the-badge&logo=windows&logoColor=white"/>
   <img alt="WSL" src="https://img.shields.io/badge/WSL-a6e3a1?logo=linux&logoColor=black&style=for-the-badge"/>
@@ -77,13 +78,13 @@
 Every machine answers a handful of questions at `chezmoi init`, and the answers
 drive what gets installed and which config files exist:
 
-| value | meaning |
-| --- | --- |
-| `profiles` | the identities this machine carries, e.g. `personal`, `personal,itcgroup` |
-| `osFamily` | `arch` / `ubuntu` / `windows` / `darwin` — picks the package installer |
-| `isWsl` | auto-detected; drops terminal emulators, fonts, input methods, desktop config |
-| `isGui` | auto-detected; false on WSL, containers and headless servers |
-| `isLaptop` | auto-detected; adds power management |
+| value      | meaning                                                                       |
+| ---------- | ----------------------------------------------------------------------------- |
+| `profiles` | the identities this machine carries, e.g. `personal`, `personal,[company]`    |
+| `osFamily` | `arch` / `ubuntu` / `windows` / `darwin` — picks the package installer        |
+| `isWsl`    | auto-detected; drops terminal emulators, fonts, input methods, desktop config |
+| `isGui`    | auto-detected; false on WSL, containers and headless servers                  |
+| `isLaptop` | auto-detected; adds power management                                          |
 
 Identities (git name/email, signing key, ssh host, age key, secrets file) are
 declared once per profile in `home/.chezmoidata/profiles.yml`. Adding a company
@@ -111,7 +112,7 @@ only). See [AGENTS.md](./AGENTS.md) for the full repo map.
 > elevated PowerShell and expect UAC prompts.
 >
 > User `PATH` entries themselves are set with
-> `[Environment]::SetEnvironmentVariable(..., User)`, which does *not* need
+> `[Environment]::SetEnvironmentVariable(..., User)`, which does _not_ need
 > admin — only the feature toggles do.
 
 </details>
@@ -182,9 +183,9 @@ Encrypted files are decrypted with [age](https://age-encryption.org/). The
 convention is **one identity file per profile**, all under `~/.config/age/`,
 and **none of them are ever committed**:
 
-| profile | identity file |
-| --- | --- |
-| `personal` | `~/.config/age/key.txt` |
+| profile     | identity file                     |
+| ----------- | --------------------------------- |
+| `personal`  | `~/.config/age/key.txt`           |
 | `<company>` | `~/.config/age/<company>-key.txt` |
 
 Restore them from Bitwarden, or generate a new one:
@@ -242,12 +243,12 @@ _([docs](https://www.chezmoi.io/install))_
   ```
 
 You will be asked to pick `profiles` from a list — `personal` on a personal
-machine, or both `personal` and `itcgroup` on a work machine that also uses the
+machine, or both `personal` and `[company]` on a work machine that also uses the
 personal GitHub account. To script it, note that `promptMultichoice` separates
 values with `/`:
 
 ```sh
-chezmoi init --promptDefaults --promptMultichoice profiles=personal/itcgroup
+chezmoi init --promptDefaults --promptMultichoice profiles=personal/[company]
 ```
 
 ### 5. Commit signing
@@ -255,7 +256,7 @@ chezmoi init --promptDefaults --promptMultichoice profiles=personal/itcgroup
 Signing is configured per profile in `home/.chezmoidata/profiles.yml`:
 `personal` signs with **GPG**, company profiles sign with their **SSH** key.
 Identity is chosen by directory (`includeIf "gitdir:"`), so work repos must
-live under the profile's `gitDir` (e.g. `~/projects/itcgroup/`).
+live under the profile's `gitDir` (e.g. `~/projects/[company]/`).
 
 GPG, for the personal profile:
 
@@ -276,12 +277,12 @@ generated from `profiles.yml`. Verify with `git log --show-signature -1`.
 
 ## Manually add/sync encrypted file to template
 
-`chezmoi re-add` re-encrypts every *managed* file, but it does not touch
+`chezmoi re-add` re-encrypts every _managed_ file, but it does not touch
 `home/.chezmoitemplates/`. Use the helper for those:
 
 ```sh
 chezmoi-encrypt-template.sh ~/.config/Code/User/settings.json VSCode/encrypted_settings.json
-chezmoi-encrypt-template.sh ~/.config/rclone/rclone.conf       rclone/encrypted_rclone.conf
+chezmoi-encrypt-template.sh ~/.config/rclone/rclone.conf rclone/encrypted_rclone.conf
 ```
 
 It reads the recipients chezmoi itself is configured with, so every file ends
@@ -289,11 +290,11 @@ up readable by every profile. The raw equivalent:
 
 ```sh
 age -a $(chezmoi data --format json | jq -r '.chezmoi.config.age.recipients | map("-r " + .) | join(" ")') \
-  file > "$(chezmoi source-path)/.chezmoitemplates/file"
+  file >"$(chezmoi source-path)/.chezmoitemplates/file"
 ```
 
 > [!NOTE]
-> `$(chezmoi source-path)` already points *inside* `home/` because of
+> `$(chezmoi source-path)` already points _inside_ `home/` because of
 > `.chezmoiroot` — do not add another `home/` to the path.
 
 ---
