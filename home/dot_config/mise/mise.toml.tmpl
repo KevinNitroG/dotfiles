@@ -44,14 +44,14 @@ uv = "latest"
 "github:jesseduffield/lazydocker" = "latest"
 "github:mr-karan/doggo" = "latest"
 "github:dlvhdr/diffnav" = "latest"
-"cargo:htmlq" = "latest"
-"cargo:websocat" = "latest"
+"htmlq" = "latest"
+"websocat" = "latest"
 "npm:@ast-grep/cli" = "latest"
 "npm:@mermaid-js/mermaid-cli" = "latest"
 "npm:opencode-ai" = "latest"
 "npm:@anthropic-ai/claude-code" = "latest"
 "pipx:markitdown" = "latest"
-"cargo:openapi-tui" = "latest"
+"aqua:zaghaghi/openapi-tui" = "latest" # no short registry name
 "github:jonas-grgt/ktea" = "latest"
 "github:jorgerojas26/lazysql" = "latest"
 "github:rtk-ai/rtk" = "latest"
@@ -62,8 +62,50 @@ uv = "latest"
 "github:nickvanw/qbittorrent-tui" = "latest"
 {{- end }}
 {{- end }}
+{{- if eq .osFamily "fedora" }}
 
-{{ if eq .osFamily "ubuntu" -}}
+# dnf HAS yq (mikefarah), helm, uv and astroterm, so those are deliberately
+# absent here. Everything below has no Fedora package at all.
+usage = "latest" # mise completions
+kubectl = "latest" # dnf only ships versioned kubernetesN.NN-client
+flux2 = "latest"
+sops = "latest"
+bun = "latest"
+kubecolor = "latest"
+xh = "latest"
+dust = "latest"
+jqp = "latest"
+"aqua:dalance/procs" = "latest" # no short registry name
+# dysk ships ONE arch-less zip with per-triple subdirs, so it needs bin_path.
+# aqua: installs it but exposes no binary, and ubi: picks the macOS build.
+# NOTE: bin_path below uses mise's own template syntax, escaped so that
+# chezmoi passes it through rather than evaluating it (see mcp-grafana).
+"github:Canop/dysk" = { version = "latest", bin_path = "{{ "{{" }}arch(x64='x86_64', arm64='aarch64'){{ "}}" }}-unknown-linux-gnu" }
+# tmuxinator stays on gem: — upstream publishes only a .gem, which is a ruby
+# package, not an executable, so there is no prebuilt binary to use instead.
+"gem:tmuxinator" = "latest"
+"github:jesseduffield/lazydocker" = "latest"
+"github:mr-karan/doggo" = "latest"
+"github:dlvhdr/diffnav" = "latest"
+"htmlq" = "latest"
+"websocat" = "latest"
+"npm:@ast-grep/cli" = "latest"
+"npm:@mermaid-js/mermaid-cli" = "latest"
+"npm:opencode-ai" = "latest"
+"npm:@anthropic-ai/claude-code" = "latest"
+"pipx:markitdown" = "latest"
+"aqua:zaghaghi/openapi-tui" = "latest" # no short registry name
+"github:jonas-grgt/ktea" = "latest"
+"github:jorgerojas26/lazysql" = "latest"
+"github:rtk-ai/rtk" = "latest"
+"github:dlvhdr/gh-dash" = "latest"
+"github:rustfs/cli" = "latest"
+{{- if .isPersonal }}
+"github:nickvanw/qbittorrent-tui" = "latest"
+{{- end }}
+{{- end }}
+
+{{ if or (eq .osFamily "ubuntu") (eq .osFamily "fedora") -}}
 [tools."github:vercel-labs/agent-browser"]
 version = "latest"
 rename_exe = "agent-browser"
