@@ -18,7 +18,9 @@
 <div align=center>
   <img alt="Arch" src="https://img.shields.io/badge/Arch-89b4fa?logo=arch-linux&logoColor=white&style=for-the-badge"/>
   <img alt="EndeavourOS" src="https://img.shields.io/badge/endeavour%20os-b4befe?logo=endeavouros&logoColor=white&style=for-the-badge"/>
+  <img alt="Ubuntu" src="https://img.shields.io/badge/Ubuntu-fab387?logo=ubuntu&logoColor=white&style=for-the-badge"/>
   <img alt="Windows" src="https://img.shields.io/badge/Windows-74c7ec?style=for-the-badge&logo=windows&logoColor=white"/>
+  <img alt="WSL" src="https://img.shields.io/badge/WSL-a6e3a1?logo=linux&logoColor=black&style=for-the-badge"/>
 </div>
 
 <div align="center">
@@ -35,7 +37,14 @@
 - [😎 Showcase](#-showcase)
   - [Terminal](#terminal)
   - [Neovim](#neovim)
+- [🧩 How it is organised](#-how-it-is-organised)
 - [⚙️ Installation](#-installation)
+  - [0. Prerequisites per platform](#0-prerequisites-per-platform)
+  - [1. SSH key](#1-ssh-key)
+  - [2. age key](#2-age-key)
+  - [3. GitHub API rate limits](#3-github-api-rate-limits)
+  - [4. Install chezmoi and apply](#4-install-chezmoi-and-apply)
+  - [5. Commit signing](#5-commit-signing)
 - [Manually add/sync encrypted file to template](#manually-addsync-encrypted-file-to-template)
 - [📝 Other notes](#-other-notes)
 - [💁 References](#-references)
@@ -63,60 +72,232 @@
 
 ---
 
+## 🧩 How it is organised
+
+Every machine answers a handful of questions at `chezmoi init`, and the answers
+drive what gets installed and which config files exist:
+
+| value | meaning |
+| --- | --- |
+| `profiles` | the identities this machine carries, e.g. `personal`, `personal,itcgroup` |
+| `osFamily` | `arch` / `ubuntu` / `windows` / `darwin` — picks the package installer |
+| `isWsl` | auto-detected; drops terminal emulators, fonts, input methods, desktop config |
+| `isGui` | auto-detected; false on WSL, containers and headless servers |
+| `isLaptop` | auto-detected; adds power management |
+
+Identities (git name/email, signing key, ssh host, age key, secrets file) are
+declared once per profile in `home/.chezmoidata/profiles.yml`. Adding a company
+is one block there — see [docs/new-company.md](./docs/new-company.md).
+
+Packages live in `home/.chezmoidata/pkgs/` split into `common` / `personal` /
+`work` / `laptop`, each with a `cli` list (always) and a `gui` list (desktop
+only). See [AGENTS.md](./AGENTS.md) for the full repo map.
+
+---
+
 ## ⚙️ Installation
 
-- Add ssh key
-  - Linux
-    ```sh
-    eval "$(ssh-agent -s)"
-    chmod 700 ~/.ssh/
-    chmod 644 ~/.ssh/id_ed25519.pub
-    chmod 600 ~/.ssh/id_ed25519
-    ssh-add ~/.ssh/id_ed25519
-    ```
-  - Windows
-    ```powershell
-    Set-Service ssh-agent -StartupType Automatic
-    Start-Service ssh-agent
-    Ssh-Add "$env:USERPROFILE/.ssh/id_ed25519"
-    ```
-- Create `~/.age-key.txt` _(for encrypt/decrypt)_
+### 0. Prerequisites per platform
 
-  > This is for personal use, as it contains encrypted files. If you wish to use it, run chezmoi apply with the `--exclude=encrypted` argument
+<details>
+<summary><b>Windows</b></summary>
 
-- Install chezmoi and init, apply, and delete binary: _([docs](https://www.chezmoi.io/install))_
-  - shell
-    ```sh
-    sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply --ssh --depth 1 --purge-binary KevinNitroG
-    ```
-  - pwsh
-    ```powershell
-    iex "&{$(irm 'https://get.chezmoi.io/ps1')} -- init --apply --ssh --depth 1 --purge-binary KevinNitroG"
-    ```
-- GPG for sign commit
+> [!IMPORTANT]
+> These dotfiles currently require **administrator privileges** on Windows.
+> `home/.chezmoiscripts/windows/run_once_before_0_config-windows.ps1.tmpl`
+> self-elevates via UAC to toggle Windows optional features (WSL, Virtual
+> Machine Platform, .NET) and to adjust machine-wide policy; the Scoop/Choco
+> bootstrap and the `ssh-agent` service also need it. Run the install from an
+> elevated PowerShell and expect UAC prompts.
+>
+> User `PATH` entries themselves are set with
+> `[Environment]::SetEnvironmentVariable(..., User)`, which does *not* need
+> admin — only the feature toggles do.
+
+</details>
+
+<details>
+<summary><b>WSL</b></summary>
+
+Install Windows Subsystem for Linux from the Microsoft Store:
+<https://apps.microsoft.com/detail/9PDXGNCFSCZV>
+
+Then install a distribution and set it as default:
+
+```powershell
+wsl --install -d Ubuntu
+wsl --set-default Ubuntu
+```
+
+Inside the WSL guest, follow the Linux instructions below. WSL is detected
+automatically (`isWsl`), and the following are skipped because they make no
+sense in a guest:
+
+- terminal emulators (alacritty, kitty, ghostty, wezterm) — the Windows
+  terminal is the terminal
+- fonts, `fcitx5` input method, `~/.gtkrc-2.0.mine`
+- Hyprland / HyDE / sddm / systemd desktop units, `kanata`, browser flag files
+- personal "leisure" dotfiles (browser data, OBS, rclone mounts, ncspot, …)
+
+`~/.wslconfig` configures the WSL VM and therefore belongs on the **Windows
+host**, not inside the guest — it is only applied on Windows.
+
+</details>
+
+<details>
+<summary><b>Linux</b></summary>
+
+Arch-based (Arch, CachyOS, EndeavourOS) and Ubuntu (including Mint and Pop!_OS,
+which report `ID_LIKE=ubuntu`) are supported; the right installer script is
+selected from `osFamily`. On Ubuntu,
+`software-properties-common` plus `ppa:neovim-ppa/stable` are set up
+automatically so neovim is current. Tools apt does not carry come from
+mise.
+
+</details>
+
+### 1. SSH key
+
+You need an SSH key to clone this repo over SSH, and one per identity you use.
+Full guide: [docs/ssh.md](./docs/ssh.md).
+
+- Linux / WSL / macOS
   ```sh
-  gpg --import public.gpg
-  gpg --import secret.gpg
-  gpg --edit-key KevinNitroG
-  trust
-  5
-  y
-  quit
+  eval "$(ssh-agent -s)"
+  chmod 700 ~/.ssh/
+  chmod 644 ~/.ssh/id_ed25519.pub
+  chmod 600 ~/.ssh/id_ed25519
+  ssh-add ~/.ssh/id_ed25519
   ```
-  > On windows use GPG from git. We can open `git bash`
+- Windows _(elevated PowerShell)_
+  ```powershell
+  Set-Service ssh-agent -StartupType Automatic
+  Start-Service ssh-agent
+  ssh-add "$env:USERPROFILE/.ssh/id_ed25519"
+  ```
+
+### 2. age key
+
+Encrypted files are decrypted with [age](https://age-encryption.org/). The
+convention is **one identity file per profile**, all under `~/.config/age/`,
+and **none of them are ever committed**:
+
+| profile | identity file |
+| --- | --- |
+| `personal` | `~/.config/age/key.txt` |
+| `<company>` | `~/.config/age/<company>-key.txt` |
+
+Restore them from Bitwarden, or generate a new one:
+
+```sh
+mkdir -p ~/.config/age
+age-keygen -o ~/.config/age/key.txt
+chmod 600 ~/.config/age/key.txt
+```
+
+Every encrypted file in this repo is encrypted to **all** known recipients, so
+any machine can read anything its profiles entitle it to. `chezmoi init` only
+lists identity files that actually exist, so adding a key later means re-running
+`chezmoi init`.
+
+> [!NOTE]
+> This repo is personal and contains encrypted files you cannot decrypt. To use
+> it anyway, run chezmoi apply with `--exclude=encrypted`.
+
+### 3. GitHub API rate limits
+
+Both **chezmoi** and **mise** hit the GitHub API a lot during a first apply —
+chezmoi for `type = "git-repo"` / release externals, mise for every
+`github:owner/repo` and `npm:`/`cargo:` tool it resolves. Anonymous requests are
+capped at **60/hour**, which is nowhere near enough: you will see
+`API rate limit exceeded` and a half-installed machine.
+
+Export a token **before** running init. A classic PAT with no scopes at all is
+enough — this is only about the rate limit, not about access:
+
+```sh
+export GITHUB_TOKEN='ghp_...'
+```
+
+Both tools read `GITHUB_TOKEN` (mise also accepts `MISE_GITHUB_TOKEN`), which
+raises the limit to 5000/hour. On an already-provisioned machine the token
+lives in the encrypted `~/.config/zsh/private/personal.zsh` and is exported by
+every shell, so this only matters for the very first bootstrap — before the
+secrets exist.
+
+> [!TIP]
+> `gh auth login && export GITHUB_TOKEN=$(gh auth token)` works too.
+
+### 4. Install chezmoi and apply
+
+_([docs](https://www.chezmoi.io/install))_
+
+- shell
+  ```sh
+  sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply --ssh --depth 1 --purge-binary KevinNitroG
+  ```
+- pwsh _(elevated — see the Windows note above)_
+  ```powershell
+  iex "&{$(irm 'https://get.chezmoi.io/ps1')} -- init --apply --ssh --depth 1 --purge-binary KevinNitroG"
+  ```
+
+You will be asked for `profiles` — answer `personal` on a personal machine, or
+`personal,itcgroup` on a work machine that also uses the personal GitHub
+account.
+
+### 5. Commit signing
+
+Signing is configured per profile in `home/.chezmoidata/profiles.yml`:
+`personal` signs with **GPG**, company profiles sign with their **SSH** key.
+Identity is chosen by directory (`includeIf "gitdir:"`), so work repos must
+live under the profile's `gitDir` (e.g. `~/projects/itcgroup/`).
+
+GPG, for the personal profile:
+
+```sh
+gpg --import public.gpg
+gpg --import secret.gpg
+gpg --edit-key <key-id>
+trust
+5
+y
+quit
+```
+
+> On Windows use the GPG shipped with git — open `git bash`.
+
+SSH signing needs nothing beyond the key itself; `~/.ssh/allowed_signers` is
+generated from `profiles.yml`. Verify with `git log --show-signature -1`.
 
 ## Manually add/sync encrypted file to template
 
-```sh
-age -a $(chezmoi data --format json | jq -r '.ageRecipients | map("-r " + .) | join(" ")') file >$(chezmoi source-path)/home/.chezmoitemplates/file
+`chezmoi re-add` re-encrypts every *managed* file, but it does not touch
+`home/.chezmoitemplates/`. Use the helper for those:
 
-age -a $(chezmoi data --format json | jq -r '.ageRecipients | map("-r " + .) | join(" ")') ~/.config/Code/User/settings.json >~/.local/share/chezmoi/home/.chezmoitemplates/VSCode/encrypted_settings.json
+```sh
+chezmoi-encrypt-template.sh ~/.config/Code/User/settings.json VSCode/encrypted_settings.json
+chezmoi-encrypt-template.sh ~/.config/rclone/rclone.conf       rclone/encrypted_rclone.conf
 ```
+
+It reads `ageRecipients` from `home/.chezmoidata/global.yml`, so every file
+ends up readable by every profile. The raw equivalent:
+
+```sh
+age -a $(chezmoi data --format json | jq -r '.ageRecipients | map("-r " + .) | join(" ")') \
+  file > "$(chezmoi source-path)/.chezmoitemplates/file"
+```
+
+> [!NOTE]
+> `$(chezmoi source-path)` already points *inside* `home/` because of
+> `.chezmoiroot` — do not add another `home/` to the path.
 
 ---
 
 ## 📝 Other notes
 
+- [New company onboarding](./docs/new-company.md)
+- [SSH keys & commit signing](./docs/ssh.md)
+- [Repo architecture (for humans and agents)](./AGENTS.md)
 - [Windows](./docs/windows.md)
 - [Linux](./docs/linux.md)
 - [Browser](./docs/browser.md)
