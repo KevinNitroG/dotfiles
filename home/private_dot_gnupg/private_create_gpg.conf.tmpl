@@ -1,1 +1,1 @@
-trusted-key {{ .gpgId }}
+trusted-key {{ (index .profileDefs "personal").gpgFingerprint }}

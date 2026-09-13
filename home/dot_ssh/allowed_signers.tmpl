@@ -1,0 +1,24 @@
+# Which SSH keys are allowed to have signed a commit, and as whom.
+#
+# Is this file required? Strictly, no:
+#   - MAKING a signature needs only the key itself.
+#   - GitHub/GitLab showing a "Verified" badge uses the key you uploaded there,
+#     not this file.
+# It is needed only for LOCAL verification — `git log --show-signature`,
+# `git verify-commit`, `git merge --verify-signatures`. Without it those print
+# "No principal matched" even for commits you just made, which reads like a
+# broken signing setup when nothing is actually wrong.
+#
+# GPG gets this mapping from your keyring; SSH has no keyring, hence the file.
+# It costs one generated line per signing identity and needs no maintenance,
+# so it is kept. To drop it, delete this template and the gpg.ssh
+# allowedSignersFile line from .chezmoitemplates/git/identity.
+#
+# GENERATED from home/.chezmoidata/profiles.yml + the committed public keys in
+# home/dot_ssh/. Only profiles that sign with ssh appear here.
+{{ range $name := .profiles }}
+{{- $p := index $.profileDefs $name }}
+{{- if eq $p.signing "ssh" }}
+{{ $p.gitEmail }} namespaces="git" {{ include (printf "dot_ssh/%s.pub" (base $p.sshKey)) | trim }}
+{{- end }}
+{{- end }}

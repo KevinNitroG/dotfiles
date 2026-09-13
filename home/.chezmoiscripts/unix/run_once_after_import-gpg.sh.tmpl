@@ -19,4 +19,4 @@ EOF
   echo y
   echo save
 ) |
-  gpg --command-fd 0 --no-tty --no-greeting -q --edit-key '{{ .gpgId }}' trust
+  gpg --command-fd 0 --no-tty --no-greeting -q --edit-key '{{ (index .profileDefs "personal").gpgFingerprint }}' trust

@@ -19,4 +19,4 @@ $trustCommands = @(
     "save"
 ) | ForEach-Object { "$_`n" } | Out-String
 
-$trustCommands | gpg --command-fd 0 --no-tty --no-greeting -q --edit-key '{{ .gpgId }}' trust
+$trustCommands | gpg --command-fd 0 --no-tty --no-greeting -q --edit-key '{{ (index .profileDefs "personal").gpgFingerprint }}' trust
