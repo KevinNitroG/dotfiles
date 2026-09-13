@@ -1,0 +1,292 @@
+# Fedora package lists — installed with `dnf`. Verified on Fedora 45.
+#
+# Mirrors the shape of ubuntu-based.yml, with the repo mechanisms swapped for
+# their dnf equivalents:
+#
+#   pkgs.fedora.<category>.releaseRpms.cli  release RPMs installed by URL, for
+#   pkgs.fedora.<category>.releaseRpms.gui  repos that ship their own .repo
+#                                           file AND their gpg key (RPM Fusion).
+#                                           Added first, before everything else:
+#                                             name: what it is, for log lines
+#                                             url:  the .rpm to install; may use
+#                                                   $releasever
+#   pkgs.fedora.<category>.coprs.cli        COPR repos, "owner/project" — the
+#   pkgs.fedora.<category>.coprs.gui        direct analogue of Ubuntu's PPAs
+#   pkgs.fedora.<category>.dnfRepos.cli     hand-written /etc/yum.repos.d/*.repo
+#   pkgs.fedora.<category>.dnfRepos.gui     files — the analogue of aptRepos:
+#                                             name:     .repo file + repo id
+#                                             desc:     name= line
+#                                             baseurl:  baseurl= line
+#                                             gpgkey:   gpgkey= line, imported
+#                                                       with `rpm --import` first
+#   pkgs.fedora.<category>.cli              always, when the category applies
+#   pkgs.fedora.<category>.gui              only when .isGui (skipped on WSL,
+#                                           containers and headless servers)
+#   pkgs.fedora.<category>.scripts.cli      curl|sh installers, run last
+#   pkgs.fedora.<category>.scripts.gui      ditto, only when .isGui
+#
+# Categories: common (always), personal, work, laptop.
+#
+# Anything with no dnf package comes from mise instead — see the
+# `{{ if eq .osFamily "fedora" }}` block in home/dot_config/mise/mise.toml.tmpl.
+#
+# Naming notes (Fedora differs from BOTH Arch and Ubuntu):
+#   - fd-find ships /usr/bin/fd and bat ships /usr/bin/bat, so unlike Debian
+#     there is nothing to symlink afterwards.
+#   - `wget` is gone in F45; wget2-wget provides /usr/bin/wget.
+#   - `npm` is nodejs-npm, `vim` is vim-enhanced, pynvim is python3-neovim.
+#   - ctags IS universal-ctags (6.x); 7zip (not p7zip) ships /usr/bin/7z.
+#   - `yq` is mikefarah's Go yq, not python-yq — no mise entry needed.
+#
+# See home/.chezmoiscripts/linux/run_once_before_10-install-pkgs-fedora.sh.tmpl
+
+pkgs:
+  fedora:
+    common:
+      releaseRpms:
+        cli:
+          # RPM Fusion. `ffmpeg` (yazi video thumbnails) lives in free; nonfree
+          # carries the codec/driver packages media apps pull in later.
+          - name: rpmfusion-free-release
+            url: https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+          - name: rpmfusion-nonfree-release
+            url: https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+        gui: []
+
+      coprs:
+        cli:
+          # Not in Fedora proper, and all three are current here.
+          - atim/lazygit
+          - atim/starship
+          - lihaohong/yazi # also ships resvg, yazi's SVG preview dep
+        gui: []
+
+      dnfRepos:
+        cli: []
+        gui:
+          # VS Code, from Microsoft. The yum equivalent of the vscode apt repo
+          # in ubuntu-based.yml.
+          - name: vscode
+            desc: Visual Studio Code
+            baseurl: https://packages.microsoft.com/yumrepos/vscode
+            gpgkey: https://packages.microsoft.com/keys/microsoft.asc
+
+      cli:
+        # Core
+        - ca-certificates
+        - curl
+        - dnf-plugins-core # provides `dnf copr`
+        - git
+        - git-lfs
+        - lsb_release
+        - rsync
+        - tree
+        - unzip
+        - wget2-wget # F45 dropped `wget`; this provides /usr/bin/wget
+        - zip
+        - zsh
+
+        # Toolchain (Fedora has no build-essential metapackage)
+        - automake
+        - gcc
+        - gcc-c++
+        - make
+
+        # Editors + the toolchain neovim plugins expect
+        - neovim
+        - vim-enhanced # `vim` is a virtual provide, not a package
+        - cmake # nvim-treesitter / telescope-fzf-native builds
+        - gettext # building parsers and neovim itself
+        - luarocks # some lua plugins (rest.nvim, ...)
+        - pkgconf-pkg-config
+        - python3-neovim # :checkhealth provider (this IS pynvim)
+        - tree-sitter-cli # nvim-treesitter parser compilation
+
+        # Shell / terminal UX
+        - bat # ships /usr/bin/bat, unlike Debian's batcat
+        - ctags # universal-ctags 6.x
+        - eza
+        - fastfetch
+        - fd-find # ships /usr/bin/fd; yazi requirement
+        - fzf # yazi requirement
+        - gdu
+        - glow
+        - jq # yazi requirement
+        - just
+        - ripgrep # yazi requirement
+        - starship # copr: atim/starship
+        - tldr # the python tldr client; Fedora has no tealdeer
+        - tmux
+        - yq # mikefarah/yq, unlike Debian
+        - zoxide
+
+        # yazi (from copr lihaohong/yazi) and its optional feature deps
+        # https://yazi-rs.github.io/docs/installation/
+        - yazi
+        - resvg # SVG preview; same copr
+        - 7zip # archive extraction + preview (ships /usr/bin/7z)
+        - ffmpeg # video thumbnails; needs RPM Fusion free
+        - ffmpegthumbnailer
+        - ImageMagick # Font / HEIC / JPEG XL preview (7.1.2 here)
+        - poppler-utils # PDF preview
+        # fd-find, ripgrep, fzf, jq and zoxide are listed above; nerd fonts are
+        # GUI-only and unpackaged on Fedora, exactly as on Ubuntu
+
+        # Git / forge
+        - gh
+        - git-delta
+        - glab # gitlab cli (work forges)
+        - lazygit # copr: atim/lazygit
+
+        # Databases
+        - pgcli
+
+        # Containers, cloud, k8s
+        # (kubectl is only shipped as versioned kubernetesN.NN-client packages,
+        #  and flux/sops have no package at all -> mise)
+        - awscli2
+        - docker-buildx
+        - docker-compose
+        - helm
+        - moby-engine # Fedora's docker daemon
+        # Toolchains
+        - golang
+        - nodejs
+        - nodejs-npm
+        - pipx
+        - python3
+        - python3-pip
+        - ruby # for mise's gem: backend (tmuxinator)
+        - rubygems
+        - cargo # for mise's cargo: backend (procs, dysk, htmlq, ...)
+        - rustup
+        - uv
+
+        # Security
+        - age
+        - gnupg2
+        - openssl
+
+        # Monitoring / system
+        - btop
+        - cronie
+        - inotify-tools
+
+        # Network
+        - rclone
+
+        # Misc runtime deps
+        - bc
+        - fuse3 # For rclone mount --daemon
+        - xdg-utils
+
+      gui:
+        # Editors / IDE (from the vscode repo declared above)
+        - code # use `code-insiders` instead for the insiders build
+
+        # Terminals
+        - alacritty
+        - kitty
+
+        # Fonts
+        - google-noto-color-emoji-fonts
+        - jetbrains-mono-fonts
+
+        # Clipboard (neovim "+" register, yazi clipboard support)
+        - wl-clipboard
+        - xclip
+        - xsel
+
+        # Desktop plumbing
+        - gnome-keyring
+        - gtk4
+        - wtype
+        - xhost
+
+      scripts:
+        cli:
+          # mise is the escape hatch for everything dnf does not carry
+          - "https://mise.run"
+        gui: []
+
+    personal:
+      releaseRpms:
+        cli: []
+        gui: []
+      coprs:
+        cli: []
+        gui: []
+      dnfRepos:
+        cli: []
+        gui: []
+
+      cli:
+        - os-prober
+
+        # CLI fun
+        - asciinema
+        - astroterm # packaged in Fedora; Ubuntu gets this from mise
+        - cowsay
+        - figlet
+        - lolcat
+
+      gui:
+        # Browsers
+        - chromium
+
+        # Media / documents
+        - libreoffice
+        - obs-studio
+        - qbittorrent
+        - vlc
+        - zathura
+        - zathura-pdf-mupdf
+        - tesseract-langpack-eng
+        - tesseract-langpack-vie
+
+        # Input method (Vietnamese)
+        - fcitx5
+        - fcitx5-configtool
+        - fcitx5-unikey
+
+        # Desktop utilities
+        - tailscale # packaged in Fedora; Ubuntu needs the install script
+
+      scripts:
+        cli: []
+        gui:
+          - "https://dl.brave.com/install.sh"
+
+    work:
+      releaseRpms:
+        cli: []
+        gui: []
+      coprs:
+        cli: []
+        gui: []
+      dnfRepos:
+        cli: []
+        gui: []
+      cli: []
+      gui: []
+      scripts:
+        cli: []
+        gui: []
+
+    laptop:
+      releaseRpms:
+        cli: []
+        gui: []
+      coprs:
+        cli: []
+        gui: []
+      dnfRepos:
+        cli: []
+        gui: []
+      cli:
+        - tlp
+        - tlp-rdw
+      gui: [] # no tlpui package on Fedora
+      scripts:
+        cli: []
+        gui: []

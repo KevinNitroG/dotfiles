@@ -20,6 +20,7 @@
   <img alt="EndeavourOS" src="https://img.shields.io/badge/endeavour%20os-b4befe?logo=endeavouros&logoColor=white&style=for-the-badge"/>
   <img alt="CachyOS" src="https://img.shields.io/badge/cachy%20os-00AA88?logo=cachyos&logoColor=white&style=for-the-badge"/>
   <img alt="Ubuntu" src="https://img.shields.io/badge/Ubuntu-fab387?logo=ubuntu&logoColor=white&style=for-the-badge"/>
+  <img alt="Fedora" src="https://img.shields.io/badge/Fedora-51A2DA?logo=fedora&logoColor=white&style=for-the-badge"/>
   <img alt="Windows" src="https://img.shields.io/badge/Windows-74c7ec?style=for-the-badge&logo=windows&logoColor=white"/>
   <img alt="WSL" src="https://img.shields.io/badge/WSL-a6e3a1?logo=linux&logoColor=black&style=for-the-badge"/>
 </div>

@@ -4,7 +4,7 @@
 # prefix — "home/" only exists in the source tree because of .chezmoiroot).
 #
 # Gating vocabulary (all from home/.chezmoi.toml.tmpl [data]):
-#   .osFamily    "arch" | "ubuntu" | "windows" | "darwin" | "other"
+#   .osFamily    "arch" | "ubuntu" | "fedora" | "windows" | "darwin" | "other"
 #   .osId        "linux-ubuntu", "linux-arch", "windows", ...
 #   .isWsl       running under WSL
 #   .isGui       has a desktop session (false on WSL, containers, servers)
@@ -62,6 +62,9 @@ AppData/Roaming/rclone/rclone.conf
 {{ end }}
 {{ if ne .osFamily "ubuntu" }}
 .chezmoiscripts/linux/*ubuntu-based*
+{{ end }}
+{{ if ne .osFamily "fedora" }}
+.chezmoiscripts/linux/*-fedora*
 {{ end }}
 
 ##########################################

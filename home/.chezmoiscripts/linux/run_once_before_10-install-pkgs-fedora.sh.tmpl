@@ -1,0 +1,155 @@
+#!/usr/bin/env bash
+# Install packages on Fedora (and the RHEL-likes that carry ID_LIKE=fedora).
+# Package lists live in home/.chezmoidata/pkgs/fedora.yml.
+# Gated to osFamily == "fedora" by home/.chezmoiignore.tmpl.
+#
+# Package names are verified against Fedora 45.
+
+# NOTE: deliberately not `set -e`. A COPR with no build for this Fedora
+# release, or a package renamed between releases, must not abort the whole
+# bootstrap — failures are collected and reported at the end instead.
+set -uo pipefail
+
+{{- $cats := list "common" }}
+{{- if .isPersonal }}{{ $cats = append $cats "personal" }}{{ end }}
+{{- if .isWork }}{{ $cats = append $cats "work" }}{{ end }}
+{{- if .isLaptop }}{{ $cats = append $cats "laptop" }}{{ end }}
+
+{{- $releaseRpms := list }}
+{{- $coprs := list }}
+{{- $dnfRepos := list }}
+{{- $pkgs := list }}
+{{- $scripts := list }}
+{{- range $cat := $cats }}
+  {{- $node := index $.pkgs.fedora $cat }}
+  {{- $nodeRelease := index $node "releaseRpms" | default dict }}
+  {{- $nodeCoprs := index $node "coprs" | default dict }}
+  {{- $nodeRepos := index $node "dnfRepos" | default dict }}
+  {{- $nodeScripts := index $node "scripts" | default dict }}
+  {{- $releaseRpms = concat $releaseRpms (index $nodeRelease "cli" | default list) }}
+  {{- $coprs = concat $coprs (index $nodeCoprs "cli" | default list) }}
+  {{- $dnfRepos = concat $dnfRepos (index $nodeRepos "cli" | default list) }}
+  {{- $scripts = concat $scripts (index $nodeScripts "cli" | default list) }}
+  {{- $pkgs = concat $pkgs (index $node "cli" | default list) }}
+  {{- if $.isGui }}
+    {{- $releaseRpms = concat $releaseRpms (index $nodeRelease "gui" | default list) }}
+    {{- $coprs = concat $coprs (index $nodeCoprs "gui" | default list) }}
+    {{- $dnfRepos = concat $dnfRepos (index $nodeRepos "gui" | default list) }}
+    {{- $pkgs = concat $pkgs (index $node "gui" | default list) }}
+    {{- $scripts = concat $scripts (index $nodeScripts "gui" | default list) }}
+  {{- end }}
+{{- end }}
+{{- $releaseRpms = $releaseRpms | compact }}
+{{- $coprs = $coprs | compact | uniq }}
+{{- $dnfRepos = $dnfRepos | compact }}
+{{- $scripts = $scripts | compact | uniq }}
+{{- $pkgs = $pkgs | compact | uniq | sortAlpha }}
+
+# Profiles: {{ join ", " .profiles }} | categories: {{ join ", " $cats }} | gui: {{ .isGui }} | wsl: {{ .isWsl }}
+
+SUDO=''
+if [ "$(id -u)" -ne 0 ]; then
+  SUDO='sudo'
+fi
+
+##########################################
+
+echo 'BOOTSTRAPPING DNF...'
+# dnf-plugins-core provides `dnf copr`; it is in the list below too, but the
+# COPR step runs before the package loop and needs it already present.
+$SUDO dnf install -y ca-certificates curl dnf-plugins-core
+
+##########################################
+
+{{ if $releaseRpms -}}
+echo 'ADDING RELEASE RPMS...'
+{{ range $r := $releaseRpms -}}
+if rpm -q {{ $r.name | quote }} >/dev/null 2>&1; then
+  echo "  -- {{ $r.name }} already installed"
+elif ! $SUDO dnf install -y "{{ $r.url }}"; then
+  echo "  !! could not install the {{ $r.name }} release rpm; skipping that repo"
+fi
+{{ end -}}
+{{- end }}
+
+##########################################
+
+{{ if $coprs -}}
+echo 'ENABLING COPR REPOS...'
+# A COPR may have no build for this Fedora release, which makes every later
+# `dnf makecache` fail. Enable each one, verify, and roll it back if it breaks.
+{{ range $copr := $coprs -}}
+if $SUDO dnf copr enable -y {{ $copr | quote }}; then
+  if ! $SUDO dnf makecache --refresh >/dev/null 2>&1; then
+    echo "  !! {{ $copr }} has no build for Fedora $(rpm -E %fedora); removing it"
+    $SUDO dnf copr disable -y {{ $copr | quote }} >/dev/null 2>&1
+  fi
+fi
+{{ end -}}
+{{- end }}
+
+##########################################
+
+{{ if $dnfRepos -}}
+echo 'ADDING THIRD-PARTY DNF REPOS...'
+{{ range $r := $dnfRepos -}}
+if $SUDO rpm --import {{ $r.gpgkey | quote }}; then
+  $SUDO tee "/etc/yum.repos.d/{{ $r.name }}.repo" >/dev/null <<'REPO_EOF'
+[{{ $r.name }}]
+name={{ $r.desc }}
+baseurl={{ $r.baseurl }}
+enabled=1
+type=rpm-md
+gpgcheck=1
+repo_gpgcheck=0
+gpgkey={{ $r.gpgkey }}
+REPO_EOF
+  if ! $SUDO dnf makecache --refresh >/dev/null 2>&1; then
+    echo "  !! the {{ $r.name }} repo is unusable here (no release, or no build for $(rpm -E %_arch)); removing it"
+    $SUDO rm -f "/etc/yum.repos.d/{{ $r.name }}.repo"
+  fi
+else
+  echo "  !! could not import the {{ $r.name }} signing key; skipping that repo"
+fi
+{{ end -}}
+{{- end }}
+
+##########################################
+
+echo 'UPDATING METADATA...'
+$SUDO dnf makecache --refresh || echo '  !! dnf makecache reported errors; continuing'
+
+##########################################
+
+{{ if $pkgs -}}
+echo 'INSTALLING PACKAGES ({{ len $pkgs }})...'
+# Install one by one so a single package missing from this release does not
+# abort the whole bootstrap; failures are reported at the end.
+failed=()
+for pkg in {{ $pkgs | quoteList | join " " }}; do
+  if ! $SUDO dnf install -y "$pkg"; then
+    echo "  !! failed: $pkg"
+    failed+=("$pkg")
+  fi
+done
+{{- end }}
+
+##########################################
+
+{{ if $scripts -}}
+echo 'INSTALLING PACKAGES VIA INSTALLER SCRIPTS...'
+{{ range $script := $scripts -}}
+curl -fsSL {{ $script | quote }} | sh || echo "  !! failed: {{ $script }}"
+{{ end -}}
+{{- end }}
+
+##########################################
+
+{{ if $pkgs -}}
+if [ ${#failed[@]} -gt 0 ]; then
+  echo
+  echo "PACKAGES THAT FAILED TO INSTALL (${#failed[@]}):"
+  printf '  - %s\n' "${failed[@]}"
+  echo 'Most tools dnf lacks are expected to come from mise instead.'
+fi
+{{- end }}

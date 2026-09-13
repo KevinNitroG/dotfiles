@@ -32,9 +32,11 @@
   {{ $osId = printf "linux-%s" .chezmoi.osRelease.id }}
 {{ end }}
 
-{{/* Picks the package installer. Debian deliberately does not map to "ubuntu":
-     its package set differs and PPAs do not resolve there, so it lands in
-     "other", which simply means no installer runs. */}}
+{{/* Picks the package installer. One of:
+     "arch" | "ubuntu" | "fedora" | "windows" | "darwin" | "other".
+     Debian deliberately does not map to "ubuntu": its package set differs and
+     PPAs do not resolve there, so it lands in "other", which simply means no
+     installer runs. */}}
 {{ $osFamily := "other" }}
 {{ if eq .chezmoi.os "windows" "darwin" }}
   {{ $osFamily = .chezmoi.os }}
@@ -45,6 +47,10 @@
     {{ $osFamily = "arch" }}
   {{ else if contains "ubuntu" $ids }}
     {{ $osFamily = "ubuntu" }}
+  {{/* idLike catches the rebuilds: Nobara and Bazzite say "fedora", while
+       RHEL/CentOS/Rocky/Alma say "rhel" (usually "... rhel fedora"). */}}
+  {{ else if or (contains "fedora" $ids) (contains "rhel" $ids) }}
+    {{ $osFamily = "fedora" }}
   {{ end }}
 {{ end }}
 
