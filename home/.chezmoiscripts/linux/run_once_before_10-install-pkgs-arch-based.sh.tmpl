@@ -1,15 +1,26 @@
 #!/usr/bin/env bash
+# Install packages on Arch-based distros (Arch, CachyOS, EndeavourOS).
+# Package lists live in home/.chezmoidata/pkgs/arch-based.yml.
+# Gated to osFamily == "arch" by home/.chezmoiignore.tmpl.
 
 set -eufo pipefail
 
-DISTRO=$(lsb_release -i | awk '{print $NF}')
+{{- $cats := list "common" }}
+{{- if .isPersonal }}{{ $cats = append $cats "personal" }}{{ end }}
+{{- if .isWork }}{{ $cats = append $cats "work" }}{{ end }}
+{{- if .isLaptop }}{{ $cats = append $cats "laptop" }}{{ end }}
 
-case "$DISTRO" in
-"Arch") ;;
-*)
-  exit 0
-  ;;
-esac
+{{- $pkgs := list }}
+{{- range $cat := $cats }}
+  {{- $node := index $.pkgs.archBased $cat }}
+  {{- $pkgs = concat $pkgs (index $node "cli" | default list) }}
+  {{- if $.isGui }}
+    {{- $pkgs = concat $pkgs (index $node "gui" | default list) }}
+  {{- end }}
+{{- end }}
+{{- $pkgs = $pkgs | compact | uniq | sortAlpha }}
+
+# Profiles: {{ join ", " .profiles }} | categories: {{ join ", " $cats }} | gui: {{ .isGui }}
 
 ##########################################
 
@@ -19,23 +30,18 @@ sudo pacman -Sy
 if ! command -v yay &>/dev/null; then
   echo 'INSTALLING YAY...'
   sudo pacman -S --needed git base-devel --noconfirm
-  git clone https://aur.archlinux.org/yay-bin.git
-  cd yay-bin
-  makepkg -si
-  cd ..
+  tmp="$(mktemp -d)"
+  git clone --depth 1 https://aur.archlinux.org/yay-bin.git "$tmp/yay-bin"
+  (cd "$tmp/yay-bin" && makepkg -si --noconfirm)
+  rm -rf "$tmp"
 fi
 
 ##########################################
 
-{{ $pkgs := .pkgs.archBased.universal }}
-{{ if .isLaptop }}
-{{ $pkgs := concat $pkgs .pkgs.archBased.laptop }}
-{{ end }}
-
-{{ if $pkgs }}
-echo 'INSTALLING PACKAGES...'
-yay -S {{ $pkgs | quoteList | join " " }} --needed --noconfirm
-{{ end }}
+{{ if $pkgs -}}
+echo 'INSTALLING PACKAGES ({{ len $pkgs }})...'
+yay -S --needed --noconfirm {{ $pkgs | quoteList | join " " }}
+{{- end }}
 
 ##########################################
 

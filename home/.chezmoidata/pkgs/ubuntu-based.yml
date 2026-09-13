@@ -1,0 +1,224 @@
+# Ubuntu package lists — installed with `apt-get`. Verified on Ubuntu 26.04 LTS.
+#
+# Mirrors the shape of arch-based.yml:
+#
+#   pkgs.ubuntuBased.<category>.repositories  PPAs added before `apt-get update`
+#   pkgs.ubuntuBased.<category>.aptRepos      third-party apt repos that ship
+#                                             their own signing key:
+#                                               name:   used for the file names
+#                                               key:    URL of the ASCII/binary
+#                                                       keyring to fetch
+#                                               source: the deb line, which must
+#                                                       reference
+#                                                       /usr/share/keyrings/<name>-keyring.gpg
+#   pkgs.ubuntuBased.<category>.cli           always, when the category applies
+#   pkgs.ubuntuBased.<category>.gui           only when .isGui (skipped on WSL,
+#                                             containers and headless servers)
+#   pkgs.ubuntuBased.<category>.scripts.cli   curl|sh installers, run last
+#   pkgs.ubuntuBased.<category>.scripts.gui   ditto, only when .isGui
+#
+# Categories: common (always), personal, work, laptop.
+#
+# Anything with no apt package comes from mise instead — see the
+# `{{ if eq .osFamily "ubuntu" }}` block in home/dot_config/mise/mise.toml.tmpl.
+#
+# See home/.chezmoiscripts/linux/run_once_before_10-install-pkgs-ubuntu-based.sh.tmpl
+
+pkgs:
+  ubuntuBased:
+    common:
+      repositories:
+        - "ppa:neovim-ppa/stable" # Ubuntu ships an ancient neovim
+
+      aptRepos:
+        # yazi is not in the Ubuntu archive; upstream publishes a repo
+        - name: yazi
+          key: https://yazi-rs.github.io/builds/yazi-keyring.gpg
+          source: "deb [signed-by=/usr/share/keyrings/yazi-keyring.gpg] https://yazi-rs.github.io/builds/ stable main"
+
+      cli:
+        # Core
+        - ca-certificates
+        - build-essential
+        - curl
+        - git
+        - git-lfs
+        - lsb-release
+        - rsync
+        - software-properties-common
+        - tree
+        - unzip
+        - wget
+        - zip
+        - zsh
+
+        # Editors + the toolchain neovim plugins expect
+        - neovim # from ppa:neovim-ppa/stable when it has a build for this release
+        - vim
+        - cmake # nvim-treesitter / telescope-fzf-native builds
+        - gettext # building parsers and neovim itself
+        - luarocks # some lua plugins (rest.nvim, ...)
+        - pkg-config
+        - python3-pynvim # :checkhealth provider
+        - tree-sitter-cli # nvim-treesitter parser compilation
+
+        # Shell / terminal UX
+        - bat # binary is `batcat`
+        - du-dust # arch: dust
+        - dysk
+        - eza
+        - fastfetch
+        - fd-find # binary is `fdfind`; yazi requirement
+        - fzf # yazi requirement
+        - gdu
+        - glow
+        - jq # yazi requirement
+        - jqp
+        - just
+        - procs
+        - ripgrep # yazi requirement
+        - starship
+        - tealdeer # provides the `tldr` binary
+        - tmux
+        - tmuxinator
+        - universal-ctags
+        - xh
+        - zoxide
+
+        # yazi (from the upstream apt repo declared in aptRepos above)
+        - yazi
+        # ...and its optional feature deps
+        # https://yazi-rs.github.io/docs/installation/#arch-linux
+        - 7zip # archive extraction + preview (non-standalone build)
+        - ffmpeg # video thumbnails
+        - imagemagick # Font / HEIC / JPEG XL preview (>= 7.1.1)
+        - poppler-utils # PDF preview
+        - resvg # SVG preview
+        # fd-find, ripgrep, fzf, jq and zoxide are listed above; nerd fonts are
+        # GUI-only and unpackaged (nerd fonts are not in the archive)
+
+        # Git / forge
+        - git-delta
+        - gh
+        - glab # gitlab cli (work forges)
+        - lazygit
+
+        # Databases
+        - pgcli
+
+        # Containers, cloud, k8s
+        # (kubectl / helm / flux / sops have no apt package -> mise)
+        - awscli # v2
+        - docker.io
+        - docker-buildx
+        - docker-compose-v2
+        - kubecolor
+
+        # Toolchains
+        - golang-go
+        - nodejs
+        - npm
+        - pipx
+        - python3
+        - python3-pip
+        - python3-venv
+        - rustup
+
+        # Security
+        - age
+        - gnupg
+        - openssl
+
+        # Monitoring / system
+        - btop
+        - cron
+        - inotify-tools
+
+        # Network
+        - rclone
+
+        # Misc runtime deps
+        - bc
+        - fuse3 # For rclone mount --daemon
+
+      gui:
+        # Terminals
+        - alacritty
+        - kitty
+
+        # Fonts
+        - fonts-jetbrains-mono
+        - fonts-noto-color-emoji
+
+        # Clipboard (neovim "+" register, yazi clipboard support)
+        - wl-clipboard
+        - xclip
+        - xsel
+
+        # Desktop plumbing
+        - gnome-keyring
+        - libgtk-4-1
+        - wtype
+        - x11-xserver-utils # provides xhost
+
+      scripts:
+        cli:
+          # mise is the escape hatch for everything apt does not carry
+          - "https://mise.run"
+        gui: []
+
+    personal:
+      repositories: []
+      aptRepos: []
+
+      cli:
+        # CLI fun
+        - asciinema
+        - cowsay
+        - figlet
+        - lolcat
+
+      gui:
+        # Media / documents
+        - libreoffice
+        - obs-studio
+        - qbittorrent
+        - vlc
+        - zathura
+        - zathura-pdf-poppler
+        - tesseract-ocr-eng
+        - tesseract-ocr-vie
+
+        # Input method (Vietnamese)
+        - fcitx5
+        - fcitx5-configtool
+        - fcitx5-unikey
+
+        # Desktop utilities
+        - kanata
+
+      scripts:
+        cli:
+          - "https://tailscale.com/install.sh"
+        gui:
+          - "https://dl.brave.com/install.sh"
+
+    work:
+      repositories: []
+      aptRepos: []
+      cli: []
+      gui: []
+      scripts:
+        cli: []
+        gui: []
+
+    laptop:
+      repositories: []
+      aptRepos: []
+      cli:
+        - tlp
+        - tlp-rdw
+      gui: []
+      scripts:
+        cli: []
+        gui: []
