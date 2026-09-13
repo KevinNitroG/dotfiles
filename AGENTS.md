@@ -73,6 +73,8 @@ one-line `dot_config/git/<name>.tmpl`, one committed `.pub`, one encrypted
 | --- | --- |
 | Template data / new variables | `home/.chezmoi.toml.tmpl` (`[data]`) and `home/.chezmoidata/` |
 | Package lists | `home/.chezmoidata/pkgs/{arch-based,ubuntu-based,fedora,windows}.yml` |
+| Adding a whole new distro | `docs/support-new-os.md` |
+| Fedora specifics / limitations | `docs/fedora.md` |
 | mise tools | `home/dot_config/mise/mise.toml.tmpl` (edited directly) |
 | Identities (git/ssh per profile) | `home/.chezmoidata/profiles.yml` |
 | age keys / recipients | `$profileMeta` in `home/.chezmoi.toml.tmpl` |
@@ -201,6 +203,9 @@ use `~/.local/bin/chezmoi-encrypt-template.sh` for those.
 - Package lists are YAML lists of strings with inline `#` comments explaining
   non-obvious entries; commented-out entries are kept as a "considered and rejected"
   record.
+- Scratch material that helps while working but does not belong in the repo
+  (e.g. `MISSING_<DISTRO>_PKGS.md`) goes in `tmp/`, which is gitignored.
+  `.chezmoiroot` is `home`, so chezmoi never sees it.
 
 ## Working rules for agents
 
@@ -218,16 +223,21 @@ use `~/.local/bin/chezmoi-encrypt-template.sh` for those.
    guards, deliberately *not* via `.chezmoidata`.
 5. Adding a machine-class distinction = add a `[data]` value in `.chezmoi.toml.tmpl`
    and branch on it, rather than hard-coding hostnames.
-6. `git` autoAdd is on (`[git] autoAdd = true`), so chezmoi stages source changes
+6. **Adding a whole distro** = follow `docs/support-new-os.md`. Package names
+   must be verified against a real container of that distro (with testing repos
+   disabled), never guessed, and new lists are translated from `arch-based.yml`
+   — Arch is the reference set. Whatever the distro cannot provide falls
+   through to mise.
+7. `git` autoAdd is on (`[git] autoAdd = true`), so chezmoi stages source changes
    automatically; commits/pushes are manual.
-7. Do not commit secrets. Anything sensitive goes through `encrypted_` + age.
-8. **Never generate a file by shelling out to a tool from a template.** A
+8. Do not commit secrets. Anything sensitive goes through `encrypted_` + age.
+9. **Never generate a file by shelling out to a tool from a template.** A
    template runs during `chezmoi apply`, before the package/mise install scripts
    have put anything on `$PATH`, and it is only re-rendered when its *source*
    changes — so `{{ output "foo" ... }}` either aborts the apply or bakes in an
    empty file forever. Use a `run_after_` script instead; see
    `.chezmoiscripts/unix/run_after_90-generate-zsh-completions.sh`.
-9. Script ordering on unix: `10` package install (before) → `20` mise install
+10. Script ordering on unix: `10` package install (before) → `20` mise install
    (after, `run_onchange_` keyed on the mise.toml hash) → `90` completions.
-10. Export `GITHUB_TOKEN` before a first bootstrap; chezmoi externals and mise
+11. Export `GITHUB_TOKEN` before a first bootstrap; chezmoi externals and mise
     both hammer the GitHub API and the anonymous limit is 60/hour.

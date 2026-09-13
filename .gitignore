@@ -21,3 +21,5 @@ home/.zshenv_private
 .claude/skills/chezmoi-scripts
 .claude/skills/chezmoi-secrets-management
 .claude/skills/chezmoi-templating
+
+tmp/
