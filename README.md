@@ -36,6 +36,7 @@
   - [Terminal](#terminal)
   - [Neovim](#neovim)
 - [⚙️ Installation](#-installation)
+- [Manually add/sync encrypted file to template](#manually-addsync-encrypted-file-to-template)
 - [📝 Other notes](#-other-notes)
 - [💁 References](#-references)
   - [Wallpaper](#wallpaper)
@@ -103,6 +104,14 @@
   quit
   ```
   > On windows use GPG from git. We can open `git bash`
+
+## Manually add/sync encrypted file to template
+
+```sh
+age -a $(chezmoi data --format json | jq -r '.ageRecipients | map("-r " + .) | join(" ")') file >$(chezmoi source-path)/home/.chezmoitemplates/file
+
+age -a $(chezmoi data --format json | jq -r '.ageRecipients | map("-r " + .) | join(" ")') ~/.config/Code/User/settings.json >~/.local/share/chezmoi/home/.chezmoitemplates/VSCode/encrypted_settings.json
+```
 
 ---
 
