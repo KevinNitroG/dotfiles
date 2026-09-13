@@ -170,6 +170,16 @@
      Available profiles: {{ join ", " $knownProfiles }} */}}
 {{/* prompt* returns the default when stdin is not a TTY, so this block is
      safe non-interactively (CI, containers, --promptString overrides). */}}
+{{/* Profiles is a LIST, not a single choice: a work laptop normally carries
+     both "personal" and the company, since the personal GitHub account still
+     gets used from work. chezmoi has no multi-select prompt and promptChoice
+     takes a single value, so this stays a comma-separated string -- but the
+     valid names are printed first and every entry is validated below, so a
+     typo fails loudly at init instead of silently producing a machine with no
+     git identity. */}}
+{{ if stdinIsATTY }}
+  {{ writeToStdout (printf "\nProfiles available: %s\n  one or more, comma separated (a work machine is usually \"personal,<company>\")\n\n" (join ", " $knownProfiles)) }}
+{{ end }}
 {{ $profiles = splitList "," (promptString "profiles" (join "," $profiles)) }}
 {{ $isGui = promptBool "isGui" $isGui }}
 {{ if not $isWsl }}
@@ -196,6 +206,14 @@
 {{ range $profiles }}{{ $cleaned = append $cleaned (trim .) }}{{ end }}
 {{ $profiles = $cleaned | compact | uniq }}
 {{ if not $profiles }}{{ $profiles = list "personal" }}{{ end }}
+
+{{/* Reject unknown names rather than carrying them into [data], where they
+     would blow up later in any template that does `index .profileDefs $name`. */}}
+{{ range $profiles }}
+  {{ if not (has . $knownProfiles) }}
+    {{ fail (printf "unknown profile %q -- valid profiles are: %s (add a new one in home/.chezmoidata/profiles.yml and $knownProfiles here; see docs/new-company.md)" . (join ", " $knownProfiles)) }}
+  {{ end }}
+{{ end }}
 
 {{/* ------------------------------------------------------------------ */}}
 {{/* Derived                                                             */}}
