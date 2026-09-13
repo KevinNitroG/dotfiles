@@ -1,30 +1,97 @@
 #:schema https://mise.jdx.dev/schema/mise.json
+#
+# Edit tools directly in this file. Profile/machine gating is done inline with
+# chezmoi template conditionals:
+#
+#   {{ "{{" }} if .isPersonal {{ "}}" }} ... {{ "{{" }} end {{ "}}" }}   personal machines
+#   {{ "{{" }} if .isWork {{ "}}" }}     ... {{ "{{" }} end {{ "}}" }}   machines with a company profile
+#   {{ "{{" }} if .isGui {{ "}}" }}      ... {{ "{{" }} end {{ "}}" }}   desktops only (not WSL / servers)
+#
+# NOTE: mise has its own {{ "{{" }} ... {{ "}}" }} syntax, which chezmoi would eat.
+# Escape literal mise templates — see the mcp-grafana asset_pattern below.
+#
+# Profiles on this machine: {{ join ", " .profiles }} | gui: {{ .isGui }}
 
 [tool_alias]
 nix = "https://github.com/mise-plugins/mise-nix.git"
 # nix = "https://github.com/jbadeau/mise-nix.git"
 
 [tools]
-"github:cloudnative-pg/cloudnative-pg" = "latest"
-"github:felangga/chiko" = "latest"
-"go:gotest.tools/gotestsum" = "latest"
 python = "3.13.12"
+pnpm = "latest"
+cmctl = "latest"
+"npm:typescript" = "latest"
 "npm:ctx7" = "latest"
 "npm:skills" = "latest"
+"go:gotest.tools/gotestsum" = "latest"
 "go:github.com/dolmen-go/docker-list-context" = "latest"
-"github:grafana/alloy" = { version = "latest", rename_exe = "alloy" }
+"github:felangga/chiko" = "latest"
+"github:cloudnative-pg/cloudnative-pg" = "latest"
+"github:rcieri/glab-tui" = "latest" # TUI for glab / gitlab
+{{- if .isPersonal }}
 "pipx:codecov-cli" = "latest"
-"npm:typescript" = "latest"
-cmctl = "latest"
-pnpm = "latest"
+{{- end }}
+{{- if eq .osFamily "ubuntu" }}
 
+# Only what Ubuntu genuinely has no apt package for. Anything apt DOES
+# carry (gdu, lazygit, glow, just, starship, procs, xh, jqp, dysk, tealdeer,
+# kubecolor, awscli, du-dust, tree-sitter-cli, glab, resvg, ...) is installed
+# from apt in home/.chezmoidata/pkgs/ubuntu-based.yml instead -- as is yazi,
+# from its own upstream apt repo.
+yq = "latest" # apt's `yq` is python-yq, not mikefarah/yq
+usage = "latest" # mise completions
+kubectl = "latest"
+helm = "latest"
+flux2 = "latest"
+sops = "latest"
+bun = "latest"
+uv = "latest"
+"github:jesseduffield/lazydocker" = "latest"
+"github:mr-karan/doggo" = "latest"
+"github:dlvhdr/diffnav" = "latest"
+"cargo:htmlq" = "latest"
+"cargo:websocat" = "latest"
+"npm:@ast-grep/cli" = "latest"
+"npm:@mermaid-js/mermaid-cli" = "latest"
+"npm:opencode-ai" = "latest"
+"npm:@anthropic-ai/claude-code" = "latest"
+"pipx:markitdown" = "latest"
+"cargo:openapi-tui" = "latest"
+"github:jonas-grgt/ktea" = "latest" # kafka tui
+"github:jorgerojas26/lazysql" = "latest"
+"github:localstack/localstack-cli" = "latest" # arch: lstk
+"github:rtk-ai/rtk" = "latest"
+"github:dlvhdr/gh-dash" = "latest"
+"github:rustfs/cli" = "latest" # arch: rustfs
+{{- if .isPersonal }}
+"github:da-luce/astroterm" = "latest"
+"github:nickvanw/qbittorrent-tui" = "latest"
+{{- end }}
+{{- end }}
+
+{{ if eq .osFamily "ubuntu" -}}
+{{/* Bare-binary release assets: without rename_exe the command would be
+     called e.g. `agent-browser-linux-x64`. */}}
+[tools."github:vercel-labs/agent-browser"]
+version = "latest"
+rename_exe = "agent-browser"
+
+[tools."github:dlvhdr/gh-enhance"]
+version = "latest"
+rename_exe = "gh-enhance"
+
+{{ end -}}
 [tools."github:wakatime/wakatime-cli"]
 version = "latest"
 rename_exe = "wakatime-cli"
 
+[tools."github:grafana/alloy"]
+version = "latest"
+rename_exe = "alloy"
+
 [tools."github:grafana/mcp-grafana"]
 version = "0.11.6"
-asset_pattern = "mcp-grafana_{{os(macos='Darwin', linux='Linux', windows='Windows')}}_{{arch(x64='x86_64', arm64='arm64')}}.*"
+asset_pattern = "mcp-grafana_{{ "{{" }}os(macos='Darwin', linux='Linux', windows='Windows'){{ "}}" }}_{{ "{{" }}arch(x64='x86_64', arm64='arm64'){{ "}}" }}.*"
 
 [settings]
 idiomatic_version_file_enable_tools = ["dotnet"]
