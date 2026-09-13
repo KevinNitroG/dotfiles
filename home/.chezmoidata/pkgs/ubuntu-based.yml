@@ -3,14 +3,16 @@
 # Mirrors the shape of arch-based.yml:
 #
 #   pkgs.ubuntuBased.<category>.repositories  PPAs added before `apt-get update`
-#   pkgs.ubuntuBased.<category>.aptRepos      third-party apt repos that ship
-#                                             their own signing key:
-#                                               name:   used for the file names
-#                                               key:    URL of the ASCII/binary
-#                                                       keyring to fetch
-#                                               source: the deb line, which must
-#                                                       reference
-#                                                       /usr/share/keyrings/<name>-keyring.gpg
+#   pkgs.ubuntuBased.<category>.aptRepos.cli  third-party apt repos that ship
+#   pkgs.ubuntuBased.<category>.aptRepos.gui  their own signing key (.gui only
+#                                             when .isGui):
+#                                               name:    sources.list.d file name
+#                                               keyring: where the key is stored;
+#                                                        must match signed-by=
+#                                               key:     URL of the key to fetch
+#                                                        (armoured or binary --
+#                                                        the installer sniffs it)
+#                                               source:  the one-line deb entry
 #   pkgs.ubuntuBased.<category>.cli           always, when the category applies
 #   pkgs.ubuntuBased.<category>.gui           only when .isGui (skipped on WSL,
 #                                             containers and headless servers)
@@ -31,10 +33,19 @@ pkgs:
         - "ppa:neovim-ppa/stable" # Ubuntu ships an ancient neovim
 
       aptRepos:
-        # yazi is not in the Ubuntu archive; upstream publishes a repo
-        - name: yazi
-          key: https://yazi-rs.github.io/builds/yazi-keyring.gpg
-          source: "deb [signed-by=/usr/share/keyrings/yazi-keyring.gpg] https://yazi-rs.github.io/builds/ stable main"
+        cli:
+          # yazi is not in the Ubuntu archive; upstream publishes a repo
+          - name: yazi
+            keyring: /usr/share/keyrings/yazi-keyring.gpg
+            key: https://yazi-rs.github.io/builds/yazi-keyring.gpg
+            source: "deb [signed-by=/usr/share/keyrings/yazi-keyring.gpg] https://yazi-rs.github.io/builds/ stable main"
+        gui:
+          # VS Code, from Microsoft. Equivalent to the deb822 vscode.sources
+          # block in Microsoft's own instructions.
+          - name: vscode
+            keyring: /usr/share/keyrings/microsoft.gpg
+            key: https://packages.microsoft.com/keys/microsoft.asc
+            source: "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/code stable main"
 
       cli:
         # Core
@@ -142,6 +153,9 @@ pkgs:
         - fuse3 # For rclone mount --daemon
 
       gui:
+        # Editors / IDE (from the vscode apt repo declared above)
+        - code # use `code-insiders` instead for the insiders build
+
         # Terminals
         - alacritty
         - kitty
@@ -169,7 +183,9 @@ pkgs:
 
     personal:
       repositories: []
-      aptRepos: []
+      aptRepos:
+        cli: []
+        gui: []
 
       cli:
         # CLI fun
@@ -205,7 +221,9 @@ pkgs:
 
     work:
       repositories: []
-      aptRepos: []
+      aptRepos:
+        cli: []
+        gui: []
       cli: []
       gui: []
       scripts:
@@ -214,7 +232,9 @@ pkgs:
 
     laptop:
       repositories: []
-      aptRepos: []
+      aptRepos:
+        cli: []
+        gui: []
       cli:
         - tlp
         - tlp-rdw

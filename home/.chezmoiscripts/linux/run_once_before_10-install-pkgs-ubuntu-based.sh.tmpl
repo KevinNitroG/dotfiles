@@ -25,12 +25,14 @@ export DEBIAN_FRONTEND=noninteractive
   {{- $node := index $.pkgs.ubuntuBased $cat }}
   {{- $nodeScripts := index $node "scripts" | default dict }}
   {{- $repos = concat $repos (index $node "repositories" | default list) }}
-  {{- $aptRepos = concat $aptRepos (index $node "aptRepos" | default list) }}
+  {{- $nodeAptRepos := index $node "aptRepos" | default dict }}
+  {{- $aptRepos = concat $aptRepos (index $nodeAptRepos "cli" | default list) }}
   {{- $scripts = concat $scripts (index $nodeScripts "cli" | default list) }}
   {{- $pkgs = concat $pkgs (index $node "cli" | default list) }}
   {{- if $.isGui }}
     {{- $pkgs = concat $pkgs (index $node "gui" | default list) }}
     {{- $scripts = concat $scripts (index $nodeScripts "gui" | default list) }}
+    {{- $aptRepos = concat $aptRepos (index $nodeAptRepos "gui" | default list) }}
   {{- end }}
 {{- end }}
 {{- $repos = $repos | compact | uniq }}
@@ -74,7 +76,7 @@ fi
 echo 'ADDING THIRD-PARTY APT REPOS...'
 $SUDO install -d -m 0755 /usr/share/keyrings
 {{ range $r := $aptRepos -}}
-keyring="/usr/share/keyrings/{{ $r.name }}-keyring.gpg"
+keyring={{ $r.keyring | quote }}
 if [ ! -s "$keyring" ]; then
   tmpkey="$(mktemp)"
   if curl -fsSL {{ $r.key | quote }} -o "$tmpkey" && [ -s "$tmpkey" ]; then
