@@ -1,0 +1,126 @@
+# Aliases and small functions.
+
+alias ev='source evalx.sh'
+
+# Apps
+if [[ -x "$HOME/.local/bin/appx.sh" ]]; then
+  alias ia="$HOME/.local/bin/appx.sh -i"
+  alias ua="$HOME/.local/bin/appx.sh -u -f"
+  alias uaa="$HOME/.local/bin/appx.sh -U"
+fi
+
+# Ls
+if has eza; then
+  EZA_OPTS=(
+    '--colour=always'
+    '--group-directories-first'
+    '--icons=auto'
+    '--ignore-glob=".DS_Store|.idea|.venv|.vs|__pycache__|cache|debug|.git|node_modules|venv"'
+    '-s Name'
+  )
+  alias l="eza -lh $EZA_OPTS"      # long list
+  alias ls="eza -1 $EZA_OPTS"      # normal ls
+  alias ll="eza -lhag $EZA_OPTS"   # long list all
+  alias ld="eza -lhD $EZA_OPTS"    # long list dirs
+  alias lt="eza -T $EZA_OPTS"      # tree
+  alias llt="eza -lagT $EZA_OPTS"  # long tree
+else
+  alias ls='ls -A --color=auto'
+  alias ll='ls -lAg --color=auto'
+fi
+
+# Change directory
+alias ..='cd ..'
+alias ...='cd ../..'
+alias .3='cd ../../..'
+alias .4='cd ../../../..'
+alias .5='cd ../../../../..'
+
+alias cdc='cd $XDG_CONFIG_HOME/'
+alias cdcm='cd $XDG_DATA_HOME/chezmoi/'
+alias cdd='cd ~/Documents/'
+alias cddl='cd ~/Downloads/'
+alias cdp='cd ~/projects/'
+{{- if .company }}
+alias cdw='cd ~/projects/{{ .company }}/'
+{{- end }}
+alias cdnv='cd $XDG_CONFIG_HOME/nvim/'
+
+# Make directory
+alias mkdir='mkdir -p'
+
+# Chezmoi
+cmc() {
+  { [ -n "$1" ] && chezmoi git "commit -m \"$1\"" || chezmoi git "commit"; } && chezmoi git push
+}
+cms() {
+  chezmoi re-add
+  chezmoi git "f" || { echo 'No "f" alias for git!'; cmc; }
+}
+# Regenerate ~/.config/zsh/completions after installing/upgrading tools
+alias zshcomp='$XDG_DATA_HOME/chezmoi/home/.chezmoiscripts/unix/run_after_90-generate-zsh-completions.sh'
+
+alias cm='chezmoi'
+alias cma='chezmoi add'
+alias cme='chezmoi edit'
+alias cmra='chezmoi re-add'
+
+# Git
+alias gca='git commit -a'
+
+# Tmux
+alias t='tmux'
+alias ta='tmux has-session &>/dev/null && tmux attach || tmux new-session'
+alias tks='tmux kill-server'
+alias tll='tmuxinator local'
+
+alias oc='opencode'
+
+# Yazi: cd to the directory yazi exited in
+yzcd() {
+  local tmp=$(mktemp)
+  yazi "$@" --cwd-file="$tmp"
+  local cwd=$(<"$tmp")
+  if [[ -n "$cwd" && "$cwd" != "$PWD" ]]; then
+    cd "$cwd"
+  fi
+  rm "$tmp"
+}
+
+# Copy, move
+if has rsync; then
+  alias rcp='rsync --recursive --times --progress --stats --human-readable'
+  alias rmv='rsync --recursive --times --progress --stats --human-readable --remove-source-files'
+fi
+
+# Kubernetes
+if has k3s; then
+  alias kk='k3s kubectl'
+fi
+if has kubecolor; then
+  compdef kubecolor=kubectl
+  alias k='kubecolor'
+fi
+
+# Others
+alias c='clear'
+alias cls='clear'
+alias csl='clear'
+alias ldk='lazydocker'
+alias lg='NVIM_NO_IDE=1 lazygit'
+alias rl='exec zsh'
+alias sv='sudo -E nvim'
+alias v='nvim'
+alias nv='NVIM_NO_IDE=1 nvim'
+alias yz='yazi'
+alias ip='ip -c'
+{{ if .isGui }}
+# Explorer
+if has dolphin; then
+  e() {
+    dolphin "$@" &
+  }
+fi
+
+alias z='zathura'
+{{ end }}

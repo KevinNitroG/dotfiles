@@ -1,0 +1,148 @@
+# $ZDOTDIR/.zshenv — sourced for EVERY zsh (interactive, non-interactive,
+# scripts). Environment variables only; nothing that prints or takes time.
+#
+# REF: https://unix.stackexchange.com/a/487889/612293
+
+##########################################
+
+# XDG (already exported by ~/.zshenv, re-asserted here for direct sourcing)
+
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+if [ ! -w "${XDG_RUNTIME_DIR:=/run/user/$UID}" ]; then
+  XDG_RUNTIME_DIR=/tmp
+fi
+export XDG_RUNTIME_DIR
+
+##########################################
+
+# PATH
+typeset -aU path # Avoid recursively lengthening $path in subshells
+export path=(
+  $HOME/.local/bin
+  $HOME/Android/Sdk/platform-tools
+  $HOME/.npm-global/bin
+  $PNPM_HOME
+  $XDG_DATA_HOME/bin
+  $HOME/.cargo/bin
+  $XDG_DATA_HOME/nvim/mason/bin
+  $path
+)
+
+##########################################
+
+# PRIVATE / PER-PROFILE SECRETS
+#
+# Encrypted in this repo, decrypted to $ZDOTDIR/private/ by chezmoi:
+#   common.zsh     both personal and work
+#   personal.zsh   personal profile only
+#   <company>.zsh  one per company profile (e.g. itcgroup.zsh)
+# chezmoi only ships the files matching this machine's .profiles, so a plain
+# glob is enough — no per-machine list to maintain here.
+
+for _private_zsh in "$ZDOTDIR"/private/*.zsh(N); do
+  source "$_private_zsh"
+done
+unset _private_zsh
+
+##########################################
+
+# COMMON
+
+export ZSH="$HOME/.oh-my-zsh"
+export NVIM_APPNAME='nvim'
+export EDITOR='nvim' # 'code --wait', 'vim'
+export VISUAL="$EDITOR"
+export SYSTEMD_EDITOR="$EDITOR"
+export PAGER='bat' # 'less', 'more', 'bat', no 'delta'!
+export WATCH_INTERVAL='5000'
+export DISABLE_AUTO_UPDATE=true
+
+{{- if .isGui }}
+export BROWSER='brave' # 'google-chrome-stable'
+export CHROME_EXECUTABLE="$(command -v brave 2>/dev/null)"
+{{- end }}
+
+##########################################
+
+# FZF
+
+# https://github.com/catppuccin/fzf - not use background for transparent
+# NOTE: With border left option, it cannot show preview-label
+export FZF_DEFAULT_OPTS="
+--color bg+:#313244
+--color bg:#1E1E2E
+--color spinner:#F5E0DC
+--color hl:#F38BA8
+--color fg:#CDD6F4
+--color header:#F38BA8
+--color info:#CBA6F7
+--color pointer:#F5E0DC
+--color marker:#B4BEFE
+--color fg+:#CDD6F4
+--color prompt:#CBA6F7
+--color hl+:#F38BA8
+--color selected-bg:#45475A
+--color border:#6C7086
+--color label:#CDD6F4
+--border
+--cycle
+--height ~100%
+--layout reverse
+--preview-window right,60%,border-left,wrap
+--bind alt-w:toggle-preview-wrap
+--bind ctrl-b:preview-page-up
+--bind ctrl-d:preview-half-page-down
+--bind ctrl-e:toggle-preview
+--bind ctrl-f:preview-page-down
+--bind ctrl-g:preview-top
+--bind ctrl-h:preview-bottom
+--bind ctrl-u:preview-half-page-up
+"
+# --bind one:accept # For accept if there's only 1
+export FZF_DEFAULT_COMMAND="rg --files --no-ignore-vcs --hidden --ignore-file $XDG_CONFIG_HOME/ripgrep/.rgignore"
+
+##########################################
+
+# BAT
+
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export MANROFFOPT='-c'
+
+##########################################
+
+# ZSH PLUGINS
+
+ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
+ZSH_TMUX_CONFIG="${XDG_CONFIG_HOME}/tmux/tmux.conf"
+
+##########################################
+
+# ZOXIDE
+export ZOXIDE_CMD_OVERRIDE="cd"
+
+##########################################
+
+# ATAC
+export ATAC_MAIN_DIR="$XDG_CONFIG_HOME/atac"
+export ATAC_KEY_BINDINGS="$XDG_CONFIG_HOME/atac/key_bindings.toml"
+
+##########################################
+
+# JAVA
+export JAVA_OPTS='-Xmx8g'
+
+##########################################
+
+# OPENCODE
+
+export OPENCODE_ENABLE_EXA='1'
+export OPENCODE_EXPERIMENTAL=true
+export OPENCODE_DISABLE_LSP_DOWNLOAD=true
+
+##########################################
+
+# CUSTOM
+export CATPPUCCIN_FLAVOR='{{ .catppuccinFlavor }}' # For configs that read env

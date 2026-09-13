@@ -1,5 +1,19 @@
 # vim:ft=gitignore.chezmoitmpl
+#
+# Targets chezmoi actively DELETES on apply. Use sparingly — these are real
+# deletions in $HOME.
 
 {{ if eq .osId "windows" }}
 .npm-global/**/*
+{{ end }}
+
+{{ if ne .osId "windows" }}
+# Leftovers from before the ZDOTDIR migration. zsh config now lives in
+# ~/.config/zsh; ~/.zshenv is only a stub that points at it. These files are
+# inert once ZDOTDIR is set, but stale copies are worse than none.
+.zshrc
+.zprofile
+.zshenv_private
+.zsh/completions
+.zsh
 {{ end }}

@@ -1,0 +1,10 @@
+# $ZDOTDIR/.zprofile — login shells only.
+{{ if .isGui }}
+# Input method (fcitx5) for GUI toolkits. Desktop sessions only — under WSL or
+# on a headless box these just confuse Qt/SDL apps.
+# export GTK_IM_MODULE=fcitx
+export GLFW_IM_MODULE=ibus
+export QT_IM_MODULE=fcitx
+export SDL_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+{{ end }}

@@ -1,0 +1,13 @@
+# ~/.zshenv — the ONLY zsh file that has to live in $HOME.
+#
+# Everything else lives in $ZDOTDIR (~/.config/zsh). zsh reads this file first,
+# then reads .zshenv/.zprofile/.zshrc/.zlogin from $ZDOTDIR instead of $HOME.
+
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-$HOME/.local/state}"
+
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+
+[[ -f "$ZDOTDIR/.zshenv" ]] && source "$ZDOTDIR/.zshenv"

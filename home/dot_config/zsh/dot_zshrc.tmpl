@@ -1,0 +1,108 @@
+# $ZDOTDIR/.zshrc — interactive shells only.
+#
+# This file is deliberately thin: it loads oh-my-zsh, then sources every
+# fragment in $ZDOTDIR/conf.d/*.zsh in order. Put new configuration in a
+# numbered fragment there, not here.
+#
+# REF: https://unix.stackexchange.com/a/487889/612293
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+##########################################
+
+# COMPLETIONS FPATH (must be set before oh-my-zsh runs compinit)
+fpath=("$ZDOTDIR/completions" $fpath)
+
+##########################################
+
+# OH-MY-ZSH
+
+plugins=(
+  # zsh-vi-mode
+  mise
+  # direnv
+
+  # wakatime
+{{- if eq .osFamily "arch" }}
+  archlinux
+{{- end }}
+{{- if eq .chezmoi.os "darwin" }}
+  macos
+  brew
+{{- end }}
+  argocd
+  bazel
+  command-not-found
+  docker
+  docker-compose
+  dotenv
+  extract
+  fluxcd
+  fzf-tab
+  gh
+  git
+  golang
+  gradle
+  helm
+  kubectl
+  minikube
+  starship
+  sudo
+  terraform
+  tmux
+  tmuxinator
+  zoxide
+  zsh-256color
+  zsh-autosuggestions
+  zsh-better-npm-completion
+  zsh-syntax-highlighting
+  # gitignore
+  # nx-completion
+
+  history-substring-search # Always below zsh-syntax-highlighting
+
+  # Have to load after zsh-vi-mode
+  fancy-ctrl-z
+  fzf
+  # zsh-autocomplete
+)
+
+[[ -f "$ZSH/oh-my-zsh.sh" ]] && source "$ZSH/oh-my-zsh.sh"
+
+_catppuccin_zsh_syntax_highlighting_zsh="$ZSH/custom/plugins/catppuccin-zsh-syntax-highlighting/themes/catppuccin_${CATPPUCCIN_FLAVOR:-mocha}-zsh-syntax-highlighting.zsh"
+if [[ -f "$_catppuccin_zsh_syntax_highlighting_zsh" ]]; then
+  source "$_catppuccin_zsh_syntax_highlighting_zsh"
+fi
+unset _catppuccin_zsh_syntax_highlighting_zsh
+
+##########################################
+
+# FRAGMENTS
+
+for _conf in "$ZDOTDIR"/conf.d/*.zsh(N); do
+  source "$_conf"
+done
+unset _conf
+
+##########################################
+
+# COMPLETION INIT (last — after every fpath entry and compdef is in place)
+
+mkdir -p "${XDG_CACHE_HOME}/zsh"
+autoload -Uz compinit && compinit -d "${XDG_CACHE_HOME}/zsh/zcompdump"
+autoload -Uz bashcompinit && bashcompinit
+
+if (( $+commands[aws_completer] )); then
+  complete -C "$(command -v aws_completer)" aws
+fi
+
+if [[ -f "$XDG_CONFIG_HOME/.dart-cli-completion/zsh-config.zsh" ]]; then
+  source "$XDG_CONFIG_HOME/.dart-cli-completion/zsh-config.zsh"
+fi
+
+##########################################
+
+if (( $+commands[fastfetch] )); then
+  fastfetch
+fi
