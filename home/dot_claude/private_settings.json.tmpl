@@ -10,7 +10,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "command -v notify-send >/dev/null 2>&1 && notify-send 'Claude' 'Task finished!' --icon=dialog-information; { command -v paplay >/dev/null 2>&1 && [ -f /usr/share/sounds/freedesktop/stereo/complete.oga ] && paplay /usr/share/sounds/freedesktop/stereo/complete.oga; } 2>/dev/null; true",
+            "command": "node \"{{ .chezmoi.homeDir }}/.claude/notify.mjs\" stop",
             "async": true
           }
         ]
@@ -21,7 +21,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "command -v notify-send >/dev/null 2>&1 && notify-send 'Claude' 'Prompt waiting for your input!' --icon=dialog-information; true",
+            "command": "node \"{{ .chezmoi.homeDir }}/.claude/notify.mjs\" notification",
             "async": true
           }
         ]
@@ -32,7 +32,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "command -v notify-send >/dev/null 2>&1 && notify-send 'Claude' 'Permission requested' --icon=dialog-question; { command -v paplay >/dev/null 2>&1 && [ -f /usr/share/sounds/freedesktop/stereo/window-question.oga ] && paplay /usr/share/sounds/freedesktop/stereo/window-question.oga; } 2>/dev/null; true",
+            "command": "node \"{{ .chezmoi.homeDir }}/.claude/notify.mjs\" permission",
             "async": true
           }
         ]
@@ -52,7 +52,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "bash ~/.claude/statusline-command.sh"
+    "command": "node \"{{ .chezmoi.homeDir }}/.claude/statusline-command.mjs\""
   },
   "enabledPlugins": {
     "gopls-lsp@claude-plugins-official": true,
