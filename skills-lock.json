@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "skills": {
+    "chezmoi-cli-commands": {
+      "source": "mkobit/chezmoi-skills",
+      "sourceType": "github",
+      "skillPath": "skills/cli-commands/SKILL.md",
+      "computedHash": "c7c86e478c134fc9e6e1790ae11f783d2eee75f1011d67169f10cf0016dfe0c9"
+    },
+    "chezmoi-configuration": {
+      "source": "mkobit/chezmoi-skills",
+      "sourceType": "github",
+      "skillPath": "skills/configuration/SKILL.md",
+      "computedHash": "7338ae509cba19b64fc5291350777634fbbc0006d3985c393b8a0e4ea828884f"
+    },
+    "chezmoi-externals": {
+      "source": "mkobit/chezmoi-skills",
+      "sourceType": "github",
+      "skillPath": "skills/externals/SKILL.md",
+      "computedHash": "149dc7f567d1aa1325b180513e782cd1d775c6adbe328b2033ef84db28a5c6c3"
+    },
+    "chezmoi-file-attributes": {
+      "source": "mkobit/chezmoi-skills",
+      "sourceType": "github",
+      "skillPath": "skills/file-attributes/SKILL.md",
+      "computedHash": "d87ae2724d960fd731c80e384287038823d94d01cc435843050477b7a0d0c60f"
+    },
+    "chezmoi-init": {
+      "source": "mkobit/chezmoi-skills",
+      "sourceType": "github",
+      "skillPath": "skills/init/SKILL.md",
+      "computedHash": "9d3b23282d5e59bd2fd1d476773a8c2108e9ed5e4d8bf6df81c6de34b2c0ff42"
+    },
+    "chezmoi-machine-config": {
+      "source": "mkobit/chezmoi-skills",
+      "sourceType": "github",
+      "skillPath": "skills/machine-config/SKILL.md",
+      "computedHash": "99293800a7c91e1c10d6429a10cc15d6ed39e4fd565a58ea35309bcf4674ef99"
+    },
+    "chezmoi-scripts": {
+      "source": "mkobit/chezmoi-skills",
+      "sourceType": "github",
+      "skillPath": "skills/scripts/SKILL.md",
+      "computedHash": "e027a5bc74c66abeb815d07d7e3261dc07e010cdc41612b4437091860b926ae2"
+    },
+    "chezmoi-secrets-management": {
+      "source": "mkobit/chezmoi-skills",
+      "sourceType": "github",
+      "skillPath": "skills/secrets-management/SKILL.md",
+      "computedHash": "2ca421fd8bf49c97bc7c499c029eeefd6b45222c8d3eb912650acffd7cc5901d"
+    },
+    "chezmoi-templating": {
+      "source": "mkobit/chezmoi-skills",
+      "sourceType": "github",
+      "skillPath": "skills/templating/SKILL.md",
+      "computedHash": "e3ad0f967583770c2f4ff8b35d09eff7d45e9b24f4d7cbd57727f441e15837f5"
+    }
+  }
+}

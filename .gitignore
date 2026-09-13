@@ -1,3 +1,23 @@
 # Chezmoi has ensured to ignore those encrypted files, but jut for sure
 home/.zsh_history
 home/.zshenv_private
+
+.agents/skills/chezmoi-cli-commands/
+.agents/skills/chezmoi-configuration/
+.agents/skills/chezmoi-externals/
+.agents/skills/chezmoi-file-attributes/
+.agents/skills/chezmoi-init/
+.agents/skills/chezmoi-machine-config/
+.agents/skills/chezmoi-scripts/
+.agents/skills/chezmoi-secrets-management/
+.agents/skills/chezmoi-templating/
+
+.claude/skills/chezmoi-cli-commands
+.claude/skills/chezmoi-configuration
+.claude/skills/chezmoi-externals
+.claude/skills/chezmoi-file-attributes
+.claude/skills/chezmoi-init
+.claude/skills/chezmoi-machine-config
+.claude/skills/chezmoi-scripts
+.claude/skills/chezmoi-secrets-management
+.claude/skills/chezmoi-templating
