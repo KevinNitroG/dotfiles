@@ -44,32 +44,23 @@ Note the `# public key: age1...` line it prints — that is the **recipient**.
 
 ## 3. Register the age recipient
 
-The recipient has to be declared in three places (chezmoi's own config template
-cannot read `.chezmoidata`, hence the duplication):
-
-**a. `home/.chezmoi.toml.tmpl`** — add to all three inline maps:
+Add the profile to `$profileMeta` in `home/.chezmoi.toml.tmpl` — this is the
+**only** place age keys and recipients are declared. `chezmoi init` runs before
+`.chezmoidata` is readable, which is why it lives here rather than in
+`profiles.yml`; everything else reads it back from `.chezmoi.config.age.*`.
 
 ```gotmpl
-{{ $knownProfiles := list
-     "personal"
-     "itcgroup"
-     "acmecorp"
-}}
-
-{{ $ageKeyFiles := dict
-     ...
-     "acmecorp" ".config/age/acmecorp-key.txt"
-}}
-
-{{ $ageRecipients := dict
-     ...
-     "acmecorp" "age1...."
+{{ $profileMeta := dict
+     "personal" (dict ...)
+     "itcgroup" (dict ...)
+     "acmecorp" (dict
+       "key" ".config/age/acmecorp-key.txt"
+       "recipient" "age1....")
 }}
 ```
 
-**b. `home/.chezmoidata/global.yml`** — append to `ageRecipients`.
-
-**c. `home/.chezmoidata/profiles.yml`** — add the profile block (step 4).
+That single entry gives you the `profiles` choice, the age identity path and
+the recipient.
 
 ## 4. Add the profile definition
 
@@ -83,8 +74,6 @@ In `home/.chezmoidata/profiles.yml`:
     signing: ssh
     gpgKey: ""
     sshKey: ~/.ssh/id_ed25519_acmecorp
-    ageKeyFile: ~/.config/age/acmecorp-key.txt
-    ageRecipient: age1....
     sshHosts:
       - name: acmecorp
         hostName: gitlab.acmecorp.com
@@ -209,8 +198,8 @@ A machine rebuild should need nothing but Bitwarden and this repo.
 
 ## Leaving a company
 
-1. Remove the block from `profiles.yml` and the three maps in
-   `.chezmoi.toml.tmpl`; drop the recipient from `global.yml`.
+1. Remove the block from `profiles.yml` and the entry from `$profileMeta` in
+   `.chezmoi.toml.tmpl`.
 2. Delete `dot_config/git/acmecorp.tmpl`,
    `dot_ssh/id_ed25519_acmecorp.pub` and
    `dot_config/zsh/private_private/encrypted_private_acmecorp.zsh.age`.

@@ -1,261 +1,139 @@
-{{/* NOTE: this template runs at `chezmoi init` time and CANNOT read .chezmoidata. */}}
-{{/*       Anything needed here must be declared inline below.                     */}}
+{{/* Runs at `chezmoi init`, which CANNOT read .chezmoidata -- hence $profileMeta
+     below. It is the SINGLE source of truth for age keys and recipients:
+     everything else reads them back from the rendered config via
+     .chezmoi.config.age.*, so there is nothing to keep in sync. */}}
 
-{{/* ------------------------------------------------------------------ */}}
-{{/* Static choices                                                      */}}
-{{/* ------------------------------------------------------------------ */}}
+{{/* ---------- choices ---------- */}}
 
-{{ $themes := list
-     "dark"
-     "light"
-}}
-{{ $catppuccinFlavors := list
-     "latte"
-     "frappe"
-     "macchiato"
-     "mocha"
-}}
+{{ $themes := list "dark" "light" }}
+{{ $catppuccinFlavors := list "latte" "frappe" "macchiato" "mocha" }}
 {{ $catppuccinAccentColors := list
-     "blue"
-     "flamingo"
-     "green"
-     "lavender"
-     "maroon"
-     "mauve"
-     "peach"
-     "pink"
-     "red"
-     "rosewater"
-     "sapphire"
-     "sky"
-     "teal"
-     "yellow"
+     "blue" "flamingo" "green" "lavender" "maroon" "mauve" "peach"
+     "pink" "red" "rosewater" "sapphire" "sky" "teal" "yellow" }}
+
+{{/* One entry per identity: "personal" plus one per company (lowercase, no
+     spaces or hyphens). Adding one here is step 3a of docs/new-company.md. */}}
+{{ $profileMeta := dict
+     "personal" (dict
+       "key" ".config/age/key.txt"
+       "recipient" "age1xq0t7wyprw8sqn6w5lqw33wl8kgct32djs7r7jmsgxjj8lqe54vsd76td3")
+     "itcgroup" (dict
+       "key" ".config/age/itcgroup-key.txt"
+       "recipient" "age1dm6cm48mcsvsw264l702mwfzyhrr74vvcff5dtzj37x2cgy7uu4smuuq7q")
 }}
+{{/* personal first, then companies alphabetically */}}
+{{ $knownProfiles := concat (list "personal") (sortAlpha (without (keys $profileMeta) "personal")) }}
 
-{{/* Known identity profiles. KEEP IN SYNC with home/.chezmoidata/profiles.yml.
-     "personal" plus one entry per company (lowercase, no spaces or hyphens). */}}
-{{ $knownProfiles := list
-     "personal"
-     "itcgroup"
-}}
+{{/* ---------- detect ---------- */}}
 
-{{/* profile -> age identity file. KEEP IN SYNC with profiles.yml ageKeyFile. */}}
-{{ $ageKeyFiles := dict
-     "personal" ".config/age/key.txt"
-     "itcgroup" ".config/age/itcgroup-key.txt"
-}}
-
-{{/* profile -> age recipient. KEEP IN SYNC with profiles.yml + global.yml. */}}
-{{ $ageRecipients := dict
-     "personal" "age1xq0t7wyprw8sqn6w5lqw33wl8kgct32djs7r7jmsgxjj8lqe54vsd76td3"
-     "itcgroup" "age1dm6cm48mcsvsw264l702mwfzyhrr74vvcff5dtzj37x2cgy7uu4smuuq7q"
-}}
-
-{{/* ------------------------------------------------------------------ */}}
-{{/* Defaults                                                            */}}
-{{/* ------------------------------------------------------------------ */}}
-
-{{ $shell := "" }}
-{{ $terminalFontSize := 13 }}
-{{ $opacity := "0.8" }}
-{{ $theme := "dark" }}
-{{ $catppuccinLightFlavour := "latte" }}
-{{ $catppuccinDarkFlavour := "mocha" }}
-{{ $catppuccinAccentColor := "lavender" }}
-{{ $useHyde := false }}
-{{ $isLaptop := false }}
-{{ $profiles := list "personal" }}
-
-{{/* ------------------------------------------------------------------ */}}
-{{/* Auto-detection (before prompts)                                     */}}
-{{/* ------------------------------------------------------------------ */}}
-
-{{/* osId: "windows" | "darwin" | "linux-<osRelease.id>" e.g. "linux-ubuntu" */}}
+{{/* "windows" | "darwin" | "linux-<osRelease.id>" */}}
 {{ $osId := .chezmoi.os }}
 {{ if and (eq .chezmoi.os "linux") (hasKey .chezmoi.osRelease "id") }}
-  {{ $osId = printf "%s-%s" .chezmoi.os .chezmoi.osRelease.id }}
+  {{ $osId = printf "linux-%s" .chezmoi.osRelease.id }}
 {{ end }}
 
-{{/* osFamily: "arch" | "ubuntu" | "windows" | "darwin" | "other".
-     Drives which package manager / install script is used.
-     Only Ubuntu and its derivatives (Mint, Pop!_OS — ID_LIKE=ubuntu) map to
-     "ubuntu"; plain Debian is not supported and falls through to "other",
-     which simply means no package installer runs. */}}
+{{/* Picks the package installer. Debian deliberately does not map to "ubuntu":
+     its package set differs and PPAs do not resolve there, so it lands in
+     "other", which simply means no installer runs. */}}
 {{ $osFamily := "other" }}
-{{ if eq .chezmoi.os "windows" }}
-  {{ $osFamily = "windows" }}
-{{ else if eq .chezmoi.os "darwin" }}
-  {{ $osFamily = "darwin" }}
+{{ if eq .chezmoi.os "windows" "darwin" }}
+  {{ $osFamily = .chezmoi.os }}
 {{ else if eq .chezmoi.os "linux" }}
-  {{ $idLike := "" }}
-  {{ if hasKey .chezmoi.osRelease "idLike" }}{{ $idLike = .chezmoi.osRelease.idLike }}{{ end }}
-  {{ $distroId := "" }}
-  {{ if hasKey .chezmoi.osRelease "id" }}{{ $distroId = .chezmoi.osRelease.id }}{{ end }}
-  {{ $distroIds := lower (printf "%s %s" $distroId $idLike) }}
-  {{ if or (contains "arch" $distroIds) (contains "cachyos" $distroIds) (contains "endeavouros" $distroIds) }}
+  {{ $ids := lower (printf "%s %s"
+       (dig "id" "" .chezmoi.osRelease) (dig "idLike" "" .chezmoi.osRelease)) }}
+  {{ if or (contains "arch" $ids) (contains "cachyos" $ids) (contains "endeavouros" $ids) }}
     {{ $osFamily = "arch" }}
-  {{ else if contains "ubuntu" $distroIds }}
+  {{ else if contains "ubuntu" $ids }}
     {{ $osFamily = "ubuntu" }}
   {{ end }}
 {{ end }}
 
-{{/* WSL: the kernel release carries "microsoft" under WSL1 and WSL2. */}}
-{{ $isWsl := false }}
-{{ if and (eq .chezmoi.os "linux") (hasKey .chezmoi "kernel") }}
-  {{ if contains "microsoft" (lower (.chezmoi.kernel.osrelease | default "")) }}
-    {{ $isWsl = true }}
-  {{ end }}
-{{ end }}
+{{/* WSL1 and WSL2 both carry "microsoft" in the kernel release. */}}
+{{ $isWsl := contains "microsoft" (lower (dig "kernel" "osrelease" "" .chezmoi)) }}
 
-{{/* Headless (no desktop): WSL, containers and servers get no terminal
-     emulators, fonts, input methods or GUI apps. */}}
+{{/* Headless (WSL, containers, servers): no terminals, fonts, input methods
+     or GUI apps. */}}
 {{ $isGui := true }}
 {{ if $isWsl }}
   {{ $isGui = false }}
 {{ else if eq .chezmoi.os "linux" }}
-  {{ if not (or (env "DISPLAY") (env "WAYLAND_DISPLAY") (env "XDG_SESSION_TYPE")) }}
-    {{ $isGui = false }}
-  {{ end }}
+  {{ $isGui = not (not (or (env "DISPLAY") (env "WAYLAND_DISPLAY") (env "XDG_SESSION_TYPE"))) }}
 {{ end }}
 
-{{ if eq $osFamily "windows" }}
-  {{ $shell = "pwsh" }}
-{{ else }}
-  {{ $shell = "zsh" }}
-{{ end }}
-
-{{/* Laptop power tooling is meaningless under WSL / in containers. */}}
+{{ $isLaptop := false }}
 {{ if lookPath "hostnamectl" }}
-  {{ if eq (output "hostnamectl" "chassis" | trim) "laptop" }}
-    {{ $isLaptop = true }}
-  {{ end }}
+  {{ $isLaptop = eq (output "hostnamectl" "chassis" | trim) "laptop" }}
 {{ else if lookPath "wmic" }}
-  {{ if eq (output "wmic" "computersystem" "get" "PCSystemType" "/VALUE" | trim) "PCSystemType=2" }}
-    {{ $isLaptop = true }}
-  {{ end }}
+  {{ $isLaptop = eq (output "wmic" "computersystem" "get" "PCSystemType" "/VALUE" | trim) "PCSystemType=2" }}
 {{ end }}
 {{ if $isWsl }}{{ $isLaptop = false }}{{ end }}
 
-{{/* ------------------------------------------------------------------ */}}
-{{/* Prompts                                                             */}}
-{{/* ------------------------------------------------------------------ */}}
+{{/* ---------- prompts ---------- */}}
 
-{{/* Seed every prompt's DEFAULT from the answer already in
-     ~/.config/chezmoi/chezmoi.toml, when there is one.
+{{/* Every default is read back from the existing chezmoi.toml via `dig`, so
+     re-running `chezmoi init` (which docs/new-company.md requires) re-asks with
+     your previous answer pre-filled rather than resetting to factory values.
+     Not promptXOnce: those never ask again once a value exists.
+     Names are short and stable so they can be scripted:
+       chezmoi init --promptDefaults --promptMultichoice profiles=personal/itcgroup */}}
 
-     This is what makes re-running `chezmoi init` non-destructive, and it is
-     not redundant with the prompt defaults below: those are the *first-run*
-     defaults (dark/mocha/personal). Without this block, the re-init that
-     docs/new-company.md requires — and any re-init after adding an age key —
-     would silently reset your theme, flavour, accent, font size and profiles
-     back to factory values.
-
-     It is deliberately NOT promptStringOnce/promptBoolOnce: those never ask
-     again once a value exists, so you could only change an answer by hand-
-     editing the config. Here you are re-asked, with your previous answer
-     pre-filled — press Enter to keep it. */}}
-{{ if hasKey . "profiles" }}{{ $profiles = .profiles }}{{ end }}
-{{ if hasKey . "isGui" }}{{ $isGui = .isGui }}{{ end }}
-{{ if hasKey . "isLaptop" }}{{ $isLaptop = .isLaptop }}{{ end }}
-{{ if hasKey . "useHyde" }}{{ $useHyde = .useHyde }}{{ end }}
-{{ if hasKey . "theme" }}{{ $theme = .theme }}{{ end }}
-{{ if hasKey . "opacity" }}{{ $opacity = printf "%v" .opacity }}{{ end }}
-{{ if hasKey . "terminalFontSize" }}{{ $terminalFontSize = .terminalFontSize }}{{ end }}
-{{ if hasKey . "catppuccinLightFlavour" }}{{ $catppuccinLightFlavour = .catppuccinLightFlavour }}{{ end }}
-{{ if hasKey . "catppuccinDarkFlavour" }}{{ $catppuccinDarkFlavour = .catppuccinDarkFlavour }}{{ end }}
-{{ if hasKey . "catppuccinAccentColor" }}{{ $catppuccinAccentColor = .catppuccinAccentColor }}{{ end }}
-
-{{/* Prompt names are kept short and stable so they can be scripted, e.g.
-     chezmoi init --promptString profiles=personal,itcgroup --promptBool isGui=false
-     Available profiles: {{ join ", " $knownProfiles }} */}}
-{{/* prompt* returns the default when stdin is not a TTY, so this block is
-     safe non-interactively (CI, containers, --promptString overrides). */}}
-{{/* Profiles is a LIST, not a single choice: a work laptop normally carries
-     both "personal" and the company, since the personal GitHub account still
-     gets used from work. promptMultichoice shows the valid names, allows any
-     combination, and rejects anything not in $knownProfiles, so a typo cannot
-     reach [data] and blow up later in `index .profileDefs $name`.
-
-     Scripted form uses "/" as the separator:
-       chezmoi init --promptMultichoice profiles=personal/itcgroup */}}
-{{ $defaultProfiles := list }}
-{{ range $profiles }}
-  {{ if has . $knownProfiles }}{{ $defaultProfiles = append $defaultProfiles . }}{{ end }}
+{{/* A list, not a single choice: a work machine normally carries both
+     "personal" and its company. promptMultichoice rejects unknown names, so a
+     typo cannot reach [data] and fail later in `index .profileDefs $name`. The
+     stored value is filtered first, or a since-removed company would make the
+     default invalid and init would refuse to start. */}}
+{{ $stored := list }}
+{{ range (dig "profiles" (list "personal") .) }}
+  {{ if has . $knownProfiles }}{{ $stored = append $stored . }}{{ end }}
 {{ end }}
-{{ if not $defaultProfiles }}{{ $defaultProfiles = list "personal" }}{{ end }}
-{{ $profiles = promptMultichoice "profiles" $knownProfiles $defaultProfiles }}
+{{ $profiles := promptMultichoice "profiles" $knownProfiles ($stored | default (list "personal")) | uniq }}
 
-{{ $isGui = promptBool "isGui" $isGui }}
+{{ $isGui = promptBool "isGui" (dig "isGui" $isGui .) }}
 {{ if not $isWsl }}
-  {{ $isLaptop = promptBool "isLaptop" $isLaptop }}
+  {{ $isLaptop = promptBool "isLaptop" (dig "isLaptop" $isLaptop .) }}
 {{ end }}
 
+{{ $terminalFontSize := dig "terminalFontSize" 13 . }}
+{{ $opacity := printf "%v" (dig "opacity" "0.8" .) }}
 {{ if $isGui }}
   {{ $terminalFontSize = promptInt "terminalFontSize" $terminalFontSize }}
   {{ $opacity = promptString "opacity" $opacity }}
 {{ end }}
 
-{{ $theme = promptChoice "theme" $themes $theme }}
-{{ $catppuccinLightFlavour = promptChoice "catppuccinLightFlavour" $catppuccinFlavors $catppuccinLightFlavour }}
-{{ $catppuccinDarkFlavour = promptChoice "catppuccinDarkFlavour" $catppuccinFlavors $catppuccinDarkFlavour }}
-{{ $catppuccinAccentColor = promptChoice "catppuccinAccentColor" $catppuccinAccentColors $catppuccinAccentColor }}
+{{ $theme := promptChoice "theme" $themes (dig "theme" "dark" .) }}
+{{ $catppuccinLightFlavour := promptChoice "catppuccinLightFlavour" $catppuccinFlavors (dig "catppuccinLightFlavour" "latte" .) }}
+{{ $catppuccinDarkFlavour := promptChoice "catppuccinDarkFlavour" $catppuccinFlavors (dig "catppuccinDarkFlavour" "mocha" .) }}
+{{ $catppuccinAccentColor := promptChoice "catppuccinAccentColor" $catppuccinAccentColors (dig "catppuccinAccentColor" "lavender" .) }}
 
 {{/* HyDE is an Arch-only Hyprland desktop; pointless on work/WSL/headless. */}}
+{{ $useHyde := false }}
 {{ if and (eq $osFamily "arch") $isGui (not $isWsl) (has "personal" $profiles) }}
-  {{ $useHyde = promptBool "useHyde" $useHyde }}
+  {{ $useHyde = promptBool "useHyde" (dig "useHyde" false .) }}
 {{ end }}
 
-{{/* promptMultichoice already guarantees valid, known names; this is only a
-     floor for the case where every stored profile has since been removed. */}}
-{{ $profiles = $profiles | compact | uniq }}
-{{ if not $profiles }}{{ $profiles = list "personal" }}{{ end }}
+{{/* ---------- derive ---------- */}}
 
-{{/* ------------------------------------------------------------------ */}}
-{{/* Derived                                                             */}}
-{{/* ------------------------------------------------------------------ */}}
-
-{{/* Companies = every profile that is not "personal". `company` is the primary
-     (first) one, or "" on a personal-only machine. */}}
 {{ $companies := without $profiles "personal" }}
-{{ $company := "" }}
-{{ if $companies }}
-  {{ $company = first $companies }}
-{{ end }}
-{{ $isWork := gt (len $companies) 0 }}
-{{ $isPersonal := has "personal" $profiles }}
+{{ $company := $companies | first | default "" }}
+{{ $catppuccinFlavor := ternary $catppuccinLightFlavour $catppuccinDarkFlavour (eq $theme "light") }}
 
-{{ $catppuccinFlavor := $catppuccinDarkFlavour }}
-{{ if eq $theme "light" }}
-  {{ $catppuccinFlavor = $catppuccinLightFlavour }}
-{{ end }}
-
-{{ $transparent := ne $opacity "1" }}
-
-{{/* Identities: only the private key files this machine actually has, for the
-     profiles it carries. Add a key later => re-run `chezmoi init`. */}}
+{{/* identities: only the key files this machine actually has -- add a key
+     later => re-run `chezmoi init`.
+     recipients: ALWAYS all of them, including ones this machine cannot read,
+     or `chezmoi re-add` on a work-only box would re-encrypt files so the
+     personal key could no longer decrypt them. */}}
 {{ $identities := list }}
-{{ range $profiles }}
-  {{ if hasKey $ageKeyFiles . }}
-    {{ $f := joinPath $.chezmoi.homeDir (get $ageKeyFiles .) }}
-    {{ if lstat $f }}
-      {{ $identities = append $identities $f }}
-    {{ end }}
-  {{ end }}
-{{ end }}
-
-{{/* Recipients: ALWAYS every known recipient, regardless of the profiles on
-     this machine. Otherwise a `chezmoi re-add` on a work-only box would
-     re-encrypt files so the personal key can no longer read them. */}}
 {{ $recipients := list }}
-{{ range $knownProfiles }}
-  {{ if hasKey $ageRecipients . }}
-    {{ $recipients = append $recipients (get $ageRecipients .) }}
+{{ range $name := $knownProfiles }}
+  {{ $meta := get $profileMeta $name }}
+  {{ $recipients = append $recipients $meta.recipient }}
+  {{ $f := joinPath $.chezmoi.homeDir $meta.key }}
+  {{ if and (has $name $profiles) (lstat $f) }}
+    {{ $identities = append $identities $f }}
   {{ end }}
 {{ end }}
 
-{{/* ------------------------------------------------------------------ */}}
-{{/* Output                                                              */}}
-{{/* ------------------------------------------------------------------ */}}
+{{/* ---------- output ---------- */}}
 
 encryption = "age"
 mode = "file" # file, symlink
@@ -265,8 +143,8 @@ progress = true
 profiles = [ {{ $profiles | quoteList | join ", " }} ]
 companies = [ {{ $companies | quoteList | join ", " }} ]
 company = {{ $company | quote }}
-isWork = {{ $isWork }}
-isPersonal = {{ $isPersonal }}
+isWork = {{ gt (len $companies) 0 }}
+isPersonal = {{ has "personal" $profiles }}
 osId = {{ $osId | quote }}
 osFamily = {{ $osFamily | quote }}
 isWsl = {{ $isWsl }}
@@ -275,7 +153,7 @@ isLaptop = {{ $isLaptop }}
 useHyde = {{ $useHyde }}
 terminalFontSize = {{ $terminalFontSize }}
 opacity = {{ $opacity }}
-transparent = {{ $transparent }}
+transparent = {{ ne $opacity "1" }}
 theme = {{ $theme | quote }}
 catppuccinLightFlavour = {{ $catppuccinLightFlavour | quote }}
 catppuccinDarkFlavour = {{ $catppuccinDarkFlavour | quote }}
@@ -298,7 +176,7 @@ autoCommit = false
 autoPush = false
 
 [cd]
-command = {{ $shell | quote }}
+command = {{ ternary "pwsh" "zsh" (eq $osFamily "windows") | quote }}
 
 [completion]
 custom = true

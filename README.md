@@ -284,11 +284,11 @@ chezmoi-encrypt-template.sh ~/.config/Code/User/settings.json VSCode/encrypted_s
 chezmoi-encrypt-template.sh ~/.config/rclone/rclone.conf       rclone/encrypted_rclone.conf
 ```
 
-It reads `ageRecipients` from `home/.chezmoidata/global.yml`, so every file
-ends up readable by every profile. The raw equivalent:
+It reads the recipients chezmoi itself is configured with, so every file ends
+up readable by every profile. The raw equivalent:
 
 ```sh
-age -a $(chezmoi data --format json | jq -r '.ageRecipients | map("-r " + .) | join(" ")') \
+age -a $(chezmoi data --format json | jq -r '.chezmoi.config.age.recipients | map("-r " + .) | join(" ")') \
   file > "$(chezmoi source-path)/.chezmoitemplates/file"
 ```
 

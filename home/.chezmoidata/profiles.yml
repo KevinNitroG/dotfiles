@@ -17,11 +17,11 @@
 #   sshKey       path to the private ssh key. The matching "<name>.pub" is
 #                committed next to it in home/dot_ssh/ and is what git uses as
 #                user.signingkey and what feeds ~/.ssh/allowed_signers.
-#   ageKeyFile   age identity file holding this profile's private key
-#   ageRecipient age public key; every encrypted file is encrypted to all of
-#                these (keep in sync with ageRecipients in global.yml and with
-#                [age] in home/.chezmoi.toml.tmpl)
 #   sshHosts     extra ~/.ssh/config Host blocks for this profile
+#
+# age keys and recipients are NOT here: they are declared once in $profileMeta
+# in home/.chezmoi.toml.tmpl (which runs before .chezmoidata is readable) and
+# read back from .chezmoi.config.age.* wherever they are needed.
 
 profileDefs:
   personal:
@@ -32,8 +32,6 @@ profileDefs:
     gpgKey: "071E9CD8A2D41057"
     gpgFingerprint: "780EDBE72B368638D3DA4691071E9CD8A2D41057"
     sshKey: ~/.ssh/id_ed25519
-    ageKeyFile: ~/.config/age/key.txt
-    ageRecipient: age1xq0t7wyprw8sqn6w5lqw33wl8kgct32djs7r7jmsgxjj8lqe54vsd76td3
     sshHosts: []
 
   itcgroup:
@@ -44,8 +42,6 @@ profileDefs:
     gpgKey: ""
     gpgFingerprint: ""
     sshKey: ~/.ssh/id_ed25519_itcgroup
-    ageKeyFile: ~/.config/age/itcgroup-key.txt
-    ageRecipient: age1dm6cm48mcsvsw264l702mwfzyhrr74vvcff5dtzj37x2cgy7uu4smuuq7q
     sshHosts:
       - name: itcgroup
         hostName: gitlab.itcgroup.io
