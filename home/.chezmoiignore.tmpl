@@ -1,21 +1,40 @@
 # vim:ft=gitignore.chezmoitmpl
+#
+# Paths here are TARGET paths, relative to ~ (no leading "~/" and no "home/"
+# prefix — "home/" only exists in the source tree because of .chezmoiroot).
+#
+# Gating vocabulary (all from home/.chezmoi.toml.tmpl [data]):
+#   .osFamily    "arch" | "ubuntu" | "windows" | "darwin" | "other"
+#   .osId        "linux-ubuntu", "linux-arch", "windows", ...
+#   .isWsl       running under WSL
+#   .isGui       has a desktop session (false on WSL, containers, servers)
+#   .isLaptop
+#   .profiles    e.g. ["personal", "itcgroup"]
+#   .isPersonal  "personal" in .profiles
+#   .isWork      at least one company profile
+#   .company     primary company id, "" if none
+#   .useHyde
 
+##########################################
+# NEVER MANAGED
+
+# age private keys live in ~/.config/age/ and are never committed
+.config/age/**
 .age-key.txt
 
 .config/browser-data/stylus/catppuccin.json
-
 .config/opencode/skills/*
 
 ##########################################
+# SECRETS THAT NEED AN AGE IDENTITY
 
-# Exclude if no ~/.age-key.txt
-
-{{ if (joinPath .chezmoi.homeDir ".age-key.txt" | lstat) }}
-home/.config/rclone/rclone.conf
+{{ if not .chezmoi.config.age.identities }}
+.config/rclone/rclone.conf
 AppData/Roaming/rclone/rclone.conf
 {{ end }}
 
 ##########################################
+# PLATFORM: SCRIPTS
 
 {{ if ne .chezmoi.os "linux" }}
 .chezmoiscripts/linux/**
@@ -28,17 +47,25 @@ AppData/Roaming/rclone/rclone.conf
 .local/bin/*.ps1
 {{ end }}
 
-{{ if ne .osId "darwin" }}
+{{ if ne .chezmoi.os "darwin" }}
 .chezmoiscripts/darwin/**
 {{ end }}
 
 {{ if eq .osId "windows" }}
 .chezmoiscripts/unix/**
 .local/bin/*.sh
-.zsh/**
+{{ end }}
+
+# Distro-specific package installers
+{{ if ne .osFamily "arch" }}
+.chezmoiscripts/linux/*arch-based*
+{{ end }}
+{{ if ne .osFamily "ubuntu" }}
+.chezmoiscripts/linux/*ubuntu-based*
 {{ end }}
 
 ##########################################
+# PLATFORM: WINDOWS vs UNIX
 
 {{ if eq .osId "windows" }}
 
@@ -55,15 +82,14 @@ AppData/Roaming/rclone/rclone.conf
 .config/rclone/
 .config/rclone/**
 .config/vlc/
+.config/zsh/
+.config/zsh/**
 
 .font/
 .npm-global/
 
 .tmux.conf
-.zprofile
 .zshenv
-.zshrc
-.zshenv_private
 .zsh_history
 
 {{ else }}
@@ -84,11 +110,15 @@ Documents/
 Documents/**
 
 .vsvimrc
+
+# .wslconfig configures the WSL VM and belongs on the *Windows* host,
+# never inside a Linux guest.
 .wslconfig
 
 {{ end }}
 
 ##########################################
+# PLATFORM: NON-LINUX
 
 {{ if ne .chezmoi.os "linux" }}
 
@@ -110,21 +140,115 @@ Documents/**
 .config/fcitx5/
 .config/fcitx5/**
 .config/gammastep/
-.config/hypr/
-.config/hypr/**
 .config/sddm/
 .config/systemd/
 .config/systemd/**
 .config/tlp/
+.config/uwsm/
+.config/uwsm/**
 
 {{ end }}
 
 ##########################################
+# HEADLESS (WSL, containers, servers): no desktop, no GUI apps
+#
+# Everything below is only useful with a graphical session, so it is dropped
+# whenever .isGui is false — which covers WSL as well as headless VMs.
 
-# SPECIFIC
+{{ if not .isGui }}
 
-{{ if not .useHyde }}
-.chezmoiscripts/linux/*hyde*.sh
+# Terminal emulators
+.config/alacritty/
+.config/alacritty/**
+.config/ghostty/
+.config/ghostty/**
+.config/kitty/
+.config/kitty/**
+.config/wezterm/
+.config/wezterm/**
+AppData/Roaming/alacritty/
+AppData/Roaming/alacritty/**
+AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/**
+
+# Fonts
+.fonts/
+.fonts/**
+
+# Input method (fcitx5) and GTK theming
+.gtkrc-2.0.mine
+.config/fcitx5/
+.config/fcitx5/**
+
+# Desktop / compositor / display
+.config/gammastep/
+.config/hypr/
+.config/hypr/**
+.config/sddm/
+.config/uwsm/
+.config/uwsm/**
+.config/kanata/
+.config/kanata/**
+.config/libinput-gestures.conf
+.config/dolphinrc
+.config/kdeglobals
+.config/mimeapps.list
+.config/.ktrashrc
+
+# Browser / GUI app flag files and data
+.config/brave-flags.conf
+.config/chrome-flags.conf
+.config/chromium-flags.conf
+.config/code-flags.conf
+.config/electron-flags.conf
+.config/spotify-flags.conf
+.config/browser-data/
+.config/browser-data/**
+
+# GUI applications
+.config/cava/
+.config/mpv/
+.config/ncspot/
+.config/obs/
+.config/obs/**
+.config/vlc/
+.config/vlc/**
+.config/zathura/
+.config/zathura/**
+.config/Code/
+.config/Code/**
+.local/bin/alacritty-toggle-theme.sh
+.local/bin/pactl-mute-twice.sh
+.local/bin/xdg-desktop-portal-hyprland-run.sh
+
+# NetworkManager wifi helpers
+.config/zsh/conf.d/60-wifi.zsh
+
+# Desktop-only setup scripts
+.chezmoiscripts/linux/*kanata*
+.chezmoiscripts/linux/*hyde*
+.chezmoiscripts/linux/*tlp*
+.chezmoiscripts/linux/*brave-debloat*
+.chezmoiscripts/unix/*stylus*
+.chezmoiscripts/linux/*spotify*
+
+# systemd --user units for desktop-only services
+.config/systemd/user/kanata.service
+.config/systemd/user/rclone-drives.service
+.config/systemd/user/rclone@.service
+
+{{ end }}
+
+##########################################
+# HYPRLAND / HyDE
+#
+# ~/.config/hypr is owned by HyDE, not by this repo.
+
+.config/hypr/
+.config/hypr/**
+
+{{/* HyDE only ever makes sense on an Arch-based personal desktop. */}}
+{{ if not (and .useHyde (eq .osFamily "arch") .isGui .isPersonal (not .isWsl)) }}
+.chezmoiscripts/linux/*hyde*
 {{ end }}
 
 {{ if not (lookPath "sddm") }}
@@ -132,7 +256,76 @@ Documents/**
 .config/sddm/**
 {{ end }}
 
-{{ if not (lookPath "hyprland") }}
-.config/hypr/
-.config/hypr/**
+##########################################
+# PROFILE: PERSONAL IDENTITY
+#
+# A work machine that also carries the "personal" profile keeps this — the
+# personal GitHub account is still used from work, so its signing key and
+# git identity must come along.
+
+{{ if not .isPersonal }}
+
+.gnupg/
+.gnupg/**
+.chezmoiscripts/*/*gpg*
+.config/windows-tasks-scheduler/Start GPG.xml
+
+{{ end }}
+
+##########################################
+# PERSONAL LEISURE / HOME-MACHINE ONLY
+#
+# Dropped on any machine without the personal profile, and on any headless
+# machine (WSL, containers, servers) — a WSL guest is a work box even when it
+# carries the personal git identity.
+
+{{ if or (not .isPersonal) (not .isGui) }}
+
+.udemy_enroller/
+.udemy_enroller/**
+
+.wakatime.cfg
+.config/ncspot/
+.config/neomutt/
+.config/neomutt/**
+.config/browser-data/
+.config/browser-data/**
+.config/obs/
+.config/obs/**
+.config/crontab/
+.config/crontab/**
+.config/rclone/
+.config/rclone/**
+.local/bin/rclone-mount.sh
+.config/systemd/user/rclone-drives.service
+.config/systemd/user/rclone@.service
+.chezmoiscripts/linux/*rclone*
+.chezmoiscripts/linux/*spotify*
+.chezmoiscripts/linux/*brave-debloat*
+.chezmoiscripts/windows/*brave-debloat*
+.chezmoiscripts/windows/*rclone*
+
+{{ end }}
+
+##########################################
+# PER-PROFILE FILES
+#
+# Never ship a git identity or a secrets file for a profile this machine does
+# not carry. Adding a company = add it to profiles.yml; this loop picks it up.
+
+{{ range $name, $def := .profileDefs }}
+{{ if not (has $name $.profiles) }}
+.config/git/{{ $name }}
+.config/zsh/private/{{ $name }}.zsh
+{{ if $def.sshKey }}.ssh/{{ base $def.sshKey }}.pub{{ end }}
+{{ end }}
+{{ end }}
+
+##########################################
+# FORM FACTOR
+
+{{ if not .isLaptop }}
+.config/tlp/
+.config/tlp/**
+.chezmoiscripts/linux/*tlp*
 {{ end }}

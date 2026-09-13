@@ -1,10 +1,14 @@
+{{/* HTTPS, not git@github.com: an ssh remote needs a key in the agent and an
+     accepted host key, so on a fresh machine, a container or CI the clone
+     blocks on "Are you sure you want to continue connecting?" with no TTY and
+     the whole apply dies. Both repos are public; https just works. */}}
 {{ if eq .osId "windows" }}
 ["AppData/Local/nvim"]
 {{ else }}
 [".config/nvim"]
 {{ end }}
 type = "git-repo"
-url = "git@github.com:uitdots/nvim.git"
+url = "https://github.com/uitdots/nvim.git"
 
 {{ if eq .osId "windows" }}
 ["vimfile"]
@@ -12,12 +16,13 @@ url = "git@github.com:uitdots/nvim.git"
 [".vim"]
 {{ end }}
 type = "git-repo"
-url = "git@github.com:uitdots/vim.git"
+url = "https://github.com/uitdots/vim.git"
 
 [".config/eza/theme.yml"]
 type = "file"
 url = "https://raw.githubusercontent.com/catppuccin/eza/refs/heads/main/themes/{{ .catppuccinFlavor }}/catppuccin-{{ .catppuccinFlavor }}-{{ .catppuccinAccentColor }}.yml"
 
+{{ if .isGui }}
 {{ if eq .osId "windows" }}
 ["AppData/Roaming/alacritty/catppuccin.toml"]
 {{ else }}
@@ -25,6 +30,7 @@ url = "https://raw.githubusercontent.com/catppuccin/eza/refs/heads/main/themes/{
 {{ end }}
 type = "file"
 url = "https://raw.githubusercontent.com/catppuccin/alacritty/refs/heads/main/catppuccin-{{ .catppuccinFlavor }}.toml"
+{{ end }}
 
 {{ if eq .osId "windows" }}
 ["AppData/Roaming/bat/themes/Catppuccin {{ .catppuccinFlavor | title }}.tmTheme"]
@@ -58,6 +64,7 @@ url = "https://raw.githubusercontent.com/catppuccin/mpv/main/themes/{{ .catppucc
 type = "file"
 url = "https://raw.githubusercontent.com/Julien-cpsn/ATAC/main/example_resources/key_bindings/vim_key_bindings.toml"
 
+{{ if and .isPersonal .isGui }}
 [".config/browser-data/stylus/catppuccin-youtube-music.user.css"]
 type = "file"
 url = "https://github.com/catppuccin/youtubemusic/raw/main/src/youtubemusic.user.css"
@@ -77,6 +84,7 @@ url = "https://github.com/catppuccin/discord/raw/main/discord.user.css"
 type = "git-repo"
 url = "https://github.com/Useful-Scripts-Extension/useful-script.git"
 {{ .externalGitArgs }}
+{{ end }}
 
 ##########################################
 

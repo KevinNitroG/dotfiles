@@ -7,6 +7,7 @@ type = "git-repo"
 url = "https://github.com/tmux-plugins/tpm"
 {{ .externalGitArgs }}
 
+{{ if .isGui }}
 [".config/zathura/catppuccin"]
 type = "file"
 url = "https://raw.githubusercontent.com/catppuccin/zathura/refs/heads/main/themes/catppuccin-{{ .catppuccinFlavor }}"
@@ -24,7 +25,9 @@ include = ["kitty-main/themes/*{{ .catppuccinFlavor }}.conf"]
 [".config/ghostty/themes/catppuccin.conf"]
 type = "file"
 url = "https://raw.githubusercontent.com/catppuccin/ghostty/refs/heads/main/themes/catppuccin-{{ .catppuccinFlavor }}.conf"
+{{ end }}
 
+{{ if and .isPersonal .isGui }}
 [".config/neomutt/vim-keys.muttrc"]
 type = "file"
 url = "https://raw.githubusercontent.com/neomutt/neomutt/refs/heads/main/contrib/vim-keys/vim-keys.rc"
@@ -34,5 +37,7 @@ type = "file"
 url = "https://raw.githubusercontent.com/catppuccin/neomutt/refs/heads/main/{{ if eq .catppuccinFlavor "latte" }}latte-{{ end }}neomuttrc"
 
 ##########################################
+
+{{ end }}
 
 {{ end }}
