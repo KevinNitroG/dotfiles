@@ -1,0 +1,52 @@
+# Per-profile (identity) definitions.
+#
+# A "profile" is one identity this machine carries: "personal", or a company.
+# Company identifiers are lowercase, no spaces/hyphens (Go package naming),
+# e.g. "itcgroup". The active profiles for a machine are chosen at
+# `chezmoi init` time and land in `.profiles` (see home/.chezmoi.toml.tmpl).
+#
+# To onboard a new company, add a block here and follow docs/new-company.md.
+#
+# Keys:
+#   gitName      user.name for repos under gitDir
+#   gitEmail     user.email for repos under gitDir
+#   gitDir       gitdir: scope that activates this identity (git includeIf)
+#   signing      "gpg" | "ssh" | "" (no commit signing)
+#   gpgKey       gpg signing key id      (when signing == "gpg")
+#   gpgFingerprint  full gpg fingerprint, for trusted-key / --edit-key trust
+#   sshKey       path to the private ssh key. The matching "<name>.pub" is
+#                committed next to it in home/dot_ssh/ and is what git uses as
+#                user.signingkey and what feeds ~/.ssh/allowed_signers.
+#   ageKeyFile   age identity file holding this profile's private key
+#   ageRecipient age public key; every encrypted file is encrypted to all of
+#                these (keep in sync with ageRecipients in global.yml and with
+#                [age] in home/.chezmoi.toml.tmpl)
+#   sshHosts     extra ~/.ssh/config Host blocks for this profile
+
+profileDefs:
+  personal:
+    gitName: Kevin Nitro
+    gitEmail: trannguyenthaibinh46@gmail.com
+    gitDir: ~/projects/
+    signing: gpg
+    gpgKey: "071E9CD8A2D41057" # short id, used as git user.signingkey
+    gpgFingerprint: "780EDBE72B368638D3DA4691071E9CD8A2D41057" # full fingerprint
+    sshKey: ~/.ssh/id_ed25519
+    ageKeyFile: ~/.config/age/key.txt
+    ageRecipient: age1xq0t7wyprw8sqn6w5lqw33wl8kgct32djs7r7jmsgxjj8lqe54vsd76td3
+    sshHosts: []
+
+  itcgroup:
+    gitName: Kevin Tran
+    gitEmail: kevin.t@itcgroup.io
+    gitDir: ~/projects/itcgroup/
+    signing: ssh
+    gpgKey: ""
+    gpgFingerprint: ""
+    sshKey: ~/.ssh/id_ed25519_itcgroup
+    ageKeyFile: ~/.config/age/itcgroup-key.txt
+    ageRecipient: age1dm6cm48mcsvsw264l702mwfzyhrr74vvcff5dtzj37x2cgy7uu4smuuq7q
+    sshHosts:
+      - name: itcgroup
+        hostName: gitlab.itcgroup.io
+        user: kevin.t
