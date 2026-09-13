@@ -13,7 +13,7 @@ show_help() {
 Description: Install, update, uninstall apps.
 
 Require: fzf
-Author: Kevin Nitro (KevinNitroG), Claude, Copilot
+Author: Kevin Nitro, Claude, Copilot
 
 Usage: ${0} [OPTION]...
 Options:
@@ -62,10 +62,10 @@ _get_package_manager() {
       package_manager="pacman"
     fi
     ;;
-  'ubuntu' | 'debian')
+  'ubuntu' | 'debian' | 'linuxmint' | 'pop')
     package_manager="apt"
     ;;
-  'fedora' | 'centos' | 'rhel')
+  'fedora' | 'centos' | 'rhel' | 'rocky' | 'almalinux' | 'ol')
     package_manager="dnf"
     ;;
   *)
@@ -118,21 +118,25 @@ _yay_manage() {
   esac
 }
 
-# WARNING: WIP
+_apt_names() {
+  # apt list output is "name/repo,now version arch [installed]"; keep just the name.
+  apt list "$@" 2>/dev/null | cut -d/ -f1 | sort -u
+}
+
 _apt_manage() {
   local action=$1
   case "$action" in
   'install')
-    apt list | fzf --multi --header 'INSTALL APPS' --preview 'apt show {1}' | xargs -ro sudo apt install
+    _apt_names | fzf --multi --header 'INSTALL APPS' --preview 'apt show {1}' | xargs -ro sudo apt install
     ;;
   'update')
-    apt list --upgradable | fzf --multi --header 'UPDATE APPS' --preview 'apt show {1}' | xargs -ro sudo apt upgrade
+    _apt_names --upgradable | fzf --multi --header 'UPDATE APPS' --preview 'apt show {1}' | xargs -ro sudo apt upgrade
     ;;
   'uninstall')
-    apt list --installed | fzf --multi --header 'UNINSTALL APPS' --preview 'apt show {1}' | xargs -ro sudo apt remove
+    _apt_names --installed | fzf --multi --header 'UNINSTALL APPS' --preview 'apt show {1}' | xargs -ro sudo apt remove
     ;;
   'uninstall-clean')
-    apt list --installed | fzf --multi --header 'UNINSTALL APPS' --preview 'apt show {1}' | xargs -ro sudo apt remove && sudo apt --purge autoremove
+    _apt_names --installed | fzf --multi --header 'UNINSTALL APPS' --preview 'apt show {1}' | xargs -ro sudo apt remove && sudo apt autoremove --purge
     ;;
   'fetch')
     sudo apt update
@@ -140,21 +144,26 @@ _apt_manage() {
   esac
 }
 
-# WARNING: WIP
+_dnf_names() {
+  # dnf list output is a header line followed by "name.arch  version  repo";
+  # NF==3 drops the header/blank lines, sub() strips the ".arch" suffix.
+  dnf -q list "$1" 2>/dev/null | awk 'NF==3 {sub(/\.[^.]+$/, "", $1); print $1}' | sort -u
+}
+
 _dnf_manage() {
   local action=$1
   case "$action" in
   'install')
-    dnf list available | fzf --multi --header 'INSTALL APPS' --preview 'dnf info {1}' | xargs -ro sudo dnf install
+    _dnf_names available | fzf --multi --header 'INSTALL APPS' --preview 'dnf info {1}' | xargs -ro sudo dnf install
     ;;
   'update')
-    dnf list upgrades | fzf --multi --header 'UPDATE APPS' --preview 'dnf info {1}' | xargs -ro sudo dnf upgrade
+    _dnf_names upgrades | fzf --multi --header 'UPDATE APPS' --preview 'dnf info {1}' | xargs -ro sudo dnf upgrade
     ;;
   'uninstall')
-    dnf list installed | fzf --multi --header 'UNINSTALL APPS' --preview 'dnf info {1}' | xargs -ro sudo dnf remove
+    _dnf_names installed | fzf --multi --header 'UNINSTALL APPS' --preview 'dnf info {1}' | xargs -ro sudo dnf remove
     ;;
   'uninstall-clean')
-    dnf list installed | fzf --multi --header 'UNINSTALL APPS' --preview 'dnf info {1}' | xargs -ro sudo dnf remove && sudo dnf autoremove
+    _dnf_names installed | fzf --multi --header 'UNINSTALL APPS' --preview 'dnf info {1}' | xargs -ro sudo dnf remove && sudo dnf autoremove
     ;;
   'fetch')
     sudo dnf check-update
@@ -162,18 +171,17 @@ _dnf_manage() {
   esac
 }
 
-# WARNING: WIP
-_snap_mange() {
+_snap_manage() {
   local action=$1
   case "$action" in
   'install')
-    snap find | fzf --multi --header 'INSTALL APPS' --preview 'snap info {1}' | xargs -ro sudo snap install
+    snap find '' 2>/dev/null | tail -n +2 | awk '{print $1}' | fzf --multi --header 'INSTALL APPS' --preview 'snap info {1}' | xargs -ro sudo snap install
     ;;
   'update')
-    snap list | tail -n +2 | fzf --multi --header 'UPDATE APPS' --preview 'snap info {1}' | xargs -ro sudo snap refresh
+    snap list | tail -n +2 | awk '{print $1}' | fzf --multi --header 'UPDATE APPS' --preview 'snap info {1}' | xargs -ro sudo snap refresh
     ;;
   'uninstall' | 'uninstall-clean')
-    snap list | tail -n +2 | fzf --multi --header 'UNINSTALL APPS' --preview 'snap info {1}' | xargs -ro sudo snap remove
+    snap list | tail -n +2 | awk '{print $1}' | fzf --multi --header 'UNINSTALL APPS' --preview 'snap info {1}' | xargs -ro sudo snap remove
     ;;
   'fetch')
     sudo snap refresh --list
@@ -216,7 +224,7 @@ _manage() {
     _dnf_manage "$action"
     ;;
   'snap')
-    _snap_mange "$action"
+    _snap_manage "$action"
     ;;
   'flatpak')
     _flatpak_manage "$action"
