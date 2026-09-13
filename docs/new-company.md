@@ -1,11 +1,10 @@
 # Onboarding a new company
 
-Everything company-specific in this repo hangs off one lowercase identifier.
-Pick it first, then work down the list.
+Everything company-specific hangs off one lowercase identifier. Pick it first.
 
 ## 0. Choose the identifier
 
-Lowercase, no spaces, no hyphens, no underscores — Go package naming:
+Lowercase, no spaces, hyphens or underscores — Go package naming:
 
 | company | id |
 | --- | --- |
@@ -13,41 +12,38 @@ Lowercase, no spaces, no hyphens, no underscores — Go package naming:
 | Acme Corp. | `acmecorp` |
 | Foo-Bar Ltd | `foobar` |
 
-That id becomes the profile name, the git identity filename, the ssh host
-alias, the age key filename and the secrets filename. Changing it later means
-touching all of them, so get it right once.
+It becomes the profile name, git identity filename, ssh host alias, age key
+filename and secrets filename. Changing it later means touching all of them.
 
-Throughout this document, replace `acmecorp` with your id.
+Replace `acmecorp` with your id below.
 
 ---
 
-## 1. Generate an SSH key
+## 1. SSH key
 
 ```sh
 ssh-keygen -t ed25519 -C "you@acmecorp.com" -f ~/.ssh/id_ed25519_acmecorp
 chmod 600 ~/.ssh/id_ed25519_acmecorp
 ```
 
-Upload `~/.ssh/id_ed25519_acmecorp.pub` to the company forge as both an
-authentication key and (if supported) a signing key.
+Upload the `.pub` to the company forge as an authentication key and, if
+supported, a signing key. Details: [ssh.md](./ssh.md).
 
-See [ssh.md](./ssh.md) for the full guide.
-
-## 2. Generate an age key
+## 2. age key
 
 ```sh
 age-keygen -o ~/.config/age/acmecorp-key.txt
 chmod 600 ~/.config/age/acmecorp-key.txt
 ```
 
-Note the `# public key: age1...` line it prints — that is the **recipient**.
+Note the `# public key: age1...` line — that is the **recipient**.
 
 ## 3. Register the age recipient
 
-Add the profile to `$profileMeta` in `home/.chezmoi.toml.tmpl` — this is the
-**only** place age keys and recipients are declared. `chezmoi init` runs before
-`.chezmoidata` is readable, which is why it lives here rather than in
-`profiles.yml`; everything else reads it back from `.chezmoi.config.age.*`.
+Add the profile to `$profileMeta` in `home/.chezmoi.toml.tmpl` — the **only**
+place age keys and recipients are declared (`chezmoi init` runs before
+`.chezmoidata` is readable; everything else reads it back from
+`.chezmoi.config.age.*`).
 
 ```gotmpl
 {{ $profileMeta := dict
@@ -59,10 +55,10 @@ Add the profile to `$profileMeta` in `home/.chezmoi.toml.tmpl` — this is the
 }}
 ```
 
-That single entry gives you the `profiles` choice, the age identity path and
-the recipient.
+That one entry gives you the `profiles` choice, the identity path and the
+recipient.
 
-## 4. Add the profile definition
+## 4. Profile definition
 
 In `home/.chezmoidata/profiles.yml`:
 
@@ -80,130 +76,107 @@ In `home/.chezmoidata/profiles.yml`:
         user: your.name
 ```
 
-This single block drives:
+Drives `~/.config/git/acmecorp`, the `includeIf "gitdir:"` entry, the
+`Host acmecorp` block in `~/.ssh/config`, the `allowed_signers` line, and what
+`.chezmoiignore.tmpl` drops on machines without this profile.
 
-- `~/.config/git/acmecorp` — the git identity + signing config
-- the `includeIf "gitdir:~/projects/acmecorp/"` entry in `~/.config/git/config`
-- the `Host acmecorp` block in `~/.ssh/config`
-- the `~/.ssh/allowed_signers` entry
-- which files `.chezmoiignore.tmpl` drops on machines without this profile
-
-## 5. Create the source files
-
-Two one-line files, copied from the `itcgroup` ones:
+## 5. Source files
 
 ```sh
 cd ~/.local/share/chezmoi/home
 
 printf '%s\n' '{{ includeTemplate "git/identity" (dict "profile" "acmecorp" "ctx" .) }}' \
   > dot_config/git/acmecorp.tmpl
-```
 
-Commit the public key itself as a plain file (same as `id_ed25519.pub`):
-
-```sh
 cp ~/.ssh/id_ed25519_acmecorp.pub dot_ssh/id_ed25519_acmecorp.pub
-```
 
-And an encrypted secrets file for the profile:
-
-```sh
 printf '# %s secrets\n' acmecorp \
   | chezmoi encrypt \
   > dot_config/zsh/private_private/encrypted_private_acmecorp.zsh.age
 ```
 
-## 6. Add packages (optional)
+## 6. Packages (optional)
 
-Company-only tooling goes in the `work` category of
-`home/.chezmoidata/pkgs/{arch-based,ubuntu-based}.yml`. It is installed on any
-machine carrying *a* company profile. mise tools are edited directly in
-`home/dot_config/mise/mise.toml.tmpl`, gated inline with `{{ if .isWork }}`.
-If two companies ever need different tool sets, split `work` into `work.<id>`
-at that point — not before.
+Company tooling goes in the `work` category of
+`home/.chezmoidata/pkgs/{arch-based,ubuntu-based,fedora}.yml`, installed on any
+machine with *a* company profile. mise tools go directly in
+`home/dot_config/mise/mise.toml.tmpl`, gated with `{{ if .isWork }}`.
+Split `work` into `work.<id>` only if two companies ever need different sets.
 
-## 7. Re-init the machine
+## 7. Re-init
 
-`~/.config/chezmoi/chezmoi.toml` is only generated at init time, so the new
-profile and age identity need a re-init:
+`~/.config/chezmoi/chezmoi.toml` is only generated at init time:
 
 ```sh
-chezmoi init
-# at the "profiles" prompt, select both: personal and acmecorp
-chezmoi diff       # review
+chezmoi init       # at the "profiles" prompt, select personal and acmecorp
+chezmoi diff
 chezmoi apply
 ```
 
-Non-interactively (`promptMultichoice` uses `/` as its separator):
+Non-interactively (`promptMultichoice` separates with `/`):
 
 ```sh
 chezmoi init --promptDefaults --promptMultichoice profiles=personal/acmecorp
 ```
 
-The new company only appears in that list once it is in `$knownProfiles` in
-`home/.chezmoi.toml.tmpl` (step 3a) — chezmoi rejects anything else.
+The company only appears in the list once it is in `$profileMeta` (step 3) —
+chezmoi rejects anything else.
 
 Verify:
 
 ```sh
 chezmoi data | jq '{profiles, company, isWork}'
-cat ~/.config/chezmoi/chezmoi.toml | grep -A3 '\[age\]'
+grep -A3 '\[age\]' ~/.config/chezmoi/chezmoi.toml
 mkdir -p ~/projects/acmecorp && cd ~/projects/acmecorp
 git init t && cd t && git config user.email     # -> you@acmecorp.com
 ```
 
-## 8. Re-encrypt existing secrets for the new recipient
+## 8. Re-encrypt existing secrets
 
-Existing encrypted files can still only be read by the old recipients. After
-step 3, re-encrypt everything so the new key can read it too:
+Existing files are still readable only by the old recipients:
 
 ```sh
 cd ~/.local/share/chezmoi
-chezmoi re-add          # re-encrypts every managed encrypted file
-git diff --stat         # every .age file should show as changed
+chezmoi re-add          # every .age file should show as changed
+git diff --stat
 ```
 
-For `.chezmoitemplates/` files (which `re-add` does not cover), redo them with
-the helper in the [README](../README.md#manually-addsync-encrypted-file-to-template).
+`re-add` skips `.chezmoitemplates/` — redo those with the helper in the
+[README](../README.md#manually-addsync-encrypted-file-to-template).
 
 ## 9. Back up the keys
 
-Put both new keys in Bitwarden **before** you need them:
+Into Bitwarden, **before** you need them:
 
-- `age: acmecorp` — contents of `~/.config/age/acmecorp-key.txt`
-- `ssh: acmecorp` — contents of `~/.ssh/id_ed25519_acmecorp` (and the `.pub`)
+- `age: acmecorp` — `~/.config/age/acmecorp-key.txt`
+- `ssh: acmecorp` — `~/.ssh/id_ed25519_acmecorp` (and the `.pub`)
 
-A machine rebuild should need nothing but Bitwarden and this repo.
+A rebuild should need nothing but Bitwarden and this repo.
 
 ---
 
-## Other things worth doing
+## Worth doing
 
-- **Keep the personal profile on the work machine.** `profiles = ["personal",
-  "acmecorp"]` is the normal answer — personal GitHub still gets used from work.
-  Machine-class gating (`.isWsl`, `.isGui`) already strips the leisure dotfiles.
-- **Put work repos under `~/projects/acmecorp/`.** Identity selection is by
-  directory. A work repo cloned to `~/code/whatever` will be signed with your
-  personal key and email.
-- **Check the company's policy** before pushing dotfiles-managed config to
-  company machines, and before putting any company secret in this repo — even
-  encrypted. Prefer the company's own secret store and keep only references here.
-- **Use a separate browser profile** for work, and keep `browser-data/` out of
-  it (already handled: it is dropped on WSL and on non-personal machines).
-- **Do not reuse the personal GPG key** for work signing. The SSH-signing path
-  exists exactly so work commits carry a separate, revocable identity.
-- **Set `AWS_PROFILE` / `KUBECONFIG` per profile** in the encrypted
-  `acmecorp.zsh` rather than globally, so personal and work credentials cannot
-  bleed into each other.
+- **Keep `personal` on the work machine.** `profiles = ["personal", "acmecorp"]`
+  is the normal answer; `.isWsl` / `.isGui` already strip the leisure dotfiles.
+- **Put work repos under `~/projects/acmecorp/`.** Identity is selected by
+  directory — a repo in `~/code/whatever` gets signed with your personal key.
+- **Check company policy** before pushing dotfiles-managed config to company
+  machines, or putting any company secret here — even encrypted. Prefer their
+  secret store and keep only references.
+- **Separate browser profile** for work; `browser-data/` is already dropped on
+  non-personal machines.
+- **Don't reuse the personal GPG key.** SSH signing exists so work commits carry
+  a separate, revocable identity.
+- **Set `AWS_PROFILE` / `KUBECONFIG` in the encrypted `acmecorp.zsh`**, not
+  globally, so credentials cannot bleed across profiles.
 
 ## Leaving a company
 
-1. Remove the block from `profiles.yml` and the entry from `$profileMeta` in
-   `.chezmoi.toml.tmpl`.
-2. Delete `dot_config/git/acmecorp.tmpl`,
-   `dot_ssh/id_ed25519_acmecorp.pub` and
+1. Remove the block from `profiles.yml` and the entry from `$profileMeta`.
+2. Delete `dot_config/git/acmecorp.tmpl`, `dot_ssh/id_ed25519_acmecorp.pub`,
    `dot_config/zsh/private_private/encrypted_private_acmecorp.zsh.age`.
-3. `chezmoi init && chezmoi apply` — the removed files are cleaned up.
-4. `chezmoi re-add` to re-encrypt everything without the old recipient, then
-   delete `~/.config/age/acmecorp-key.txt` and the Bitwarden entries.
+3. `chezmoi init && chezmoi apply` — removed files are cleaned up.
+4. `chezmoi re-add`, then delete `~/.config/age/acmecorp-key.txt` and the
+   Bitwarden entries.
 5. Revoke the SSH key on the company forge.

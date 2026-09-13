@@ -75,24 +75,23 @@
 
 ## 🧩 How it is organised
 
-Every machine answers a handful of questions at `chezmoi init`, and the answers
-drive what gets installed and which config files exist:
+`chezmoi init` asks a few questions; the answers decide what gets installed and
+which files exist:
 
-| value      | meaning                                                                       |
-| ---------- | ----------------------------------------------------------------------------- |
-| `profiles` | the identities this machine carries, e.g. `personal`, `personal,[company]`    |
-| `osFamily` | `arch` / `ubuntu` / `windows` / `darwin` — picks the package installer        |
-| `isWsl`    | auto-detected; drops terminal emulators, fonts, input methods, desktop config |
-| `isGui`    | auto-detected; false on WSL, containers and headless servers                  |
-| `isLaptop` | auto-detected; adds power management                                          |
+| value      | meaning                                                              |
+| ---------- | -------------------------------------------------------------------- |
+| `profiles` | identities this machine carries — `personal`, `personal,[company]`   |
+| `osFamily` | `arch` / `ubuntu` / `fedora` / `windows` / `darwin` — picks installer |
+| `isWsl`    | auto-detected                                                        |
+| `isGui`    | auto-detected; false on WSL, containers, headless                    |
+| `isLaptop` | auto-detected; adds power management                                 |
 
-Identities (git name/email, signing key, ssh host, age key, secrets file) are
-declared once per profile in `home/.chezmoidata/profiles.yml`. Adding a company
-is one block there — see [docs/new-company.md](./docs/new-company.md).
+Identities live in `home/.chezmoidata/profiles.yml`, one block per profile —
+see [docs/new-company.md](./docs/new-company.md).
 
-Packages live in `home/.chezmoidata/pkgs/` split into `common` / `personal` /
-`work` / `laptop`, each with a `cli` list (always) and a `gui` list (desktop
-only). See [AGENTS.md](./AGENTS.md) for the full repo map.
+Packages live in `home/.chezmoidata/pkgs/`, split `common` / `personal` /
+`work` / `laptop`, each with `cli` (always) and `gui` (desktop only).
+Full repo map: [AGENTS.md](./AGENTS.md).
 
 ---
 
@@ -104,63 +103,48 @@ only). See [AGENTS.md](./AGENTS.md) for the full repo map.
 <summary><b>Windows</b></summary>
 
 > [!IMPORTANT]
-> These dotfiles currently require **administrator privileges** on Windows.
-> `home/.chezmoiscripts/windows/run_once_before_0_config-windows.ps1.tmpl`
-> self-elevates via UAC to toggle Windows optional features (WSL, Virtual
-> Machine Platform, .NET) and to adjust machine-wide policy; the Scoop/Choco
-> bootstrap and the `ssh-agent` service also need it. Run the install from an
-> elevated PowerShell and expect UAC prompts.
->
-> User `PATH` entries themselves are set with
-> `[Environment]::SetEnvironmentVariable(..., User)`, which does _not_ need
-> admin — only the feature toggles do.
+> Needs **administrator privileges**. Run from an elevated PowerShell and
+> expect UAC prompts: `run_once_before_0_config-windows.ps1.tmpl` toggles
+> Windows optional features (WSL, Virtual Machine Platform, .NET), and the
+> Scoop/Choco bootstrap plus the `ssh-agent` service need it too.
+> User `PATH` entries do not.
 
 </details>
 
 <details>
 <summary><b>WSL</b></summary>
 
-Install Windows Subsystem for Linux from the Microsoft Store:
-<https://apps.microsoft.com/detail/9PDXGNCFSCZV>
-
-Then install a distribution and set it as default:
+Install WSL from the [Microsoft Store](https://apps.microsoft.com/detail/9PDXGNCFSCZV),
+then:
 
 ```powershell
 wsl --install -d Ubuntu
 wsl --set-default Ubuntu
 ```
 
-Inside the WSL guest, follow the Linux instructions below. WSL is detected
-automatically (`isWsl`), and the following are skipped because they make no
-sense in a guest:
+Inside the guest, follow the Linux instructions. `isWsl` is auto-detected and
+skips what makes no sense in a guest: terminal emulators, fonts, `fcitx5`,
+Hyprland/HyDE/sddm/systemd desktop units, `kanata`, and the personal leisure
+dotfiles (browser data, OBS, rclone, ncspot, …).
 
-- terminal emulators (alacritty, kitty, ghostty, wezterm) — the Windows
-  terminal is the terminal
-- fonts, `fcitx5` input method, `~/.gtkrc-2.0.mine`
-- Hyprland / HyDE / sddm / systemd desktop units, `kanata`, browser flag files
-- personal "leisure" dotfiles (browser data, OBS, rclone mounts, ncspot, …)
-
-`~/.wslconfig` configures the WSL VM and therefore belongs on the **Windows
-host**, not inside the guest — it is only applied on Windows.
+`~/.wslconfig` configures the VM, so it is applied on the **Windows host**, not
+in the guest.
 
 </details>
 
 <details>
 <summary><b>Linux</b></summary>
 
-Arch-based (Arch, CachyOS, EndeavourOS) and Ubuntu (including Mint and Pop!_OS,
-which report `ID_LIKE=ubuntu`) are supported; the right installer script is
-selected from `osFamily`. On Ubuntu,
-`software-properties-common` plus `ppa:neovim-ppa/stable` are set up
-automatically so neovim is current. Tools apt does not carry come from
-mise.
+Arch-based (Arch, CachyOS, EndeavourOS), Ubuntu-based (Mint, Pop!\_OS) and
+Fedora-based are supported; the installer is picked from `osFamily`. On Ubuntu,
+`ppa:neovim-ppa/stable` is added so neovim is current. Anything apt lacks comes
+from mise.
 
 </details>
 
 ### 1. SSH key
 
-You need an SSH key to clone this repo over SSH, and one per identity you use.
-Full guide: [docs/ssh.md](./docs/ssh.md).
+One key per identity. Full guide: [docs/ssh.md](./docs/ssh.md).
 
 - Linux / WSL / macOS
   ```sh
@@ -179,16 +163,15 @@ Full guide: [docs/ssh.md](./docs/ssh.md).
 
 ### 2. age key
 
-Encrypted files are decrypted with [age](https://age-encryption.org/). The
-convention is **one identity file per profile**, all under `~/.config/age/`,
-and **none of them are ever committed**:
+Encrypted files use [age](https://age-encryption.org/). One identity file per
+profile under `~/.config/age/`, **never committed**:
 
 | profile     | identity file                     |
 | ----------- | --------------------------------- |
 | `personal`  | `~/.config/age/key.txt`           |
 | `<company>` | `~/.config/age/<company>-key.txt` |
 
-Restore them from Bitwarden, or generate a new one:
+Restore from Bitwarden, or generate:
 
 ```sh
 mkdir -p ~/.config/age
@@ -196,35 +179,26 @@ age-keygen -o ~/.config/age/key.txt
 chmod 600 ~/.config/age/key.txt
 ```
 
-Every encrypted file in this repo is encrypted to **all** known recipients, so
-any machine can read anything its profiles entitle it to. `chezmoi init` only
-lists identity files that actually exist, so adding a key later means re-running
-`chezmoi init`.
+Every file is encrypted to **all** known recipients. `chezmoi init` only lists
+identity files that exist, so adding a key later means re-running it.
 
 > [!NOTE]
-> This repo is personal and contains encrypted files you cannot decrypt. To use
-> it anyway, run chezmoi apply with `--exclude=encrypted`.
+> This repo is personal and contains encrypted files you cannot decrypt. Apply
+> with `--exclude=encrypted`.
 
 ### 3. GitHub API rate limits
 
-Both **chezmoi** and **mise** hit the GitHub API a lot during a first apply —
-chezmoi for `type = "git-repo"` / release externals, mise for every
-`github:owner/repo` and `npm:`/`cargo:` tool it resolves. Anonymous requests are
-capped at **60/hour**, which is nowhere near enough: you will see
-`API rate limit exceeded` and a half-installed machine.
-
-Export a token **before** running init. A classic PAT with no scopes at all is
-enough — this is only about the rate limit, not about access:
+chezmoi externals and mise both hammer the GitHub API on a first apply, and the
+anonymous limit is **60/hour** — you will hit `API rate limit exceeded` and get
+a half-installed machine. Export a token first (a classic PAT with no scopes is
+enough; this is only about the rate limit):
 
 ```sh
 export GITHUB_TOKEN='ghp_...'
 ```
 
-Both tools read `GITHUB_TOKEN` (mise also accepts `MISE_GITHUB_TOKEN`), which
-raises the limit to 5000/hour. On an already-provisioned machine the token
-lives in the encrypted `~/.config/zsh/private/personal.zsh` and is exported by
-every shell, so this only matters for the very first bootstrap — before the
-secrets exist.
+Only matters for the first bootstrap — afterwards the token lives in the
+encrypted `~/.config/zsh/private/personal.zsh`.
 
 > [!TIP]
 > `gh auth login && export GITHUB_TOKEN=$(gh auth token)` works too.
@@ -242,10 +216,8 @@ _([docs](https://www.chezmoi.io/install))_
   iex "&{$(irm 'https://get.chezmoi.io/ps1')} -- init --apply --ssh --depth 1 --purge-binary KevinNitroG"
   ```
 
-You will be asked to pick `profiles` from a list — `personal` on a personal
-machine, or both `personal` and `[company]` on a work machine that also uses the
-personal GitHub account. To script it, note that `promptMultichoice` separates
-values with `/`:
+Pick `profiles` from the list — `personal`, or `personal` + `[company]` on a
+work machine. To script it (`promptMultichoice` separates with `/`):
 
 ```sh
 chezmoi init --promptDefaults --promptMultichoice profiles=personal/[company]
@@ -253,12 +225,11 @@ chezmoi init --promptDefaults --promptMultichoice profiles=personal/[company]
 
 ### 5. Commit signing
 
-Signing is configured per profile in `home/.chezmoidata/profiles.yml`:
-`personal` signs with **GPG**, company profiles sign with their **SSH** key.
-Identity is chosen by directory (`includeIf "gitdir:"`), so work repos must
-live under the profile's `gitDir` (e.g. `~/projects/[company]/`).
+Per profile in `profiles.yml`: `personal` signs with **GPG**, companies with
+their **SSH** key. Identity is picked by directory (`includeIf "gitdir:"`), so
+work repos must live under the profile's `gitDir`.
 
-GPG, for the personal profile:
+GPG (personal):
 
 ```sh
 gpg --import public.gpg
@@ -272,21 +243,21 @@ quit
 
 > On Windows use the GPG shipped with git — open `git bash`.
 
-SSH signing needs nothing beyond the key itself; `~/.ssh/allowed_signers` is
-generated from `profiles.yml`. Verify with `git log --show-signature -1`.
+SSH signing needs only the key; `~/.ssh/allowed_signers` is generated. Verify
+with `git log --show-signature -1`.
 
 ## Manually add/sync encrypted file to template
 
-`chezmoi re-add` re-encrypts every _managed_ file, but it does not touch
-`home/.chezmoitemplates/`. Use the helper for those:
+`chezmoi re-add` re-encrypts managed files, but not `home/.chezmoitemplates/`.
+Use the helper for those:
 
 ```sh
 chezmoi-encrypt-template.sh ~/.config/Code/User/settings.json VSCode/encrypted_settings.json
 chezmoi-encrypt-template.sh ~/.config/rclone/rclone.conf rclone/encrypted_rclone.conf
 ```
 
-It reads the recipients chezmoi itself is configured with, so every file ends
-up readable by every profile. The raw equivalent:
+It reads chezmoi's own recipients, so every file stays readable by every
+profile. The raw equivalent:
 
 ```sh
 age -a $(chezmoi data --format json | jq -r '.chezmoi.config.age.recipients | map("-r " + .) | join(" ")') \
