@@ -30,11 +30,10 @@ pkgs:
   ubuntuBased:
     common:
       repositories:
-        - "ppa:neovim-ppa/stable" # Ubuntu ships an ancient neovim
+        - "ppa:neovim-ppa/stable"
 
       aptRepos:
         cli:
-          # yazi is not in the Ubuntu archive; upstream publishes a repo
           - name: yazi
             keyring: /usr/share/keyrings/yazi-keyring.gpg
             key: https://yazi-rs.github.io/builds/yazi-keyring.gpg

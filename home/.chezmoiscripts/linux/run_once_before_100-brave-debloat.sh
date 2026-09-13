@@ -6,4 +6,8 @@ fi
 
 echo 'DEBLOATING BRAVE...'
 
-sudo curl 'https://raw.githubusercontent.com/MulesGaming/brave-debullshitinator/refs/heads/main/policies.json' --remote-name --create-dirs --output-dir '/etc/brave/policies/managed'
+sudo curl \
+  'https://raw.githubusercontent.com/MulesGaming/brave-debullshitinator/refs/heads/main/policies.json' \
+  --remote-name \
+  --create-dirs \
+  --output-dir '/etc/brave/policies/managed'

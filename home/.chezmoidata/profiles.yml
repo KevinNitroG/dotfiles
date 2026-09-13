@@ -29,8 +29,8 @@ profileDefs:
     gitEmail: trannguyenthaibinh46@gmail.com
     gitDir: ~/projects/
     signing: gpg
-    gpgKey: "071E9CD8A2D41057" # short id, used as git user.signingkey
-    gpgFingerprint: "780EDBE72B368638D3DA4691071E9CD8A2D41057" # full fingerprint
+    gpgKey: "071E9CD8A2D41057"
+    gpgFingerprint: "780EDBE72B368638D3DA4691071E9CD8A2D41057"
     sshKey: ~/.ssh/id_ed25519
     ageKeyFile: ~/.config/age/key.txt
     ageRecipient: age1xq0t7wyprw8sqn6w5lqw33wl8kgct32djs7r7jmsgxjj8lqe54vsd76td3

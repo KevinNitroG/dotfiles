@@ -27,17 +27,12 @@ cmctl = "latest"
 "go:github.com/dolmen-go/docker-list-context" = "latest"
 "github:felangga/chiko" = "latest"
 "github:cloudnative-pg/cloudnative-pg" = "latest"
-"github:rcieri/glab-tui" = "latest" # TUI for glab / gitlab
+"github:rcieri/glab-tui" = "latest"
 {{- if .isPersonal }}
 "pipx:codecov-cli" = "latest"
 {{- end }}
 {{- if eq .osFamily "ubuntu" }}
 
-# Only what Ubuntu genuinely has no apt package for. Anything apt DOES
-# carry (gdu, lazygit, glow, just, starship, procs, xh, jqp, dysk, tealdeer,
-# kubecolor, awscli, du-dust, tree-sitter-cli, glab, resvg, ...) is installed
-# from apt in home/.chezmoidata/pkgs/ubuntu-based.yml instead -- as is yazi,
-# from its own upstream apt repo.
 yq = "latest" # apt's `yq` is python-yq, not mikefarah/yq
 usage = "latest" # mise completions
 kubectl = "latest"
@@ -57,12 +52,11 @@ uv = "latest"
 "npm:@anthropic-ai/claude-code" = "latest"
 "pipx:markitdown" = "latest"
 "cargo:openapi-tui" = "latest"
-"github:jonas-grgt/ktea" = "latest" # kafka tui
+"github:jonas-grgt/ktea" = "latest"
 "github:jorgerojas26/lazysql" = "latest"
-"github:localstack/localstack-cli" = "latest" # arch: lstk
 "github:rtk-ai/rtk" = "latest"
 "github:dlvhdr/gh-dash" = "latest"
-"github:rustfs/cli" = "latest" # arch: rustfs
+"github:rustfs/cli" = "latest"
 {{- if .isPersonal }}
 "github:da-luce/astroterm" = "latest"
 "github:nickvanw/qbittorrent-tui" = "latest"
@@ -70,8 +64,6 @@ uv = "latest"
 {{- end }}
 
 {{ if eq .osFamily "ubuntu" -}}
-{{/* Bare-binary release assets: without rename_exe the command would be
-     called e.g. `agent-browser-linux-x64`. */}}
 [tools."github:vercel-labs/agent-browser"]
 version = "latest"
 rename_exe = "agent-browser"
