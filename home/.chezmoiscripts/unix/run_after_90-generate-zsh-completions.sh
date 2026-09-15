@@ -26,20 +26,15 @@ export PATH="$HOME/.local/bin:${XDG_DATA_HOME:-$HOME/.local/share}/mise/shims:$P
 
 # name:binary:args...
 specs=(
-  "_chezmoi:chezmoi:completion:zsh"
   "_cmctl:cmctl:completion:zsh"
   "_doggo:doggo:completions:zsh"
   "_just:just:--completions:zsh"
   "_kubectl-cnpg:kubectl-cnpg:completion:zsh"
   "_lstk:lstk:completion:zsh"
-  "_npm:npm:completion"
   "_opencode:opencode:completion:zsh"
   "_pnpm:pnpm:completion:zsh"
   "_railway:railway:completion:zsh"
   "_rc:rc:completions:zsh"
-  "_uv:uv:generate-shell-completion:zsh"
-  "_gh:gh:completion:-s:zsh"
-  "_mise:mise:completion:zsh"
   "_tree-sitter:tree-sitter:complete:--shell:zsh"
 )
 

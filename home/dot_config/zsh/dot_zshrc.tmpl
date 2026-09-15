@@ -23,7 +23,6 @@ plugins=(
   mise
   # direnv
 
-  # wakatime
   {{- if eq .osFamily "arch" }}
   archlinux
   {{- end }}
@@ -31,36 +30,65 @@ plugins=(
   macos
   brew
   {{- end }}
-  argocd
-  aws
-  bazel
+  {{- if eq .osFamily "ubuntu" }}
+  ubuntu
+  {{- end }}
+  {{ if lookPath "dnf" }}
+  dnf
+  {{- end }}
+
+  # shell
+  fzf-tab
   command-not-found
-  docker
-  docker-compose
   dotenv
   extract
-  fluxcd
-  fzf-tab
+  starship
+  sudo
+  tmux
+  zoxide
+  # gitignore
+  # nx-completion
+
+  # necessary
+  docker
+  docker-compose
   gh
   git
-  golang
-  gradle
-  mvn
+  tmuxinator
+
+  # devops
   helm
   kubectl
   minikube
-  starship
-  sudo
   terraform
-  tmux
-  tmuxinator
-  zoxide
+  fluxcd
+  argocd
+  aws
+  azure
+  k9s
+
+  # coding
+  spring
+  gradle
+  mvn
+  golang
+  # bazel
+  # ruff
+  uv
+  # uv-env
+  npm
+  zsh-better-npm-completion
+
+  # utils
+  # wakatime
+  chezmoi
+  gh
+  rclone
+
+  # zsh
   zsh-256color
   zsh-autosuggestions
-  zsh-better-npm-completion
   zsh-syntax-highlighting
-  # gitignore
-  # nx-completion
 
   history-substring-search # Always below zsh-syntax-highlighting
 
@@ -95,13 +123,13 @@ mkdir -p "${XDG_CACHE_HOME}/zsh"
 autoload -Uz compinit && compinit -d "${XDG_CACHE_HOME}/zsh/zcompdump"
 autoload -Uz bashcompinit && bashcompinit
 
-if (( $+commands[aws_completer] )); then
-  complete -C "$(command -v aws_completer)" aws
-fi
+# if (( $+commands[aws_completer] )); then
+#   complete -C "$(command -v aws_completer)" aws
+# fi
 
-if [[ -f "$XDG_CONFIG_HOME/.dart-cli-completion/zsh-config.zsh" ]]; then
-  source "$XDG_CONFIG_HOME/.dart-cli-completion/zsh-config.zsh"
-fi
+# if [[ -f "$XDG_CONFIG_HOME/.dart-cli-completion/zsh-config.zsh" ]]; then
+#   source "$XDG_CONFIG_HOME/.dart-cli-completion/zsh-config.zsh"
+# fi
 
 ##########################################
 
