@@ -24,14 +24,15 @@ plugins=(
   # direnv
 
   # wakatime
-{{- if eq .osFamily "arch" }}
+  {{- if eq .osFamily "arch" }}
   archlinux
-{{- end }}
-{{- if eq .chezmoi.os "darwin" }}
+  {{- end }}
+  {{- if eq .chezmoi.os "darwin" }}
   macos
   brew
-{{- end }}
+  {{- end }}
   argocd
+  aws
   bazel
   command-not-found
   docker
@@ -44,6 +45,7 @@ plugins=(
   git
   golang
   gradle
+  mvn
   helm
   kubectl
   minikube

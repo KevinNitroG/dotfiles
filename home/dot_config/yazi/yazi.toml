@@ -27,8 +27,8 @@ prepend_previewers = [
 
 [opener]
 edit = [
-  { run = '$EDITOR "$@"', block = true, for = "unix" },
-  { run = "%EDITOR% %*", block = true, for = "windows" },
+  { run = '$EDITOR "$s"', block = true, for = "unix" },
+  { run = "%EDITOR% %s", block = true, for = "windows" },
 ]
 extract = [
   # { run = 'ouch d -y %*', desc = "Extract here with ouch", for = "windows" },

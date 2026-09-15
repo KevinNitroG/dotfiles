@@ -1,4 +1,5 @@
 # yaml-language-server: $schema=https://www.gh-dash.dev/schema.json
+# chezmoi:template:left-delimiter=%% right-delimiter=%%
 prSections:
   - title: My Open PRs
     filters: is:open author:@me
@@ -61,29 +62,29 @@ keybindings:
   universal:
     - key: g
       name: lazygit
-      command: cd {{ "{{" }} .RepoPath {{ "}}" }} && lazygit
+      command: cd {{ .RepoPath }} && lazygit
   prs:
     - key: S
       name: squash merge
-      command: gh pr merge {{ "{{" }} .PrNumber {{ "}}" }} --repo {{ "{{" }} .RepoName {{ "}}" }} --squash --delete-branch
+      command: gh pr merge {{ .PrNumber }} --repo {{ .RepoName }} --squash --delete-branch
 theme:
   ui:
     table:
       showSeparator: false
 colors:
   text:
-    {{- $palette := index .catppuccin.palettes .catppuccinFlavor }}
-    primary: {{ $palette.text | quote }}
-    secondary: {{ index $palette .catppuccinAccentColor | quote }}
-    inverted: {{ $palette.surface0 | quote }}
-    faint: {{ $palette.surface1 | quote }}
-    warning: {{ $palette.red | quote }}
-    success: {{ $palette.green | quote }}
+    %%- $palette := index .catppuccin.palettes .catppuccinFlavor %%
+    primary: %% $palette.text | quote %%
+    secondary: %% index $palette .catppuccinAccentColor | quote %%
+    inverted: %% $palette.surface0 | quote %%
+    faint: %% $palette.surface1 | quote %%
+    warning: %% $palette.red | quote %%
+    success: %% $palette.green | quote %%
   background:
-    selected: {{ $palette.overlay2 | quote }}
+    selected: %% $palette.overlay2 | quote %%
   border:
-    primary: {{ $palette.lavender | quote }}
-    secondary: {{ index $palette .catppuccinAccentColor | quote }}
-    faint: {{ $palette.teal | quote }}
+    primary: %% $palette.lavender | quote %%
+    secondary: %% index $palette .catppuccinAccentColor | quote %%
+    faint: %% $palette.teal | quote %%
 pager:
   diff: "delta" # delta | less
