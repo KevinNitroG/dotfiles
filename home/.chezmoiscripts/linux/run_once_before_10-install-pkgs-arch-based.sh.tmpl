@@ -27,6 +27,30 @@ set -eufo pipefail
 echo 'UPDATING SOURCES...'
 sudo pacman -Sy
 
+##########################################
+
+# Chaotic-AUR: prebuilt binaries for AUR packages, so yay does not have to
+# compile them. Some entries in arch-based.yml (qbittorrent-enhanced, …) only
+# exist here. Skipped on CachyOS, which ships it enabled already.
+if ! grep -q '^\[chaotic-aur\]' /etc/pacman.conf; then
+  echo 'ENABLING CHAOTIC-AUR...'
+  # Primary key of the Chaotic-AUR maintainer; signs the keyring package below.
+  chaotic_key=3056513887B78AEB
+  if sudo pacman-key --recv-key "$chaotic_key" --keyserver keyserver.ubuntu.com &&
+    sudo pacman-key --lsign-key "$chaotic_key" &&
+    sudo pacman -U --needed --noconfirm \
+      'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' \
+      'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'; then
+    printf '\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n' |
+      sudo tee -a /etc/pacman.conf >/dev/null
+    sudo pacman -Sy
+  else
+    echo '  !! could not enable chaotic-aur; AUR packages will be built from source'
+  fi
+fi
+
+##########################################
+
 if ! command -v yay &>/dev/null; then
   echo 'INSTALLING YAY...'
   sudo pacman -S --needed git base-devel --noconfirm
