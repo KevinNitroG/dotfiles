@@ -100,7 +100,6 @@ pkgs:
         - nodejs
         - npm
         - rust
-        - rustup
         - uv
         # - pnpm
         # - pyenv
@@ -193,7 +192,7 @@ pkgs:
         # Media / documents
         - libreoffice-fresh
         - obs-studio
-        - qbittorrent
+        - qbittorrent-enhanced
         - spotify
         - vlc
         - zathura
