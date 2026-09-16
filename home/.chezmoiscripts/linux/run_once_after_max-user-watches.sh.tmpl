@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# https://github.com/nvim-tree/nvim-tree.lua/wiki/Troubleshooting
+# https://github.com/twpayne/dotfiles/blob/master/home/.chezmoiscripts/linux/run_onchange_before_install-ghostty.sh.tmpl
+if ! grep -qF "fs.inotify.max_user_watches" /etc/sysctl.conf; then
+  sudo tee -a /etc/sysctl.conf <<'EOF'
+fs.inotify.max_user_watches = 1048576
+fs.inotify.max_user_instances = 1024
+EOF
+
+  sudo sysctl -p
+fi

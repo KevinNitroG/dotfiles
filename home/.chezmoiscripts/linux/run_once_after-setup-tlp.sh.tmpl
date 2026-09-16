@@ -1,3 +1,4 @@
+{{ if .isLaptop -}}
 #!/usr/bin/env bash
 
 set -eufo pipefail
@@ -21,3 +22,5 @@ if command -v tlpRdw &>/dev/null; then
 fi
 
 sudo systemctl mask systemd-rfkill.service systemd-rfkill.socket
+
+{{ end -}}

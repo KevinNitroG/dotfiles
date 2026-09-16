@@ -1,0 +1,11 @@
+{{ if lookPath "spotify" -}}
+#!/usr/bin/env bash
+
+# Spotify version: {{ output "spotify" "--version" | regexFind "version [0-9a-z.]+" | trimPrefix "version " }}
+
+set -eufo pipefail
+
+echo 'PATCHING SPOTIFY USING SPOTX...'
+bash <(curl -sSL https://spotx-official.github.io/run.sh) --blockupdates || true
+
+{{ end -}}

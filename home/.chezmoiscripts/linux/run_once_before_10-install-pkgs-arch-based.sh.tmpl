@@ -1,7 +1,5 @@
+{{ if eq .osFamily "arch" -}}
 #!/usr/bin/env bash
-# Install packages on Arch-based distros (Arch, CachyOS, EndeavourOS).
-# Package lists live in home/.chezmoidata/pkgs/arch-based.yml.
-# Gated to osFamily == "arch" by home/.chezmoiignore.tmpl.
 
 set -eufo pipefail
 
@@ -22,28 +20,29 @@ set -eufo pipefail
 
 # Profiles: {{ join ", " .profiles }} | categories: {{ join ", " $cats }} | gui: {{ .isGui }}
 
+{{ $sudo := "sudo " -}}
+{{ if eq .chezmoi.username "root" -}}
+{{   $sudo = "" -}}
+{{ end -}}
+
 ##########################################
 
 echo 'UPDATING SOURCES...'
-sudo pacman -Sy
+{{ $sudo }}pacman -Syu
 
 ##########################################
 
-# Chaotic-AUR: prebuilt binaries for AUR packages, so yay does not have to
-# compile them. Some entries in arch-based.yml (qbittorrent-enhanced, …) only
-# exist here. Skipped on CachyOS, which ships it enabled already.
 if ! grep -q '^\[chaotic-aur\]' /etc/pacman.conf; then
   echo 'ENABLING CHAOTIC-AUR...'
-  # Primary key of the Chaotic-AUR maintainer; signs the keyring package below.
   chaotic_key=3056513887B78AEB
-  if sudo pacman-key --recv-key "$chaotic_key" --keyserver keyserver.ubuntu.com &&
-    sudo pacman-key --lsign-key "$chaotic_key" &&
-    sudo pacman -U --needed --noconfirm \
+  if {{ $sudo }}pacman-key --recv-key "$chaotic_key" --keyserver keyserver.ubuntu.com &&
+    {{ $sudo }}pacman-key --lsign-key "$chaotic_key" &&
+    {{ $sudo }}pacman -U --needed --noconfirm \
       'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst' \
       'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'; then
     printf '\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n' |
-      sudo tee -a /etc/pacman.conf >/dev/null
-    sudo pacman -Sy
+      {{ $sudo }}tee -a /etc/pacman.conf >/dev/null
+    {{ $sudo }}pacman -Sy
   else
     echo '  !! could not enable chaotic-aur; AUR packages will be built from source'
   fi
@@ -53,7 +52,7 @@ fi
 
 if ! command -v yay &>/dev/null; then
   echo 'INSTALLING YAY...'
-  sudo pacman -S --needed git base-devel --noconfirm
+  {{ $sudo }}pacman -S --needed git base-devel --noconfirm
   tmp="$(mktemp -d)"
   git clone --depth 1 https://aur.archlinux.org/yay-bin.git "$tmp/yay-bin"
   (cd "$tmp/yay-bin" && makepkg -si --noconfirm)
@@ -64,10 +63,12 @@ fi
 
 {{ if $pkgs -}}
 echo 'INSTALLING PACKAGES ({{ len $pkgs }})...'
-yay -S --needed --noconfirm {{ $pkgs | quoteList | join " " }}
+yay -Syu --needed --noconfirm {{ $pkgs | quoteList | join " " }}
 {{- end }}
 
 ##########################################
 
 echo 'SETTING UP SERVICES...'
-systemctl list-unit-files "cronie.service" &>/dev/null && sudo systemctl enable --now cronie.service
+systemctl list-unit-files "cronie.service" &>/dev/null && {{ $sudo }}systemctl enable --now cronie.service
+
+{{ end -}}

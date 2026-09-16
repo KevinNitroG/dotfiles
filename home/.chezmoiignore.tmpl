@@ -56,17 +56,6 @@ AppData/Roaming/rclone/rclone.conf
 .local/bin/*.sh
 {{ end }}
 
-# Distro-specific package installers
-{{ if ne .osFamily "arch" }}
-.chezmoiscripts/linux/*arch-based*
-{{ end }}
-{{ if ne .osFamily "ubuntu" }}
-.chezmoiscripts/linux/*ubuntu-based*
-{{ end }}
-{{ if ne .osFamily "fedora" }}
-.chezmoiscripts/linux/*-fedora*
-{{ end }}
-
 ##########################################
 # PLATFORM: WINDOWS vs UNIX
 

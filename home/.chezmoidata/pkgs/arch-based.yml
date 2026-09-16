@@ -114,7 +114,7 @@ pkgs:
 
         # Monitoring / system
         - btop
-        - cronie
+        # - cronie
         - dysk
         - gdu
         - inotify-tools

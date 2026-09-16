@@ -1,10 +1,7 @@
+{{ if lookPath "kanata" -}}
 #!/usr/bin/env bash
 
 set -eufo pipefail
-
-if ! command -v crontab &>/dev/null; then
-  exit
-fi
 
 echo "SETTING UP KANATA..."
 sudo groupadd uinput || true
@@ -18,3 +15,5 @@ fi
 sudo udevadm control --reload-rules && sudo udevadm trigger
 sudo modprobe uinput || echo 'please run "sudo modprobe uinput" for the first time run kanata'
 systemctl --user enable kanata.service || echo 'Cannot enable kanata service. Try to enable manually :)'
+
+{{ end -}}

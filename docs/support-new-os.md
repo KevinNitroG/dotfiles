@@ -132,8 +132,18 @@ its resilience properties, which are deliberate:
 
 - **No `set -e`** (only `set -uo pipefail`). One missing package must not abort
   the whole bootstrap.
-- **Install packages one at a time**, collecting failures into an array and
-  printing them at the end.
+- **One merged install invocation, with a per-package fallback.** Join all
+  `cli`/`gui` packages into a single transaction (`apt-get install ...`,
+  `dnf install ...`, `yay -S ...`) so the solver resolves dependencies once
+  and downloads in parallel. If that single transaction fails (one rename or
+  missing package on that release), fall back to a per-package loop that
+  collects failures into an array and prints them at the end. Never ship only
+  the single transaction — it makes the bootstrap brittle across releases —
+  and never ship only the loop — it is slow and hides solver conflicts.
+- **Arch is the exception: always full-upgrade.** Never `pacman -Sy` without
+  `-u`, and never `yay -S --needed` without `-u`. A sync-only DB plus a
+  version-pinned dep (e.g. `python-uv` requiring `uv=0.12.13`) breaks the
+  transaction. Use `pacman -Syu` / `yay -Syu --needed`.
 - **Roll back any repo that breaks the metadata refresh.** Add the repo, run
   `dnf makecache` / `apt-get update`, and remove it again if that fails.
 - **Guard anything idempotent-sensitive.** Use the *real* package name —

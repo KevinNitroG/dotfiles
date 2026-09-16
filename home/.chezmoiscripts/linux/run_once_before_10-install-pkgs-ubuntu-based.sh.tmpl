@@ -1,13 +1,10 @@
+{{ if eq .osFamily "ubuntu" -}}
 #!/usr/bin/env bash
-# Install packages on Ubuntu (including WSL).
-# Package lists live in home/.chezmoidata/pkgs/ubuntu-based.yml.
-# Gated to osFamily == "ubuntu" by home/.chezmoiignore.tmpl.
-#
-# Package names are verified against Ubuntu 26.04 LTS.
 
 # NOTE: deliberately not `set -e`. A PPA with no build for this Ubuntu release,
 # or a package renamed between releases, must not abort the whole bootstrap —
 # failures are collected and reported at the end instead.
+
 set -uo pipefail
 
 export DEBIAN_FRONTEND=noninteractive
@@ -42,16 +39,17 @@ export DEBIAN_FRONTEND=noninteractive
 
 # Profiles: {{ join ", " .profiles }} | categories: {{ join ", " $cats }} | gui: {{ .isGui }} | wsl: {{ .isWsl }}
 
-SUDO=''
-if [ "$(id -u)" -ne 0 ]; then
-  SUDO='sudo'
-fi
+{{ $sudo := "sudo " -}}
+{{ if eq .chezmoi.username "root" -}}
+{{   $sudo = "" -}}
+{{ end -}}
+
 
 ##########################################
 
 echo 'BOOTSTRAPPING APT...'
-$SUDO apt-get update
-$SUDO apt-get install -y --no-install-recommends \
+{{ $sudo }}apt-get update
+{{ $sudo }}apt-get install -y --no-install-recommends \
   ca-certificates curl gnupg software-properties-common
 
 ##########################################
@@ -61,10 +59,10 @@ echo 'ADDING REPOSITORIES...'
 # A PPA may have no build for this Ubuntu release, which makes every later
 # `apt-get update` fail. Add each one, verify, and roll it back if it breaks.
 {{ range $repo := $repos -}}
-if $SUDO add-apt-repository -y {{ $repo | quote }}; then
-  if ! $SUDO apt-get update >/dev/null 2>&1; then
+if {{ $sudo }}add-apt-repository -y {{ $repo | quote }}; then
+  if ! {{ $sudo }}apt-get update >/dev/null 2>&1; then
     echo "  !! {{ $repo }} has no release for $(lsb_release -cs); removing it"
-    $SUDO add-apt-repository -y --remove {{ $repo | quote }} >/dev/null 2>&1
+    {{ $sudo }}add-apt-repository -y --remove {{ $repo | quote }} >/dev/null 2>&1
   fi
 fi
 {{ end -}}
@@ -74,7 +72,7 @@ fi
 
 {{ if $aptRepos -}}
 echo 'ADDING THIRD-PARTY APT REPOS...'
-$SUDO install -d -m 0755 /usr/share/keyrings
+{{ $sudo }}install -d -m 0755 /usr/share/keyrings
 {{ range $r := $aptRepos -}}
 keyring={{ $r.keyring | quote }}
 if [ ! -s "$keyring" ]; then
@@ -82,21 +80,21 @@ if [ ! -s "$keyring" ]; then
   if curl -fsSL {{ $r.key | quote }} -o "$tmpkey" && [ -s "$tmpkey" ]; then
     # Accept either an armoured or an already-binary keyring.
     if grep -q 'BEGIN PGP PUBLIC KEY' "$tmpkey" 2>/dev/null; then
-      gpg --dearmor <"$tmpkey" | $SUDO tee "$keyring" >/dev/null
+      gpg --dearmor <"$tmpkey" | {{ $sudo }}tee "$keyring" >/dev/null
     else
-      $SUDO cp "$tmpkey" "$keyring"
+      {{ $sudo }}cp "$tmpkey" "$keyring"
     fi
-    $SUDO chmod 0644 "$keyring"
+    {{ $sudo }}chmod 0644 "$keyring"
   else
     echo "  !! could not fetch the {{ $r.name }} signing key; skipping that repo"
   fi
   rm -f "$tmpkey"
 fi
 if [ -s "$keyring" ]; then
-  echo {{ $r.source | quote }} | $SUDO tee "/etc/apt/sources.list.d/{{ $r.name }}.list" >/dev/null
-  if ! $SUDO apt-get update >/dev/null 2>&1; then
+  echo {{ $r.source | quote }} | {{ $sudo }}tee "/etc/apt/sources.list.d/{{ $r.name }}.list" >/dev/null
+  if ! {{ $sudo }}apt-get update >/dev/null 2>&1; then
     echo "  !! the {{ $r.name }} repo is unusable here (no release, or no build for $(dpkg --print-architecture)); removing it"
-    $SUDO rm -f "/etc/apt/sources.list.d/{{ $r.name }}.list"
+    {{ $sudo }}rm -f "/etc/apt/sources.list.d/{{ $r.name }}.list"
   fi
 fi
 {{ end -}}
@@ -105,21 +103,22 @@ fi
 ##########################################
 
 echo 'UPDATING SOURCES...'
-$SUDO apt-get update || echo '  !! apt-get update reported errors; continuing'
+{{ $sudo }}apt-get update || echo '  !! apt-get update reported errors; continuing'
 
 ##########################################
 
 {{ if $pkgs -}}
 echo 'INSTALLING PACKAGES ({{ len $pkgs }})...'
-# Install one by one so a single package missing from this release does not
-# abort the whole bootstrap; failures are reported at the end.
 failed=()
-for pkg in {{ $pkgs | quoteList | join " " }}; do
-  if ! $SUDO apt-get install -y --no-install-recommends "$pkg"; then
-    echo "  !! failed: $pkg"
-    failed+=("$pkg")
-  fi
-done
+if ! {{ $sudo }}apt-get install -y --no-install-recommends {{ $pkgs | quoteList | join " " }}; then
+  echo '  !! bulk install failed; retrying one by one'
+  for pkg in {{ $pkgs | quoteList | join " " }}; do
+    if ! {{ $sudo }}apt-get install -y --no-install-recommends "$pkg"; then
+      echo "  !! failed: $pkg"
+      failed+=("$pkg")
+    fi
+  done
+fi
 {{- end }}
 
 ##########################################
@@ -150,3 +149,5 @@ if [ ${#failed[@]} -gt 0 ]; then
   echo 'Most tools apt lacks are expected to come from mise instead.'
 fi
 {{- end }}
+
+{{ end }}

@@ -1,13 +1,10 @@
+{{ if eq .osFamily "fedora" -}}
 #!/usr/bin/env bash
-# Install packages on Fedora (and the RHEL-likes that carry ID_LIKE=fedora).
-# Package lists live in home/.chezmoidata/pkgs/fedora.yml.
-# Gated to osFamily == "fedora" by home/.chezmoiignore.tmpl.
-#
-# Package names are verified against Fedora 45.
 
 # NOTE: deliberately not `set -e`. A COPR with no build for this Fedora
 # release, or a package renamed between releases, must not abort the whole
 # bootstrap — failures are collected and reported at the end instead.
+
 set -uo pipefail
 
 {{- $cats := list "common" }}
@@ -47,17 +44,17 @@ set -uo pipefail
 
 # Profiles: {{ join ", " .profiles }} | categories: {{ join ", " $cats }} | gui: {{ .isGui }} | wsl: {{ .isWsl }}
 
-SUDO=''
-if [ "$(id -u)" -ne 0 ]; then
-  SUDO='sudo'
-fi
+{{ $sudo := "sudo " -}}
+{{ if eq .chezmoi.username "root" -}}
+{{   $sudo = "" -}}
+{{ end -}}
 
 ##########################################
 
 echo 'BOOTSTRAPPING DNF...'
 # dnf-plugins-core provides `dnf copr`; it is in the list below too, but the
 # COPR step runs before the package loop and needs it already present.
-$SUDO dnf install -y ca-certificates curl dnf-plugins-core
+{{ $sudo }}dnf install -y ca-certificates curl dnf-plugins-core
 
 ##########################################
 
@@ -66,7 +63,7 @@ echo 'ADDING RELEASE RPMS...'
 {{ range $r := $releaseRpms -}}
 if rpm -q {{ $r.name | quote }} >/dev/null 2>&1; then
   echo "  -- {{ $r.name }} already installed"
-elif ! $SUDO dnf install -y "{{ $r.url }}"; then
+elif ! {{ $sudo }}dnf install -y "{{ $r.url }}"; then
   echo "  !! could not install the {{ $r.name }} release rpm; skipping that repo"
 fi
 {{ end -}}
@@ -79,10 +76,10 @@ echo 'ENABLING COPR REPOS...'
 # A COPR may have no build for this Fedora release, which makes every later
 # `dnf makecache` fail. Enable each one, verify, and roll it back if it breaks.
 {{ range $copr := $coprs -}}
-if $SUDO dnf copr enable -y {{ $copr | quote }}; then
-  if ! $SUDO dnf makecache --refresh >/dev/null 2>&1; then
+if {{ $sudo }}dnf copr enable -y {{ $copr | quote }}; then
+  if ! {{ $sudo }}dnf makecache --refresh >/dev/null 2>&1; then
     echo "  !! {{ $copr }} has no build for Fedora $(rpm -E %fedora); removing it"
-    $SUDO dnf copr disable -y {{ $copr | quote }} >/dev/null 2>&1
+    {{ $sudo }}dnf copr disable -y {{ $copr | quote }} >/dev/null 2>&1
   fi
 fi
 {{ end -}}
@@ -93,8 +90,8 @@ fi
 {{ if $dnfRepos -}}
 echo 'ADDING THIRD-PARTY DNF REPOS...'
 {{ range $r := $dnfRepos -}}
-if $SUDO rpm --import {{ $r.gpgkey | quote }}; then
-  $SUDO tee "/etc/yum.repos.d/{{ $r.name }}.repo" >/dev/null <<'REPO_EOF'
+if {{ $sudo }}rpm --import {{ $r.gpgkey | quote }}; then
+  {{ $sudo }}tee "/etc/yum.repos.d/{{ $r.name }}.repo" >/dev/null <<'REPO_EOF'
 [{{ $r.name }}]
 name={{ $r.desc }}
 baseurl={{ $r.baseurl }}
@@ -104,9 +101,9 @@ gpgcheck=1
 repo_gpgcheck=0
 gpgkey={{ $r.gpgkey }}
 REPO_EOF
-  if ! $SUDO dnf makecache --refresh >/dev/null 2>&1; then
+  if ! {{ $sudo }}dnf makecache --refresh >/dev/null 2>&1; then
     echo "  !! the {{ $r.name }} repo is unusable here (no release, or no build for $(rpm -E %_arch)); removing it"
-    $SUDO rm -f "/etc/yum.repos.d/{{ $r.name }}.repo"
+    {{ $sudo }}rm -f "/etc/yum.repos.d/{{ $r.name }}.repo"
   fi
 else
   echo "  !! could not import the {{ $r.name }} signing key; skipping that repo"
@@ -117,21 +114,22 @@ fi
 ##########################################
 
 echo 'UPDATING METADATA...'
-$SUDO dnf makecache --refresh || echo '  !! dnf makecache reported errors; continuing'
+{{ $sudo }}dnf makecache --refresh || echo '  !! dnf makecache reported errors; continuing'
 
 ##########################################
 
 {{ if $pkgs -}}
 echo 'INSTALLING PACKAGES ({{ len $pkgs }})...'
-# Install one by one so a single package missing from this release does not
-# abort the whole bootstrap; failures are reported at the end.
 failed=()
-for pkg in {{ $pkgs | quoteList | join " " }}; do
-  if ! $SUDO dnf install -y "$pkg"; then
-    echo "  !! failed: $pkg"
-    failed+=("$pkg")
-  fi
-done
+if ! {{ $sudo }}dnf install -y {{ $pkgs | quoteList | join " " }}; then
+  echo '  !! bulk install failed; retrying one by one'
+  for pkg in {{ $pkgs | quoteList | join " " }}; do
+    if ! {{ $sudo }}dnf install -y "$pkg"; then
+      echo "  !! failed: $pkg"
+      failed+=("$pkg")
+    fi
+  done
+fi
 {{- end }}
 
 ##########################################
@@ -153,3 +151,5 @@ if [ ${#failed[@]} -gt 0 ]; then
   echo 'Most tools dnf lacks are expected to come from mise instead.'
 fi
 {{- end }}
+
+{{ end -}}
