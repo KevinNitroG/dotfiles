@@ -1,5 +1,5 @@
 # chezmoi:template:left-delimiter=%% right-delimiter=%%
-%%- $palette := index .catppuccin.palettes .catppuccinFlavor %%
+%%- $palette := index .catppuccin.palettes .catppuccinFlavor -%%
 #reference from https://github.com/scottmckendry/Windots/blob/main/lazygit/config.yml
 notARepository: skip
 disableStartupPopups: true
@@ -38,8 +38,8 @@ gui:
 git:
   parseEmoji: true
 %%- if ne .chezmoi.os "windows" %%
-  pagers:
-    - pager: delta --paging=never
+  diffRenderers:
+    - command: delta --paging=never
       colorArg: always
 %%- end %%
 customCommands:

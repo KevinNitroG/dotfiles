@@ -32,11 +32,11 @@ pkgs:
         - zsh
 
         # Editors + the toolchain neovim plugins expect
-        - neovim
-        - vim
         - cmake
         - luarocks
+        - neovim
         - tree-sitter-cli
+        - vim
 
         # Shell / prompt / terminal UX
         - bat
@@ -52,7 +52,9 @@ pkgs:
         - jq
         - jqp-bin # aur
         - just
+        - mermaid-cli
         - procs
+        - resvg # yazi: SVG preview
         - ripgrep
         - starship
         - tldr
@@ -60,7 +62,6 @@ pkgs:
         - tmuxinator
         - xh
         - yazi
-        - resvg # yazi: SVG preview
         - yq # mise requirements
         - zoxide
 
@@ -91,7 +92,7 @@ pkgs:
         - lazysql-bin
         - openapi-tui
         - pgcli
-        - rustfs
+        - rustfs-bin
 
         # Toolchains
         - bun
@@ -127,18 +128,18 @@ pkgs:
 
         # AI / agents
         - agent-browser-bin
+        - antigravity-cli
         - ast-grep-bin
         - claude # aur
         - markitdown-bin # aur
         - opencode
         - rtk-bin # aur
-        - wakatime
-        - mermaid-cli
 
         # Misc runtime deps
         - bc
         - fuse3 # For rclone mount --daemon
         - usage # For mise
+        - wakatime
 
       gui:
         # Terminals
@@ -175,13 +176,14 @@ pkgs:
         - qbittorrent-tui-bin
 
         # CLI fun
+        # - speedtest-cli
         - asciinema
         - asciinema-agg-bin
         - astroterm
         - cowsay
         - figlet # A program for making large letters out of ordinary text
         - lolcat
-        # - speedtest-cli
+        - pipes.sh
 
       gui:
         # Browsers
@@ -215,6 +217,7 @@ pkgs:
         - wayscriber-bin # aur: live drawing/annotation overlay
         # - gammastep
         # - screenkey
+        - wshowkeys-mao-git
 
     work:
       cli: []

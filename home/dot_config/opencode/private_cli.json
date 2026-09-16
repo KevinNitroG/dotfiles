@@ -8,12 +8,27 @@
     "oh-my-opencode-slim"
   ],
   "diffs": {
-    "wrap": "word"
+    "wrap": "word",
+    "view": "auto"
   },
   "session": {
     "sidebar": "hide",
-    "scrollbar": false,
-    "thinking": "show"
+    "scrollbar": true,
+    "thinking": "show",
+    "grouping": "auto",
+    "image_preview": true,
+    "permissions": "prompt"
   },
-  "animations": true
+  "animations": true,
+  "tabs": {
+    "enabled": true
+  },
+  "prompt": {
+    "paste": "compact",
+    "image_preview": true
+  },
+  "attention": {
+    "enabled": true,
+    "volume": 1
+  }
 }

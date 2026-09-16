@@ -1,16 +1,6 @@
-{{/* chezmoi:template:left-delimiter=%% right-delimiter=%% */}}
+{{ /* chezmoi:template:left-delimiter=%% right-delimiter=%% */ -}}
 #:schema https://mise.jdx.dev/schema/mise.json
-#
-# Edit tools directly in this file. Profile/machine gating is done inline with
-# chezmoi template conditionals:
-#
-#   %% if .isPersonal %% ... %% end %%   personal machines
-#   %% if .isWork %%     ... %% end %%   machines with a company profile
-#   %% if .isGui %%      ... %% end %%   desktops only (not WSL / servers)
-#
-# NOTE: mise has its own {{ }} syntax. With %% delimiters, chezmoi no longer
-# conflicts with mise's {{ }}, so no escaping is needed (see asset_pattern below).
-#
+
 # Profiles on this machine: %% join ", " .profiles %% | gui: %% .isGui %%
 
 [tool_alias]
@@ -79,8 +69,6 @@ jqp = "latest"
 "aqua:dalance/procs" = "latest" # no short registry name
 # dysk ships ONE arch-less zip with per-triple subdirs, so it needs bin_path.
 # aqua: installs it but exposes no binary, and ubi: picks the macOS build.
-# NOTE: bin_path below uses mise's own {{ }} syntax. With %% chezmoi delimiters,
-# this is no longer a conflict — mise {{ }} passes through untouched.
 "github:Canop/dysk" = { version = "latest", bin_path = "{{arch(x64='x86_64', arm64='aarch64')}}-unknown-linux-gnu" }
 # tmuxinator stays on gem: — upstream publishes only a .gem, which is a ruby
 # package, not an executable, so there is no prebuilt binary to use instead.

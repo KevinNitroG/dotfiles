@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
-# Install every tool declared in ~/.config/mise/mise.toml.
-#
-# run_onchange_ + the hash below means this only re-runs when the rendered
-# mise.toml actually changes, so a normal `chezmoi apply` costs nothing.
-#
+
 # mise.toml hash: {{ include "dot_config/mise/mise.toml.tmpl" | sha256sum }}
 
 set -uo pipefail
@@ -16,9 +12,6 @@ if ! command -v mise >/dev/null 2>&1; then
   exit 0
 fi
 
-# GitHub-backed tools hit the anonymous API rate limit fast. mise reads
-# GITHUB_TOKEN (exported from ~/.config/zsh/private/*.zsh), and chezmoi uses
-# the same variable for its own GitHub lookups.
 if [ -z "${GITHUB_TOKEN:-}" ] && [ -z "${MISE_GITHUB_TOKEN:-}" ]; then
   echo 'warning: GITHUB_TOKEN is not set — GitHub API rate limits may bite.'
   echo '         See the README ("GitHub API rate limits").'

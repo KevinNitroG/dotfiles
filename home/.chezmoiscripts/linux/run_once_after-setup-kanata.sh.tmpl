@@ -1,0 +1,41 @@
+{{ if lookPath "kanata" -}}
+#!/usr/bin/env bash
+
+set -eufo pipefail
+
+echo "SETTING UP KANATA..."
+
+# 1. Ensure groups exist and user is added
+if ! getent group uinput >/dev/null; then
+  sudo groupadd uinput
+fi
+sudo usermod -aG input,uinput "$USER"
+
+# 2. Safely configure udev rules (creates file if missing)
+RULE='KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"'
+FILE='/etc/udev/rules.d/99-input.rules'
+
+sudo mkdir -p "$(dirname "$FILE")"
+if [ ! -f "$FILE" ] || ! grep -Fxq "$RULE" "$FILE"; then
+  echo "$RULE" | sudo tee "$FILE" >/dev/null
+  sudo udevadm control --reload-rules
+  sudo udevadm trigger
+  echo "Udev rules updated."
+fi
+
+# 3. Handle uinput kernel module gracefully
+if modinfo uinput &>/dev/null; then
+  sudo modprobe uinput || echo 'Warning: Failed to load uinput module.'
+else
+  echo 'Notice: "uinput" kernel module not found for the current kernel.'
+  echo 'If your kernel lacks built-in uinput support, you may need to recompile or load the module package.'
+fi
+
+# 4. Enable systemd user service
+if systemctl --user --version &>/dev/null; then
+  systemctl --user enable --now kanata.service || echo 'Cannot enable/start kanata service. Check systemd --user setup.'
+else
+  echo 'Systemd user session not available; skipping service activation.'
+fi
+
+{{ end -}}
