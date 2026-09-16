@@ -1,7 +1,6 @@
-{{ /* chezmoi:template:left-delimiter=%% right-delimiter=%% */ -}}
 #:schema https://mise.jdx.dev/schema/mise.json
 
-# Profiles on this machine: %% join ", " .profiles %% | gui: %% .isGui %%
+# Profiles on this machine: {{ join ", " .profiles }} | gui: {{ .isGui }}
 
 [tool_alias]
 nix = "https://github.com/mise-plugins/mise-nix.git"
@@ -19,10 +18,10 @@ cmctl = "latest"
 "github:felangga/chiko" = "latest"
 "github:cloudnative-pg/cloudnative-pg" = "latest"
 "github:rcieri/glab-tui" = "latest"
-%%- if .isPersonal %%
+{{- if .isPersonal }}
 "pipx:codecov-cli" = "latest"
-%%- end %%
-%%- if eq .osFamily "ubuntu" %%
+{{- end }}
+{{- if eq .osFamily "ubuntu" }}
 
 yq = "latest" # apt's `yq` is python-yq, not mikefarah/yq
 usage = "latest" # mise completions
@@ -48,12 +47,12 @@ uv = "latest"
 "github:rtk-ai/rtk" = "latest"
 "github:dlvhdr/gh-dash" = "latest"
 "github:rustfs/cli" = "latest"
-%%- if .isPersonal %%
+{{- if .isPersonal }}
 "github:da-luce/astroterm" = "latest"
 "github:nickvanw/qbittorrent-tui" = "latest"
-%%- end %%
-%%- end %%
-%%- if eq .osFamily "fedora" %%
+{{- end }}
+{{- end }}
+{{- if eq .osFamily "fedora" }}
 
 # dnf HAS yq (mikefarah), helm, uv and astroterm, so those are deliberately
 # absent here. Everything below has no Fedora package at all.
@@ -69,7 +68,7 @@ jqp = "latest"
 "aqua:dalance/procs" = "latest" # no short registry name
 # dysk ships ONE arch-less zip with per-triple subdirs, so it needs bin_path.
 # aqua: installs it but exposes no binary, and ubi: picks the macOS build.
-"github:Canop/dysk" = { version = "latest", bin_path = "{{arch(x64='x86_64', arm64='aarch64')}}-unknown-linux-gnu" }
+"github:Canop/dysk" = { version = "latest", bin_path = "{{ "{{" }}arch(x64='x86_64', arm64='aarch64'){{ "}}" }}-unknown-linux-gnu" }
 # tmuxinator stays on gem: — upstream publishes only a .gem, which is a ruby
 # package, not an executable, so there is no prebuilt binary to use instead.
 "gem:tmuxinator" = "latest"
@@ -89,12 +88,12 @@ jqp = "latest"
 "github:rtk-ai/rtk" = "latest"
 "github:dlvhdr/gh-dash" = "latest"
 "github:rustfs/cli" = "latest"
-%%- if .isPersonal %%
+{{- if .isPersonal }}
 "github:nickvanw/qbittorrent-tui" = "latest"
-%%- end %%
-%%- end %%
+{{- end }}
+{{- end }}
 
-%% if or (eq .osFamily "ubuntu") (eq .osFamily "fedora") -%%
+{{ if or (eq .osFamily "ubuntu") (eq .osFamily "fedora") -}}
 [tools."github:vercel-labs/agent-browser"]
 version = "latest"
 rename_exe = "agent-browser"
@@ -103,7 +102,7 @@ rename_exe = "agent-browser"
 version = "latest"
 rename_exe = "gh-enhance"
 
-%% end -%%
+{{ end -}}
 [tools."github:wakatime/wakatime-cli"]
 version = "latest"
 rename_exe = "wakatime-cli"
@@ -114,7 +113,7 @@ rename_exe = "alloy"
 
 [tools."github:grafana/mcp-grafana"]
 version = "0.11.6"
-asset_pattern = "mcp-grafana_{{os(macos='Darwin', linux='Linux', windows='Windows')}}_{{arch(x64='x86_64', arm64='arm64')}}.*"
+asset_pattern = "mcp-grafana_{{ "{{" }}os(macos='Darwin', linux='Linux', windows='Windows'){{ "}}" }}_{{ "{{" }}arch(x64='x86_64', arm64='arm64'){{ "}}" }}.*"
 
 [settings]
 idiomatic_version_file_enable_tools = ["dotnet"]
