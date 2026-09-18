@@ -64,8 +64,6 @@ pkgs:
       dnfRepos:
         cli: []
         gui:
-          # VS Code, from Microsoft. The yum equivalent of the vscode apt repo
-          # in ubuntu-based.yml.
           - name: vscode
             desc: Visual Studio Code
             baseurl: https://packages.microsoft.com/yumrepos/vscode
@@ -130,8 +128,7 @@ pkgs:
         - ffmpegthumbnailer
         - ImageMagick # Font / HEIC / JPEG XL preview (7.1.2 here)
         - poppler-utils # PDF preview
-        # fd-find, ripgrep, fzf, jq and zoxide are listed above; nerd fonts are
-        # GUI-only and unpackaged on Fedora, exactly as on Ubuntu
+        # nerd fonts are GUI-only and unpackaged on Fedora, exactly as on Ubuntu
 
         # Git / forge
         - gh
@@ -183,7 +180,7 @@ pkgs:
 
       gui:
         # Editors / IDE (from the vscode repo declared above)
-        - code # use `code-insiders` instead for the insiders build
+        - code # code-insiders
 
         # Terminals
         - alacritty
@@ -226,7 +223,7 @@ pkgs:
 
         # CLI fun
         - asciinema
-        - astroterm # packaged in Fedora; Ubuntu gets this from mise
+        - astroterm
         - cowsay
         - figlet
         - lolcat
@@ -251,7 +248,7 @@ pkgs:
         - fcitx5-unikey
 
         # Desktop utilities
-        - tailscale # packaged in Fedora; Ubuntu needs the install script
+        - tailscale
 
       scripts:
         cli: []

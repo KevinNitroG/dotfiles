@@ -249,3 +249,4 @@ use `~/.local/bin/chezmoi-encrypt-template.sh` for those.
     (after, `run_onchange_` keyed on the mise.toml hash) → `90` completions.
 11. Export `GITHUB_TOKEN` before a first bootstrap; chezmoi externals and mise
     both hammer the GitHub API and the anonymous limit is 60/hour.
+12. **Don't write unnecessary comments**. If it is necessary, ask human for permission to add.

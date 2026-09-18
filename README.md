@@ -22,7 +22,7 @@
   <img alt="Ubuntu" src="https://img.shields.io/badge/Ubuntu-fab387?logo=ubuntu&logoColor=white&style=for-the-badge"/>
   <img alt="Fedora" src="https://img.shields.io/badge/Fedora-51A2DA?logo=fedora&logoColor=white&style=for-the-badge"/>
   <img alt="Windows" src="https://img.shields.io/badge/Windows-74c7ec?style=for-the-badge&logo=windows&logoColor=white"/>
-  <img alt="WSL" src="https://img.shields.io/badge/WSL-a6e3a1?logo=linux&logoColor=black&style=for-the-badge"/>
+  <img alt="WSL" src="https://img.shields.io/badge/WSL-0272cb?logo=linux&logoColor=white&style=for-the-badge"/>
 </div>
 
 <div align="center">
@@ -79,13 +79,13 @@
 `chezmoi init` asks a few questions; the answers decide what gets installed and
 which files exist:
 
-| value      | meaning                                                              |
-| ---------- | -------------------------------------------------------------------- |
-| `profiles` | identities this machine carries — `personal`, `personal,[company]`   |
+| value      | meaning                                                               |
+| ---------- | --------------------------------------------------------------------- |
+| `profiles` | identities this machine carries — `personal`, `personal,[company]`    |
 | `osFamily` | `arch` / `ubuntu` / `fedora` / `windows` / `darwin` — picks installer |
-| `isWsl`    | auto-detected                                                        |
-| `isGui`    | auto-detected; false on WSL, containers, headless                    |
-| `isLaptop` | auto-detected; adds power management                                 |
+| `isWsl`    | auto-detected                                                         |
+| `isGui`    | auto-detected; false on WSL, containers, headless                     |
+| `isLaptop` | auto-detected; adds power management                                  |
 
 Identities live in `home/.chezmoidata/profiles.yml`, one block per profile —
 see [docs/new-company.md](./docs/new-company.md).

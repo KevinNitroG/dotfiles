@@ -39,8 +39,6 @@ pkgs:
             key: https://yazi-rs.github.io/builds/yazi-keyring.gpg
             source: "deb [signed-by=/usr/share/keyrings/yazi-keyring.gpg] https://yazi-rs.github.io/builds/ stable main"
         gui:
-          # VS Code, from Microsoft. Equivalent to the deb822 vscode.sources
-          # block in Microsoft's own instructions.
           - name: vscode
             keyring: /usr/share/keyrings/microsoft.gpg
             key: https://packages.microsoft.com/keys/microsoft.asc
@@ -153,7 +151,7 @@ pkgs:
 
       gui:
         # Editors / IDE (from the vscode apt repo declared above)
-        - code # use `code-insiders` instead for the insiders build
+        - code # code-insiders
 
         # Terminals
         - alacritty

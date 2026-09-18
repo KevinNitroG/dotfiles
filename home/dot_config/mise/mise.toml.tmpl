@@ -18,6 +18,7 @@ cmctl = "latest"
 "github:felangga/chiko" = "latest"
 "github:cloudnative-pg/cloudnative-pg" = "latest"
 "github:rcieri/glab-tui" = "latest"
+"github:huseyinbabal/taws" = "latest"
 {{- if .isPersonal }}
 "pipx:codecov-cli" = "latest"
 {{- end }}
@@ -55,7 +56,8 @@ uv = "latest"
 {{- if eq .osFamily "fedora" }}
 
 # dnf HAS yq (mikefarah), helm, uv and astroterm, so those are deliberately
-# absent here. Everything below has no Fedora package at all.
+# absent here; kubectl comes from the upstream Kubernetes repo. Everything
+# below has no Fedora package at all.
 usage = "latest" # mise completions
 kubectl = "latest" # dnf only ships versioned kubernetesN.NN-client
 flux2 = "latest"
