@@ -92,29 +92,29 @@
 {{ range (dig "profiles" (list "personal") .) }}
   {{ if has . $knownProfiles }}{{ $stored = append $stored . }}{{ end }}
 {{ end }}
-{{ $profiles := promptMultichoice "profiles" $knownProfiles ($stored | default (list "personal")) | uniq }}
+{{ $profiles := promptMultichoice "Choose profiles" $knownProfiles ($stored | default (list "personal")) | uniq }}
 
-{{ $isGui = promptBool "isGui" (dig "isGui" $isGui .) }}
+{{ $isGui = promptBool "Is this machine GUI" (dig "isGui" $isGui .) }}
 {{ if not $isWsl }}
-  {{ $isLaptop = promptBool "isLaptop" (dig "isLaptop" $isLaptop .) }}
+  {{ $isLaptop = promptBool "Is this a laptop" (dig "isLaptop" $isLaptop .) }}
 {{ end }}
 
 {{ $terminalFontSize := dig "terminalFontSize" 13 . }}
 {{ $opacity := printf "%v" (dig "opacity" "0.8" .) }}
 {{ if $isGui }}
-  {{ $terminalFontSize = promptInt "terminalFontSize" $terminalFontSize }}
-  {{ $opacity = promptString "opacity" $opacity }}
+  {{ $terminalFontSize = promptInt "Terminal font size" $terminalFontSize }}
+  {{ $opacity = promptString "Opacity" $opacity }}
 {{ end }}
 
-{{ $theme := promptChoice "theme" $themes (dig "theme" "dark" .) }}
-{{ $catppuccinLightFlavour := promptChoice "catppuccinLightFlavour" $catppuccinFlavors (dig "catppuccinLightFlavour" "latte" .) }}
-{{ $catppuccinDarkFlavour := promptChoice "catppuccinDarkFlavour" $catppuccinFlavors (dig "catppuccinDarkFlavour" "mocha" .) }}
-{{ $catppuccinAccentColor := promptChoice "catppuccinAccentColor" $catppuccinAccentColors (dig "catppuccinAccentColor" "lavender" .) }}
+{{ $theme := promptChoice "What theme to use" " $themes (dig "theme" "dark" .) }}
+{{ $catppuccinLightFlavour := promptChoice "catppuccin light flavour" $catppuccinFlavors (dig "catppuccinLightFlavour" "latte" .) }}
+{{ $catppuccinDarkFlavour := promptChoice "catppuccin dark flavour" $catppuccinFlavors (dig "catppuccinDarkFlavour" "mocha" .) }}
+{{ $catppuccinAccentColor := promptChoice "catppuccin accentColor" $catppuccinAccentColors (dig "catppuccinAccentColor" "lavender" .) }}
 
 {{/* HyDE is an Arch-only Hyprland desktop; pointless on work/WSL/headless. */}}
 {{ $useHyde := false }}
 {{ if and (eq $osFamily "arch") $isGui (not $isWsl) (has "personal" $profiles) }}
-  {{ $useHyde = promptBool "useHyde" (dig "useHyde" false .) }}
+  {{ $useHyde = promptBool "detect Arch based Linux, use hyde" (dig "useHyde" false .) }}
 {{ end }}
 
 {{/* ---------- derive ---------- */}}

@@ -6,7 +6,7 @@ what that produced.
 
 **The governing rule: replicate `arch-based.yml`.** Arch is the primary distro
 here, so its package list is the reference set. A new distro's list is a
-*translation* of `home/.chezmoidata/pkgs/arch-based.yml`, not a fresh list.
+_translation_ of `home/.chezmoidata/pkgs/arch-based.yml`, not a fresh list.
 Anything Arch has that the new distro cannot provide falls through to mise.
 
 **The second rule: verify, never guess.** Package names differ between distros
@@ -22,7 +22,7 @@ turned out to carry far more than expected. Measure.
 package manager **and** package names should map onto that family instead of
 getting its own — that is why CachyOS and EndeavourOS are just `arch`.
 
-Give it a new family only if the package *names* differ. Debian is the
+Give it a new family only if the package _names_ differ. Debian is the
 cautionary case: same `apt`, different package set and no PPAs, so it
 deliberately lands in `other` (= no installer runs) rather than pretending to be
 Ubuntu.
@@ -52,7 +52,7 @@ chezmoi execute-template --file /tmp/detect-test.tmpl
 ## 2. Find a container to verify against
 
 ```sh
-docker run -d --name oscheck <distro>:<tag> sleep infinity
+docker run -d --name oscheck infinity <distro >: <tag >sleep
 ```
 
 **Check what you actually got.** A tag that exists is not always a release —
@@ -62,8 +62,8 @@ with:
 
 ```sh
 docker exec oscheck grep -E '^(ID|ID_LIKE|VERSION_ID|VERSION)=' /etc/os-release
-docker exec oscheck <pkgmgr> repolist        # dnf
-docker exec oscheck apt-cache policy         # apt
+docker exec oscheck <pkgmgr >repolist # dnf
+docker exec oscheck apt-cache policy  # apt
 ```
 
 **Disable testing/proposed repos** before querying, or you will "verify" a
@@ -77,7 +77,7 @@ Say in the commit or docs which tag you used.
 
 ## 3. Translate the package list
 
-Copy the *structure* of the nearest existing list (`ubuntu-based.yml` is the
+Copy the _structure_ of the nearest existing list (`ubuntu-based.yml` is the
 most elaborate) and walk `arch-based.yml` top to bottom. Keep the same
 categories (`common` / `personal` / `work` / `laptop`) and the same
 `cli` / `gui` split — `gui` is skipped whenever `.isGui` is false (WSL,
@@ -89,18 +89,18 @@ Bulk-check candidate names in one pass rather than one at a time:
 while read -r p; do
   out=$(dnf repoquery --disablerepo='*-testing' --qf '%{name}|%{repoid}' "$p" 2>/dev/null | sort -u | head -1)
   [ -n "$out" ] && echo "OK   $p -> $out" || echo "MISS $p"
-done < candidates.txt
+done <candidates.txt
 ```
 
 For a `MISS`, find what really provides the binary before giving up:
 
 ```sh
-dnf repoquery --whatprovides /usr/bin/wget     # -> wget2-wget
-apt-file search bin/wget                       # apt equivalent
+dnf repoquery --whatprovides /usr/bin/wget # -> wget2-wget
+apt-file search bin/wget                   # apt equivalent
 ```
 
 That step is what turns `wget` MISS into `wget2-wget`, `npm` into `nodejs-npm`,
-and `vim` into `vim-enhanced`. Also confirm a package is the thing you *think*
+and `vim` into `vim-enhanced`. Also confirm a package is the thing you _think_
 it is — Fedora's `yq` is mikefarah's Go yq, Ubuntu's is python-yq; Fedora's
 `tldr` is the python client, not tealdeer.
 
@@ -116,13 +116,13 @@ only when no container exists (e.g. a distro with no official image).
 Each distro's third-party repo mechanism gets its **own** shape in the YAML;
 do not bend one distro's shape onto another. Compare:
 
-| distro | keys | mechanism |
-| --- | --- | --- |
-| Ubuntu | `repositories`, `aptRepos` | PPAs; `sources.list.d` + `signed-by` keyring |
+| distro | keys                               | mechanism                                                  |
+| ------ | ---------------------------------- | ---------------------------------------------------------- |
+| Ubuntu | `repositories`, `aptRepos`         | PPAs; `sources.list.d` + `signed-by` keyring               |
 | Fedora | `releaseRpms`, `coprs`, `dnfRepos` | release RPMs; `dnf copr enable`; `yum.repos.d` + `gpgkey=` |
 
 Keep third-party repos to a minimum — each is a trust and maintenance burden.
-Before adding one, check the repo actually has builds for this release *and*
+Before adding one, check the repo actually has builds for this release _and_
 architecture, and prefer the better-maintained option when several exist.
 
 ## 5. The installer script
@@ -146,7 +146,7 @@ its resilience properties, which are deliberate:
   transaction. Use `pacman -Syu` / `yay -Syu --needed`.
 - **Roll back any repo that breaks the metadata refresh.** Add the repo, run
   `dnf makecache` / `apt-get update`, and remove it again if that fails.
-- **Guard anything idempotent-sensitive.** Use the *real* package name —
+- **Guard anything idempotent-sensitive.** Use the _real_ package name —
   `rpm -q rpmfusion-free` never matches, because the package is
   `rpmfusion-free-release`.
 - Add a symlink step **only if needed**: Debian renames `fd`→`fdfind` and
@@ -184,7 +184,7 @@ Anything the distro genuinely lacks goes in a
 
 **Do not copy another distro's block.** Diff against what you measured — the
 Fedora block drops `yq`/`helm`/`uv`/`astroterm` because dnf has them, and adds
-`procs`/`dysk`/`dust`/`xh`/`jqp`/`kubecolor`/`tmuxinator` because apt had them
+`procs`/`dust`/`xh`/`jqp`/`kubecolor`/`tmuxinator` because apt had them
 and dnf does not.
 
 Choosing a backend, in order of preference:
@@ -192,13 +192,13 @@ Choosing a backend, in order of preference:
 1. **Short registry name** — `htmlq = "latest"`. Check with `mise registry <name>`;
    it prints the backends it maps to. Simplest, use it when it exists.
 2. **`aqua:<owner>/<repo>`** — prebuilt binaries, correct asset mapping, and no
-   `rename_exe` needed. `mise registry` only knows *short* names, so it will say
+   `rename_exe` needed. `mise registry` only knows _short_ names, so it will say
    nothing for e.g. `procs` even though `aqua:dalance/procs` works. Check the
    real question with `mise ls-remote aqua:<owner>/<repo>`.
 3. **`github:<owner>/<repo>`** — when aqua has no package. Bare-binary assets
    need `rename_exe`.
-4. **`cargo:` / `npm:` / `pipx:` / `gem:`** — last resort. `cargo:` *compiles
-   from source* and is dramatically slower than a prebuilt binary; prefer aqua
+4. **`cargo:` / `npm:` / `pipx:` / `gem:`** — last resort. `cargo:` _compiles
+   from source_ and is dramatically slower than a prebuilt binary; prefer aqua
    whenever it exists.
 
 Never add `ubi:` — mise deprecates it ("will be removed in mise 2027.1.0").
@@ -207,7 +207,7 @@ Before adding a `github:` entry, confirm it actually publishes release assets
 for linux x86_64:
 
 ```sh
-gh api repos/<owner>/<repo>/releases/latest --jq '.tag_name, (.assets[].name)'
+gh api repos/ --jq '.tag_name, (.assets[].name)' <owner >/ <repo >/releases/latest
 ```
 
 Then **install it and run it** in a throwaway root — do not trust a successful
@@ -221,13 +221,13 @@ MISE_DATA_DIR=/tmp/misetest mise which <bin>     # this is the real test
 Two traps that both report success and deliver nothing:
 
 - an arch-less archive with per-platform subdirectories installs fine but
-  exposes **no binary** — it needs `bin_path` (see `github:Canop/dysk`);
+  exposes **no binary** — it needs `bin_path`;
 - the `http:` backend pointed at a non-executable asset (a `.gem`, say) prints
   `✓ installed` and leaves an **empty directory**.
 
 If an entry needs mise's own `{{ }}` templating, escape it so chezmoi passes it
-through — see the `mcp-grafana` `asset_pattern` and the `dysk` `bin_path`. Note
-that a *comment* containing a bare `{{ }}` breaks the template too.
+through — see the `mcp-grafana` `asset_pattern` and the `bin_path`. Note
+that a _comment_ containing a bare `{{ }}` breaks the template too.
 
 Switching `github:` → `aqua:` does **not** reduce GitHub API usage — both spend
 one API call per version lookup. The fix for rate limits is `GITHUB_TOKEN`

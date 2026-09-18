@@ -116,7 +116,7 @@ pkgs:
         # Monitoring / system
         - btop
         # - cronie
-        - dysk
+        - duf
         - gdu
         - inotify-tools
         - websocat

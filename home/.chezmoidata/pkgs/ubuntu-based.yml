@@ -75,7 +75,7 @@ pkgs:
         # Shell / terminal UX
         - bat # binary is `batcat`
         - du-dust # arch: dust
-        - dysk
+        - duf
         - eza
         - fastfetch
         - fd-find # binary is `fdfind`; yazi requirement

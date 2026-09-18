@@ -105,6 +105,7 @@ pkgs:
         # Shell / terminal UX
         - bat # ships /usr/bin/bat, unlike Debian's batcat
         - ctags # universal-ctags 6.x
+        - duf
         - eza
         - fastfetch
         - fd-find # ships /usr/bin/fd; yazi requirement
@@ -158,7 +159,7 @@ pkgs:
         - python3-pip
         - ruby # for mise's gem: backend (tmuxinator)
         - rubygems
-        - cargo # for mise's cargo: backend (procs, dysk, htmlq, ...)
+        - cargo # for mise's cargo: backend (procs, htmlq, ...)
         - rustup
         - uv
 
