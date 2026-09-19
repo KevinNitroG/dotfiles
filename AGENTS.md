@@ -23,7 +23,7 @@ CLAUDE.md                    symlink -> AGENTS.md
 home/                        === CHEZMOI SOURCE DIRECTORY ===
 ├── .chezmoi.toml.tmpl       generates ~/.config/chezmoi/chezmoi.toml at `init`
 ├── .chezmoidata/            static data merged into `.` for every template
-│   ├── global.yml           githubUsername, externalGitArgs
+│   ├── global.yml           externalGitArgs
 │   ├── profiles.yml         profileDefs: one block per identity (see below)
 │   ├── catppuccin/*.toml    full palettes (latte/frappe/macchiato/mocha)
 │   ├── config/windows.yml   Windows env vars + optional-features lists
@@ -51,21 +51,37 @@ home/                        === CHEZMOI SOURCE DIRECTORY ===
 
 ### Identity profiles
 
-A _profile_ is one identity the machine carries: `personal`, or a company id
-(lowercase, no spaces or hyphens — `itcgroup`). `home/.chezmoidata/profiles.yml`
-declares each one once (`profileDefs.<name>`) and that single block drives:
+A _profile_ is one identity: `personal`, or a company id (lowercase, no spaces
+or hyphens — `itcgroup`).
 
-- `~/.config/git/<name>` — rendered from `.chezmoitemplates/git/identity`
-- the `includeIf "gitdir:"` entries in `~/.config/git/config`
-- the `Host` blocks in `~/.ssh/config` and the `~/.ssh/allowed_signers` lines
-- which files `.chezmoiignore.tmpl` drops on machines without that profile
+**One machine carries exactly one profile.** `profile` is a `promptChoice`, not
+a list. A company machine is a company machine: no personal ssh key, no personal
+gpg key, no personal `private/*.zsh`, no personal git identity. It authenticates
+to GitHub with the *company* key, because that is the only key it has.
+
+`home/.chezmoidata/profiles.yml` declares each profile once
+(`profileDefs.<name>`) and that single block drives:
+
+- the `[user]` / `[gpg]` / `[commit]` blocks at the bottom of
+  `~/.config/git/config` — rendered inline, no per-profile include file, no
+  `includeIf`, no gitdir scoping
+- every `Host` block in `~/.ssh/config` (`sshHosts` is a **list** — a company
+  usually has its own git server plus github.com / gitlab.com) and the
+  `~/.ssh/allowed_signers` line
+- `~/.config/gh/hosts.yml` via `ghUser`; empty `ghUser` means the file is not
+  managed at all
+- which files `.chezmoiignore.tmpl` drops on machines that are not this profile
 
 The age key path and recipient are the exception: they live in `$profileMeta` in
 `home/.chezmoi.toml.tmpl`, which runs before `.chezmoidata` is readable.
 
-Adding a company = one entry in `$profileMeta`, one block in `profiles.yml`, one
-one-line `dot_config/git/<name>.tmpl`, one committed `.pub`, one encrypted
-`<name>.zsh.age`. See `docs/new-company.md`.
+GPG is deliberately **not** automated. Only `personal` signs with gpg, the key
+is imported by hand (`docs/gpg.md`), and `profiles.yml` carries only the public
+`gpgKey` id.
+
+Adding a company = one entry in `$profileMeta`, one block in `profiles.yml`,
+one committed `.pub`, one encrypted `<name>.zsh.age`. See
+`docs/new-company.md`.
 
 ### Where to find things
 
@@ -82,7 +98,7 @@ one-line `dot_config/git/<name>.tmpl`, one committed `.pub`, one encrypted
 | What gets skipped on which machine           | `home/.chezmoiignore.tmpl`                                            |
 | Shell config                                 | `home/dot_zshenv` (stub) + `home/dot_config/zsh/`                     |
 | Secrets (env vars, tokens)                   | `home/dot_config/zsh/private_private/*.age`                           |
-| Git identity / aliases                       | `home/dot_config/git/config.tmpl` + `<profile>.tmpl`                  |
+| Git identity / aliases                       | `home/dot_config/git/config.tmpl` (identity is the last block)        |
 | Themed third-party files pulled from the net | `home/.chezmoiexternals/*.toml.tmpl`                                  |
 | Reusable template fragments                  | `home/.chezmoitemplates/`                                             |
 
@@ -92,7 +108,9 @@ one-line `dot_config/git/<name>.tmpl`, one committed `.pub`, one encrypted
 
 `dot_` → `.`, `private_` → mode 0600, `executable_` → +x, `encrypted_` → age-encrypted,
 `empty_` → keep even if empty, `create_` → write once, never overwrite,
-`symlink_` → create a symlink, `once_` → only on first apply.
+`symlink_` → create a symlink. `once_` is a **script** attribute only — on a
+regular file chezmoi keeps it as part of the name (`once_foo.conf` lands at
+`~/…/once_foo.conf`); `create_` is the write-once equivalent for files.
 Suffix `.tmpl` → render as a Go template; the suffix is stripped from the target.
 
 ### Templating
@@ -102,12 +120,13 @@ Data is exposed at `.`:
 - `.chezmoi.*` — built-ins (`os`, `arch`, `hostname`, `osRelease.id`, `homeDir`, …),
   plus `.chezmoi.config.age.*` for the age identity and recipients
 - `[data]` from `.chezmoi.toml.tmpl` — the _prompted_ / _detected_ values:
-  - identity: `profiles`, `companies`, `company`, `isWork`, `isPersonal`
+  - identity: `profile` (the one identity), `company` (`""` when personal),
+    `isWork`, `isPersonal`
   - platform: `osId`, `osFamily`, `isWsl`, `isGui`, `isLaptop`, `useHyde`
   - theme: `theme`, `catppuccinFlavor`, `catppuccinAccentColor`,
     `terminalFontSize`, `opacity`, `transparent`
 - `.chezmoidata/**` — merged by top-level key: `.pkgs.*`, `.profileDefs.*`,
-  `.config.windows.*`, `.githubUsername`, `.externalGitArgs`
+  `.config.windows.*`, `.externalGitArgs`
 
 The two key discriminators:
 
@@ -122,13 +141,17 @@ The two key discriminators:
 switch that strips terminal emulators, fonts, input methods, desktop config and
 GUI applications. Prefer it over testing `isWsl` directly.
 
-Prompt names are short and stable (`profiles`, `isGui`, `isLaptop`, `theme`, …)
-so they can be scripted. `profiles` is a `promptMultichoice`, validated against
-`$knownProfiles`, and its separator is `/`:
+The **prompt text is the key** `--promptX` matches on, not the variable it is
+assigned to. `profile` is therefore prompted as the bare word `profile`, so it
+stays scriptable; it is a `promptChoice` validated against `$knownProfiles`:
 
 ```sh
-chezmoi init --promptDefaults --promptMultichoice profiles=personal/itcgroup
+chezmoi init --promptDefaults --promptChoice profile=itcgroup
 ```
+
+The remaining prompts are written for humans (`Is this machine GUI`,
+`Terminal font size`, …) — to script those, pass the full prompt text as the
+key. `--promptBool` cannot express one with a comma in it.
 
 Previous answers are read back out of the existing config, so re-running
 `chezmoi init` is non-destructive.
@@ -184,14 +207,32 @@ from `.chezmoi.config.age.*`, so there is nothing to keep in sync.
 
 - **identities** — one private key file per profile, `~/.config/age/key.txt`
   (personal) and `~/.config/age/<company>-key.txt`. Never committed. The
-  generated config lists only the ones that actually exist on this machine, so
-  adding a key later requires re-running `chezmoi init`.
+  generated config lists this machine's profile key and only if it exists, so
+  adding a key later requires re-running `chezmoi init`. An **empty** list is a
+  supported state, not an error — see the invariant below.
 - **recipients** — _always every known recipient_, regardless of this machine's
-  profiles. Otherwise `chezmoi re-add` on a work-only box would re-encrypt files
-  so the personal key could no longer read them.
+  profile. Otherwise `chezmoi re-add` on a work box would re-encrypt files so
+  the personal key could no longer read them. It also means whichever key you
+  hold opens every encrypted file the machine ships.
 
 `chezmoi re-add` re-encrypts managed files but **not** `.chezmoitemplates/` —
 use `~/.local/bin/chezmoi-encrypt-template.sh` for those.
+
+#### Invariant: every encrypted file is listed in `.chezmoiignore.tmpl`
+
+chezmoi decrypts while computing the target state, so **one encrypted file that
+no available key can open aborts the entire `chezmoi apply`**, not just that
+file. The "SECRETS THAT NEED AN AGE IDENTITY" block in
+`home/.chezmoiignore.tmpl` lists the target path of every encrypted source and
+drops them all when `.chezmoi.config.age.identities` is empty. That is what
+makes a machine without its age key still applyable.
+
+Adding an `encrypted_` / `.age` source is therefore a **two-file change**: the
+source, and its target path in that block. Audit with:
+
+```sh
+find home -name '*encrypted_*' -o -name '*.age'
+```
 
 ## Conventions
 
@@ -238,7 +279,11 @@ use `~/.local/bin/chezmoi-encrypt-template.sh` for those.
    through to mise.
 7. `git` autoAdd is on (`[git] autoAdd = true`), so chezmoi stages source changes
    automatically; commits/pushes are manual.
-8. Do not commit secrets. Anything sensitive goes through `encrypted_` + age.
+8. Do not commit secrets. Anything sensitive goes through `encrypted_` + age —
+   and **every encrypted file must also be listed** in the "SECRETS THAT NEED
+   AN AGE IDENTITY" block of `home/.chezmoiignore.tmpl`. Miss it and a machine
+   without its age key cannot `chezmoi apply` at all, because decryption
+   happens while rendering the whole target state. Maintain that list.
 9. **Never generate a file by shelling out to a tool from a template.** A
    template runs during `chezmoi apply`, before the package/mise install scripts
    have put anything on `$PATH`, and it is only re-rendered when its _source_

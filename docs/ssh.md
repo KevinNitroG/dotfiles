@@ -4,12 +4,18 @@ How SSH keys are created, stored, used and signed with here.
 
 ## Convention
 
-One key per identity, named after the profile:
+A machine carries **one** profile, and that profile has **one** key:
 
-| profile | private key | public key | used for |
-| --- | --- | --- | --- |
-| `personal` | `~/.ssh/id_ed25519` | `~/.ssh/id_ed25519.pub` | GitHub, personal servers |
-| `<company>` | `~/.ssh/id_ed25519_<company>` | `~/.ssh/id_ed25519_<company>.pub` | company forge and hosts |
+| profile | private key | public key |
+| --- | --- | --- |
+| `personal` | `~/.ssh/id_ed25519` | `~/.ssh/id_ed25519.pub` |
+| `<company>` | `~/.ssh/id_ed25519_<company>` | `~/.ssh/id_ed25519_<company>.pub` |
+
+That key authenticates to **every** forge the profile talks to, GitHub
+included. A company machine has no personal key on it, so it pushes to GitHub
+with the company key — register that key on GitHub too, alongside the company
+forge and gitlab.com. Which forges a profile uses is its `sshHosts` list in
+`home/.chezmoidata/profiles.yml`; nothing is hardcoded per host.
 
 Company ids are lowercase, no spaces or hyphens (`itcgroup`).
 
@@ -60,14 +66,21 @@ Paste the **`.pub`**, never the private key.
 
 ## Per-host configuration
 
-`~/.ssh/config` is generated from `profileDefs.<company>.sshHosts` in
-`home/.chezmoidata/profiles.yml`:
+`~/.ssh/config` is generated from `profileDefs.<profile>.sshHosts` in
+`home/.chezmoidata/profiles.yml`. It is a list — a company usually has its own
+git server *plus* the public forges where its key is registered:
 
 ```yaml
 sshHosts:
   - name: itcgroup
     hostName: gitlab.itcgroup.io
     user: kevin.t
+  - name: gitlab.com
+    hostName: gitlab.com
+    user: git
+  - name: github.com
+    hostName: github.com
+    user: git
 ```
 
 →
@@ -76,9 +89,18 @@ sshHosts:
 Host itcgroup
   HostName gitlab.itcgroup.io
   User kevin.t
+  PreferredAuthentications publickey
   IdentityFile ~/.ssh/id_ed25519_itcgroup
   IdentitiesOnly yes
+
+Host gitlab.com
+  ...
+Host github.com
+  ...
 ```
+
+Every block gets the active profile's `sshKey`, so there is no way for a
+personal key to end up on a company machine's config.
 
 `IdentitiesOnly yes` matters: without it ssh offers every key in the agent, and
 a server with `MaxAuthTries 3` disconnects before reaching the right one.
@@ -87,16 +109,16 @@ Clone with the alias: `git clone itcgroup:team/repo.git`.
 
 ## Signing commits with SSH
 
-Personal commits are GPG-signed, company commits SSH-signed. Set in
-`profiles.yml`:
+Personal commits are GPG-signed (imported by hand — see [gpg.md](./gpg.md)),
+company commits SSH-signed. Set in `profiles.yml`:
 
 ```yaml
 signing: ssh
 sshKey: ~/.ssh/id_ed25519_itcgroup
 ```
 
-with `home/dot_ssh/id_ed25519_itcgroup.pub` committed alongside, producing
-`~/.config/git/itcgroup`:
+with `home/dot_ssh/id_ed25519_itcgroup.pub` committed alongside, producing the
+IDENTITY block at the bottom of `~/.config/git/config`:
 
 ```gitconfig
 [user]
@@ -146,7 +168,7 @@ ssh -vT itcgroup               # -v shows which key was offered and accepted
 | `Permissions 0644 ... are too open` | `chmod 600` the private key |
 | `Too many authentication failures` | add `IdentitiesOnly yes` to that Host block |
 | Wrong account used for a repo | clone via the host alias (`itcgroup:...`), not the raw hostname |
-| Commit signed with wrong identity | identity is by directory — the repo must live under the profile's `gitDir`; check `git config user.email` |
+| Commit signed with wrong identity | the machine has one identity for every repo; override it in that repo's own `.git/config` |
 | `Load key ... invalid format` when signing | `user.signingkey` must point at the `.pub`, and the private key must be loadable |
 | Host key changed / MITM warning | `ssh-keygen -R <host>`, reconnect, accept the new fingerprint |
 

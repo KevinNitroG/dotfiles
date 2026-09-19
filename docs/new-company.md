@@ -27,7 +27,9 @@ chmod 600 ~/.ssh/id_ed25519_acmecorp
 ```
 
 Upload the `.pub` to the company forge as an authentication key and, if
-supported, a signing key. Details: [ssh.md](./ssh.md).
+supported, a signing key — **and to every other forge this machine will use**,
+GitHub and gitlab.com included. A company machine has no other key to offer.
+Details: [ssh.md](./ssh.md).
 
 ## 2. age key
 
@@ -55,7 +57,7 @@ place age keys and recipients are declared (`chezmoi init` runs before
 }}
 ```
 
-That one entry gives you the `profiles` choice, the identity path and the
+That one entry gives you the `profile` choice, the identity path and the
 recipient.
 
 ## 4. Profile definition
@@ -66,27 +68,36 @@ In `home/.chezmoidata/profiles.yml`:
   acmecorp:
     gitName: Your Name
     gitEmail: you@acmecorp.com
-    gitDir: ~/projects/acmecorp/
     signing: ssh
     gpgKey: ""
     sshKey: ~/.ssh/id_ed25519_acmecorp
+    ghUser: "" # company GitHub account, "" if none
     sshHosts:
-      - name: acmecorp
+      - name: acmecorp # `git clone acmecorp:team/repo.git`
         hostName: gitlab.acmecorp.com
         user: your.name
+      - name: github.com
+        hostName: github.com
+        user: git
 ```
 
-Drives `~/.config/git/acmecorp`, the `includeIf "gitdir:"` entry, the
-`Host acmecorp` block in `~/.ssh/config`, the `allowed_signers` line, and what
-`.chezmoiignore.tmpl` drops on machines without this profile.
+Drives `~/.config/git/acmecorp`, every `Host` block in `~/.ssh/config`, the
+`allowed_signers` line, `~/.config/gh/hosts.yml`, and what
+`.chezmoiignore.tmpl` drops on machines that are not this profile.
+
+**List every forge this identity uses**, public ones included. An `acmecorp`
+machine has no personal key on it, so `github.com` must appear here or GitHub
+is unreachable from it — and the key you register on GitHub is the *company*
+key. Same for `gitlab.com`. Leave `ghUser` empty if there is no company GitHub
+account; `hosts.yml` is then not managed and `gh auth login` writes its own.
 
 ## 5. Source files
 
+Two files. The git identity needs none — it is rendered straight into
+`~/.config/git/config` from the block you just added.
+
 ```sh
 cd ~/.local/share/chezmoi/home
-
-printf '%s\n' '{{ includeTemplate "git/identity" (dict "profile" "acmecorp" "ctx" .) }}' \
-  > dot_config/git/acmecorp.tmpl
 
 cp ~/.ssh/id_ed25519_acmecorp.pub dot_ssh/id_ed25519_acmecorp.pub
 
@@ -94,6 +105,12 @@ printf '# %s secrets\n' acmecorp \
   | chezmoi encrypt \
   > dot_config/zsh/private_private/encrypted_private_acmecorp.zsh.age
 ```
+
+The second is encrypted. `.config/zsh/private/**` is already listed in the
+"SECRETS THAT NEED AN AGE IDENTITY" block of `home/.chezmoiignore.tmpl`, so
+this one is covered — but **any encrypted file you add outside that glob needs
+its own target path there**. chezmoi decrypts while rendering, so a single
+file no key can open aborts the whole `chezmoi apply`, not just that file.
 
 ## 6. Packages (optional)
 
@@ -108,15 +125,15 @@ Split `work` into `work.<id>` only if two companies ever need different sets.
 `~/.config/chezmoi/chezmoi.toml` is only generated at init time:
 
 ```sh
-chezmoi init       # at the "profiles" prompt, select personal and acmecorp
+chezmoi init       # at the "profile" prompt, select acmecorp
 chezmoi diff
 chezmoi apply
 ```
 
-Non-interactively (`promptMultichoice` separates with `/`):
+Non-interactively:
 
 ```sh
-chezmoi init --promptDefaults --promptMultichoice profiles=personal/acmecorp
+chezmoi init --promptDefaults --promptChoice profile=acmecorp
 ```
 
 The company only appears in the list once it is in `$profileMeta` (step 3) —
@@ -125,7 +142,7 @@ chezmoi rejects anything else.
 Verify:
 
 ```sh
-chezmoi data | jq '{profiles, company, isWork}'
+chezmoi data | jq '{profile, company, isWork}'
 grep -A3 '\[age\]' ~/.config/chezmoi/chezmoi.toml
 mkdir -p ~/projects/acmecorp && cd ~/projects/acmecorp
 git init t && cd t && git config user.email     # -> you@acmecorp.com
@@ -157,10 +174,14 @@ A rebuild should need nothing but Bitwarden and this repo.
 
 ## Worth doing
 
-- **Keep `personal` on the work machine.** `profiles = ["personal", "acmecorp"]`
-  is the normal answer; `.isWsl` / `.isGui` already strip the leisure dotfiles.
-- **Put work repos under `~/projects/acmecorp/`.** Identity is selected by
-  directory — a repo in `~/code/whatever` gets signed with your personal key.
+- **A company machine is company-only.** `profile = "acmecorp"` is the whole
+  answer — there is no way to also carry `personal`, and that is the point:
+  no personal ssh key, no personal gpg key, no personal `private/*.zsh`, no
+  personal git identity. Register the company key with GitHub and work from
+  it.
+- **Every repo on the machine commits as this identity.** There is no gitdir
+  scoping any more. For a one-off repo that needs something else, set
+  `user.name` / `user.email` in that repo's `.git/config`.
 - **Check company policy** before pushing dotfiles-managed config to company
   machines, or putting any company secret here — even encrypted. Prefer their
   secret store and keep only references.
@@ -174,9 +195,10 @@ A rebuild should need nothing but Bitwarden and this repo.
 ## Leaving a company
 
 1. Remove the block from `profiles.yml` and the entry from `$profileMeta`.
-2. Delete `dot_config/git/acmecorp.tmpl`, `dot_ssh/id_ed25519_acmecorp.pub`,
+2. Delete `dot_ssh/id_ed25519_acmecorp.pub` and
    `dot_config/zsh/private_private/encrypted_private_acmecorp.zsh.age`.
-3. `chezmoi init && chezmoi apply` — removed files are cleaned up.
+3. `chezmoi init && chezmoi apply` — pick another profile; removed files are
+   cleaned up.
 4. `chezmoi re-add`, then delete `~/.config/age/acmecorp-key.txt` and the
    Bitwarden entries.
 5. Revoke the SSH key on the company forge.

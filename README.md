@@ -48,6 +48,7 @@
   - [4. Install chezmoi and apply](#4-install-chezmoi-and-apply)
   - [5. Commit signing](#5-commit-signing)
 - [Manually add/sync encrypted file to template](#manually-addsync-encrypted-file-to-template)
+  - [Then list it in `.chezmoiignore.tmpl`](#then-list-it-in-chezmoiignoretmpl)
 - [📝 Other notes](#-other-notes)
 - [💁 References](#-references)
   - [Wallpaper](#wallpaper)
@@ -81,7 +82,7 @@ which files exist:
 
 | value      | meaning                                                               |
 | ---------- | --------------------------------------------------------------------- |
-| `profiles` | identities this machine carries — `personal`, `personal,[company]`    |
+| `profile`  | the ONE identity this machine is — `personal` or a company id        |
 | `osFamily` | `arch` / `ubuntu` / `fedora` / `windows` / `darwin` — picks installer |
 | `isWsl`    | auto-detected                                                         |
 | `isGui`    | auto-detected; false on WSL, containers, headless                     |
@@ -180,8 +181,15 @@ age-keygen -o ~/.config/age/key.txt
 chmod 600 ~/.config/age/key.txt
 ```
 
-Every file is encrypted to **all** known recipients. `chezmoi init` only lists
+Every file is encrypted to **all** known recipients, so whichever profile's key
+you hold opens everything this machine ships. `chezmoi init` only lists
 identity files that exist, so adding a key later means re-running it.
+
+With no identity at all, every encrypted target is skipped **by design** —
+`chezmoi apply` still succeeds, it just leaves those files out. That is what
+the "SECRETS THAT NEED AN AGE IDENTITY" block in `home/.chezmoiignore.tmpl`
+is for, and why it has to list every encrypted file (see
+[below](#manually-addsync-encrypted-file-to-template)).
 
 > [!NOTE]
 > This repo is personal and contains encrypted files you cannot decrypt. Apply
@@ -217,35 +225,26 @@ _([docs](https://www.chezmoi.io/install))_
   iex "&{$(irm 'https://get.chezmoi.io/ps1')} -- init --apply --ssh --depth 1 --purge-binary KevinNitroG"
   ```
 
-Pick `profiles` from the list — `personal`, or `personal` + `[company]` on a
-work machine. To script it (`promptMultichoice` separates with `/`):
+Pick `profile` from the list — one identity per machine, `personal` or a
+company. A company machine gets no personal key, no personal secrets and no
+personal git identity; it authenticates to GitHub with the company key. To
+script it:
 
 ```sh
-chezmoi init --promptDefaults --promptMultichoice profiles=personal/[company]
+chezmoi init --promptDefaults --promptChoice profile=[company]
 ```
 
 ### 5. Commit signing
 
 Per profile in `profiles.yml`: `personal` signs with **GPG**, companies with
-their **SSH** key. Identity is picked by directory (`includeIf "gitdir:"`), so
-work repos must live under the profile's `gitDir`.
-
-GPG (personal):
-
-```sh
-gpg --import public.gpg
-gpg --import secret.gpg
-gpg --edit-key <key-id>
-trust
-5
-y
-quit
-```
-
-> On Windows use the GPG shipped with git — open `git bash`.
+their **SSH** key. The machine has one identity, so every repo on it signs the
+same way.
 
 SSH signing needs only the key; `~/.ssh/allowed_signers` is generated. Verify
 with `git log --show-signature -1`.
+
+GPG keys are **imported by hand** — nothing here installs or trusts a private
+key. Steps, including Windows: [docs/gpg.md](./docs/gpg.md).
 
 ## Manually add/sync encrypted file to template
 
@@ -268,6 +267,23 @@ age -a $(chezmoi data --format json | jq -r '.chezmoi.config.age.recipients | ma
 > [!NOTE]
 > `$(chezmoi source-path)` already points _inside_ `home/` because of
 > `.chezmoiroot` — do not add another `home/` to the path.
+
+### Then list it in `.chezmoiignore.tmpl`
+
+**Every** encrypted file needs its target path in the "SECRETS THAT NEED AN AGE
+IDENTITY" block of `home/.chezmoiignore.tmpl`. Adding an `encrypted_` / `.age`
+source is a two-file change.
+
+chezmoi decrypts while rendering the target state, so one file that no
+available key can open does not fail alone — it aborts the entire
+`chezmoi apply`. Without the entry, a machine that has not got its age key yet
+cannot apply anything at all.
+
+Audit that the list is complete:
+
+```sh
+find home -name '*encrypted_*' -o -name '*.age'
+```
 
 ---
 
