@@ -1,23 +1,52 @@
 # Per-profile (identity) definitions.
 #
-# A "profile" is one identity this machine carries: "personal", or a company.
+# A "profile" is the ONE identity a machine carries: "personal", or a company.
 # Company identifiers are lowercase, no spaces/hyphens (Go package naming),
-# e.g. "itcgroup". The active profiles for a machine are chosen at
-# `chezmoi init` time and land in `.profiles` (see home/.chezmoi.toml.tmpl).
+# e.g. "itcgroup". The profile is chosen at `chezmoi init` time and lands in
+# `.profile` (see home/.chezmoi.toml.tmpl).
+#
+# One machine, one identity. A company machine does NOT get the personal git
+# identity, the personal ssh key or any personal secret -- it declares its own
+# forges and its own GitHub account below.
 #
 # To onboard a new company, add a block here and follow docs/new-company.md.
 #
-# Keys:
-#   gitName      user.name for repos under gitDir
-#   gitEmail     user.email for repos under gitDir
-#   gitDir       gitdir: scope that activates this identity (git includeIf)
-#   signing      "gpg" | "ssh" | "" (no commit signing)
-#   gpgKey       gpg signing key id      (when signing == "gpg")
-#   gpgFingerprint  full gpg fingerprint, for trusted-key / --edit-key trust
-#   sshKey       path to the private ssh key. The matching "<name>.pub" is
-#                committed next to it in home/dot_ssh/ and is what git uses as
-#                user.signingkey and what feeds ~/.ssh/allowed_signers.
-#   sshHosts     extra ~/.ssh/config Host blocks for this profile
+# A full profile block, every key annotated:
+#
+#   profileDefs:
+#     acmecorp:
+#       # git user.name / user.email for every repo on this machine
+#       gitName: Your Name
+#       gitEmail: you@acmecorp.com
+#
+#       # "gpg" | "ssh" | ""  -- "" disables commit signing entirely.
+#       # gpg signing needs gpgKey; the key itself is imported BY HAND, see
+#       # docs/gpg.md. ssh signing uses sshKey below.
+#       signing: ssh
+#       gpgKey: "" # long key id, only read when signing == "gpg"
+#
+#       # Private ssh key. The matching "<name>.pub" is committed next to it in
+#       # home/dot_ssh/ and is what git uses as user.signingkey and what feeds
+#       # ~/.ssh/allowed_signers.
+#       sshKey: ~/.ssh/id_ed25519_acmecorp
+#
+#       # GitHub account for `gh`, "" if this profile has none -- then
+#       # ~/.config/gh/hosts.yml is not managed at all and `gh auth login`
+#       # writes its own.
+#       ghUser: ""
+#
+#       # Every forge this identity talks to, as ~/.ssh/config Host blocks.
+#       # A company usually has more than one: its self-hosted git plus the
+#       # public forges where its key is registered. github.com/gitlab.com go
+#       # here too -- they are NOT hardcoded anywhere, so a company machine
+#       # authenticates to GitHub with the COMPANY key, not a personal one.
+#       sshHosts:
+#         - name: acmecorp # `git clone acmecorp:team/repo.git`
+#           hostName: gitlab.acmecorp.com
+#           user: your.name
+#         - name: github.com
+#           hostName: github.com
+#           user: git
 #
 # age keys and recipients are NOT here: they are declared once in $profileMeta
 # in home/.chezmoi.toml.tmpl (which runs before .chezmoidata is readable) and
@@ -27,22 +56,29 @@ profileDefs:
   personal:
     gitName: Kevin Nitro
     gitEmail: trannguyenthaibinh46@gmail.com
-    gitDir: ~/projects/
     signing: gpg
     gpgKey: "071E9CD8A2D41057"
-    gpgFingerprint: "780EDBE72B368638D3DA4691071E9CD8A2D41057"
     sshKey: ~/.ssh/id_ed25519
-    sshHosts: []
+    ghUser: KevinNitroG
+    sshHosts:
+      - name: github.com
+        hostName: github.com
+        user: git
 
   itcgroup:
     gitName: Kevin Tran
     gitEmail: kevin.t@itcgroup.io
-    gitDir: ~/projects/itcgroup/
     signing: ssh
     gpgKey: ""
-    gpgFingerprint: ""
     sshKey: ~/.ssh/id_ed25519_itcgroup
+    ghUser: "" # no company GitHub account yet
     sshHosts:
       - name: itcgroup
         hostName: gitlab.itcgroup.io
         user: kevin.t
+      - name: gitlab.com
+        hostName: gitlab.com
+        user: git
+      - name: github.com
+        hostName: github.com
+        user: git

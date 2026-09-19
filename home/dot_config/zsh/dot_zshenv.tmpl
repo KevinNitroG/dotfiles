@@ -36,11 +36,12 @@ export path=(
 # PRIVATE / PER-PROFILE SECRETS
 #
 # Encrypted in this repo, decrypted to $ZDOTDIR/private/ by chezmoi:
-#   common.zsh     both personal and work
+#   common.zsh     every profile
 #   personal.zsh   personal profile only
 #   <company>.zsh  one per company profile (e.g. itcgroup.zsh)
-# chezmoi only ships the files matching this machine's .profiles, so a plain
-# glob is enough — no per-machine list to maintain here.
+# chezmoi ships only the file matching this machine's .profile, and none of
+# them when there is no age key, so a plain glob is enough — no per-machine
+# list to maintain here.
 
 for _private_zsh in "$ZDOTDIR"/private/*.zsh(N); do
   source "$_private_zsh"

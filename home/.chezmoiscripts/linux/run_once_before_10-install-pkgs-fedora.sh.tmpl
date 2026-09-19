@@ -42,7 +42,7 @@ set -uo pipefail
 {{- $scripts = $scripts | compact | uniq }}
 {{- $pkgs = $pkgs | compact | uniq | sortAlpha }}
 
-# Profiles: {{ join ", " .profiles }} | categories: {{ join ", " $cats }} | gui: {{ .isGui }} | wsl: {{ .isWsl }}
+# Profile: {{ .profile }} | categories: {{ join ", " $cats }} | gui: {{ .isGui }} | wsl: {{ .isWsl }}
 
 {{ $sudo := "sudo " -}}
 {{ if eq .chezmoi.username "root" -}}

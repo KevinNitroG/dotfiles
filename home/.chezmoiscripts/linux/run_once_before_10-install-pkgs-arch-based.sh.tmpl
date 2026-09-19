@@ -18,7 +18,7 @@ set -eufo pipefail
 {{- end }}
 {{- $pkgs = $pkgs | compact | uniq | sortAlpha }}
 
-# Profiles: {{ join ", " .profiles }} | categories: {{ join ", " $cats }} | gui: {{ .isGui }}
+# Profile: {{ .profile }} | categories: {{ join ", " $cats }} | gui: {{ .isGui }}
 
 {{ $sudo := "sudo " -}}
 {{ if eq .chezmoi.username "root" -}}

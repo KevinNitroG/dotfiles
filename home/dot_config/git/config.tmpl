@@ -1,17 +1,17 @@
 ; Ref: https://github.com/garybernhardt/dotfiles/blob/main/.gitconfig
 ;
 ; IDENTITY
-; This file carries no user.name/user.email of its own. Identities live in
-; ~/.config/git/<profile> (generated from home/.chezmoidata/profiles.yml) and
-; are wired in at the bottom of this file: the default identity is included
-; unconditionally, and every other profile is activated by its gitdir scope.
+; Generated at the bottom of this file from the one profile this machine
+; carries (home/.chezmoidata/profiles.yml).
 
 [include]
   path = ~/.config/delta/catppuccin.gitconfig
 
+{{- $ghUser := (index .profileDefs .profile).ghUser }}
+{{- if $ghUser }}
 [github]
-  user = {{ .githubUsername }}
-
+  user = {{ $ghUser }}
+{{ end }}
 [core]
   editor = nvim
   longpaths = true
@@ -163,27 +163,37 @@
   pushInsteadOf = "git://gist.github.com/" ; From GIT to SSH
 
 ; ---------------------------------------------------------------------------
-; IDENTITIES
+; IDENTITY
 ;
-; Default identity first (personal when this machine has it, otherwise the
-; primary company), then a gitdir-scoped override per profile. Later includes
-; win, and the company scopes are nested deeper than ~/projects/, so a repo in
-; ~/projects/{{ if .company }}{{ .company }}{{ else }}<company>{{ end }}/ ends up with the company identity while
-; everything else under ~/projects/ stays personal.
+; GENERATED from profileDefs.{{ .profile }} in home/.chezmoidata/profiles.yml.
+; One machine, one identity — no gitdir scoping, no per-profile include file.
+; Every repo on this machine commits as this identity; to override it for a
+; single repo, set user.name/user.email in that repo's own .git/config.
+;
+; gpg keys are imported by hand — see docs/gpg.md. Nothing here installs one.
+{{- $p := index .profileDefs .profile }}
 
-{{ $default := "" }}
-{{- if .isPersonal }}{{ $default = "personal" }}{{ else if .company }}{{ $default = .company }}{{ end }}
-{{- if $default }}
-[include]
-  path = ~/.config/git/{{ $default }}
+[user]
+  name = {{ $p.gitName }}
+  email = {{ $p.gitEmail }}
+{{- if eq $p.signing "gpg" }}
+  signingkey = {{ $p.gpgKey }}
+
+[gpg]
+  format = openpgp
+  program = gpg
+{{- else if eq $p.signing "ssh" }}
+  signingkey = {{ $p.sshKey }}.pub
+
+[gpg]
+  format = ssh
+
+[gpg "ssh"]
+  allowedSignersFile = ~/.ssh/allowed_signers
 {{- end }}
 
-{{/* personal first, companies after, so the deeper company scope wins */}}
-{{- $ordered := list }}
-{{- if .isPersonal }}{{ $ordered = append $ordered "personal" }}{{ end }}
-{{- $ordered = concat $ordered .companies }}
-{{ range $name := $ordered }}
-{{- $p := index $.profileDefs $name }}
-[includeIf "gitdir:{{ $p.gitDir }}"]
-  path = ~/.config/git/{{ $name }}
-{{ end }}
+[commit]
+  gpgsign = {{ if $p.signing }}true{{ else }}false{{ end }}
+
+[tag]
+  gpgsign = {{ if $p.signing }}true{{ else }}false{{ end }}

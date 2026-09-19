@@ -37,9 +37,6 @@ home/dot_config/komorebi/*.json linguist-language=jsonc linguist-detectable
 home/dot_ssh/config.tmpl linguist-language=sshconfig linguist-detectable
 home/dot_ssh/allowed_signers.tmpl linguist-language=sshconfig linguist-detectable
 home/dot_config/git/config.tmpl linguist-language=gitconfig linguist-detectable
-home/dot_config/git/personal.tmpl linguist-language=gitconfig linguist-detectable
-home/dot_config/git/itcgroup.tmpl linguist-language=gitconfig linguist-detectable
-home/.chezmoitemplates/git/identity linguist-language=gitconfig linguist-detectable
 home/dot_config/git/ignore.tmpl linguist-language=ignore linguist-detectable
 
 home/dot_config/obs/** linguist-generated

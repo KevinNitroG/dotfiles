@@ -1,31 +1,24 @@
 # vim:ft=sshconfig.chezmoitmpl
+#
+# The forge blocks below are GENERATED from profileDefs.{{ .profile }}.sshHosts in
+# home/.chezmoidata/profiles.yml. No host is hardcoded to a particular
+# identity: github.com is an sshHosts entry like any other, so on a company
+# machine it authenticates with the COMPANY key.
+{{- $p := index .profileDefs .profile }}
 
 Host *
   ServerAliveInterval 86400
   ServerAliveCountMax 4
   Port 22
-  IdentityFile ~/.ssh/id_ed25519
-
-# Personal GitHub — used from work machines too.
-Host github.com
-  User git
-  PreferredAuthentications publickey
-  IdentityFile ~/.ssh/id_ed25519
-  IdentitiesOnly yes
-
-{{/* Per-profile hosts, generated from home/.chezmoidata/profiles.yml */}}
-{{- range $name := .profiles }}
-{{- $p := index $.profileDefs $name }}
-{{- range $h := ($p.sshHosts | default list) }}
-
-# {{ $name }}
+  IdentityFile {{ $p.sshKey }}
+{{ range $h := ($p.sshHosts | default list) }}
 Host {{ $h.name }}
   HostName {{ $h.hostName }}
   User {{ $h.user }}
+  PreferredAuthentications publickey
   IdentityFile {{ $p.sshKey }}
   IdentitiesOnly yes
-{{- end }}
-{{- end }}
+{{ end }}
 
 Host ngen
   HostName ntgnguyen.tailf6edf3.ts.net

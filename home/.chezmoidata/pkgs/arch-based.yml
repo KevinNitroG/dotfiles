@@ -8,7 +8,7 @@
 #
 # Categories and when they apply:
 #   common    always
-#   personal  when "personal" is in .profiles
+#   personal  when .profile is "personal"
 #   work      when .isWork  (any company profile present)
 #   laptop    when .isLaptop
 #

@@ -81,18 +81,20 @@
      your previous answer pre-filled rather than resetting to factory values.
      Not promptXOnce: those never ask again once a value exists.
      Names are short and stable so they can be scripted:
-       chezmoi init --promptDefaults --promptMultichoice profiles=personal/itcgroup */}}
+       chezmoi init --promptDefaults --promptChoice profile=itcgroup */}}
 
-{{/* A list, not a single choice: a work machine normally carries both
-     "personal" and its company. promptMultichoice rejects unknown names, so a
-     typo cannot reach [data] and fail later in `index .profileDefs $name`. The
-     stored value is filtered first, or a since-removed company would make the
-     default invalid and init would refuse to start. */}}
-{{ $stored := list }}
-{{ range (dig "profiles" (list "personal") .) }}
-  {{ if has . $knownProfiles }}{{ $stored = append $stored . }}{{ end }}
-{{ end }}
-{{ $profiles := promptMultichoice "Choose profiles" $knownProfiles ($stored | default (list "personal")) | uniq }}
+{{/* ONE identity per machine. A company machine is a company machine: it does
+     not carry the personal git identity, the personal ssh key or any personal
+     secret. Its own GitHub account, if it has one, is declared in that
+     profile's own block in .chezmoidata/profiles.yml.
+     promptChoice rejects unknown names, so a typo cannot reach [data] and fail
+     later in `index .profileDefs $profile`. The stored value is checked first,
+     or a since-removed company would make the default invalid and init would
+     refuse to start. */}}
+{{ $stored := dig "profile" "personal" . }}
+{{ if not (has $stored $knownProfiles) }}{{ $stored = "personal" }}{{ end }}
+{{/* the prompt TEXT is the key `--promptChoice` matches on, hence "profile" */}}
+{{ $profile := promptChoice "profile" $knownProfiles $stored }}
 
 {{ $isGui = promptBool "Is this machine GUI" (dig "isGui" $isGui .) }}
 {{ if not $isWsl }}
@@ -106,35 +108,37 @@
   {{ $opacity = promptString "Opacity" $opacity }}
 {{ end }}
 
-{{ $theme := promptChoice "What theme to use" " $themes (dig "theme" "dark" .) }}
+{{ $theme := promptChoice "What theme to use" $themes (dig "theme" "dark" .) }}
 {{ $catppuccinLightFlavour := promptChoice "catppuccin light flavour" $catppuccinFlavors (dig "catppuccinLightFlavour" "latte" .) }}
 {{ $catppuccinDarkFlavour := promptChoice "catppuccin dark flavour" $catppuccinFlavors (dig "catppuccinDarkFlavour" "mocha" .) }}
 {{ $catppuccinAccentColor := promptChoice "catppuccin accentColor" $catppuccinAccentColors (dig "catppuccinAccentColor" "lavender" .) }}
 
 {{/* HyDE is an Arch-only Hyprland desktop; pointless on work/WSL/headless. */}}
 {{ $useHyde := false }}
-{{ if and (eq $osFamily "arch") $isGui (not $isWsl) (has "personal" $profiles) }}
+{{ if and (eq $osFamily "arch") $isGui (not $isWsl) (eq $profile "personal") }}
   {{ $useHyde = promptBool "detect Arch based Linux, use hyde" (dig "useHyde" false .) }}
 {{ end }}
 
 {{/* ---------- derive ---------- */}}
 
-{{ $companies := without $profiles "personal" }}
-{{ $company := $companies | first | default "" }}
+{{ $isPersonal := eq $profile "personal" }}
+{{ $company := ternary "" $profile $isPersonal }}
 {{ $catppuccinFlavor := ternary $catppuccinLightFlavour $catppuccinDarkFlavour (eq $theme "light") }}
 
-{{/* identities: only the key files this machine actually has -- add a key
-     later => re-run `chezmoi init`.
+{{/* identities: this profile's key, and only if the file actually exists --
+     drop a key in later => re-run `chezmoi init`. An empty list is a supported
+     state, not an error: .chezmoiignore.tmpl skips every encrypted target when
+     there is no identity, so `chezmoi apply` still works on a fresh machine.
      recipients: ALWAYS all of them, including ones this machine cannot read,
-     or `chezmoi re-add` on a work-only box would re-encrypt files so the
-     personal key could no longer decrypt them. */}}
+     or `chezmoi re-add` on a work box would re-encrypt files so the personal
+     key could no longer decrypt them. */}}
 {{ $identities := list }}
 {{ $recipients := list }}
 {{ range $name := $knownProfiles }}
   {{ $meta := get $profileMeta $name }}
   {{ $recipients = append $recipients $meta.recipient }}
   {{ $f := joinPath $.chezmoi.homeDir $meta.key }}
-  {{ if and (has $name $profiles) (lstat $f) }}
+  {{ if and (eq $name $profile) (lstat $f) }}
     {{ $identities = append $identities $f }}
   {{ end }}
 {{ end }}
@@ -146,11 +150,10 @@ mode = "file" # file, symlink
 progress = true
 
 [data]
-profiles = [ {{ $profiles | quoteList | join ", " }} ]
-companies = [ {{ $companies | quoteList | join ", " }} ]
+profile = {{ $profile | quote }}
 company = {{ $company | quote }}
-isWork = {{ gt (len $companies) 0 }}
-isPersonal = {{ has "personal" $profiles }}
+isWork = {{ not $isPersonal }}
+isPersonal = {{ $isPersonal }}
 osId = {{ $osId | quote }}
 osFamily = {{ $osFamily | quote }}
 isWsl = {{ $isWsl }}

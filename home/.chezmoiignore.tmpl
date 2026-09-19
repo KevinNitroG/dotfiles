@@ -9,10 +9,10 @@
 #   .isWsl       running under WSL
 #   .isGui       has a desktop session (false on WSL, containers, servers)
 #   .isLaptop
-#   .profiles    e.g. ["personal", "itcgroup"]
-#   .isPersonal  "personal" in .profiles
-#   .isWork      at least one company profile
-#   .company     primary company id, "" if none
+#   .profile     the ONE identity this machine carries, e.g. "itcgroup"
+#   .isPersonal  .profile == "personal"
+#   .isWork      .profile is a company
+#   .company     the company id, "" when .profile is "personal"
 #   .useHyde
 
 ##########################################
@@ -27,10 +27,45 @@
 
 ##########################################
 # SECRETS THAT NEED AN AGE IDENTITY
+#
+# MAINTAIN THIS LIST. Every encrypted source file in home/ must have its TARGET
+# path here. chezmoi decrypts at render time, so a single encrypted file that
+# no key can open does not fail on its own — it aborts the whole
+# `chezmoi apply`. That is the difference between "this machine has no age key
+# yet" degrading gracefully and a fresh clone being unusable.
+#
+# Audit that nothing is missing:
+#   find home -name '*encrypted_*' -o -name '*.age'
+#
+# .profile is a single identity and every file is encrypted to ALL recipients,
+# so "an identity exists" == "this machine can decrypt everything it ships".
 
 {{ if not .chezmoi.config.age.identities }}
+
+.npmrc
+.wakatime.cfg
+.udemy_enroller/settings.yaml
+
+.config/zsh/private/**
+
 .config/rclone/rclone.conf
 AppData/Roaming/rclone/rclone.conf
+
+.config/autohotkey/hotstring.ahk
+AppData/Local/EVKey/evkmacro.txt
+
+.config/browser-data/chrome-bookmarks.html
+.config/browser-data/bonjourr-homepage/settings.json
+.config/browser-data/dark-reader/settings.json
+.config/browser-data/improvetube/improvedtube.json
+.config/browser-data/refine-github/options.json
+.config/browser-data/sponsorblock/config.json
+.config/browser-data/tampermonkey/backup.txt
+.config/browser-data/ublock/backup.txt
+
+.config/obs/profiles/Kevostro__High_Quality__linux/basic.ini
+.config/obs/profiles/Kevostro__High_Quality__windows/basic.ini
+
 {{ end }}
 
 ##########################################
@@ -249,9 +284,9 @@ AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/**
 ##########################################
 # PROFILE: PERSONAL IDENTITY
 #
-# A work machine that also carries the "personal" profile keeps this — the
-# personal GitHub account is still used from work, so its signing key and
-# git identity must come along.
+# One machine carries one identity, so none of this reaches a company machine.
+# GPG only ever belongs to the personal profile (companies sign with ssh), and
+# the gpg *keys* are imported by hand — see docs/gpg.md, nothing here does it.
 
 {{ if not .isPersonal }}
 
@@ -259,6 +294,9 @@ AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/**
 .gnupg/**
 .chezmoiscripts/*/*gpg*
 .config/windows-tasks-scheduler/Start GPG.xml
+
+# Seeded from the personal GitHub account's keys.
+.ssh/authorized_keys
 
 {{ end }}
 
@@ -300,15 +338,25 @@ AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/**
 ##########################################
 # PER-PROFILE FILES
 #
-# Never ship a git identity or a secrets file for a profile this machine does
-# not carry. Adding a company = add it to profiles.yml; this loop picks it up.
+# Never ship a secrets file or a public key for a profile this machine is not.
+# The git identity needs no entry here: it is rendered straight into
+# ~/.config/git/config from the active profile.
+# Adding a company = add it to profiles.yml; this loop picks it up.
 
 {{ range $name, $def := .profileDefs }}
-{{ if not (has $name $.profiles) }}
-.config/git/{{ $name }}
+{{ if ne $name $.profile }}
 .config/zsh/private/{{ $name }}.zsh
 {{ if $def.sshKey }}.ssh/{{ base $def.sshKey }}.pub{{ end }}
 {{ end }}
+{{ end }}
+
+{{/* No GitHub account for this identity => let `gh auth login` write its own
+     hosts.yml instead of managing an empty one. config.yml is agnostic and
+     always ships. */}}
+{{ if not (index .profileDefs .profile).ghUser }}
+.config/gh/hosts.yml
+AppData/Roaming/GitHub CLI/hosts.yml
+.ssh/authorized_keys
 {{ end }}
 
 ##########################################

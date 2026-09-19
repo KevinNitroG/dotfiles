@@ -7,6 +7,18 @@
 .npm-global/**/*
 {{ end }}
 
+# The git identity is rendered directly into ~/.config/git/config now; these
+# per-profile include files no longer exist.
+{{ range $name, $_ := .profileDefs }}
+.config/git/{{ $name }}
+{{- end }}
+
+# "once_" is a SCRIPT attribute; on a regular file chezmoi keeps it as part of
+# the name, so this config used to land next to the real one and rclone never
+# read it. The source is now create_rclone.conf.tmpl.
+.config/rclone/once_rclone.conf
+AppData/Roaming/rclone/once_rclone.conf
+
 {{ if ne .osId "windows" }}
 # Leftovers from before the ZDOTDIR migration. zsh config now lives in
 # ~/.config/zsh; ~/.zshenv is only a stub that points at it. These files are
