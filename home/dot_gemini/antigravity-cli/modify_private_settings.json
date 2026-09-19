@@ -1,0 +1,7 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- /* vim:ft=json.chezmoitmpl */ -}}
+{{- $settings := dict -}}
+{{- if .chezmoi.stdin -}}
+{{-   $settings = fromJson .chezmoi.stdin -}}
+{{- end -}}
+{{ mergeOverwrite $settings (includeTemplate "gemini/antigravity-settings.json" . | fromJson) | toPrettyJson }}

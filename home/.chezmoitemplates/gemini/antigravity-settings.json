@@ -1,0 +1,12 @@
+{
+  "altScreenMode": "always",
+  "enableTelemetry": false,
+  "notifications": true,
+  "runningLightSpeed": "fast",
+  "showFeedbackSurvey": false,
+  "statusLine": {
+    "type": "",
+    "command": "",
+    "enabled": true
+  }
+}
