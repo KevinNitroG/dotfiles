@@ -1,0 +1,66 @@
+{{- $p := index .catppuccin.palettes "mocha" -}}
+[colors.primary]
+background = "{{ $p.base }}"
+foreground = "{{ $p.text }}"
+dim_foreground = "{{ $p.overlay1 }}"
+bright_foreground = "{{ $p.text }}"
+
+[colors.cursor]
+text = "{{ $p.base }}"
+cursor = "{{ $p.rosewater }}"
+
+[colors.vi_mode_cursor]
+text = "{{ $p.base }}"
+cursor = "{{ $p.lavender }}"
+
+[colors.search.matches]
+foreground = "{{ $p.base }}"
+background = "{{ $p.subtext0 }}"
+
+[colors.search.focused_match]
+foreground = "{{ $p.base }}"
+background = "{{ $p.green }}"
+
+[colors.footer_bar]
+foreground = "{{ $p.base }}"
+background = "{{ $p.subtext0 }}"
+
+[colors.hints.start]
+foreground = "{{ $p.base }}"
+background = "{{ $p.yellow }}"
+
+[colors.hints.end]
+foreground = "{{ $p.base }}"
+background = "{{ $p.subtext0 }}"
+
+[colors.selection]
+text = "{{ $p.base }}"
+background = "{{ $p.rosewater }}"
+
+[colors.normal]
+black = "{{ $p.surface1 }}"
+red = "{{ $p.red }}"
+green = "{{ $p.green }}"
+yellow = "{{ $p.yellow }}"
+blue = "{{ $p.blue }}"
+magenta = "{{ $p.pink }}"
+cyan = "{{ $p.teal }}"
+white = "{{ $p.subtext1 }}"
+
+[colors.bright]
+black = "{{ $p.surface2 }}"
+red = "{{ $p.red }}"
+green = "{{ $p.green }}"
+yellow = "{{ $p.yellow }}"
+blue = "{{ $p.blue }}"
+magenta = "{{ $p.pink }}"
+cyan = "{{ $p.teal }}"
+white = "{{ $p.subtext0 }}"
+
+[[colors.indexed_colors]]
+index = 16
+color = "{{ $p.peach }}"
+
+[[colors.indexed_colors]]
+index = 17
+color = "{{ $p.rosewater }}"

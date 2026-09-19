@@ -1,0 +1,12 @@
+$ErrorActionPreference='Stop'
+
+$Config = Join-Path $HOME 'AppData\Roaming\alacritty\alacritty.toml'
+$Light = 'catppuccin-{{ .catppuccinLightFlavour }}.toml'
+$Dark = 'catppuccin-{{ .catppuccinDarkFlavour }}.toml'
+
+$lines = Get-Content $Config
+if ($lines -match "^import = .*""$Dark""") {
+  ($lines -replace $Dark, $Light) | Set-Content $Config
+} else {
+  ($lines -replace $Light, $Dark) | Set-Content $Config
+}

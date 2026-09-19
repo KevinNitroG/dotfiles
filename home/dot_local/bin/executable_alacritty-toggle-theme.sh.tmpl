@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
+set -u
 
 ALACRITTY_CONFIG="$HOME/.config/alacritty/alacritty.toml"
+LIGHT='catppuccin-{{ .catppuccinLightFlavour }}.toml'
+DARK='catppuccin-{{ .catppuccinDarkFlavour }}.toml'
 
-if grep -q '{{- .catppuccinDarkFlavour -}}' "$ALACRITTY_CONFIG"; then
-  sed -i "s/{{- .catppuccinDarkFlavour -}}/{{- .catppuccinLightFlavour -}}/" "$ALACRITTY_CONFIG"
+if grep -q "^import = .*\"$DARK\"" "$ALACRITTY_CONFIG"; then
+  sed -i "/^import = /s|$DARK|$LIGHT|" "$ALACRITTY_CONFIG"
 else
-  sed -i "s/{{- .catppuccinLightFlavour -}}/{{- .catppuccinDarkFlavour -}}/" "$ALACRITTY_CONFIG"
+  sed -i "/^import = /s|$LIGHT|$DARK|" "$ALACRITTY_CONFIG"
 fi
