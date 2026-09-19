@@ -1,0 +1,165 @@
+#!/usr/bin/env bash
+
+set -e
+
+has() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+print_step() {
+  printf "\n===> CLEANING: %s\n" "$1"
+}
+
+# 1. SYSTEM PACKAGE MANAGERS
+
+{{ if lookPath "pacman" -}}
+print_step "Pacman Cache"
+sudo pacman -Scc --noconfirm
+{{ end -}}
+
+{{ if lookPath "yay" -}}
+  print_step "Yay (AUR) Cache"
+  yay -Scc --noconfirm
+{{ end -}}
+
+{{ if lookPath "apt" -}}
+  print_step "APT (Ubuntu/Debian/WSL)"
+  sudo apt autoremove --purge -y
+  sudo apt clean
+{{ end -}}
+
+{{ if lookPath "dnf" -}}
+  print_step "DNF (Fedora)"
+  sudo dnf clean all
+{{ end -}}
+
+{{ if lookPath "zypper" -}}
+  print_step "Zypper (openSUSE)"
+  sudo zypper clean
+{{ end -}}
+
+{{ if lookPath "snap" -}}
+  print_step "Snap (Disabled Revisions)"
+  # Removes old, disabled versions of snaps to free up space
+  set -- $(snap list --all | awk '/disabled/{print $1, $3}')
+  while [ $# -gt 0 ]; do
+    sudo snap remove "$1" --revision="$2"
+    shift 2
+  done
+{{ end -}}
+
+{{ if lookPath "flatpak" -}}
+  print_step "Flatpak Unused Runtimes"
+  flatpak uninstall --unused -y
+{{ end -}}
+
+{{ if lookPath "brew" -}}
+  print_step "Homebrew Old Versions & Cache"
+  brew cleanup --prune=all
+{{ end -}}
+
+# 2. DEVELOPMENT TOOLS & RUNTIMES
+
+if has mise; then
+  print_step "Mise Prune"
+  mise prune -y
+fi
+
+if has npm; then
+  print_step "NPM Cache"
+  npm cache clean --force
+fi
+
+if has pnpm; then
+  print_step "PNPM Store"
+  pnpm store prune
+fi
+
+if has bun; then
+  print_step "Bun Cache"
+  bun pm cache rm
+fi
+
+if has go; then
+  print_step "Go Build, Mod, & Test Cache"
+  go clean -cache -modcache -testcache
+fi
+
+if has dotnet; then
+  print_step "Dotnet NuGet Local Caches"
+  dotnet nuget locals all --clear
+fi
+
+if has dart; then
+  print_step "Dart Global Pub Cache"
+  dart pub cache clean
+elif has flutter; then
+  print_step "Flutter Global Pub Cache"
+  flutter pub cache clean
+fi
+
+if has golangci-lint; then
+  print_step "Golangci-lint Cache"
+  golangci-lint cache clean
+fi
+
+if has uv; then
+  print_step "UV / UVX Cache"
+  uv cache clean
+fi
+
+if has pip; then
+  print_step "Python Pip Cache"
+  pip cache purge
+fi
+
+# 3. SPECIFIC CACHES & DIRECTORIES
+
+{{- $goplsCache := "" -}}
+{{ if eq .osId "darwin" -}}
+  {{ $goplsCache = "$HOME/Library/Caches/gopls" -}}
+{{ else -}}
+  {{ $goplsCache = "$HOME/.cache/gopls" -}}
+{{ end -}}
+
+if [ -d "{{- $goplsCache -}}" ]; then
+  print_step "Gopls Cache"
+  rm -rf "{{- $goplsCache -}}/"*
+fi
+
+{{- $helmCache := "" -}}
+{{ if eq .osId "darwin" -}}
+  {{ $helmCache = "$HOME/Library/Caches/helm" -}}
+{{ else -}}
+  {{ $helmCache = "$HOME/.cache/helm" -}}
+{{ end -}}
+
+if [ -d "{{- $helmCache -}}" ]; then
+  print_step "Helm Cache"
+  rm -rf "{{- $helmCache -}}/"*
+fi
+
+if [ -d "$HOME/.cargo/registry/cache" ]; then
+  print_step "Rust Cargo Registry Cache"
+  rm -rf "$HOME/.cargo/registry/cache/"*
+fi
+
+if [ -d "$HOME/.gradle/caches" ]; then
+  print_step "Gradle Caches"
+  # Clean old gradle versions/caches, keeping recent files safely
+  find "$HOME/.gradle/caches" -type d -name "transforms-*" -exec rm -rf {} + 2>/dev/null || true
+  find "$HOME/.gradle/caches" -type d -name "modules-2" -prune -o -type f -mtime +120 -exec rm -f {} + 2>/dev/null || true
+fi
+
+{{- $vscodeCache := "" -}}
+{{ if eq .osId "darwin" -}}
+  {{ $vscodeCache = "$HOME/Library/Application Support/Code/CachedData" -}}
+{{ else -}}
+  {{ $vscodeCache = "$HOME/.config/Code/CachedData" -}}
+{{ end -}}
+if [ -d "{{- $vscodeCache -}}" ]; then
+  print_step "VS Code Cached Data"
+  rm -rf "{{- $vscodeCache -}}/"*
+fi
+
+printf "\n✨ All cleanup tasks completed successfully!\n"

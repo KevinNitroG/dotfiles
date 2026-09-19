@@ -27,6 +27,10 @@ fi
 echo "$stylus" | jq --arg accent "$accent_color" \
   --arg light "$light_flavor" \
   --arg dark "$dark_flavor" \
-  '.[1:].[].usercssData.vars.accentColor.value |= $accent |
-                     .[1:].[].usercssData.vars.lightFlavor.value |= $light |
-                     .[1:].[].usercssData.vars.darkFlavor.value |= $dark' >"$FILE_PATH"
+  "$(
+    cat <<'jq'
+.[1:].[].usercssData.vars.accentColor.value |= $accent |
+.[1:].[].usercssData.vars.lightFlavor.value |= $light |
+.[1:].[].usercssData.vars.darkFlavor.value |= $dark
+jq
+  )" >"$FILE_PATH"

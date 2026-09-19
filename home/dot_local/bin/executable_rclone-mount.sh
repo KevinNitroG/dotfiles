@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 if ! rclone --version &>/dev/null; then
   echo "Rclone isn't installed"
   exit 1
 fi
 
-MOUNT_POINT="$HOME/mount/rclone/"
+MOUNT_POINT="$HOME/mnt/rclone/"
 ARGS=(
   '--buffer-size=512M'
   '--daemon'
@@ -17,6 +17,8 @@ ARGS=(
   '--vfs-cache-mode=full'
 )
 
-drive=$(rclone listremotes | fzf)
+drive=$(rclone listremotes | fzf --border-label 'Select a remote to mount')
+
+mkdir -p "$MOUNT_POINT"
 
 rclone mount "$drive" "$MOUNT_POINT" "${ARGS[@]}"

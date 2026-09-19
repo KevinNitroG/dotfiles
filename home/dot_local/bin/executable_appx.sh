@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 FZF_DEFAULT_OPTS+="
 --bind ctrl-a:toggle-all

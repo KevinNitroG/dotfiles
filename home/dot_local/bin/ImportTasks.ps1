@@ -20,9 +20,8 @@ param (
 
 $gettasks = Get-ChildItem $task_path
 foreach ($task in $gettasks){
-[xml]$gettask = get-content $task.FullName
-$gettaskxmlstring  = get-content $task.FullName | Out-String
-$taskname = ($gettask.task.RegistrationInfo.URI).split("\")[-1]
-Register-ScheduledTask -xml $gettaskxmlstring -TaskName $taskname -TaskPath "\$task_Folder\" -User $task_user -Password $task_pass
+  [xml]$gettask = get-content $task.FullName
+  $gettaskxmlstring  = get-content $task.FullName | Out-String
+  $taskname = ($gettask.task.RegistrationInfo.URI).split("\")[-1]
+  Register-ScheduledTask -xml $gettaskxmlstring -TaskName $taskname -TaskPath "\$task_Folder\" -User $task_user -Password $task_pass
 }
-####################################################################

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+ALACRITTY_CONFIG="$HOME/.config/alacritty/alacritty.toml"
+
+if grep -q '{{- .catppuccinDarkFlavour -}}' "$ALACRITTY_CONFIG"; then
+  sed -i "s/{{- .catppuccinDarkFlavour -}}/{{- .catppuccinLightFlavour -}}/" "$ALACRITTY_CONFIG"
+else
+  sed -i "s/{{- .catppuccinLightFlavour -}}/{{- .catppuccinDarkFlavour -}}/" "$ALACRITTY_CONFIG"
+fi

@@ -13,15 +13,14 @@
 #>
 #################Export Scheduled Tasks except Microsoft######################
 Get-ScheduledTask | ForEach-Object{
-$TaskPath = $taskName = $Null
-$taskName = $_.TaskName
-$TaskPath = $_.TaskPath 
-if($TaskPath -eq "\"){$TaskFolderPath = "root"}else{$TaskFolderPath = $taskpath.replace("\","")}
-if(($TaskFolderPath) -and ($TaskFolderPath -notlike "*Microsoft*")){
-if($(Test-Path -Path $TaskFolderPath) -eq $false){
-$null = New-Item -Path (Get-Location).path -Name $TaskFolderPath -Type directory
+  $TaskPath = $taskName = $Null
+  $taskName = $_.TaskName
+  $TaskPath = $_.TaskPath 
+  if($TaskPath -eq "\"){$TaskFolderPath = "root"}else{$TaskFolderPath = $taskpath.replace("\","")}
+  if(($TaskFolderPath) -and ($TaskFolderPath -notlike "*Microsoft*")){
+    if($(Test-Path -Path $TaskFolderPath) -eq $false){
+      $null = New-Item -Path (Get-Location).path -Name $TaskFolderPath -Type directory
+    }
+    Export-ScheduledTask -TaskName $taskName -TaskPath $TaskPath | out-file -FilePath $($TaskFolderPath + "\" + $taskName + ".xml")
+  }
 }
-Export-ScheduledTask -TaskName $taskName -TaskPath $TaskPath | out-file -FilePath $($TaskFolderPath + "\" + $taskName + ".xml")
-}
-}
-#############################################################################
