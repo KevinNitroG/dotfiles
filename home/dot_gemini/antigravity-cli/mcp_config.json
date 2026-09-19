@@ -1,16 +1,150 @@
 {
   "mcpServers": {
+    "chrome-devtools": {
+      "command": "mise",
+      "args": [
+        "exec",
+        "npm:chrome-devtools-mcp@latest",
+        "--",
+        "chrome-devtools-mcp"
+      ],
+      "disabled": true
+    },
     "context7": {
       "serverUrl": "https://mcp.context7.com/mcp",
       "headers": {
         "CONTEXT7_API_KEY": "${CONTEXT7_API_KEY}"
       }
     },
+    "ddg-search": {
+      "command": "mise",
+      "args": [
+        "exec",
+        "pipx:duckduckgo-mcp-server@latest",
+        "--",
+        "duckduckgo-mcp-server"
+      ],
+      "disabled": true
+    },
+    "brave-search": {
+      "command": "mise",
+      "args": [
+        "exec",
+        "npm:@brave/brave-search-mcp-server@latest",
+        "--",
+        "brave-search-mcp-server"
+      ],
+      "env": {
+        "BRAVE_SEARCH_API_KEY": "{env:BRAVE_SEARCH_API_KEY}"
+      },
+      "disabled": true
+    },
+    "fetch": {
+      "command": "mise",
+      "args": ["exec", "npm:mcp-fetch-server@latest", "--", "mcp-fetch-server"],
+      "disabled": true
+    },
+    "filesystem": {
+      "command": "mise",
+      "args": [
+        "exec",
+        "npm:@modelcontextprotocol/server-filesystem@latest",
+        "--",
+        "mcp-server-filesystem",
+        "/home/kevinnitro/"
+      ],
+      "disabled": true
+    },
     "github": {
       "serverUrl": "https://api.githubcopilot.com/mcp/",
       "headers": {
-        "Authorization": "Bearer ${GITHUB_TOKEN}"
-      }
+        "Authorization": "Bearer {env:GITHUB_TOKEN}"
+      },
+      "disabled": true
+    },
+    "memory": {
+      "command": "mise",
+      "args": [
+        "exec",
+        "npm:@modelcontextprotocol/server-memory@latest",
+        "--",
+        "server-memory"
+      ],
+      "disabled": true
+    },
+    "playwright": {
+      "command": "mise",
+      "args": [
+        "exec",
+        "npm:@playwright/mcp@latest",
+        "--",
+        "playwright-mcp",
+        "--config",
+        "/home/kevinnitro/.config/playwright-mcp.json"
+      ],
+      "env": {
+        "WAYLAND_DISPLAY": "{env:WAYLAND_DISPLAY}",
+        "XDG_RUNTIME_DIR": "{env:XDG_RUNTIME_DIR}"
+      },
+      "disabled": true
+    },
+    "puppeteer": {
+      "command": "mise",
+      "args": [
+        "exec",
+        "npm:@modelcontextprotocol/server-puppeteer@latest",
+        "--",
+        "server-puppeteer"
+      ],
+      "disabled": true
+    },
+    "sequential-thinking": {
+      "command": "mise",
+      "args": [
+        "exec",
+        "npm:@modelcontextprotocol/server-sequential-thinking@latest",
+        "--",
+        "server-sequential-thinking"
+      ],
+      "disabled": true
+    },
+    "tavily": {
+      "command": "mise",
+      "args": ["exec", "npm:tavily-mcp@latest", "--", "tavily-mcp"],
+      "env": {
+        "TAVILY_API_KEY": "{env:TAVILY_API_KEY}"
+      },
+      "disabled": true
+    },
+    "time": {
+      "command": "mise",
+      "args": [
+        "exec",
+        "pipx:mcp-server-time@latest",
+        "--",
+        "mcp-server-time",
+        "--local-timezone=Asia/Ho_Chi_Minh"
+      ],
+      "disabled": true
+    },
+    "Framelink_Figma_MCP": {
+      "command": "mise",
+      "args": [
+        "exec",
+        "npm:figma-developer-mcp@latest",
+        "--",
+        "figma-developer-mcp",
+        "--stdio"
+      ],
+      "env": {
+        "FIGMA_API_KEY": "{env:FIGMA_API_KEY}"
+      },
+      "disabled": true
+    },
+    "shadcn": {
+      "command": "mise",
+      "args": ["exec", "npm:shadcn@latest", "--", "shadcn", "mcp"],
+      "disabled": true
     }
   }
 }

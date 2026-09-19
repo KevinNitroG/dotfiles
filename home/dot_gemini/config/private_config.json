@@ -1,0 +1,7 @@
+{
+  "plugins": {
+    "gemini-cli-wakatime": {
+      "enabled": true
+    }
+  }
+}
