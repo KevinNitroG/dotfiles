@@ -27,6 +27,9 @@ $docker_context\
 $kubernetes\
 $helm\
 $terraform\
+$aws\
+$azure\
+$gcloud\
 [](fg:blue bg:lavender)\
 $cmd_duration\
 $sudo\
@@ -198,6 +201,22 @@ symbol ="󱃾"
 style = "bg:blue"
 format = '[[ $symbol( $version)( \($workspace\)) ](fg:base bg:blue)]($style)'
 symbol = ""
+
+[aws]
+symbol = ""
+style = "bg:blue"
+format = '[[ $symbol( $profile)( $region)( $duration) ](fg:base bg:blue)]($style)'
+
+[azure]
+symbol = "󰠅"
+style = "bg:blue"
+disabled = false
+format = '[[ $symbol( $subscription) ](fg:base bg:blue)]($style)'
+
+[gcloud]
+symbol = "󱇶"
+style = "bg:blue"
+format = '[[ $symbol($account)( $project)( $region) ](fg:base bg:blue)]($style)'
 
 [conda]
 style = "bg:blue"
