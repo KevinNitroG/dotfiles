@@ -1,0 +1,18 @@
+# False positives
+# 1. Windows Terminal "keys" keybindings (keyboard shortcuts, the JSON key is literally named "keys")
+# 2. OBS PipeWire RestoreToken (local random UUID in an already-deleted file)
+a6f1972ab745c8471bb73281638edaf3605a195d:home/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/create_settings.json.tmpl:generic-api-key:532
+a6f1972ab745c8471bb73281638edaf3605a195d:home/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/create_settings.json.tmpl:generic-api-key:692
+a6f1972ab745c8471bb73281638edaf3605a195d:home/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/create_settings.json.tmpl:generic-api-key:700
+a6f1972ab745c8471bb73281638edaf3605a195d:home/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/create_settings.json.tmpl:generic-api-key:704
+a6f1972ab745c8471bb73281638edaf3605a195d:home/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/create_settings.json.tmpl:generic-api-key:712
+a6f1972ab745c8471bb73281638edaf3605a195d:home/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/create_settings.json.tmpl:generic-api-key:1020
+a6f1972ab745c8471bb73281638edaf3605a195d:home/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/create_settings.json.tmpl:generic-api-key:1048
+c2175f08c05c76ea098dbbf740b0b6657393d11a:home/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json.tmpl:generic-api-key:54
+c2175f08c05c76ea098dbbf740b0b6657393d11a:home/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json.tmpl:generic-api-key:137
+c2175f08c05c76ea098dbbf740b0b6657393d11a:home/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json.tmpl:generic-api-key:141
+c2175f08c05c76ea098dbbf740b0b6657393d11a:home/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json.tmpl:generic-api-key:145
+c2175f08c05c76ea098dbbf740b0b6657393d11a:home/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json.tmpl:generic-api-key:157
+c2175f08c05c76ea098dbbf740b0b6657393d11a:home/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json.tmpl:generic-api-key:713
+c2175f08c05c76ea098dbbf740b0b6657393d11a:home/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/settings.json.tmpl:generic-api-key:823
+c2175f08c05c76ea098dbbf740b0b6657393d11a:home/dot_config/obs/scenes/KevinNitro__linux.json:generic-api-key:206
