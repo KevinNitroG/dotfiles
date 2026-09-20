@@ -13,6 +13,9 @@
   <a href="https://github.com/HyDE-Project/HyDE">
     <img alt="HyDE" src="https://img.shields.io/badge/Hyde-cba6f7?style=for-the-badge"/>
   </a>
+  <a href="https://wakatime.com/badge/github/KevinNitroG/dotfiles">
+    <img src="https://wakatime.com/badge/github/KevinNitroG/dotfiles.svg?style=for-the-badge" alt="wakatime">
+  </a>
 </div>
 
 <div align=center>
@@ -82,7 +85,7 @@ which files exist:
 
 | value      | meaning                                                               |
 | ---------- | --------------------------------------------------------------------- |
-| `profile`  | the ONE identity this machine is — `personal` or a company id        |
+| `profile`  | the ONE identity this machine is — `personal` or a company id         |
 | `osFamily` | `arch` / `ubuntu` / `fedora` / `windows` / `darwin` — picks installer |
 | `isWsl`    | auto-detected                                                         |
 | `isGui`    | auto-detected; false on WSL, containers, headless                     |
