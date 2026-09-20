@@ -18,6 +18,7 @@
 *chezmoiremove* linguist-language=gitignore linguist-detectable
 *gitignore* linguist-language=gitignore linguist-detectable
 *rgignore* linguist-language=gitignore linguist-detectable
+.gitleaksignore linguist-language=gitignore linguist-detectable
 
 *vimrc linguist-language=vim linguist-detectable
 *vsvimrc linguist-language=vim linguist-detectable
@@ -39,7 +40,6 @@ home/dot_ssh/allowed_signers.tmpl linguist-language=sshconfig linguist-detectabl
 home/dot_config/git/config.tmpl linguist-language=gitconfig linguist-detectable
 home/dot_config/git/ignore.tmpl linguist-language=ignore linguist-detectable
 
-home/dot_config/obs/** linguist-generated
 home/AppData/Local/Microsoft/PowerToys/** linguist-generated
 home/dot_config/browser-data/vimium/** linguist-generated
 home/TrafficMonitor/** linguist-generated
