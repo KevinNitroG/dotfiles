@@ -1,4 +1,7 @@
 #:schema https://raw.githubusercontent.com/yazi-rs/schemas/refs/heads/main/schemas/yazi.json
+
+# https://github.com/timseriakov/dotfiles/blob/master/yazi/yazi-default.toml
+
 [mgr]
 show_hidden = true
 show_symlink = true
@@ -6,17 +9,7 @@ linemode = "size"
 
 [plugin]
 prepend_previewers = [
-  { mime = "application/*zip", run = "ouch" },
-  { mime = "application/x-tar", run = "ouch" },
-  { mime = "application/x-bzip2", run = "ouch" },
-  { mime = "application/x-7z-compressed", run = "ouch" },
-  { mime = "application/x-rar", run = "ouch" },
-  { mime = "application/vnd.rar", run = "ouch" },
-  { mime = "application/x-xz", run = "ouch" },
-  { mime = "application/xz", run = "ouch" },
-  { mime = "application/x-zstd", run = "ouch" },
-  { mime = "application/zstd", run = "ouch" },
-  { mime = "application/java-archive", run = "ouch" },
+  { mime = "application/{*zip,tar,bzip2,7z*,rar,xz,zstd,java-archive}", run = "ouch" },
   { url = "*.md", run = 'piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark "$1"' },
 ]
 # prepend_fetchers = [
@@ -31,8 +24,7 @@ edit = [
   { run = "%EDITOR% %s", block = true, for = "windows" },
 ]
 extract = [
-  # { run = 'ouch d -y %*', desc = "Extract here with ouch", for = "windows" },
-  # { run = 'ouch d -y "$@"', desc = "Extract here with ouch", for = "unix" },
-  { run = 'ya pub extract --list "$@"', desc = "Extract here", for = "unix" },
-  { run = 'ya pub extract --list %*', desc = "Extract here", for = "windows" },
+  { run = 'ouch decompress --yes %s', desc = "Extract here with ouch" },
+  # TODO: I cannot make it work with this below
+  # { run = 'ya pub extract --list "%s"', desc = "Extract here" },
 ]
