@@ -82,6 +82,7 @@ pkgs:
         - unzip
         - wget2-wget # F45 dropped `wget`; this provides /usr/bin/wget
         - zip
+        - 7zip # yazi
         - zsh
 
         # Toolchain (Fedora has no build-essential metapackage)
