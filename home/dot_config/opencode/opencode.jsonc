@@ -27,8 +27,9 @@
   "plugin": [
     "opencode-wakatime@latest",
     "@tarquinen/opencode-dcp@latest",
-    "@mohak34/opencode-notifier@latest",
-    "opencode-pty@latest",
+    {
+      "package": "opencode-pty/v2",
+    },
     "oh-my-opencode-slim",
   ],
   "permission": {
