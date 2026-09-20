@@ -9,7 +9,7 @@ linemode = "size"
 
 [plugin]
 prepend_previewers = [
-  { mime = "application/{*zip,tar,bzip2,7z*,rar,xz,zstd,java-archive}", run = "ouch" },
+  # { mime = "application/{*zip,tar,bzip2,7z*,rar,xz,zstd,java-archive}", run = "ouch" },
   { url = "*.md", run = 'piper -- CLICOLOR_FORCE=1 glow -w=$w -s=dark "$1"' },
 ]
 # prepend_fetchers = [
