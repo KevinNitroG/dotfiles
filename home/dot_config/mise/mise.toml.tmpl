@@ -39,8 +39,8 @@ uv = "latest"
 "websocat" = "latest"
 "npm:@ast-grep/cli" = "latest"
 "npm:@mermaid-js/mermaid-cli" = "latest"
-"npm:@opencode/cli" = { version = "latest", npm_args = "--ignore-scripts=false" }
-"npm:@anthropic-ai/claude-code" = "latest"
+"npm:@opencode/cli" = { version = "latest", allow_builds = true }
+"npm:@anthropic-ai/claude-code" = { version = "latest", allow_builds = true }
 antigravity-cli = "latest"
 "pipx:markitdown" = "latest"
 "aqua:zaghaghi/openapi-tui" = "latest" # no short registry name
@@ -77,8 +77,8 @@ jqp = "latest"
 "websocat" = "latest"
 "npm:@ast-grep/cli" = "latest"
 "npm:@mermaid-js/mermaid-cli" = "latest"
-"npm:@opencode/cli" = { version = "latest", npm_args = "--ignore-scripts=false" }
-"npm:@anthropic-ai/claude-code" = "latest"
+"npm:@opencode/cli" = { version = "latest", allow_builds = true }
+"npm:@anthropic-ai/claude-code" = { version = "latest", allow_builds = true }
 antigravity-cli = "latest"
 "pipx:markitdown" = "latest"
 "aqua:zaghaghi/openapi-tui" = "latest" # no short registry name
@@ -118,6 +118,7 @@ asset_pattern = "mcp-grafana_{{ "{{" }}os(macos='Darwin', linux='Linux', windows
 idiomatic_version_file_enable_tools = ["dotnet"]
 experimental = true
 pipx.uvx = true
+# npm.package_manager = "pnpm"
 
 # [hooks]
 # enter = "mise i -q"

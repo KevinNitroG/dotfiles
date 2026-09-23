@@ -217,8 +217,8 @@ encrypted `~/.config/zsh/private/personal.zsh`.
 
 ```sh
 export MISE_JOBS=2
-export MISE_HTTP_TIMEOUT=3000
-export MISE_FETCH_REMOTE_VERSIONS_TIMEOUT=3000
+export MISE_HTTP_TIMEOUT=10m
+export MISE_FETCH_REMOTE_VERSIONS_TIMEOUT=10m
 ```
 
 ### 5. Install chezmoi and apply
