@@ -48,8 +48,9 @@
   - [1. SSH key](#1-ssh-key)
   - [2. age key](#2-age-key)
   - [3. GitHub API rate limits](#3-github-api-rate-limits)
-  - [4. Install chezmoi and apply](#4-install-chezmoi-and-apply)
-  - [5. Commit signing](#5-commit-signing)
+  - [4. Slow network](#4-slow-network)
+  - [5. Install chezmoi and apply](#5-install-chezmoi-and-apply)
+  - [6. Commit signing](#6-commit-signing)
 - [Manually add/sync encrypted file to template](#manually-addsync-encrypted-file-to-template)
   - [Then list it in `.chezmoiignore.tmpl`](#then-list-it-in-chezmoiignoretmpl)
 - [📝 Other notes](#-other-notes)
@@ -200,10 +201,7 @@ is for, and why it has to list every encrypted file (see
 
 ### 3. GitHub API rate limits
 
-chezmoi externals and mise both hammer the GitHub API on a first apply, and the
-anonymous limit is **60/hour** — you will hit `API rate limit exceeded` and get
-a half-installed machine. Export a token first (a classic PAT with no scopes is
-enough; this is only about the rate limit):
+chezmoi externals and mise both hammer the GitHub API
 
 ```sh
 export GITHUB_TOKEN='ghp_...'
@@ -215,7 +213,15 @@ encrypted `~/.config/zsh/private/personal.zsh`.
 > [!TIP]
 > `gh auth login && export GITHUB_TOKEN=$(gh auth token)` works too.
 
-### 4. Install chezmoi and apply
+### 4. Slow network
+
+```sh
+export MISE_JOBS=2
+export MISE_HTTP_TIMEOUT=3000
+export MISE_FETCH_REMOTE_VERSIONS_TIMEOUT=3000
+```
+
+### 5. Install chezmoi and apply
 
 _([docs](https://www.chezmoi.io/install))_
 
@@ -237,7 +243,7 @@ script it:
 chezmoi init --promptDefaults --promptChoice profile=[company]
 ```
 
-### 5. Commit signing
+### 6. Commit signing
 
 Per profile in `profiles.yml`: `personal` signs with **GPG**, companies with
 their **SSH** key. The machine has one identity, so every repo on it signs the
