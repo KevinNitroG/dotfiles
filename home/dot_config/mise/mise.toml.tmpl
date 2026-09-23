@@ -39,8 +39,9 @@ uv = "latest"
 "websocat" = "latest"
 "npm:@ast-grep/cli" = "latest"
 "npm:@mermaid-js/mermaid-cli" = "latest"
-"npm:opencode-ai" = "latest"
+"npm:@opencode/cli" = { version = "latest", npm_args = "--ignore-scripts=false" }
 "npm:@anthropic-ai/claude-code" = "latest"
+antigravity-cli = "latest"
 "pipx:markitdown" = "latest"
 "aqua:zaghaghi/openapi-tui" = "latest" # no short registry name
 "github:jonas-grgt/ktea" = "latest"
@@ -76,8 +77,9 @@ jqp = "latest"
 "websocat" = "latest"
 "npm:@ast-grep/cli" = "latest"
 "npm:@mermaid-js/mermaid-cli" = "latest"
-"npm:opencode-ai" = "latest"
+"npm:@opencode/cli" = { version = "latest", npm_args = "--ignore-scripts=false" }
 "npm:@anthropic-ai/claude-code" = "latest"
+antigravity-cli = "latest"
 "pipx:markitdown" = "latest"
 "aqua:zaghaghi/openapi-tui" = "latest" # no short registry name
 "github:jonas-grgt/ktea" = "latest"
@@ -117,8 +119,8 @@ idiomatic_version_file_enable_tools = ["dotnet"]
 experimental = true
 pipx.uvx = true
 
-[hooks]
-enter = "mise i -q"
+# [hooks]
+# enter = "mise i -q"
 
 [shell_alias]
 renovate = "mise exec npm:renovate@latest npm:node@24 -- renovate"

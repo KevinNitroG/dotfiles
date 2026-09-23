@@ -101,10 +101,10 @@
   {{ $isLaptop = promptBool "Is this a laptop" (dig "isLaptop" $isLaptop .) }}
 {{ end }}
 
-{{ $terminalFontSize := dig "terminalFontSize" 13 . }}
+{{ $terminalFontSize := dig "terminalFontSize" 13 . | int64 }}
 {{ $opacity := printf "%v" (dig "opacity" "0.8" .) }}
 {{ if $isGui }}
-  {{ $terminalFontSize = promptInt "Terminal font size" $terminalFontSize }}
+  {{ $terminalFontSize = promptInt "Terminal font size" $terminalFontSize | int64 }}
   {{ $opacity = promptString "Opacity" $opacity }}
 {{ end }}
 
