@@ -18,84 +18,20 @@ fpath=("$ZDOTDIR/completions" $fpath)
 
 # OH-MY-ZSH
 
+{{- $plugins := .zsh.plugins.pre }}
+{{- if eq .osFamily "arch" }}{{ $plugins = append $plugins "archlinux" }}{{- end }}
+{{- if eq .chezmoi.os "darwin" }}{{ $plugins = append $plugins "macos" "brew" }}{{- end }}
+{{- if eq .osFamily "ubuntu" }}{{ $plugins = append $plugins "ubuntu" }}{{- end }}
+{{- if lookPath "dnf" }}{{ $plugins = append $plugins "dnf" }}{{- end }}
+{{- $plugins = concat $plugins .zsh.plugins.mid.common }}
+{{- if .isPersonal }}{{ $plugins = concat $plugins .zsh.plugins.mid.personal }}{{- end }}
+{{- if .isWork }}{{ $plugins = concat $plugins (default (list) (index .zsh.plugins.mid.work .company)) }}{{- end }}
+{{- $plugins = concat $plugins .zsh.plugins.post }}
+
 plugins=(
-  # zsh-vi-mode
-  mise
-  # direnv
-
-  {{- if eq .osFamily "arch" }}
-  archlinux
-  {{- end }}
-  {{- if eq .chezmoi.os "darwin" }}
-  macos
-  brew
-  {{- end }}
-  {{- if eq .osFamily "ubuntu" }}
-  ubuntu
-  {{- end }}
-  {{ if lookPath "dnf" }}
-  dnf
-  {{- end }}
-
-  # shell
-  fzf-tab
-  command-not-found
-  dotenv
-  extract
-  starship
-  sudo
-  tmux
-  zoxide
-  # gitignore
-  # nx-completion
-
-  # necessary
-  docker
-  docker-compose
-  gh
-  glab
-  git
-  tmuxinator
-
-  # devops
-  helm
-  kubectl
-  minikube
-  terraform
-  fluxcd
-  argocd
-  aws
-  azure
-  k9s
-
-  # coding
-  spring
-  gradle
-  mvn
-  golang
-  # bazel
-  # ruff
-  uv
-  # uv-env
-  npm
-  zsh-better-npm-completion
-
-  # utils
-  # wakatime
-  chezmoi
-  rclone
-
-  # zsh
-  zsh-256color
-  zsh-autosuggestions
-  zsh-syntax-highlighting
-
-  history-substring-search # Always below zsh-syntax-highlighting
-
-  # Have to load after zsh-vi-mode
-  fancy-ctrl-z
-  fzf
-  # zsh-autocomplete
+{{- range $plugins | uniq }}
+  {{ . }}
+{{- end }}
 )
 
 [[ -f "$ZSH/oh-my-zsh.sh" ]] && source "$ZSH/oh-my-zsh.sh"

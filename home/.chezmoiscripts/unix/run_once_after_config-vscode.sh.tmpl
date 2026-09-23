@@ -1,10 +1,10 @@
-{{- if not .isWsl -}}
+{{ if lookPath "code" -}}
 #!/usr/bin/env bash
 
 set -eufo pipefail
 
 {{ range .vscode.extensions -}}
-code --install-extension {{ . }}
+code --install-extension --force {{ . }} || echo "vscode: failed to install {{ . }}" >&2
 {{ end -}}
 
 {{ end -}}

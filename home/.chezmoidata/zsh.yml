@@ -1,0 +1,72 @@
+zsh:
+  plugins:
+    pre:
+      # - zsh-vi-mode
+      - mise
+      # - direnv
+
+    mid:
+      common:
+        # ESSENTIAL
+        - fzf-tab
+        - command-not-found
+        - dotenv
+        - extract
+        - starship
+        - sudo
+        - tmux
+        - zoxide
+        # - gitignore
+
+        - docker
+        - docker-compose
+        - gh
+        - glab
+        - git
+        - tmuxinator
+        - chezmoi
+
+        - npm
+        # - zsh-better-npm-completion
+      personal:
+        # CODE
+        - spring
+        - gradle
+        - mvn
+        - golang
+        # - bazel
+        # - ruff
+        - uv
+        # - uv-env
+        # - nx-completion
+
+        # DEVOPS
+        - helm
+        - kubectl
+        # - minikube
+        - terraform
+        - fluxcd
+        # - argocd
+        - k9s
+
+        - rclone
+        # - wakatime
+
+      work:
+        itcgroup:
+          - dotnet
+          - aws
+          - azure
+          - terraform
+          - helm
+          - kubectl
+          - k9s
+
+    post:
+      - zsh-256color
+      - zsh-autosuggestions
+      - zsh-syntax-highlighting
+      - history-substring-search
+      - fancy-ctrl-z
+      - fzf
+      # - zsh-autocomplete

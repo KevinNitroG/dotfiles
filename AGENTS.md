@@ -247,6 +247,12 @@ find home -name '*encrypted_*' -o -name '*.age'
 - Scratch material that helps while working but does not belong in the repo
   (e.g. `MISSING_<DISTRO>_PKGS.md`) goes in `tmp/`, which is gitignored.
   `.chezmoiroot` is `home`, so chezmoi never sees it.
+- oh-my-zsh plugins live in `home/.chezmoidata/zsh.yml` (`.zsh.plugins`) as YAML
+  lists under `pre`, `mid` (`common` / `personal` / `work`), `post`.
+  `work` is keyed per company (`work.<company>`, e.g. `work.itcgroup`) and the
+  template renders only `index work .company`. Lists preserve order, maps do not,
+  so the template names each list explicitly and never ranges over the `mid` or
+  `work` maps.
 
 ## Chezmoi tips
 
@@ -294,4 +300,10 @@ find home -name '*encrypted_*' -o -name '*.age'
     (after, `run_onchange_` keyed on the mise.toml hash) → `90` completions.
 11. Export `GITHUB_TOKEN` before a first bootstrap; chezmoi externals and mise
     both hammer the GitHub API and the anonymous limit is 60/hour.
-12. **Don't write unnecessary comments**. If it is necessary, ask human for permission to add.
+12. **Do not add comments to files under `home/`.** No explanatory, section-header,
+    or rationale comments in templates, scripts, data files, or configs. The only
+    comments allowed are ones already present in the file and commented-out entries
+    kept as a considered-and-rejected record per Conventions above. Ordering
+    invariants (e.g. YAML lists preserve order, never range over a map) belong in
+    `AGENTS.md` or `docs/`, not in the files themselves. If you believe a comment
+    is load-bearing, ask the user first.
