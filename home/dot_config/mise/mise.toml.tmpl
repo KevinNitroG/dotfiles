@@ -9,6 +9,7 @@ nix = "https://github.com/mise-plugins/mise-nix.git"
 [tools]
 python = "3.13.12"
 pnpm = "latest"
+terraform = "latest"
 cmctl = "latest"
 "npm:typescript" = "latest"
 "npm:ctx7" = "latest"
@@ -118,7 +119,7 @@ asset_pattern = "mcp-grafana_{{ "{{" }}os(macos='Darwin', linux='Linux', windows
 idiomatic_version_file_enable_tools = ["dotnet"]
 experimental = true
 pipx.uvx = true
-# npm.package_manager = "pnpm"
+npm.package_manager = "pnpm"
 
 # [hooks]
 # enter = "mise i -q"
