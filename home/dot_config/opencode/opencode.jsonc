@@ -25,7 +25,7 @@
     },
   },
   "plugin": [
-    "opencode-wakatime@latest",
+    "@wakatime/opencode-wakatime",
     "@tarquinen/opencode-dcp@latest",
     {
       "package": "opencode-pty/v2",
