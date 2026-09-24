@@ -50,11 +50,19 @@ antigravity-cli = "latest"
 "github:rtk-ai/rtk" = "latest"
 "github:dlvhdr/gh-dash" = "latest"
 "github:rustfs/cli" = "latest"
+
+{{- if eq .profile "itcgroup" }}
+aws-cli = { version = "latest", symlink_bins = "true" }
+azure = { version = "latest", dependency_prereleases = "allow", with = ["pip"] }
+{{- end }}
+
 {{- if .isPersonal }}
 "github:da-luce/astroterm" = "latest"
 "github:nickvanw/qbittorrent-tui" = "latest"
 {{- end }}
+
 {{- end }}
+
 {{- if eq .osFamily "fedora" }}
 
 # dnf HAS yq (mikefarah), helm, uv and astroterm, so those are deliberately
