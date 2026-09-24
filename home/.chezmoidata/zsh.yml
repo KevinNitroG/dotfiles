@@ -21,7 +21,6 @@ zsh:
         - docker
         - docker-compose
         - gh
-        - glab
         - git
         - tmuxinator
         - chezmoi
@@ -54,6 +53,7 @@ zsh:
 
       work:
         itcgroup:
+          - glab
           - dotnet
           - aws
           - azure
