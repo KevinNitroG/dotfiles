@@ -38,6 +38,7 @@ zsh:
         - uv
         # - uv-env
         # - nx-completion
+        - buf
 
         # DEVOPS
         - helm
