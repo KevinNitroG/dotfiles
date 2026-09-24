@@ -59,6 +59,12 @@ mkdir -p "${XDG_CACHE_HOME}/zsh"
 autoload -Uz compinit && compinit -d "${XDG_CACHE_HOME}/zsh/zcompdump"
 autoload -Uz bashcompinit && bashcompinit
 
+if (( $+commands[az] )); then
+  _az_completion="${commands[az]:A:h}/az.completion.sh"
+  [[ -r "$_az_completion" ]] && source "$_az_completion"
+  unset _az_completion
+fi
+
 # if (( $+commands[aws_completer] )); then
 #   complete -C "$(command -v aws_completer)" aws
 # fi
