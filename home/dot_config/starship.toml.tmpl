@@ -1,5 +1,20 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
+{{- $f := .starship.format }}
+{{- $toolchain := $f.toolchain.common }}
+{{- $devops := $f.devops.common }}
+{{- if .isPersonal }}
+{{- $toolchain = concat $toolchain $f.toolchain.personal }}
+{{- $devops = concat $devops $f.devops.personal }}
+{{- end }}
+{{- if .isWork }}
+{{- $toolchain = concat $toolchain (default (list) (index $f.toolchain.work .company)) }}
+{{- $devops = concat $devops (default (list) (index $f.devops.work .company)) }}
+{{- end }}
+{{- $toolchain = uniq $toolchain }}
+{{- $devops = uniq $devops }}
+{{- $active := concat $toolchain $devops }}
+
 format = """
 [](surface0)\
 $os\
@@ -12,25 +27,10 @@ $directory\
 $git_branch\
 $git_status\
 [](fg:yellow bg:green)\
-$c\
-$rust\
-$golang\
-$nodejs\
-$deno\
-$php\
-$gradle\
-$java\
-$kotlin\
-$python\
-[](fg:green bg:blue)\
-$docker_context\
-$kubernetes\
-$helm\
-$terraform\
-$aws\
-$azure\
-$gcloud\
-[](fg:blue bg:lavender)\
+{{ range $toolchain }}${{ . }}\
+{{ end }}[](fg:green bg:blue)\
+{{ range $devops }}${{ . }}\
+{{ end }}[](fg:blue bg:lavender)\
 $cmd_duration\
 $sudo\
 [ ](fg:lavender)\
@@ -141,83 +141,113 @@ staged = "+${count}"
 renamed = "»${count}"
 deleted = "✘${count}"
 
+{{ if has "nodejs" $active -}}
 [nodejs]
 symbol = ""
 style = "bg:text"
 format = '[[ $symbol( $version) ](fg:base bg:green)]($style)'
 
+{{ end -}}
+{{ if has "c" $active -}}
 [c]
 symbol = " "
 style = "bg:text"
 format = '[[ $symbol( $version) ](fg:base bg:green)]($style)'
 
+{{ end -}}
+{{ if has "rust" $active -}}
 [rust]
 symbol = ""
 style = "bg:text"
 format = '[[ $symbol( $version) ](fg:base bg:green)]($style)'
 
+{{ end -}}
+{{ if has "golang" $active -}}
 [golang]
 symbol = ""
 style = "bg:text"
 format = '[[ $symbol( $version)( $mod_version) ](fg:base bg:green)]($style)'
 
+{{ end -}}
+{{ if has "php" $active -}}
 [php]
 symbol = ""
 style = "bg:text"
 format = '[[ $symbol( $version) ](fg:base bg:green)]($style)'
 
+{{ end -}}
+{{ if has "gradle" $active -}}
 [gradle]
 symbol = ""
 style = "bg:text"
 format = '[[ $symbol( $version) ](fg:base bg:green)]($style)'
 
+{{ end -}}
+{{ if has "java" $active -}}
 [java]
 symbol = " "
 style = "bg:text"
 format = '[[ $symbol( $version) ](fg:base bg:green)]($style)'
 
+{{ end -}}
+{{ if has "kotlin" $active -}}
 [kotlin]
 symbol = ""
 style = "bg:text"
 format = '[[ $symbol( $version) ](fg:base bg:green)]($style)'
 
+{{ end -}}
+{{ if has "python" $active -}}
 [python]
 symbol = ""
 style = "bg:text"
 format = '[[ $symbol( $pyenv_prefix)( $version)( \($virtualenv\)) ](fg:base bg:green)]($style)'
 
+{{ end -}}
+{{ if has "docker_context" $active -}}
 [docker_context]
 symbol = ""
 style = "bg:blue"
 format = '[[ $symbol( $context) ](fg:base bg:blue)]($style)'
 
+{{ end -}}
+{{ if has "kubernetes" $active -}}
 [kubernetes]
 style = "bg:blue"
 format = '[[ $symbol( $context)( \($namespace\)) ](fg:base bg:blue)]($style)'
 disabled = false
 symbol ="󱃾"
 
+{{ end -}}
+{{ if has "terraform" $active -}}
 [terraform]
 style = "bg:blue"
 format = '[[ $symbol( $version)( \($workspace\)) ](fg:base bg:blue)]($style)'
 symbol = ""
 
+{{ end -}}
+{{ if has "aws" $active -}}
 [aws]
 symbol = ""
 style = "bg:blue"
 format = '[[ $symbol( $profile)( $region)( $duration) ](fg:base bg:blue)]($style)'
 
+{{ end -}}
+{{ if has "azure" $active -}}
 [azure]
 symbol = "󰠅"
 style = "bg:blue"
 disabled = false
 format = '[[ $symbol( $subscription) ](fg:base bg:blue)]($style)'
 
+{{ end -}}
+{{ if has "gcloud" $active -}}
 [gcloud]
 symbol = "󱇶"
 style = "bg:blue"
 format = '[[ $symbol($account)( $project)( $region) ](fg:base bg:blue)]($style)'
 
+{{ end -}}
 [conda]
 style = "bg:blue"
 format = '[[ $symbol( $environment) ](fg:#base bg:blue)]($style)'

@@ -1,0 +1,31 @@
+starship:
+  format:
+    toolchain:
+      common:
+        - golang
+        - nodejs
+        - python
+        # - kotlin
+        # - c
+        # - rust
+        # - deno
+        # - php
+      personal:
+        - gradle
+        - java
+      work:
+        itcgroup: []
+    devops:
+      common:
+        - docker_context
+        - kubernetes
+        - helm
+        - terraform
+        # - gcloud
+      personal:
+        - aws
+        - azure
+      work:
+        itcgroup:
+          - aws
+          - azure
