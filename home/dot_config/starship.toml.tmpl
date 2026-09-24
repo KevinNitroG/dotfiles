@@ -74,27 +74,67 @@ disabled = false
 style = "bg:surface0 fg:text"
 
 [os.symbols]
+AIX = ""
+AlmaLinux = ""
+Alpaquita = ""
 Alpine = ""
+ALTLinux = ""
 Amazon = ""
-Android = ""
-Arch = "󰣇"
-Artix = "󰣇"
+Android = ""
+AOSC = ""
+Arch = ""
+Artix = ""
+Bazzite = ""
+Bluefin = ""
+CachyOS = ""
 CentOS = ""
-Debian = "󰣚"
-EndeavourOS = ""
-Fedora = "󰣛"
-Gentoo = "󰣨"
-Linux = "󰌽"
-Macos = "󰀵"
+Debian = ""
+DragonFly = ""
+Elementary = ""
+Emscripten = ""
+EndeavourOS = ""
+Fedora = ""
+FreeBSD = ""
+Garuda = ""
+Gentoo = ""
+HardenedBSD = "󰞌"
+Hurd = ""
+Illumos = ""
+InstantOS = ""
+Ios = "󰀷"
+Kali = ""
+KDENeon = ""
+Linux = ""
+Mabox = ""
+Macos = ""
 Manjaro = ""
-Mint = "󰣭"
+Mariner = ""
+MidnightBSD = ""
+Mint = ""
+NetBSD = ""
+NixOS = ""
+Nobara = ""
+OpenBSD = ""
+OpenCloudOS = ""
+openEuler = ""
+openSUSE = ""
+OracleLinux = "󰺡"
+PikaOS = ""
 Pop = ""
-Raspbian = "󰐿"
-RedHatEnterprise = "󱄛"
+Raspbian = ""
 Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+Redox = "󰀘"
+RockyLinux = ""
+Solus = ""
 SUSE = ""
-Ubuntu = "󰕈"
+Ubuntu = ""
+Ultramarine = ""
+Unknown = ""
+Uos = ""
+Void = ""
 Windows = "󰍲"
+Zorin = ""
 
 [username]
 show_always = true
@@ -202,6 +242,35 @@ format = '[[ $symbol( $version) ](fg:base bg:green)]($style)'
 symbol = ""
 style = "bg:text"
 format = '[[ $symbol( $pyenv_prefix)( $version)( \($virtualenv\)) ](fg:base bg:green)]($style)'
+
+{{ end -}}
+{{ if has "direnv" $active -}}
+[direnv]
+symbol = ""
+disabled = false
+style = "bg:text"
+format = '[[ $symbol$loaded/$allowed ](fg:base bg:green)]($style)'
+
+{{ end -}}
+{{ if has "buf" $active -}}
+[buf]
+symbol = ""
+style = "bg:text"
+format = '[[ $symbol( $version) ](fg:base bg:green)]($style)'
+
+{{ end -}}
+{{ if has "typst" $active -}}
+[typst]
+symbol = ""
+style = "bg:text"
+format = '[[ $symbol( $version) ](fg:base bg:green)]($style)'
+
+{{ end -}}
+{{ if has "dotnet" $active -}}
+[dotnet]
+symbol = ""
+style = "bg:text"
+format = '[[ $symbol( $version) ](fg:base bg:green)]($style)'
 
 {{ end -}}
 {{ if has "docker_context" $active -}}

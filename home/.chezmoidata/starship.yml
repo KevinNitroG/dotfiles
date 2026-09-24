@@ -13,8 +13,12 @@ starship:
       personal:
         - gradle
         - java
+        - typst
+        - buf
+        # - direnv
       work:
-        itcgroup: []
+        itcgroup:
+          - dotnet
     devops:
       common:
         - docker_context
