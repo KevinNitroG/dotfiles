@@ -10,7 +10,9 @@ Host *
   ServerAliveInterval 86400
   ServerAliveCountMax 4
   Port 22
+{{- if $p.sshKey }}
   IdentityFile {{ $p.sshKey }}
+{{- end }}
 {{ range $h := ($p.sshHosts | default list) }}
 Host {{ $h.name }}
   HostName {{ $h.hostName }}
@@ -18,8 +20,9 @@ Host {{ $h.name }}
   PreferredAuthentications publickey
   IdentityFile {{ $p.sshKey }}
   IdentitiesOnly yes
+  StrictHostKeyChecking accept-new
 {{ end }}
-
+{{ if .isPersonal }}
 Host ngen
   HostName ntgnguyen.tailf6edf3.ts.net
   User ntgnguyen
@@ -50,3 +53,4 @@ Host kevblink
 Host kevblink-cloudflare
   User kevinnitro
   HostName 192.0.1.1
+{{ end }}

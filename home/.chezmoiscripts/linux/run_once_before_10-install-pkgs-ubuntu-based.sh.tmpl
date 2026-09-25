@@ -132,6 +132,17 @@ true
 
 ##########################################
 
+export PATH="$HOME/.local/bin:$PATH"
+if command -v mise >/dev/null 2>&1; then
+  echo "MISE ALREADY INSTALLED ($(command -v mise))"
+else
+  echo 'INSTALLING MISE...'
+  curl -fsSL https://mise.run | sh ||
+    echo '  !! mise install failed; install it later with: curl -fsSL https://mise.run | sh'
+fi
+
+##########################################
+
 {{ if $scripts -}}
 echo 'INSTALLING PACKAGES VIA INSTALLER SCRIPTS...'
 {{ range $script := $scripts -}}

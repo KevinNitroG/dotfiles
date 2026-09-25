@@ -12,7 +12,8 @@
 #   .profile     the ONE identity this machine carries, e.g. "itcgroup"
 #   .isPersonal  .profile == "personal"
 #   .isWork      .profile is a company
-#   .company     the company id, "" when .profile is "personal"
+#   .isEphemeral .profile == "ephemeral" (keyless guest/throwaway machine)
+#   .company     the company id, "" unless .isWork
 #   .useHyde
 
 ##########################################
@@ -279,6 +280,22 @@ AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/**
 {{ if not (lookPath "sddm") }}
 .config/sddm/
 .config/sddm/**
+{{ end }}
+
+##########################################
+# PROFILE: EPHEMERAL (guest / throwaway / CI)
+#
+# No identity at all: no age key, no ssh key, no git identity, no forge hosts.
+# ~/.ssh is left entirely alone — the guest keeps whatever keys and config they
+# already have, and nothing of this repo's identity leaks onto their machine.
+
+{{/* `eq .profile`, not `.isEphemeral`: this file must still render on a
+     machine whose chezmoi.toml predates that key. */}}
+{{ if eq .profile "ephemeral" }}
+
+.ssh/
+.ssh/**
+
 {{ end }}
 
 ##########################################

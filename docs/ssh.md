@@ -1,28 +1,27 @@
 # SSH
 
-How SSH keys are created, stored, used and signed with here.
-
 ## Convention
 
-A machine carries **one** profile, and that profile has **one** key:
+One machine → one profile → one key:
 
 | profile | private key | public key |
 | --- | --- | --- |
 | `personal` | `~/.ssh/id_ed25519` | `~/.ssh/id_ed25519.pub` |
 | `<company>` | `~/.ssh/id_ed25519_<company>` | `~/.ssh/id_ed25519_<company>.pub` |
+| `ephemeral` | — | — |
 
-That key authenticates to **every** forge the profile talks to, GitHub
-included. A company machine has no personal key on it, so it pushes to GitHub
-with the company key — register that key on GitHub too, alongside the company
-forge and gitlab.com. Which forges a profile uses is its `sshHosts` list in
-`home/.chezmoidata/profiles.yml`; nothing is hardcoded per host.
+`ephemeral` (guest / throwaway / CI) has no key: `~/.ssh` is **unmanaged** — no
+`config`, `allowed_signers`, `.pub` or `authorized_keys`. The owner's existing
+setup is left alone.
 
-Company ids are lowercase, no spaces or hyphens (`itcgroup`).
+That one key authenticates to **every** forge the profile uses, GitHub included
+— a company machine pushes to GitHub with the company key, so register it there
+too. Forges come from `sshHosts` in `home/.chezmoidata/profiles.yml`; nothing is
+hardcoded per host. Company ids: lowercase, no spaces or hyphens.
 
-**Only public keys are committed**, as plain files in `home/dot_ssh/`. Private
-keys come from Bitwarden or are regenerated. `~/.ssh/config` and
-`~/.ssh/allowed_signers` are generated from `home/.chezmoidata/profiles.yml`
-plus those committed `.pub` files.
+**Only public keys are committed** (`home/dot_ssh/`). Private keys come from
+Bitwarden. `~/.ssh/config` + `~/.ssh/allowed_signers` are generated from
+`profiles.yml` + those `.pub` files.
 
 ## Create a key
 
@@ -33,9 +32,9 @@ chmod 600 ~/.ssh/id_ed25519_itcgroup
 chmod 644 ~/.ssh/id_ed25519_itcgroup.pub
 ```
 
-ed25519, not RSA. `-C` is the email, shown in the forge's key list. Use a
-passphrase — `ssh-agent` means typing it once per session. Permissions matter:
-ssh refuses keys that are too readable.
+ed25519, not RSA. `-C` = email shown in the forge's key list. Use a passphrase
+(`ssh-agent` = type it once per session). Permissions matter — ssh refuses keys
+that are too readable.
 
 ## Load it into the agent
 
@@ -45,7 +44,7 @@ ssh-add ~/.ssh/id_ed25519_itcgroup
 ssh-add -l
 ```
 
-Windows (elevated PowerShell, once):
+Windows (elevated, once):
 
 ```powershell
 Set-Service ssh-agent -StartupType Automatic
@@ -53,31 +52,27 @@ Start-Service ssh-agent
 ssh-add "$env:USERPROFILE\.ssh\id_ed25519_itcgroup"
 ```
 
-WSL does not share the Windows agent. Run a separate `ssh-agent` inside WSL —
-simpler than bridging with `npiperelay` + `socat`.
+WSL does not share the Windows agent — run its own, simpler than bridging with
+`npiperelay` + `socat`.
 
 ## Tell the forge
 
 Paste the **`.pub`**, never the private key.
 
-- GitHub: Settings → SSH and GPG keys → **New SSH key**. Add it twice to sign
-  commits: once as *Authentication*, once as *Signing*.
+- GitHub: Settings → SSH and GPG keys → **New SSH key**. Add it **twice** to
+  sign commits: once as *Authentication*, once as *Signing*.
 - GitLab: Preferences → SSH Keys.
 
 ## Per-host configuration
 
-`~/.ssh/config` is generated from `profileDefs.<profile>.sshHosts` in
-`home/.chezmoidata/profiles.yml`. It is a list — a company usually has its own
-git server *plus* the public forges where its key is registered:
+`~/.ssh/config` is generated from `profileDefs.<profile>.sshHosts` — a list,
+since a company usually has its own git server *plus* the public forges:
 
 ```yaml
 sshHosts:
   - name: itcgroup
     hostName: gitlab.itcgroup.io
     user: kevin.t
-  - name: gitlab.com
-    hostName: gitlab.com
-    user: git
   - name: github.com
     hostName: github.com
     user: git
@@ -92,33 +87,32 @@ Host itcgroup
   PreferredAuthentications publickey
   IdentityFile ~/.ssh/id_ed25519_itcgroup
   IdentitiesOnly yes
-
-Host gitlab.com
-  ...
-Host github.com
-  ...
+  StrictHostKeyChecking accept-new
 ```
 
-Every block gets the active profile's `sshKey`, so there is no way for a
-personal key to end up on a company machine's config.
+- Every block gets the active profile's `sshKey` → a personal key can never
+  reach a company machine's config.
+- `IdentitiesOnly yes`: without it ssh offers every agent key, and a server with
+  `MaxAuthTries 3` disconnects before the right one.
+- `StrictHostKeyChecking accept-new`: first contact must not block on a prompt —
+  `git-repo` externals are cloned non-interactively during `chezmoi apply`.
+- Clone with the alias: `git clone itcgroup:team/repo.git`.
 
-`IdentitiesOnly yes` matters: without it ssh offers every key in the agent, and
-a server with `MaxAuthTries 3` disconnects before reaching the right one.
-
-Clone with the alias: `git clone itcgroup:team/repo.git`.
+Ad-hoc personal hosts (homelab, tailnet, modem) are in `dot_ssh/config.tmpl`
+behind `{{ if .isPersonal }}`.
 
 ## Signing commits with SSH
 
-Personal commits are GPG-signed (imported by hand — see [gpg.md](./gpg.md)),
-company commits SSH-signed. Set in `profiles.yml`:
+`personal` → GPG ([gpg.md](./gpg.md)), companies → SSH, `ephemeral` → none.
+From `profiles.yml`:
 
 ```yaml
 signing: ssh
 sshKey: ~/.ssh/id_ed25519_itcgroup
 ```
 
-with `home/dot_ssh/id_ed25519_itcgroup.pub` committed alongside, producing the
-IDENTITY block at the bottom of `~/.config/git/config`:
+with `home/dot_ssh/id_ed25519_itcgroup.pub` committed alongside → the IDENTITY
+block at the bottom of `~/.config/git/config`:
 
 ```gitconfig
 [user]
@@ -133,22 +127,21 @@ IDENTITY block at the bottom of `~/.config/git/config`:
 
 ### Why `allowed_signers` exists
 
-Signing needs only the key; **verifying** needs git to know which public keys
-may sign as which identity. GPG gets that from your keyring — SSH has none,
-hence the file. Without it `git log --show-signature` says *No principal
-matched* even for your own commits.
+Signing needs only the key; **verifying** needs git to know which public key may
+sign as which identity. GPG uses your keyring — SSH has none, hence the file.
+Without it `git log --show-signature` says *No principal matched*, even for your
+own commits.
 
-It is generated from `profiles.yml` plus the committed `.pub` files, one line
-per signing identity:
+Generated from `profiles.yml` + the committed `.pub`, one line per signing
+identity:
 
 ```
 kevin.t@itcgroup.io namespaces="git" ssh-ed25519 AAAA... kevin.t@itcgroup.io
 ```
 
-Verify:
+Check:
 
 ```sh
-cd ~/projects/itcgroup/some-repo
 git commit --allow-empty -m 'test: signing'
 git log --show-signature -1
 ```
@@ -157,7 +150,6 @@ git log --show-signature -1
 
 ```sh
 ssh -T git@github.com          # "Hi <user>! You've successfully authenticated"
-ssh -T git@gitlab.itcgroup.io
 ssh -vT itcgroup               # -v shows which key was offered and accepted
 ```
 
@@ -166,17 +158,17 @@ ssh -vT itcgroup               # -v shows which key was offered and accepted
 | Symptom | Fix |
 | --- | --- |
 | `Permissions 0644 ... are too open` | `chmod 600` the private key |
-| `Too many authentication failures` | add `IdentitiesOnly yes` to that Host block |
-| Wrong account used for a repo | clone via the host alias (`itcgroup:...`), not the raw hostname |
-| Commit signed with wrong identity | the machine has one identity for every repo; override it in that repo's own `.git/config` |
-| `Load key ... invalid format` when signing | `user.signingkey` must point at the `.pub`, and the private key must be loadable |
+| `Too many authentication failures` | `IdentitiesOnly yes` on that Host block |
+| Wrong account for a repo | clone via the host alias (`itcgroup:...`), not the raw hostname |
+| Commit signed with wrong identity | one identity per machine; override in that repo's `.git/config` |
+| `Load key ... invalid format` when signing | `user.signingkey` must point at the `.pub` |
 | Host key changed / MITM warning | `ssh-keygen -R <host>`, reconnect, accept the new fingerprint |
 
-**Lost the private key**: the public one cannot sign or authenticate. Generate a
-new pair, upload the new `.pub` to the forge, replace `home/dot_ssh/<name>.pub`,
-`chezmoi apply`, revoke the old key.
+**Lost private key**: the public one cannot sign or authenticate. New pair →
+upload the `.pub` → replace `home/dot_ssh/<name>.pub` → `chezmoi apply` → revoke
+the old one.
 
 ## Backup
 
-Every private key goes into Bitwarden as `ssh: <profile>` — same place as the
-age keys. A rebuild then needs only Bitwarden plus this repo.
+Every private key → Bitwarden as `ssh: <profile>`, same place as the age keys. A
+rebuild then needs only Bitwarden plus this repo.

@@ -4,14 +4,14 @@ Guidance for AI agents working in this repository.
 
 ## What this repo is
 
-A personal **dotfiles repo managed by [chezmoi](https://www.chezmoi.io/)**, targeting
-**Arch-based Linux** (CachyOS/EndeavourOS + HyDE/Hyprland), **Ubuntu-based Linux**
-(including WSL), **Fedora-based Linux**, and **Windows**. Theming is Catppuccin-driven
-and flows from one prompt at `chezmoi init` time into ~40 generated config files.
+Personal **dotfiles managed by [chezmoi](https://www.chezmoi.io/)** for
+**Arch-based** (CachyOS/EndeavourOS + HyDE/Hyprland), **Ubuntu-based** (incl.
+WSL), **Fedora-based** and **Windows**. Catppuccin theming flows from one
+`chezmoi init` prompt into ~40 generated files.
 
-`.chezmoiroot` contains `home`, so **the chezmoi source directory is `home/`, not the
-repo root**. Everything outside `home/` (`README.md`, `docs/`, `AGENTS.md`,
-`.gitattributes`) is repo metadata that chezmoi never sees.
+`.chezmoiroot` = `home`, so **the source dir is `home/`, not the repo root**.
+Everything outside `home/` (`README.md`, `docs/`, `AGENTS.md`, `.github/`,
+`.gitattributes`) is repo metadata chezmoi never sees.
 
 ## Repository layout
 
@@ -20,6 +20,7 @@ repo root**. Everything outside `home/` (`README.md`, `docs/`, `AGENTS.md`,
 .gitattributes               linguist overrides for the many odd file types
 README.md, docs/             human docs
 CLAUDE.md                    symlink -> AGENTS.md
+.github/workflows/           CI; smoke-ephemeral.yml proves the keyless path
 home/                        === CHEZMOI SOURCE DIRECTORY ===
 ├── .chezmoi.toml.tmpl       generates ~/.config/chezmoi/chezmoi.toml at `init`
 ├── .chezmoidata/            static data merged into `.` for every template
@@ -51,37 +52,66 @@ home/                        === CHEZMOI SOURCE DIRECTORY ===
 
 ### Identity profiles
 
-A _profile_ is one identity: `personal`, or a company id (lowercase, no spaces
-or hyphens — `itcgroup`).
+One _profile_ = one identity: `personal`, a company id (lowercase, no spaces or
+hyphens — `itcgroup`), or `ephemeral`.
 
-**One machine carries exactly one profile.** `profile` is a `promptChoice`, not
-a list. A company machine is a company machine: no personal ssh key, no personal
-gpg key, no personal `private/*.zsh`, no personal git identity. It authenticates
-to GitHub with the *company* key, because that is the only key it has.
+**One machine, one profile** — `promptChoice`, not a list. A company machine has
+no personal ssh key, gpg key, `private/*.zsh` or git identity; it reaches GitHub
+with the *company* key because that is the only key it has.
 
 `home/.chezmoidata/profiles.yml` declares each profile once
-(`profileDefs.<name>`) and that single block drives:
+(`profileDefs.<name>`); that one block drives:
 
 - the `[user]` / `[gpg]` / `[commit]` blocks at the bottom of
-  `~/.config/git/config` — rendered inline, no per-profile include file, no
-  `includeIf`, no gitdir scoping
+  `~/.config/git/config` — inline, no include file, no `includeIf`, no gitdir
+  scoping
 - every `Host` block in `~/.ssh/config` (`sshHosts` is a **list** — a company
   usually has its own git server plus github.com / gitlab.com) and the
   `~/.ssh/allowed_signers` line
-- `~/.config/gh/hosts.yml` via `ghUser`; empty `ghUser` means the file is not
-  managed at all
-- which files `.chezmoiignore.tmpl` drops on machines that are not this profile
+- `~/.config/gh/hosts.yml` via `ghUser`; empty ⇒ file not managed
+- what `.chezmoiignore.tmpl` drops on machines that are not this profile
 
-The age key path and recipient are the exception: they live in `$profileMeta` in
+Exception: age key path + recipient live in `$profileMeta` in
 `home/.chezmoi.toml.tmpl`, which runs before `.chezmoidata` is readable.
 
-GPG is deliberately **not** automated. Only `personal` signs with gpg, the key
-is imported by hand (`docs/gpg.md`), and `profiles.yml` carries only the public
-`gpgKey` id.
+GPG is deliberately **not** automated: only `personal` signs with gpg, the key
+is imported by hand (`docs/gpg.md`), `profiles.yml` carries only the public id.
 
-Adding a company = one entry in `$profileMeta`, one block in `profiles.yml`,
-one committed `.pub`, one encrypted `<name>.zsh.age`. See
-`docs/new-company.md`.
+New company = one `$profileMeta` entry + one `profiles.yml` block + one
+committed `.pub` + one encrypted `<name>.zsh.age`. See `docs/new-company.md`.
+
+#### `ephemeral` — the keyless guest identity
+
+Friend's box, throwaway VM, container, CI: **no age key, no ssh key, no git
+identity, no secrets**. Every `profileDefs.ephemeral` field is empty on purpose;
+`$profileMeta.ephemeral` has empty `key`/`recipient` (both loops skip empties) ⇒
+`.chezmoi.config.age.identities` is `[]` ⇒ the "SECRETS THAT NEED AN AGE
+IDENTITY" block drops every encrypted target.
+
+- `.isEphemeral` true; `.isPersonal` **and** `.isWork` both false; `.company`
+  `""`. `isWork` is no longer `not isPersonal` — do not reintroduce that.
+- `.chezmoiignore.tmpl` drops `.ssh/**` wholesale. Guest keeps their own keys
+  and `config`; nothing of this repo's identity lands on their machine.
+- `git/config.tmpl` omits `[user]` when `gitName` is empty — never commit as
+  someone else.
+- Personal-only ad-hoc `Host` blocks in `dot_ssh/config.tmpl` are behind
+  `{{ if .isPersonal }}`.
+- Packages: `common` only.
+
+**Keep it applyable without any key.** Anything needing a key, token or TTY must
+degrade to a warning, never abort. Traps already hit — do not undo:
+
+- `progress = "auto"`, **not** `true`. `true` forces a download progress bar,
+  which opens `/dev/tty` → `could not open a new TTY` in any container/CI.
+- `encryption = "age"` is always emitted, even with zero identities. It is what
+  strips `encrypted_` / `.age` when mapping source → target; without it
+  `encrypted_private_dot_npmrc.age` becomes a literal `~/.npmrc.age` no ignore
+  entry matches.
+- Scripts must not need a TTY: `run_onchange_after_chsh.sh` tolerates `chsh`
+  failing under PAM.
+
+CI guards this: `.github/workflows/smoke-ephemeral.yml` (ubuntu-latest, weekly +
+on `home/**` changes). Reproduce locally in a container, don't reason about it.
 
 ### Where to find things
 
@@ -91,7 +121,7 @@ one committed `.pub`, one encrypted `<name>.zsh.age`. See
 | Package lists                                | `home/.chezmoidata/pkgs/{arch-based,ubuntu-based,fedora,windows}.yml` |
 | Adding a whole new distro                    | `docs/support-new-os.md`                                              |
 | Fedora specifics / limitations               | `docs/fedora.md`                                                      |
-| mise tools                                   | `home/dot_config/mise/mise.toml.tmpl` (edited directly)               |
+| mise tools                                   | `home/dot_config/mise/config.toml.tmpl` (edited directly)             |
 | Identities (git/ssh per profile)             | `home/.chezmoidata/profiles.yml`                                      |
 | age keys / recipients                        | `$profileMeta` in `home/.chezmoi.toml.tmpl`                           |
 | Install / bootstrap logic                    | `home/.chezmoiscripts/{linux,unix,windows}/`                          |
@@ -106,129 +136,123 @@ one committed `.pub`, one encrypted `<name>.zsh.age`. See
 
 ### Attributes (source filename prefixes)
 
-`dot_` → `.`, `private_` → mode 0600, `executable_` → +x, `encrypted_` → age-encrypted,
-`empty_` → keep even if empty, `create_` → write once, never overwrite,
-`symlink_` → create a symlink. `once_` is a **script** attribute only — on a
-regular file chezmoi keeps it as part of the name (`once_foo.conf` lands at
-`~/…/once_foo.conf`); `create_` is the write-once equivalent for files.
-Suffix `.tmpl` → render as a Go template; the suffix is stripped from the target.
+`dot_` → `.`, `private_` → 0600, `executable_` → +x, `encrypted_` → age,
+`empty_` → keep if empty, `create_` → write once, `symlink_` → symlink.
+Suffix `.tmpl` → Go template, suffix stripped.
+
+`once_` is a **script** attribute only — on a regular file it stays in the name
+(`once_foo.conf` → `~/…/once_foo.conf`). `create_` is the file equivalent.
 
 ### Templating
 
-Data is exposed at `.`:
+Data at `.`:
 
-- `.chezmoi.*` — built-ins (`os`, `arch`, `hostname`, `osRelease.id`, `homeDir`, …),
-  plus `.chezmoi.config.age.*` for the age identity and recipients
-- `[data]` from `.chezmoi.toml.tmpl` — the _prompted_ / _detected_ values:
-  - identity: `profile` (the one identity), `company` (`""` when personal),
-    `isWork`, `isPersonal`
-  - platform: `osId`, `osFamily`, `isWsl`, `isGui`, `isLaptop`, `useHyde`
-  - theme: `theme`, `catppuccinFlavor`, `catppuccinAccentColor`,
+- `.chezmoi.*` — built-ins (`os`, `arch`, `hostname`, `osRelease.id`,
+  `homeDir`, …) plus `.chezmoi.config.age.*`
+- `[data]` from `.chezmoi.toml.tmpl`:
+  - identity — `profile`, `company` (`""` unless `isWork`), `isPersonal` /
+    `isWork` / `isEphemeral` (mutually exclusive)
+  - platform — `osId`, `osFamily`, `isWsl`, `isGui`, `isLaptop`, `useHyde`
+  - theme — `theme`, `catppuccinFlavor`, `catppuccinAccentColor`,
     `terminalFontSize`, `opacity`, `transparent`
 - `.chezmoidata/**` — merged by top-level key: `.pkgs.*`, `.profileDefs.*`,
   `.config.windows.*`, `.externalGitArgs`
 
-The two key discriminators:
+Key discriminators:
 
-- `osFamily` — `arch` / `ubuntu` / `fedora` / `windows` / `darwin` / `other`. Picks
-  the package installer. Derived from `osRelease.id` + `idLike`, so CachyOS and
-  EndeavourOS both resolve to `arch`, Nobara/Bazzite/RHEL-likes to `fedora`.
-  Debian deliberately does _not_ map to `ubuntu` (different package set, no PPAs);
-  it lands in `other`, which means no installer runs.
-- `osId` — `windows`, `darwin`, or `linux-<osRelease.id>`. For finer branching.
+- `osFamily` — `arch`/`ubuntu`/`fedora`/`windows`/`darwin`/`other`; picks the
+  installer. From `osRelease.id` + `idLike`, so CachyOS/EndeavourOS → `arch`,
+  Nobara/Bazzite/RHEL-likes → `fedora`. Debian deliberately → `other` (different
+  package set, no PPAs) ⇒ no installer runs.
+- `osId` — `windows`, `darwin`, or `linux-<osRelease.id>`, for finer branching.
+- `isGui` — false on WSL/containers/headless. The single switch for terminal
+  emulators, fonts, input methods, desktop config, GUI apps. Prefer it over
+  `isWsl`.
 
-`isGui` is false on WSL, in containers and on headless servers; it is the single
-switch that strips terminal emulators, fonts, input methods, desktop config and
-GUI applications. Prefer it over testing `isWsl` directly.
-
-The **prompt text is the key** `--promptX` matches on, not the variable it is
-assigned to. `profile` is therefore prompted as the bare word `profile`, so it
-stays scriptable; it is a `promptChoice` validated against `$knownProfiles`:
+The **prompt text is the key** `--promptX` matches, not the variable. `profile`
+is prompted as the bare word `profile` so it stays scriptable and is validated
+against `$knownProfiles`:
 
 ```sh
 chezmoi init --promptDefaults --promptChoice profile=itcgroup
 ```
 
-The remaining prompts are written for humans (`Is this machine GUI`,
-`Terminal font size`, …) — to script those, pass the full prompt text as the
-key. `--promptBool` cannot express one with a comma in it.
+Other prompts are human-worded (`Is this machine GUI`, …) — script them with the
+full text as key. `--promptBool` can't express one containing a comma.
 
-Previous answers are read back out of the existing config, so re-running
+Previous answers are read back from the existing config ⇒ re-running
 `chezmoi init` is non-destructive.
 
-**Always render a template before committing it:**
+**Always render before committing:**
 
 ```sh
 chezmoi execute-template <home/dot_config/zsh/dot_zshrc.tmpl
-chezmoi execute-template --init <home/.chezmoi.toml.tmpl # for the config template
-chezmoi cat ~/.zshrc                                     # rendered target content
-chezmoi data                                             # everything available at `.`
+chezmoi execute-template --init <home/.chezmoi.toml.tmpl # config template
+chezmoi cat ~/.zshrc                                     # rendered target
+chezmoi data                                             # everything at `.`
 chezmoi doctor
 chezmoi apply --dry-run --verbose
 ```
 
 ### Ignore vs. remove
 
-- `home/.chezmoiignore.tmpl` — a gitignore-syntax, **templated** list of _target_
-  paths (relative to `~`, no leading `~/`) chezmoi should pretend do not exist.
-  This is the main modularity lever: OS gating, WSL gating, machine-role gating.
-  It also gates `.chezmoiscripts/**` so scripts for other platforms never run.
-- `home/.chezmoiremove.tmpl` — targets chezmoi should actively **delete** on apply.
+- `.chezmoiignore.tmpl` — templated gitignore-syntax list of _target_ paths
+  (relative to `~`) to pretend don't exist. Main modularity lever: OS / WSL /
+  role gating. Also gates `.chezmoiscripts/**`.
+- `.chezmoiremove.tmpl` — targets to actively **delete** on apply.
 
-Both are evaluated as templates, so any `.data` value can drive them.
+Both are templates, so any `.data` value can drive them.
 
 ### Scripts
 
-Named `run_[once_|onchange_][before_|after_]<NN>-<name>.sh[.tmpl]`. `before`/`after`
-is relative to applying the rest of the target state; the numeric prefix orders them.
-`run_once_` state is tracked in chezmoi's persistent state — use
-`chezmoi state delete-bucket --bucket=scriptState` to force a re-run.
-Scripts are gated by platform/profile in `.chezmoiignore.tmpl`, _not_ by an `if`
-inside the script.
+`run_[once_|onchange_][before_|after_]<NN>-<name>.sh[.tmpl]`. `before`/`after`
+is relative to applying the rest of the target state; `NN` orders them.
+`run_once_` state lives in chezmoi's persistent state — force a re-run with
+`chezmoi state delete-bucket --bucket=scriptState`. Gate scripts in
+`.chezmoiignore.tmpl`, _not_ with an `if` inside the script.
 
-Unix ordering: `before_10` distro packages → `after_20` mise tools
-(`run_onchange_`, keyed on the rendered `mise.toml` hash) → `after_90` zsh
-completion generation.
+Unix order: `before_10` distro packages + the mise binary → `after_20` mise
+tools (`run_onchange_`, keyed on the rendered `config.toml` hash) → `after_90`
+zsh completions.
 
 ### Externals
 
-`home/.chezmoiexternals/*.toml.tmpl` declare `type = "file" | "archive" | "git-repo"`
-entries keyed by target path. They are templated, so Catppuccin flavour/accent flow
-straight into the download URL. `{{ .externalGitArgs }}` injects shallow-clone args.
+`home/.chezmoiexternals/*.toml.tmpl`: `type = "file" | "archive" | "git-repo"`
+keyed by target path, templated (Catppuccin flavour/accent flow into URLs).
+`{{ .externalGitArgs }}` injects shallow-clone args.
+
+`git-repo` remotes pick their scheme from whether the profile's private ssh key
+is on disk: `git@github.com:` if yes, `https://` otherwise. Never hardcode ssh —
+a keyless machine would block on the host-key prompt with no TTY.
 
 ### Encryption (age)
 
-`encryption = "age"`, `armor = true`. Encrypted source files carry the
-`encrypted_` attribute and/or an `.age` suffix.
+`encryption = "age"`, `armor = true`. Encrypted sources carry `encrypted_`
+and/or `.age`.
 
 `$profileMeta` in `home/.chezmoi.toml.tmpl` is the **single source of truth** for
-both the key path and the recipient of every profile. Everything else reads it back
-from `.chezmoi.config.age.*`, so there is nothing to keep in sync.
+key path + recipient; everything else reads `.chezmoi.config.age.*`.
 
-- **identities** — one private key file per profile, `~/.config/age/key.txt`
-  (personal) and `~/.config/age/<company>-key.txt`. Never committed. The
-  generated config lists this machine's profile key and only if it exists, so
-  adding a key later requires re-running `chezmoi init`. An **empty** list is a
-  supported state, not an error — see the invariant below.
-- **recipients** — _always every known recipient_, regardless of this machine's
-  profile. Otherwise `chezmoi re-add` on a work box would re-encrypt files so
-  the personal key could no longer read them. It also means whichever key you
-  hold opens every encrypted file the machine ships.
+- **identities** — one private key per profile (`~/.config/age/key.txt`,
+  `~/.config/age/<company>-key.txt`), never committed. The config lists this
+  machine's key *only if the file exists* ⇒ adding a key later means re-running
+  `chezmoi init`. An **empty** list is supported, not an error.
+- **recipients** — _always all of them_, whatever this machine is. Otherwise
+  `chezmoi re-add` on a work box would re-encrypt so the personal key can no
+  longer read it. Upshot: whichever key you hold opens everything.
 
-`chezmoi re-add` re-encrypts managed files but **not** `.chezmoitemplates/` —
-use `~/.local/bin/chezmoi-encrypt-template.sh` for those.
+`chezmoi re-add` does **not** cover `.chezmoitemplates/` — use
+`~/.local/bin/chezmoi-encrypt-template.sh`.
 
 #### Invariant: every encrypted file is listed in `.chezmoiignore.tmpl`
 
-chezmoi decrypts while computing the target state, so **one encrypted file that
-no available key can open aborts the entire `chezmoi apply`**, not just that
-file. The "SECRETS THAT NEED AN AGE IDENTITY" block in
-`home/.chezmoiignore.tmpl` lists the target path of every encrypted source and
-drops them all when `.chezmoi.config.age.identities` is empty. That is what
-makes a machine without its age key still applyable.
+chezmoi decrypts while computing the target state, so **one unreadable
+encrypted file aborts the entire `chezmoi apply`**, not just itself. The
+"SECRETS THAT NEED AN AGE IDENTITY" block lists every encrypted target and drops
+them all when `.chezmoi.config.age.identities` is empty. That is what keeps a
+keyless machine applyable.
 
-Adding an `encrypted_` / `.age` source is therefore a **two-file change**: the
-source, and its target path in that block. Audit with:
+Adding an `encrypted_` / `.age` source is a **two-file change**. Audit:
 
 ```sh
 find home -name '*encrypted_*' -o -name '*.age'
@@ -236,74 +260,63 @@ find home -name '*encrypted_*' -o -name '*.age'
 
 ## Conventions
 
-- Company/organisation identifiers are **lowercase, no spaces or hyphens**, Go-package
-  style: `itcgroup`, not `ITC Group` / `itc-group`. Use this for filenames
-  (`~/.config/git/itcgroup`), SSH hosts, key names, and directory scopes
-  (`~/projects/itcgroup/`).
-- Comment section separators in shell/zsh files use a row of `#` (`##########…`).
-- Package lists are YAML lists of strings with inline `#` comments explaining
-  non-obvious entries; commented-out entries are kept as a "considered and rejected"
-  record.
-- Scratch material that helps while working but does not belong in the repo
-  (e.g. `MISSING_<DISTRO>_PKGS.md`) goes in `tmp/`, which is gitignored.
-  `.chezmoiroot` is `home`, so chezmoi never sees it.
-- oh-my-zsh plugins live in `home/.chezmoidata/zsh.yml` (`.zsh.plugins`) as YAML
-  lists under `pre`, `mid` (`common` / `personal` / `work`), `post`.
-  `work` is keyed per company (`work.<company>`, e.g. `work.itcgroup`) and the
-  template renders only `index work .company`. Lists preserve order, maps do not,
-  so the template names each list explicitly and never ranges over the `mid` or
-  `work` maps.
+- Company ids: **lowercase, no spaces or hyphens**, Go-package style —
+  `itcgroup`, not `ITC Group` / `itc-group`. Same for filenames, SSH hosts, key
+  names, directory scopes (`~/projects/itcgroup/`).
+- Section separators in shell/zsh files: a row of `#`.
+- Package lists: YAML string lists with inline `#` comments on non-obvious
+  entries; commented-out entries kept as a considered-and-rejected record.
+- Scratch material (`MISSING_<DISTRO>_PKGS.md`, …) goes in `tmp/` — gitignored,
+  and outside `home/` so chezmoi never sees it.
+- oh-my-zsh plugins: `home/.chezmoidata/zsh.yml` (`.zsh.plugins`), lists under
+  `pre`, `mid` (`common`/`personal`/`work`), `post`. `work` is keyed per company
+  (`work.<company>`) and the template renders only `index work .company`. Lists
+  preserve order, maps do not ⇒ name each list explicitly, never range over the
+  `mid` or `work` maps.
 
 ## Chezmoi tips
 
-- To change the delimiters for a single template, place a comment at the top
+- Per-template delimiters, as a comment at the top:
   ```gotmpl
   {{/* chezmoi:template:left-delimiter=%% right-delimiter=%% */}}
-  {{/* example to change to %% instead of {{*/}}
   ```
 
 ## Working rules for agents
 
-1. **Never edit files under `~` directly.** Edit the source in `home/` and run
-   `chezmoi apply`, or use `chezmoi re-add` to pull target changes back in.
-2. **Verify every template renders** with `chezmoi execute-template` before finishing.
-   A template that fails to parse breaks _all_ of `chezmoi apply`.
-3. Target paths in `.chezmoiignore` / `.chezmoiremove` are **relative to `~`** and must
-   not be prefixed with `home/` — that prefix belongs to the source tree only.
-4. Adding a package = edit the YAML under `home/.chezmoidata/pkgs/`, not the
-   script. Each category (`common`/`personal`/`work`/`laptop`) has a `cli` list
-   (always) and a `gui` list (only when `.isGui`). **mise tools are the
-   exception**: they are edited directly in
-   `home/dot_config/mise/mise.toml.tmpl` with inline `{{ if .isWork }}` style
-   guards, deliberately _not_ via `.chezmoidata`.
-5. Adding a machine-class distinction = add a `[data]` value in `.chezmoi.toml.tmpl`
-   and branch on it, rather than hard-coding hostnames.
-6. **Adding a whole distro** = follow `docs/support-new-os.md`. Package names
-   must be verified against a real container of that distro (with testing repos
-   disabled), never guessed, and new lists are translated from `arch-based.yml`
-   — Arch is the reference set. Whatever the distro cannot provide falls
-   through to mise.
-7. `git` autoAdd is on (`[git] autoAdd = true`), so chezmoi stages source changes
-   automatically; commits/pushes are manual.
-8. Do not commit secrets. Anything sensitive goes through `encrypted_` + age —
-   and **every encrypted file must also be listed** in the "SECRETS THAT NEED
-   AN AGE IDENTITY" block of `home/.chezmoiignore.tmpl`. Miss it and a machine
-   without its age key cannot `chezmoi apply` at all, because decryption
-   happens while rendering the whole target state. Maintain that list.
-9. **Never generate a file by shelling out to a tool from a template.** A
-   template runs during `chezmoi apply`, before the package/mise install scripts
-   have put anything on `$PATH`, and it is only re-rendered when its _source_
-   changes — so `{{ output "foo" ... }}` either aborts the apply or bakes in an
-   empty file forever. Use a `run_after_` script instead; see
+1. **Never edit files under `~` directly.** Edit `home/` + `chezmoi apply`, or
+   `chezmoi re-add`.
+2. **Verify every template renders** (`chezmoi execute-template`) before
+   finishing. One parse error breaks _all_ of `chezmoi apply`.
+3. Paths in `.chezmoiignore` / `.chezmoiremove` are **relative to `~`** — never
+   prefixed with `home/`.
+4. Adding a package = edit `home/.chezmoidata/pkgs/`, not the script. Categories
+   `common`/`personal`/`work`/`laptop`, each with `cli` (always) and `gui`
+   (`.isGui` only). **mise tools are the exception** — edited directly in
+   `home/dot_config/mise/config.toml.tmpl` with inline `{{ if .isWork }}` guards.
+5. Machine-class distinctions = a new `[data]` value, never a hardcoded hostname.
+6. **New distro** = `docs/support-new-os.md`. Verify package names against a real
+   container (testing repos disabled), never guess; translate from
+   `arch-based.yml` (the reference set). Gaps fall through to mise.
+7. `[git] autoAdd = true` stages source changes automatically; commits/pushes are
+   manual.
+8. Do not commit secrets — `encrypted_` + age, **and** the target path in the
+   "SECRETS THAT NEED AN AGE IDENTITY" block. Miss it and a keyless machine
+   cannot apply anything at all.
+9. **Never shell out to a tool from a template.** Templates run before the
+   package/mise scripts have touched `$PATH`, and re-render only when the
+   _source_ changes — `{{ output "foo" }}` either aborts the apply or bakes in an
+   empty file forever. Use a `run_after_` script; see
    `.chezmoiscripts/unix/run_after_90-generate-zsh-completions.sh`.
-10. Script ordering on unix: `10` package install (before) → `20` mise install
-    (after, `run_onchange_` keyed on the mise.toml hash) → `90` completions.
-11. Export `GITHUB_TOKEN` before a first bootstrap; chezmoi externals and mise
-    both hammer the GitHub API and the anonymous limit is 60/hour.
-12. **Do not add comments to files under `home/`.** No explanatory, section-header,
-    or rationale comments in templates, scripts, data files, or configs. The only
-    comments allowed are ones already present in the file and commented-out entries
-    kept as a considered-and-rejected record per Conventions above. Ordering
-    invariants (e.g. YAML lists preserve order, never range over a map) belong in
-    `AGENTS.md` or `docs/`, not in the files themselves. If you believe a comment
-    is load-bearing, ask the user first.
+10. Unix script order: `10` distro packages + the mise **binary** (guarded by
+    `command -v mise`, deliberately not a pkgs-YAML `scripts:` entry — that list
+    is for one-shot `curl | sh` installers with no idempotency of their own, e.g.
+    tailscale, brave) → `20` mise **tools** → `90` completions.
+11. Export `GITHUB_TOKEN` before a first bootstrap (externals + mise hammer the
+    API; anon limit 60/h). A missing token must **never** fail an apply:
+    `run_onchange_after_20-mise-install.sh.tmpl` warns, prints the recovery
+    command, `exit 0`. Every bootstrap script follows that rule.
+12. **Do not add comments to files under `home/`.** No explanatory,
+    section-header or rationale comments in templates, scripts, data files or
+    configs. Only comments already present, and commented-out entries kept as a
+    considered-and-rejected record. Invariants belong here or in `docs/`. If you
+    think a comment is load-bearing, ask first.

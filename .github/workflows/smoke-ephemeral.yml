@@ -1,0 +1,100 @@
+name: Smoke (ephemeral)
+
+# Wednesday 03:00 UTC+7 == Tuesday 20:00 UTC
+on:
+  schedule:
+    - cron: "0 20 * * 2"
+  push:
+    paths:
+      - "home/**"
+      - ".github/workflows/smoke-ephemeral.yml"
+  pull_request:
+    paths:
+      - "home/**"
+      - ".github/workflows/smoke-ephemeral.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: smoke-ephemeral-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ephemeral:
+    name: ubuntu-latest / profile=ephemeral
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      # Externals and mise both hammer the GitHub API; the anonymous limit is 60/h.
+      GITHUB_TOKEN: ${{ github.token }}
+      MISE_JOBS: "2"
+      DEBIAN_FRONTEND: noninteractive
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Stage the checkout as the chezmoi source dir
+        run: |
+          mkdir -p "$HOME/.local/share"
+          cp -a "$GITHUB_WORKSPACE" "$HOME/.local/share/chezmoi"
+
+      - name: Install chezmoi
+        run: |
+          sh -c "$(curl -fsLS get.chezmoi.io)" -- -b "$HOME/.local/bin"
+          echo "$HOME/.local/bin" >>"$GITHUB_PATH"
+
+      - name: chezmoi init (no age key, no ssh key, no TTY)
+        run: |
+          chezmoi init \
+            --promptChoice 'profile=ephemeral,What theme to use=dark,catppuccin light flavour=latte,catppuccin dark flavour=mocha,catppuccin accentColor=lavender' \
+            --promptBool 'Is this machine GUI=false,Is this a laptop=false' \
+            --promptInt 'Terminal font size=13' \
+            --promptString 'Opacity=0.8'
+
+      - name: Assert no age identity was configured
+        run: |
+          identities=$(chezmoi data --format=json | jq -c '.chezmoi.config.age.identities')
+          echo "identities=$identities"
+          [ "$identities" = "[]" ] || [ "$identities" = "null" ]
+
+      - name: chezmoi apply --dry-run (renders the whole target state)
+        run: chezmoi apply --dry-run
+
+      - name: chezmoi apply
+        run: chezmoi apply
+
+      - name: Assert ~/.ssh is untouched
+        run: |
+          if [ -e "$HOME/.ssh/config" ] || [ -e "$HOME/.ssh/allowed_signers" ]; then
+            echo "::error::ephemeral must not manage ~/.ssh"
+            ls -la "$HOME/.ssh"
+            exit 1
+          fi
+
+      - name: Assert no identity leaked into git config
+        run: |
+          user=$(git config --global --get user.email || true)
+          sign=$(git config --global --get commit.gpgsign || true)
+          echo "user.email='$user' commit.gpgsign='$sign'"
+          [ -z "$user" ] && [ "$sign" = "false" ]
+
+      - name: Assert no secrets were written
+        run: |
+          for f in "$HOME/.npmrc" "$HOME/.wakatime.cfg" "$HOME/.config/zsh/private"; do
+            if [ -e "$f" ]; then
+              echo "::error::$f should not exist without an age key"
+              exit 1
+            fi
+          done
+
+      - name: Assert the toolchain landed
+        run: |
+          test -f "$HOME/.config/zsh/.zshrc"
+          test -d "$HOME/.oh-my-zsh"
+          test -d "$HOME/.config/nvim"
+          test -x "$HOME/.local/bin/mise"
+
+      - name: chezmoi apply is idempotent
+        run: chezmoi apply

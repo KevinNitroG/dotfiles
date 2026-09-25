@@ -174,9 +174,7 @@ pkgs:
         - x11-xserver-utils # provides xhost
 
       scripts:
-        cli:
-          # mise is the escape hatch for everything apt does not carry
-          - "https://mise.run"
+        cli: []
         gui: []
 
     personal:

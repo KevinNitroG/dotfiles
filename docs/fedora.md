@@ -68,7 +68,7 @@ mise `cargo:` and `gem:` backends need those toolchains present.
 ## What Fedora does better than Ubuntu
 
 These are packaged on Fedora but not Ubuntu, so they are deliberately **absent**
-from the fedora block in `mise.toml.tmpl`:
+from the fedora block in `config.toml.tmpl`:
 
 `yq` (genuinely mikefarah's Go yq 4.53.3, unlike Debian's python-yq), `helm`,
 `uv`, `astroterm`, `tailscale` (Ubuntu needs the install script), and `resvg`
@@ -91,7 +91,7 @@ Things that work on Arch but **cannot** work on Fedora:
 | `lstk`, `cmctl`   | no package; `cmctl` already comes from mise everywhere.                                                                               |
 
 Anything dnf lacks is picked up by the `{{ if eq .osFamily "fedora" }}` block in
-`home/dot_config/mise/mise.toml.tmpl`. Compared to Ubuntu's block, Fedora
+`home/dot_config/mise/config.toml.tmpl`. Compared to Ubuntu's block, Fedora
 additionally needs `procs`, `dust`, `xh`, `jqp`, `kubecolor`and`tmuxinator`, all of which apt carried and dnf does not.
 
 ## Known rough edges

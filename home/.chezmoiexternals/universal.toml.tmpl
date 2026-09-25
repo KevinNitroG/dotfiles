@@ -1,14 +1,22 @@
-{{/* HTTPS, not git@github.com: an ssh remote needs a key in the agent and an
-     accepted host key, so on a fresh machine, a container or CI the clone
-     blocks on "Are you sure you want to continue connecting?" with no TTY and
-     the whole apply dies. Both repos are public; https just works. */}}
+{{/* ssh only when this machine actually holds its profile's private key -- an
+     ssh remote needs a key in the agent and an accepted host key, so on a
+     keyless machine (ephemeral/guest, a container, CI) the clone would block on
+     "Are you sure you want to continue connecting?" with no TTY and the whole
+     apply dies. Both repos are public, so https is the safe fallback. The key
+     lands in ~/.ssh only if chezmoi decrypted it, i.e. never without an age
+     identity. */}}
+{{- $p := index .profileDefs .profile }}
+{{- $gh := "https://github.com/" }}
+{{- if and $p.sshKey (lstat (replace "~" .chezmoi.homeDir $p.sshKey)) }}
+{{-   $gh = "git@github.com:" }}
+{{- end }}
 {{ if eq .osId "windows" }}
 ["AppData/Local/nvim"]
 {{ else }}
 [".config/nvim"]
 {{ end }}
 type = "git-repo"
-url = "https://github.com/uitdots/nvim.git"
+url = "{{ $gh }}uitdots/nvim.git"
 
 {{ if eq .osId "windows" }}
 ["vimfile"]
@@ -16,7 +24,7 @@ url = "https://github.com/uitdots/nvim.git"
 [".vim"]
 {{ end }}
 type = "git-repo"
-url = "https://github.com/uitdots/vim.git"
+url = "{{ $gh }}uitdots/vim.git"
 
 [".config/eza/theme.yml"]
 type = "file"

@@ -52,7 +52,22 @@
 # in home/.chezmoi.toml.tmpl (which runs before .chezmoidata is readable) and
 # read back from .chezmoi.config.age.* wherever they are needed.
 
+# "ephemeral" is the keyless guest identity: a friend's box, a throwaway VM, a
+# container, CI. Every field is empty on purpose -- no git identity, no commit
+# signing, no ssh key, no GitHub account, no forge host blocks -- and there is
+# no age key for it in $profileMeta either, so every encrypted target is
+# skipped. It ships the common package set and the shared config, nothing else.
+
 profileDefs:
+  ephemeral:
+    gitName: ""
+    gitEmail: ""
+    signing: ""
+    gpgKey: ""
+    sshKey: ""
+    ghUser: ""
+    sshHosts: []
+
   personal:
     gitName: Kevin Nitro
     gitEmail: trannguyenthaibinh46@gmail.com

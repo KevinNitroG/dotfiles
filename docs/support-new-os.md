@@ -180,7 +180,7 @@ you are not on.)
 
 Anything the distro genuinely lacks goes in a
 `{{ if eq .osFamily "<family>" }}` block in
-`home/dot_config/mise/mise.toml.tmpl`.
+`home/dot_config/mise/config.toml.tmpl`.
 
 **Do not copy another distro's block.** Diff against what you measured — the
 Fedora block drops `yq`/`helm`/`uv`/`astroterm` because dnf has them, and adds

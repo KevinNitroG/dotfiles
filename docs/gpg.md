@@ -1,12 +1,11 @@
 # GPG
 
-Only the `personal` profile signs with GPG; companies sign with their SSH key
-(see [ssh.md](./ssh.md)). The key itself is **imported by hand** — nothing in
-this repo imports, trusts or installs a private key. `profiles.yml` carries
-only the public `gpgKey` id, so `~/.config/git/personal` knows what to sign
-with.
+Only `personal` signs with GPG; companies use their SSH key ([ssh.md](./ssh.md)),
+`ephemeral` signs nothing. The key is **imported by hand** — nothing here
+imports, trusts or installs a private key. `profiles.yml` carries only the
+public `gpgKey` id, which lands in the IDENTITY block of `~/.config/git/config`.
 
-Get the key from Bitwarden.
+Key from Bitwarden.
 
 | | |
 | --- | --- |

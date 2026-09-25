@@ -51,7 +51,8 @@
   - [4. Slow network](#4-slow-network)
   - [5. Install chezmoi and apply](#5-install-chezmoi-and-apply)
   - [6. Commit signing](#6-commit-signing)
-- [Manually add/sync encrypted file to template](#manually-addsync-encrypted-file-to-template)
+- [👤 Ephemeral / guest machines](#-ephemeral--guest-machines)
+- [🔐 Encrypted files](#-encrypted-files)
   - [Then list it in `.chezmoiignore.tmpl`](#then-list-it-in-chezmoiignoretmpl)
 - [📝 Other notes](#-other-notes)
 - [💁 References](#-references)
@@ -81,23 +82,21 @@
 
 ## 🧩 How it is organised
 
-`chezmoi init` asks a few questions; the answers decide what gets installed and
-which files exist:
+`chezmoi init` prompts; the answers decide what exists.
 
-| value      | meaning                                                               |
-| ---------- | --------------------------------------------------------------------- |
-| `profile`  | the ONE identity this machine is — `personal` or a company id         |
-| `osFamily` | `arch` / `ubuntu` / `fedora` / `windows` / `darwin` — picks installer |
-| `isWsl`    | auto-detected                                                         |
-| `isGui`    | auto-detected; false on WSL, containers, headless                     |
-| `isLaptop` | auto-detected; adds power management                                  |
+| value      | meaning                                                      |
+| ---------- | ------------------------------------------------------------ |
+| `profile`  | the ONE identity — `personal`, a company id, or `ephemeral`  |
+| `osFamily` | `arch` / `ubuntu` / `fedora` / `windows` / `darwin`          |
+| `isWsl`    | auto                                                         |
+| `isGui`    | auto; false on WSL, containers, headless                     |
+| `isLaptop` | auto; adds power management                                  |
 
-Identities live in `home/.chezmoidata/profiles.yml`, one block per profile —
-see [docs/new-company.md](./docs/new-company.md).
+- Identities → `home/.chezmoidata/profiles.yml`, one block each ([new company](./docs/new-company.md)).
+- Packages → `home/.chezmoidata/pkgs/`, split `common`/`personal`/`work`/`laptop` × `cli`/`gui`.
+- Repo map → [AGENTS.md](./AGENTS.md).
 
-Packages live in `home/.chezmoidata/pkgs/`, split `common` / `personal` /
-`work` / `laptop`, each with `cli` (always) and `gui` (desktop only).
-Full repo map: [AGENTS.md](./AGENTS.md).
+**Not me? Use [`ephemeral`](#-ephemeral--guest-machines).**
 
 ---
 
@@ -109,48 +108,44 @@ Full repo map: [AGENTS.md](./AGENTS.md).
 <summary><b>Windows</b></summary>
 
 > [!IMPORTANT]
-> Needs **administrator privileges**. Run from an elevated PowerShell and
-> expect UAC prompts: `run_once_before_0_config-windows.ps1.tmpl` toggles
-> Windows optional features (WSL, Virtual Machine Platform, .NET), and the
-> Scoop/Choco bootstrap plus the `ssh-agent` service need it too.
-> User `PATH` entries do not.
+> Needs **admin**. Elevated PowerShell, expect UAC:
+> `run_once_before_0_config-windows.ps1.tmpl` toggles optional features (WSL,
+> Virtual Machine Platform, .NET); Scoop/Choco and `ssh-agent` need it too.
+> User `PATH` does not.
 
 </details>
 
 <details>
 <summary><b>WSL</b></summary>
 
-Install WSL from the [Microsoft Store](https://apps.microsoft.com/detail/9PDXGNCFSCZV),
-then:
+[Store](https://apps.microsoft.com/detail/9PDXGNCFSCZV), then:
 
 ```powershell
 wsl --install -d Ubuntu
 wsl --set-default Ubuntu
 ```
 
-Inside the guest, follow the Linux instructions. `isWsl` is auto-detected and
-skips what makes no sense in a guest: terminal emulators, fonts, `fcitx5`,
-Hyprland/HyDE/sddm/systemd desktop units, `kanata`, and the personal leisure
-dotfiles (browser data, OBS, rclone, ncspot, …).
+Then follow Linux. `isWsl` is auto and drops: terminal emulators, fonts,
+fcitx5, Hyprland/HyDE/sddm/systemd desktop units, kanata, leisure dotfiles.
 
-`~/.wslconfig` configures the VM, so it is applied on the **Windows host**, not
-in the guest.
+`~/.wslconfig` belongs to the **Windows host**, not the guest.
 
 </details>
 
 <details>
 <summary><b>Linux</b></summary>
 
-Arch-based (Arch, CachyOS, EndeavourOS), Ubuntu-based (Mint, Pop!\_OS) and
-Fedora-based are supported; the installer is picked from `osFamily`. On Ubuntu,
-`ppa:neovim-ppa/stable` is added so neovim is current. Anything apt lacks comes
-from mise.
+Arch-based, Ubuntu-based, Fedora-based. Installer picked from `osFamily`.
+Ubuntu adds `ppa:neovim-ppa/stable`; whatever apt/dnf lacks comes from mise.
 
 </details>
 
 ### 1. SSH key
 
-One key per identity. Full guide: [docs/ssh.md](./docs/ssh.md).
+> [!TIP]
+> `ephemeral` has no keys — skip steps 1, 2, 6.
+
+One key per identity → [docs/ssh.md](./docs/ssh.md).
 
 - Linux / WSL / macOS
   ```sh
@@ -160,7 +155,7 @@ One key per identity. Full guide: [docs/ssh.md](./docs/ssh.md).
   chmod 600 ~/.ssh/id_ed25519
   ssh-add ~/.ssh/id_ed25519
   ```
-- Windows _(elevated PowerShell)_
+- Windows _(elevated)_
   ```powershell
   Set-Service ssh-agent -StartupType Automatic
   Start-Service ssh-agent
@@ -169,15 +164,15 @@ One key per identity. Full guide: [docs/ssh.md](./docs/ssh.md).
 
 ### 2. age key
 
-Encrypted files use [age](https://age-encryption.org/). One identity file per
-profile under `~/.config/age/`, **never committed**:
+[age](https://age-encryption.org/) identity per profile, **never committed**:
 
 | profile     | identity file                     |
 | ----------- | --------------------------------- |
 | `personal`  | `~/.config/age/key.txt`           |
 | `<company>` | `~/.config/age/<company>-key.txt` |
+| `ephemeral` | none                              |
 
-Restore from Bitwarden, or generate:
+Restore from Bitwarden, or:
 
 ```sh
 mkdir -p ~/.config/age
@@ -185,33 +180,20 @@ age-keygen -o ~/.config/age/key.txt
 chmod 600 ~/.config/age/key.txt
 ```
 
-Every file is encrypted to **all** known recipients, so whichever profile's key
-you hold opens everything this machine ships. `chezmoi init` only lists
-identity files that exist, so adding a key later means re-running it.
-
-With no identity at all, every encrypted target is skipped **by design** —
-`chezmoi apply` still succeeds, it just leaves those files out. That is what
-the "SECRETS THAT NEED AN AGE IDENTITY" block in `home/.chezmoiignore.tmpl`
-is for, and why it has to list every encrypted file (see
-[below](#manually-addsync-encrypted-file-to-template)).
-
-> [!NOTE]
-> This repo is personal and contains encrypted files you cannot decrypt. Apply
-> with `--exclude=encrypted`.
+- Encrypted to **all** recipients → any one key opens everything.
+- `init` only lists keys that exist → new key = re-run `chezmoi init`.
+- No key at all = encrypted targets skipped, apply still succeeds. No
+  `--exclude=encrypted` needed.
 
 ### 3. GitHub API rate limits
 
-chezmoi externals and mise both hammer the GitHub API
+Externals + mise hammer the API (anon limit 60/h).
 
 ```sh
-export GITHUB_TOKEN='ghp_...'
+export GITHUB_TOKEN='ghp_...'          # or: $(gh auth token)
 ```
 
-Only matters for the first bootstrap — afterwards the token lives in the
-encrypted `~/.config/zsh/private/personal.zsh`.
-
-> [!TIP]
-> `gh auth login && export GITHUB_TOKEN=$(gh auth token)` works too.
+First bootstrap only; afterwards it lives in `~/.config/zsh/private/personal.zsh`.
 
 ### 4. Slow network
 
@@ -227,17 +209,25 @@ _([docs](https://www.chezmoi.io/install))_
 
 - shell
   ```sh
-  sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply --ssh --depth 1 --purge-binary KevinNitroG
+  sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply --ssh --depth 1 KevinNitroG
   ```
-- pwsh _(elevated — see the Windows note above)_
+- pwsh _(elevated)_
   ```powershell
-  iex "&{$(irm 'https://get.chezmoi.io/ps1')} -- init --apply --ssh --depth 1 --purge-binary KevinNitroG"
+  iex "&{$(irm 'https://get.chezmoi.io/ps1')} -- init --apply --ssh --depth 1 KevinNitroG"
   ```
 
-Pick `profile` from the list — one identity per machine, `personal` or a
-company. A company machine gets no personal key, no personal secrets and no
-personal git identity; it authenticates to GitHub with the company key. To
-script it:
+> [!CAUTION]
+> No `--purge-binary` unless your package manager ships chezmoi. It deletes
+> `~/.local/bin/chezmoi` at the end — without a packaged chezmoi you are left
+> with none and cannot re-apply.
+>
+> - **Arch-based** — `chezmoi` is in the package list → safe, and avoids two
+>   copies shadowing each other.
+> - **Everything else** — leave it off. To clean up later: install chezmoi
+>   properly (`mise use -g chezmoi`, package manager), then
+>   `rm ~/.local/bin/chezmoi`.
+
+Scripted:
 
 ```sh
 chezmoi init --promptDefaults --promptChoice profile=[company]
@@ -245,54 +235,102 @@ chezmoi init --promptDefaults --promptChoice profile=[company]
 
 ### 6. Commit signing
 
-Per profile in `profiles.yml`: `personal` signs with **GPG**, companies with
-their **SSH** key. The machine has one identity, so every repo on it signs the
-same way.
+`personal` → **GPG**, companies → **SSH**, `ephemeral` → none. One identity per
+machine, so every repo signs the same way.
 
-SSH signing needs only the key; `~/.ssh/allowed_signers` is generated. Verify
-with `git log --show-signature -1`.
+- SSH: needs only the key; `~/.ssh/allowed_signers` is generated.
+  Check: `git log --show-signature -1`.
+- GPG: keys imported **by hand** → [docs/gpg.md](./docs/gpg.md).
 
-GPG keys are **imported by hand** — nothing here installs or trusts a private
-key. Steps, including Windows: [docs/gpg.md](./docs/gpg.md).
+---
 
-## Manually add/sync encrypted file to template
+## 👤 Ephemeral / guest machines
 
-`chezmoi re-add` re-encrypts managed files, but not `home/.chezmoitemplates/`.
-Use the helper for those:
+A friend's laptop, throwaway VM, container, devcontainer, CI — **no age key, no
+ssh key**.
 
 ```sh
-chezmoi-encrypt-template.sh ~/.config/Code/User/settings.json VSCode/encrypted_settings.json
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply --depth 1 \
+  --promptChoice profile=ephemeral KevinNitroG
+```
+
+<details>
+<summary>Fully non-interactive (CI)</summary>
+
+```sh
+chezmoi init --apply --depth 1 \
+  --promptChoice 'profile=ephemeral,What theme to use=dark,catppuccin light flavour=latte,catppuccin dark flavour=mocha,catppuccin accentColor=lavender' \
+  --promptBool 'Is this machine GUI=false,Is this a laptop=false' \
+  --promptInt 'Terminal font size=13' \
+  --promptString 'Opacity=0.8' \
+  KevinNitroG
+```
+
+</details>
+
+Not touched:
+
+| area           | behaviour                                                       |
+| -------------- | ---------------------------------------------------------------- |
+| `~/.ssh`       | unmanaged entirely — your keys and `config` stay                 |
+| git identity   | no `[user]` block; your existing one wins                        |
+| commit signing | off                                                              |
+| secrets        | no age key ⇒ every `encrypted_` target skipped                   |
+| `gh`           | `hosts.yml` unmanaged                                            |
+| packages       | `common` only                                                    |
+
+You still get: zsh + oh-my-zsh + starship, editors, Catppuccin, the `common`
+CLI toolchain.
+
+> [!NOTE]
+> `git-repo` externals clone over **https** unless the profile's private ssh key
+> is actually on disk (then `git@github.com:`) — a keyless clone never blocks on
+> a host-key prompt.
+
+Promote to a real identity later: drop the age + ssh keys in place, then
+`chezmoi init --promptChoice profile=personal && chezmoi apply`.
+
+---
+
+## 🔐 Encrypted files
+
+`chezmoi re-add` re-encrypts managed files, but **not** `home/.chezmoitemplates/`:
+
+```sh
 chezmoi-encrypt-template.sh ~/.config/rclone/rclone.conf rclone/encrypted_rclone.conf
 ```
 
-It reads chezmoi's own recipients, so every file stays readable by every
-profile. The raw equivalent:
+<details>
+<summary>Raw equivalent</summary>
 
 ```sh
 age -a $(chezmoi data --format json | jq -r '.chezmoi.config.age.recipients | map("-r " + .) | join(" ")') \
   file >"$(chezmoi source-path)/.chezmoitemplates/file"
 ```
 
-> [!NOTE]
-> `$(chezmoi source-path)` already points _inside_ `home/` because of
-> `.chezmoiroot` — do not add another `home/` to the path.
+`$(chezmoi source-path)` is already _inside_ `home/` — don't add it again.
+
+</details>
 
 ### Then list it in `.chezmoiignore.tmpl`
 
 **Every** encrypted file needs its target path in the "SECRETS THAT NEED AN AGE
-IDENTITY" block of `home/.chezmoiignore.tmpl`. Adding an `encrypted_` / `.age`
-source is a two-file change.
+IDENTITY" block. Adding an `encrypted_` / `.age` source is a **two-file change**.
 
-chezmoi decrypts while rendering the target state, so one file that no
-available key can open does not fail alone — it aborts the entire
-`chezmoi apply`. Without the entry, a machine that has not got its age key yet
-cannot apply anything at all.
+Why: chezmoi decrypts while rendering the target state, so one unreadable file
+aborts the whole `chezmoi apply`, not just itself.
 
-Audit that the list is complete:
+Audit:
 
 ```sh
 find home -name '*encrypted_*' -o -name '*.age'
 ```
+
+> [!TIP]
+> CI proves the keyless path still works —
+> [`.github/workflows/smoke-ephemeral.yml`](./.github/workflows/smoke-ephemeral.yml)
+> applies the `ephemeral` profile on `ubuntu-latest` every Wednesday 03:00
+> UTC+7.
 
 ---
 

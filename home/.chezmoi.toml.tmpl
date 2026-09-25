@@ -12,7 +12,10 @@
      "pink" "red" "rosewater" "sapphire" "sky" "teal" "yellow" }}
 
 {{/* One entry per identity: "personal" plus one per company (lowercase, no
-     spaces or hyphens). Adding one here is step 3a of docs/new-company.md. */}}
+     spaces or hyphens). Adding one here is step 3a of docs/new-company.md.
+     "ephemeral" is the keyless guest identity: no age key, no ssh key, no git
+     identity, no secrets. Empty "key"/"recipient" means exactly that and is
+     skipped in both loops below. */}}
 {{ $profileMeta := dict
      "personal" (dict
        "key" ".config/age/key.txt"
@@ -20,9 +23,15 @@
      "itcgroup" (dict
        "key" ".config/age/itcgroup-key.txt"
        "recipient" "age1dm6cm48mcsvsw264l702mwfzyhrr74vvcff5dtzj37x2cgy7uu4smuuq7q")
+     "ephemeral" (dict
+       "key" ""
+       "recipient" "")
 }}
-{{/* personal first, then companies alphabetically */}}
-{{ $knownProfiles := concat (list "personal") (sortAlpha (without (keys $profileMeta) "personal")) }}
+{{/* personal first, then companies alphabetically, ephemeral last */}}
+{{ $knownProfiles := concat
+     (list "personal")
+     (sortAlpha (without (keys $profileMeta) "personal" "ephemeral"))
+     (list "ephemeral") }}
 
 {{/* ---------- detect ---------- */}}
 
@@ -122,7 +131,12 @@
 {{/* ---------- derive ---------- */}}
 
 {{ $isPersonal := eq $profile "personal" }}
-{{ $company := ternary "" $profile $isPersonal }}
+{{/* "ephemeral" is neither personal nor work: it is a guest/throwaway box that
+     carries no identity at all, so it must not pull the work package set or
+     the work zsh plugins either. */}}
+{{ $isEphemeral := eq $profile "ephemeral" }}
+{{ $isWork := and (not $isPersonal) (not $isEphemeral) }}
+{{ $company := ternary $profile "" $isWork }}
 {{ $catppuccinFlavor := ternary $catppuccinLightFlavour $catppuccinDarkFlavour (eq $theme "light") }}
 
 {{/* identities: this profile's key, and only if the file actually exists --
@@ -136,24 +150,33 @@
 {{ $recipients := list }}
 {{ range $name := $knownProfiles }}
   {{ $meta := get $profileMeta $name }}
-  {{ $recipients = append $recipients $meta.recipient }}
-  {{ $f := joinPath $.chezmoi.homeDir $meta.key }}
-  {{ if and (eq $name $profile) (lstat $f) }}
-    {{ $identities = append $identities $f }}
+  {{ if $meta.recipient }}
+    {{ $recipients = append $recipients $meta.recipient }}
+  {{ end }}
+  {{ if $meta.key }}
+    {{ $f := joinPath $.chezmoi.homeDir $meta.key }}
+    {{ if and (eq $name $profile) (lstat $f) }}
+      {{ $identities = append $identities $f }}
+    {{ end }}
   {{ end }}
 {{ end }}
 
 {{/* ---------- output ---------- */}}
 
+{{/* Always set, even with no identity: it is what makes chezmoi strip the
+     `encrypted_` attribute and the `.age` suffix when mapping source names to
+     target paths. Unset it and `encrypted_private_dot_npmrc.age` becomes a
+     literal `~/.npmrc.age` that no .chezmoiignore entry matches. */}}
 encryption = "age"
 mode = "file" # file, symlink
-progress = true
+progress = "auto" # "true" forces a progress bar, which needs a TTY and aborts in CI/containers
 
 [data]
 profile = {{ $profile | quote }}
 company = {{ $company | quote }}
-isWork = {{ not $isPersonal }}
+isWork = {{ $isWork }}
 isPersonal = {{ $isPersonal }}
+isEphemeral = {{ $isEphemeral }}
 osId = {{ $osId | quote }}
 osFamily = {{ $osFamily | quote }}
 isWsl = {{ $isWsl }}

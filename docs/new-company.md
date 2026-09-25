@@ -1,6 +1,6 @@
 # Onboarding a new company
 
-Everything company-specific hangs off one lowercase identifier. Pick it first.
+Everything hangs off one lowercase identifier. Pick it first.
 
 ## 0. Choose the identifier
 
@@ -13,9 +13,9 @@ Lowercase, no spaces, hyphens or underscores — Go package naming:
 | Foo-Bar Ltd | `foobar` |
 
 It becomes the profile name, git identity filename, ssh host alias, age key
-filename and secrets filename. Changing it later means touching all of them.
+filename and secrets filename — changing it later touches all of them.
 
-Replace `acmecorp` with your id below.
+`acmecorp` below = your id.
 
 ---
 
@@ -54,11 +54,17 @@ place age keys and recipients are declared (`chezmoi init` runs before
      "acmecorp" (dict
        "key" ".config/age/acmecorp-key.txt"
        "recipient" "age1....")
+     "ephemeral" (dict ...)
 }}
 ```
 
 That one entry gives you the `profile` choice, the identity path and the
 recipient.
+
+> [!NOTE]
+> Leave `ephemeral` alone. It is the keyless guest identity (empty `key` and
+> `recipient`, skipped by both loops) and `$knownProfiles` deliberately sorts
+> it last, after `personal` and the companies.
 
 ## 4. Profile definition
 
@@ -117,7 +123,7 @@ file no key can open aborts the whole `chezmoi apply`, not just that file.
 Company tooling goes in the `work` category of
 `home/.chezmoidata/pkgs/{arch-based,ubuntu-based,fedora}.yml`, installed on any
 machine with *a* company profile. mise tools go directly in
-`home/dot_config/mise/mise.toml.tmpl`, gated with `{{ if .isWork }}`.
+`home/dot_config/mise/config.toml.tmpl`, gated with `{{ if .isWork }}`.
 Split `work` into `work.<id>` only if two companies ever need different sets.
 
 ## 7. Re-init
@@ -159,7 +165,7 @@ git diff --stat
 ```
 
 `re-add` skips `.chezmoitemplates/` — redo those with the helper in the
-[README](../README.md#manually-addsync-encrypted-file-to-template).
+[README](../README.md#-encrypted-files).
 
 ## 9. Back up the keys
 
@@ -174,23 +180,19 @@ A rebuild should need nothing but Bitwarden and this repo.
 
 ## Worth doing
 
-- **A company machine is company-only.** `profile = "acmecorp"` is the whole
-  answer — there is no way to also carry `personal`, and that is the point:
-  no personal ssh key, no personal gpg key, no personal `private/*.zsh`, no
-  personal git identity. Register the company key with GitHub and work from
-  it.
-- **Every repo on the machine commits as this identity.** There is no gitdir
-  scoping any more. For a one-off repo that needs something else, set
+- **A company machine is company-only.** No way to also carry `personal` — that
+  is the point. Register the company key with GitHub and work from it.
+- **Every repo commits as this identity.** No gitdir scoping. One-off override:
   `user.name` / `user.email` in that repo's `.git/config`.
-- **Check company policy** before pushing dotfiles-managed config to company
-  machines, or putting any company secret here — even encrypted. Prefer their
-  secret store and keep only references.
+- **Check company policy** before pushing managed config to company machines, or
+  putting any company secret here — even encrypted. Prefer their secret store,
+  keep only references.
 - **Separate browser profile** for work; `browser-data/` is already dropped on
   non-personal machines.
-- **Don't reuse the personal GPG key.** SSH signing exists so work commits carry
-  a separate, revocable identity.
-- **Set `AWS_PROFILE` / `KUBECONFIG` in the encrypted `acmecorp.zsh`**, not
-  globally, so credentials cannot bleed across profiles.
+- **Don't reuse the personal GPG key** — SSH signing gives work a separate,
+  revocable identity.
+- **`AWS_PROFILE` / `KUBECONFIG` in the encrypted `acmecorp.zsh`**, not globally,
+  so credentials cannot bleed across profiles.
 
 ## Leaving a company
 

@@ -173,6 +173,8 @@
 ; gpg keys are imported by hand — see docs/gpg.md. Nothing here installs one.
 {{- $p := index .profileDefs .profile }}
 
+{{- if $p.gitName }}
+
 [user]
   name = {{ $p.gitName }}
   email = {{ $p.gitEmail }}
@@ -190,6 +192,7 @@
 
 [gpg "ssh"]
   allowedSignersFile = ~/.ssh/allowed_signers
+{{- end }}
 {{- end }}
 
 [commit]
