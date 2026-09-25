@@ -302,11 +302,19 @@ find home -name '*encrypted_*' -o -name '*.age'
 8. Do not commit secrets — `encrypted_` + age, **and** the target path in the
    "SECRETS THAT NEED AN AGE IDENTITY" block. Miss it and a keyless machine
    cannot apply anything at all.
-9. **Never shell out to a tool from a template.** Templates run before the
-   package/mise scripts have touched `$PATH`, and re-render only when the
-   _source_ changes — `{{ output "foo" }}` either aborts the apply or bakes in an
-   empty file forever. Use a `run_after_` script; see
-   `.chezmoiscripts/unix/run_after_90-generate-zsh-completions.sh`.
+9. **A template may not depend on anything the apply itself produces.**
+   - No shelling out: templates run before the package/mise scripts have touched
+     `$PATH`, and re-render only when the _source_ changes, so
+     `{{ output "foo" }}` either aborts the apply or bakes in an empty file
+     forever. Use a `run_after_` script — see
+     `.chezmoiscripts/unix/run_after_90-generate-zsh-completions.sh`.
+   - No `include` of a path under `.chezmoi.homeDir`: externals are fetched
+     *during* apply, so on a fresh machine (and under `--dry-run`) the file is
+     not there yet and the whole apply dies. To re-run a `run_once_` script when
+     a themed external changes, put the **data** in the script
+     (`# theme: {{ .catppuccinFlavor }}`) — `run_once_` keys on script content,
+     so that is enough. `.chezmoiscripts/*/run_once_after_bat-build-cache.*`
+     used to hash the fetched `.tmTheme` and broke exactly this way.
 10. Unix script order: `10` distro packages + the mise **binary** (guarded by
     `command -v mise`, deliberately not a pkgs-YAML `scripts:` entry — that list
     is for one-shot `curl | sh` installers with no idempotency of their own, e.g.
