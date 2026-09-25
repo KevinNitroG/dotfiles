@@ -29,11 +29,10 @@ jobs:
     env:
       # Externals and mise both hammer the GitHub API; the anonymous limit is 60/h.
       GITHUB_TOKEN: ${{ github.token }}
-      MISE_JOBS: "2"
       DEBIAN_FRONTEND: noninteractive
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Stage the checkout as the chezmoi source dir
         run: |
