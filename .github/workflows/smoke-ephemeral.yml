@@ -4,10 +4,6 @@ name: Smoke (ephemeral)
 on:
   schedule:
     - cron: "0 20 * * 2"
-  push:
-    paths:
-      - "home/**"
-      - ".github/workflows/smoke-ephemeral.yml"
   pull_request:
     paths:
       - "home/**"
