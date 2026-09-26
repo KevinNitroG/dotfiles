@@ -37,7 +37,7 @@
     "webfetch": "allow",
   },
   "mcp": {
-    "server": {
+    "servers": {
       "chrome-devtools": {
         "type": "local",
         "command": [
@@ -52,7 +52,7 @@
           "--experimentalScreencast=true",
           "--experimentalDevtools=true",
         ],
-        "enabled": false,
+        "disabled": true,
       },
       "chrome-devtools-isolate": {
         "type": "local",
@@ -69,7 +69,7 @@
           "--experimentalScreencast=true",
           "--experimentalDevtools=true",
         ],
-        "enabled": false,
+        "disabled": true,
       },
       "context7": {
         "type": "remote",
@@ -77,7 +77,7 @@
         "headers": {
           "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}",
         },
-        "enabled": false,
+        "disabled": false,
       },
       "ddg-search": {
         "type": "local",
@@ -88,7 +88,7 @@
           "--",
           "duckduckgo-mcp-server",
         ],
-        "enabled": false,
+        "disabled": true,
       },
       "brave-search": {
         "type": "local",
@@ -102,7 +102,7 @@
         "environment": {
           "BRAVE_SEARCH_API_KEY": "{env:BRAVE_SEARCH_API_KEY}",
         },
-        "enabled": false,
+        "disabled": true,
       },
       "fetch": {
         "type": "local",
@@ -113,7 +113,7 @@
           "--",
           "mcp-fetch-server",
         ],
-        "enabled": false,
+        "disabled": true,
       },
       "filesystem": {
         "type": "local",
@@ -125,12 +125,12 @@
           "mcp-server-filesystem",
           "~/",
         ],
-        "enabled": false,
+        "disabled": true,
       },
       "github": {
         "type": "remote",
         "url": "https://api.githubcopilot.com/mcp/",
-        "enabled": false,
+        "disabled": true,
         "headers": {
           "Authorization": "Bearer {env:GITHUB_TOKEN}",
         },
@@ -144,7 +144,7 @@
           "--",
           "mcp-google-sheets",
         ],
-        "enabled": false,
+        "disabled": true,
         "environment": {
           "CREDENTIALS_PATH": "${HOME}/.config/mcp/mcp-google-sheet/credentials.json",
           "TOKEN_PATH": "${HOME}/.config/mcp/mcp-google-sheet/token.json",
@@ -159,7 +159,7 @@
           "--",
           "mcp-server-kubernetes",
         ],
-        "enabled": false,
+        "disabled": true,
       },
       "memory": {
         "type": "local",
@@ -170,7 +170,7 @@
           "--",
           "server-memory",
         ],
-        "enabled": false,
+        "disabled": true,
       },
       "playwright": {
         "type": "local",
@@ -183,7 +183,7 @@
           "--config",
           "/home/kevinnitro/.config/playwright-mcp.json",
         ],
-        "enabled": false,
+        "disabled": true,
         "environment": {
           "WAYLAND_DISPLAY": "{env:WAYLAND_DISPLAY}",
           "XDG_RUNTIME_DIR": "{env:XDG_RUNTIME_DIR}",
@@ -198,7 +198,7 @@
           "--",
           "server-puppeteer",
         ],
-        "enabled": false,
+        "disabled": true,
       },
       "sequential-thinking": {
         "type": "local",
@@ -209,7 +209,7 @@
           "--",
           "server-sequential-thinking",
         ],
-        "enabled": false,
+        "disabled": true,
       },
       "tavily": {
         "type": "local",
@@ -220,7 +220,7 @@
           "--",
           "tavily-mcp",
         ],
-        "enabled": false,
+        "disabled": true,
         "environment": {
           "TAVILY_API_KEY": "{env:TAVILY_API_KEY}",
         },
@@ -235,7 +235,7 @@
           "mcp-server-time",
           "--local-timezone=Asia/Ho_Chi_Minh",
         ],
-        "enabled": false,
+        "disabled": true,
       },
       "Framelink_Figma_MCP": {
         "type": "local",
@@ -247,7 +247,7 @@
           "figma-developer-mcp",
           "--stdio",
         ],
-        "enabled": false,
+        "disabled": true,
         "environment": {
           "FIGMA_API_KEY": "{env:FIGMA_API_KEY}",
         },
@@ -255,7 +255,7 @@
       "shadcn": {
         "type": "local",
         "command": ["mise", "exec", "npm:shadcn@latest", "--", "shadcn", "mcp"],
-        "enabled": false,
+        "disabled": true,
       },
     },
   },

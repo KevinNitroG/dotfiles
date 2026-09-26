@@ -1,0 +1,8 @@
+{
+  "$schema": "https://opencode.ai/tui.json",
+  "theme": "catppuccin",
+  "plugin": ["oh-my-opencode-slim"],
+  "keybinds": {
+    "mcp_list": "<leader>ctrl+m"
+  }
+}
