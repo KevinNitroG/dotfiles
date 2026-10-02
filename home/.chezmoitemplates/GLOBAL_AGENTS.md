@@ -9,3 +9,5 @@
 
 - Do not write unnecessary/obvious comments for the code can be implied itself
   > We are men, talk less, do more
+- For technologies used, or asked, should prefer searching with websearch or context7 (ctx7) if need
+- If context7 mcp is not available, use `ctx7` cli
