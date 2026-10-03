@@ -1,0 +1,9 @@
+include = ["**/*.toml", "**/.*.toml"]
+exclude = [
+  "**/node_modules/**",
+  "**/.git/**",
+  "**/target/**",
+  "**/.cargo/**",
+  "**/vendor/**",
+  "**/build/**",
+]
