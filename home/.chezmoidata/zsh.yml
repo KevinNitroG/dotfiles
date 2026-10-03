@@ -36,7 +36,7 @@ zsh:
         # - bazel
         # - ruff
         - uv
-        # - uv-env
+        - uv-env
         # - nx-completion
 
         # DEVOPS
@@ -53,6 +53,7 @@ zsh:
 
       work:
         itcgroup:
+          - uv-env # diagrams.mingrammer.com
           - glab
           - dotnet
           - aws
