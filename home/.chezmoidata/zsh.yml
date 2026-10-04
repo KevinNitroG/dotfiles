@@ -25,6 +25,8 @@ zsh:
         - tmuxinator
         - chezmoi
 
+        - python
+
         - npm
         # - zsh-better-npm-completion
       personal:
@@ -36,7 +38,6 @@ zsh:
         # - bazel
         # - ruff
         - uv
-        - uv-env
         # - nx-completion
 
         # DEVOPS
@@ -53,7 +54,6 @@ zsh:
 
       work:
         itcgroup:
-          - uv-env # diagrams.mingrammer.com
           - glab
           - dotnet
           - aws
