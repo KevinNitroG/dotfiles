@@ -3,9 +3,11 @@
 ##########################################
 
 [".oh-my-zsh"]
-type = "git-repo"
-url = "https://github.com/ohmyzsh/ohmyzsh.git"
-{{ .externalGitArgs }}
+type = "archive"
+url = "https://github.com/ohmyzsh/ohmyzsh/archive/master.tar.gz"
+stripComponents = 1
+refreshPeriod = "168h"
+exclude = ["*/.*", "*/templates", "*/themes"]
 
 [".oh-my-zsh/custom/plugins/catppuccin-zsh-syntax-highlighting"]
 type = "git-repo"

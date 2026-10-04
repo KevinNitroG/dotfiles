@@ -35,6 +35,7 @@ plugins=(
 )
 
 [[ -f "$ZSH/oh-my-zsh.sh" ]] && source "$ZSH/oh-my-zsh.sh"
+# oh-my-zsh.sh has already run compinit (dump: $ZSH_COMPDUMP), do not run it again
 
 _catppuccin_zsh_syntax_highlighting_zsh="$ZSH/custom/plugins/catppuccin-zsh-syntax-highlighting/themes/catppuccin_${CATPPUCCIN_FLAVOR:-mocha}-zsh-syntax-highlighting.zsh"
 if [[ -f "$_catppuccin_zsh_syntax_highlighting_zsh" ]]; then
@@ -53,21 +54,7 @@ unset _conf
 
 ##########################################
 
-# COMPLETION INIT (last — after every fpath entry and compdef is in place)
-
-mkdir -p "${XDG_CACHE_HOME}/zsh"
-autoload -Uz compinit && compinit -d "${XDG_CACHE_HOME}/zsh/zcompdump"
-autoload -Uz bashcompinit && bashcompinit
-
-if (( $+commands[az] )); then
-  _az_completion="${commands[az]:A:h}/az.completion.sh"
-  [[ -r "$_az_completion" ]] && source "$_az_completion"
-  unset _az_completion
-fi
-
-# if (( $+commands[aws_completer] )); then
-#   complete -C "$(command -v aws_completer)" aws
-# fi
+# COMPLETIONS
 
 # if [[ -f "$XDG_CONFIG_HOME/.dart-cli-completion/zsh-config.zsh" ]]; then
 #   source "$XDG_CONFIG_HOME/.dart-cli-completion/zsh-config.zsh"
