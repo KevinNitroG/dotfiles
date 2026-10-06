@@ -1,0 +1,27 @@
+skills:
+  # https://github.com/vercel-labs/skills#supported-agents
+  # https://github.com/vercel-labs/skills/blob/main/src/agents.ts
+  agents:
+    - amp
+    - claude-code
+    - cline
+    - codex
+    - cursor
+    - gemini-cli
+    - github-copilot
+    - kimi-code-cli
+    - opencode
+  # source: GitHub owner/repo (https://github.com/<source>)
+  # name:   optional skill name (omit to install every skill in the source)
+  # agents: optional, replaces the default list above for this entry
+  skillsCli:
+    - source: vercel-labs/skills
+      name: find-skills
+    - source: vercel-labs/agent-browser
+      name: agent-browser
+    - source: anthropics/skills
+      name: skill-creator
+    - source: juliusbrussee/caveman
+      name: caveman
+    - source: mattpocock/skills
+      name: grilling

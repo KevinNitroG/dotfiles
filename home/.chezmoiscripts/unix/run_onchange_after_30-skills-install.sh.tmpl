@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+set -uo pipefail
+
+export PATH="$HOME/.local/bin:${XDG_DATA_HOME:-$HOME/.local/share}/mise/shims:$PATH"
+
+if ! command -v skills >/dev/null 2>&1; then
+  echo 'skills cli not found; skipping agent skills install'
+  echo '  install it with: mise install'
+  exit 0
+fi
+
+failed=0
+
+add_skill() {
+  local source="$1" name="$2"
+  shift 2
+  local args=(-g -y)
+  local agent
+  for agent in "$@"; do
+    args+=(-a "$agent")
+  done
+  if [ -n "$name" ]; then
+    echo "INSTALLING SKILL $name FROM $source..."
+    skills add "$source" --skill "$name" "${args[@]}" || failed=1
+  else
+    echo "INSTALLING ALL SKILLS FROM $source..."
+    skills add "$source" --skill '*' "${args[@]}" || failed=1
+  fi
+}
+
+{{ range .skills.skillsCli -}}
+add_skill {{ .source | quote }} {{ index . "name" | default "" | quote }}{{ range (index . "agents" | default $.skills.agents) }} {{ . | quote }}{{ end }}
+{{ end }}
+if [ "$failed" -ne 0 ]; then
+  echo
+  echo '  !! some skills failed to install; this does NOT fail the apply.'
+  echo '     Re-run them later with:'
+  echo '       chezmoi state delete-bucket --bucket=scriptState && chezmoi apply'
+fi
+
+exit 0
