@@ -50,10 +50,15 @@ antigravity-cli = "latest"
 "github:rtk-ai/rtk" = "latest"
 "github:dlvhdr/gh-dash" = "latest"
 "github:rustfs/cli" = "latest"
+neovim = "latest"
 
 {{- if eq .profile "itcgroup" }}
 aws-cli = { version = "latest", symlink_bins = "true" }
 azure = { version = "latest", dependency_prereleases = "allow", with = ["pip"] }
+"github:matsest/lazyazure" = "latest"
+checkov = "latest"
+tflint = "latest"
+trivy = "latest"
 {{- end }}
 
 {{- if .isPersonal }}
