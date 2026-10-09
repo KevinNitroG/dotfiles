@@ -368,6 +368,7 @@ AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/**
 {{ range $name, $def := .profileDefs }}
 {{ if ne $name $.profile }}
 .config/zsh/private/{{ $name }}.zsh
+.config/mise/conf.d/20-{{ $name }}.toml
 {{ if $def.sshKey }}.ssh/{{ base $def.sshKey }}.pub{{ end }}
 {{ end }}
 {{ end }}
@@ -379,6 +380,14 @@ AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/**
 .config/gh/hosts.yml
 AppData/Roaming/GitHub CLI/hosts.yml
 .ssh/authorized_keys
+{{ end }}
+
+{{ if ne .osFamily "ubuntu" }}
+.config/mise/conf.d/10-ubuntu.toml
+{{ end }}
+
+{{ if ne .osFamily "fedora" }}
+.config/mise/conf.d/10-fedora.toml
 {{ end }}
 
 ##########################################

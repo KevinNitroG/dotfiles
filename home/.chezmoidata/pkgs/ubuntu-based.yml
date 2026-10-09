@@ -21,8 +21,8 @@
 #
 # Categories: common (always), personal, work, laptop.
 #
-# Anything with no apt package comes from mise instead — see the
-# `{{ if eq .osFamily "ubuntu" }}` block in home/dot_config/mise/mise.toml.tmpl.
+# Anything with no apt package comes from mise instead — see
+# home/dot_config/mise/conf.d/10-ubuntu.toml.tmpl.
 #
 # See home/.chezmoiscripts/linux/run_once_before_10-install-pkgs-ubuntu-based.sh.tmpl
 

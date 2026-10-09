@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# mise.toml hash: {{ include "dot_config/mise/config.toml.tmpl" | sha256sum }}
-
 set -uo pipefail
 
 export PATH="$HOME/.local/bin:${XDG_DATA_HOME:-$HOME/.local/share}/mise/shims:$PATH"
@@ -18,14 +16,12 @@ if [ -z "${GITHUB_TOKEN:-}" ] && [ -z "${MISE_GITHUB_TOKEN:-}" ]; then
 fi
 
 echo 'INSTALLING MISE TOOLS...'
-if ! mise install --yes; then
+if ! mise i --yes; then
   echo
   echo '  !! some mise tools failed to install; this does NOT fail the apply.'
   echo '     Most often this is the anonymous GitHub API limit (60 req/hour).'
   echo '     Finish them later with:'
   echo '       export GITHUB_TOKEN=$(gh auth token)   # or a PAT'
-  echo '       mise install --yes'
+  echo '       mise i --yes'
 fi
 mise reshim >/dev/null 2>&1 || true
-
-exit 0

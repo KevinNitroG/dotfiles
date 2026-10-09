@@ -1,0 +1,40 @@
+[tools]
+# dnf HAS yq (mikefarah), helm, uv and astroterm, so those are deliberately
+# absent here; kubectl comes from the upstream Kubernetes repo. Everything
+# below has no Fedora package at all.
+usage = "latest" # mise completions
+kubectl = "latest" # dnf only ships versioned kubernetesN.NN-client
+flux2 = "latest"
+sops = "latest"
+bun = "latest"
+kubecolor = "latest"
+xh = "latest"
+dust = "latest"
+jqp = "latest"
+"aqua:dalance/procs" = "latest" # no short registry name
+"gem:tmuxinator" = "latest"
+"github:jesseduffield/lazydocker" = "latest"
+"github:mr-karan/doggo" = "latest"
+"github:dlvhdr/diffnav" = "latest"
+"htmlq" = "latest"
+"websocat" = "latest"
+"npm:@ast-grep/cli" = "latest"
+"npm:@mermaid-js/mermaid-cli" = "latest"
+"npm:@opencode/cli" = { version = "latest", allow_builds = true }
+"npm:@anthropic-ai/claude-code" = { version = "latest", allow_builds = true }
+antigravity-cli = "latest"
+"pipx:markitdown" = "latest"
+"aqua:zaghaghi/openapi-tui" = "latest" # no short registry name
+"github:jonas-grgt/ktea" = "latest"
+"github:jorgerojas26/lazysql" = "latest"
+"github:rtk-ai/rtk" = "latest"
+"github:dlvhdr/gh-dash" = "latest"
+"github:rustfs/cli" = "latest"
+
+[tools."github:vercel-labs/agent-browser"]
+version = "latest"
+rename_exe = "agent-browser"
+
+[tools."github:dlvhdr/gh-enhance"]
+version = "latest"
+rename_exe = "gh-enhance"

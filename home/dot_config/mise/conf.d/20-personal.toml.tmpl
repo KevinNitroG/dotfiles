@@ -1,0 +1,8 @@
+[tools]
+"pipx:codecov-cli" = "latest"
+{{- if or (eq .osFamily "ubuntu") (eq .osFamily "fedora") }}
+"github:nickvanw/qbittorrent-tui" = "latest"
+{{- end }}
+{{- if eq .osFamily "ubuntu" }}
+"github:da-luce/astroterm" = "latest"
+{{- end }}

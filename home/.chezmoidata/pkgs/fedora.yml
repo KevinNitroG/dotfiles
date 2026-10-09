@@ -27,8 +27,8 @@
 #
 # Categories: common (always), personal, work, laptop.
 #
-# Anything with no dnf package comes from mise instead — see the
-# `{{ if eq .osFamily "fedora" }}` block in home/dot_config/mise/mise.toml.tmpl.
+# Anything with no dnf package comes from mise instead — see
+# home/dot_config/mise/conf.d/10-fedora.toml.tmpl.
 #
 # Naming notes (Fedora differs from BOTH Arch and Ubuntu):
 #   - fd-find ships /usr/bin/fd and bat ships /usr/bin/bat, so unlike Debian
