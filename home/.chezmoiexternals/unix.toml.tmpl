@@ -1,7 +1,5 @@
 {{ if eq .chezmoi.os "linux" "darwin" }}
 
-##########################################
-
 [".config/tmux/plugins/tpm"]
 type = "git-repo"
 url = "https://github.com/tmux-plugins/tpm"
@@ -35,8 +33,6 @@ url = "https://raw.githubusercontent.com/neomutt/neomutt/refs/heads/main/contrib
 [".config/neomutt/themes/catppuccin{{ if eq .catppuccinFlavor "latte" }}-latte{{ end }}.muttrc"]
 type = "file"
 url = "https://raw.githubusercontent.com/catppuccin/neomutt/refs/heads/main/{{ if eq .catppuccinFlavor "latte" }}latte-{{ end }}neomuttrc"
-
-##########################################
 
 {{ end }}
 
