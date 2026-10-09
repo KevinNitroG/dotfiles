@@ -154,10 +154,9 @@ pkgs:
         # - zed
 
         # Fonts
-        - maplemono-nf
+        - maplemono-nf-cn-unhinted
         - noto-fonts-emoji
         - ttf-google-sans
-        - ttf-jetbrains-mono-nerd
         - ttf-nerd-fonts-symbols
 
         # Clipboard (neovim "+" register, yazi clipboard support)

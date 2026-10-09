@@ -2,3 +2,7 @@
 
 [core]
 output = table
+collect_telemetry = no
+
+[extension]
+dynamic_install_allow_preview=true

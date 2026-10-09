@@ -30,7 +30,7 @@ pkgs:
         - main/mise
 
         # Fonts
-        - nerd-fonts/JetBrainsMono-NF
+        - nerd-fonts/Maple-Mono-NF-CN
         - nerd-fonts/Noto-NF
 
         # Completion

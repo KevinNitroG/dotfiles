@@ -189,7 +189,6 @@ pkgs:
 
         # Fonts
         - google-noto-color-emoji-fonts
-        - jetbrains-mono-fonts
 
         # Clipboard (neovim "+" register, yazi clipboard support)
         - wl-clipboard

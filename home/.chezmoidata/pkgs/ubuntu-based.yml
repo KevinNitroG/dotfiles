@@ -159,7 +159,6 @@ pkgs:
         - kitty
 
         # Fonts
-        - fonts-jetbrains-mono
         - fonts-noto-color-emoji
 
         # Clipboard (neovim "+" register, yazi clipboard support)

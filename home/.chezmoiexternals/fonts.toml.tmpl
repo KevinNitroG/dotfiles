@@ -1,0 +1,20 @@
+{{ if .isGui }}
+{{ $fontDir := ".fonts" }}
+{{ if eq .osId "windows" }}
+{{ $fontDir = "AppData/Local/Microsoft/Windows/Fonts" }}
+{{ else if eq .chezmoi.os "darwin" }}
+{{ $fontDir = "Library/Fonts" }}
+{{ end }}
+[vnf_futura]
+type = "file"
+url = "https://github.com/devntd/hoayeu/raw/refs/heads/master/fonts/font-web/VNF-Futura-Regular.ttf"
+targetPath = "{{ $fontDir }}/VNF-Futura Regular.ttf"
+[maple_mono_nf_cn]
+type = "archive"
+url = "https://github.com/subframe7536/maple-font/releases/download/v7.9/MapleMono-NF-CN-unhinted.zip"
+include = ["*.ttf"]
+targetPath = "{{ $fontDir }}"
+[maple_mono_nf_cn.checksum]
+sha256 = "ab88522932cf4015dffeaef6dedc59a22a5fefecdcc6e583d9fcd997da5b7cac"
+size = 158916064
+{{ end }}

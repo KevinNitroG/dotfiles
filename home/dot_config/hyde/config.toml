@@ -10,7 +10,7 @@ browser = "brave"
 editor = "nvim"
 # font_size = 11
 font = "Google Sans"
-monospace_font = "JetBrainsMono Nerd Font"
+monospace_font = "Maple Mono NF CN"
 # monospace_font_size = 11
 
 [rofi]
