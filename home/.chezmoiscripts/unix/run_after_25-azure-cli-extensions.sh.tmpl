@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+export PATH="$HOME/.local/bin:${XDG_DATA_HOME:-$HOME/.local/share}/mise/shims:$PATH"
+
+if ! command -v az >/dev/null 2>&1; then
+  echo 'az cli not found; skipping azure cli extension install'
+  exit 0
+fi
+
+{{ range .azure.cliExtensions }}
+az extension add \
+  --upgrade \
+  --yes \
+  {{ if index . "allowPreview" | default false }}--allow-preview \
+  {{ end }}--name {{ .name | quote }}
+{{ end }}

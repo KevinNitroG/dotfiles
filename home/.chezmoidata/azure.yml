@@ -1,0 +1,7 @@
+azure:
+  cliExtensions:
+    - name: containerapp
+      allowPreview: true
+    - name: acr
+    - name: bicep
+    - name: ai
