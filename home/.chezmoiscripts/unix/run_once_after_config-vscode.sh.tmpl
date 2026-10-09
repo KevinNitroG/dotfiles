@@ -1,10 +1,17 @@
-{{ if lookPath "code" -}}
 #!/usr/bin/env bash
 
 set -eufo pipefail
+export PATH="$HOME/.local/bin:${XDG_DATA_HOME:-$HOME/.local/share}/mise/shims:$PATH"
 
-{{ range .vscode.extensions -}}
-code --install-extension --force {{ . }} || echo "vscode: failed to install {{ . }}" >&2
-{{ end -}}
+if command -v code >/dev/null 2>&1; then
+  bin=$(command -v code || command -v code-insiders || command -v codium)
+fi
 
-{{ end -}}
+if [ -n "$bin" ]; then
+  echo "Using VSCode binary: $bin"
+else
+  echo "No VSCode binary found; skipping extension install"
+  exit 0
+fi
+
+$bin --force {{ range .vscode.extensions }}--install-extension {{ . | quote }} {{ end }}
