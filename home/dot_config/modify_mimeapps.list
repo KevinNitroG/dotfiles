@@ -1,4 +1,0 @@
-#!/usr/bin/env chezmoi_modify_manager
-
-source auto
-ignore section "Added Associations"
