@@ -1,0 +1,25 @@
+claudeCli:
+  marketplaces:
+    - anthropics/claude-plugins-official
+    - https://github.com/wakatime/claude-code-wakatime.git
+    - matcra587/claude-themes
+  plugins:
+    - gopls-lsp@claude-plugins-official
+    - typescript-lsp@claude-plugins-official
+    - pyright-lsp@claude-plugins-official
+    - claude-code-wakatime@wakatime
+    - catppuccin@claude-themes
+  statusline:
+    modelColors:
+      fable: mauve
+      opus: peach
+      sonnet: blue
+      haiku: green
+      unknown: red
+    effortColors:
+      low: sky
+      medium: green
+      high: yellow
+      xhigh: peach
+      max: pink
+      unknown: overlay1
