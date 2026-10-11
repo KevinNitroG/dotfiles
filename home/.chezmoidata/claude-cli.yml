@@ -17,9 +17,9 @@ claudeCli:
       haiku: green
       unknown: red
     effortColors:
-      low: sky
+      low: yellow
       medium: green
-      high: yellow
-      xhigh: peach
+      high: blue
+      xhigh: pink
       max: pink
-      unknown: overlay1
+      unknown: red

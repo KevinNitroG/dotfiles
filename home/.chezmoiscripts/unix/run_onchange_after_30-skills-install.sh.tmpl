@@ -6,8 +6,9 @@ export PATH="$HOME/.local/bin:${XDG_DATA_HOME:-$HOME/.local/share}/mise/shims:$P
 
 if ! command -v skills >/dev/null 2>&1; then
   echo 'skills cli not found; skipping agent skills install'
-  echo '  install it with: mise install'
   exit 0
+else
+  echo 'skills cli found; proceeding with agent skills install'
 fi
 
 failed=0
@@ -34,9 +35,7 @@ add_skill {{ .source | quote }} {{ index . "name" | default "" | quote }}{{ rang
 {{ end }}
 if [ "$failed" -ne 0 ]; then
   echo
-  echo '  !! some skills failed to install; this does NOT fail the apply.'
-  echo '     Re-run them later with:'
-  echo '       chezmoi state delete-bucket --bucket=scriptState && chezmoi apply'
+  echo 'Some skills failed to install'
 fi
 
 exit 0

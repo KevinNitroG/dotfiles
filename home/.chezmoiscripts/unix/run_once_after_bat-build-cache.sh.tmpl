@@ -3,7 +3,10 @@
 # theme: {{ .catppuccinFlavor }}
 
 if ! command -v bat &>/dev/null; then
-  exit
+  echo "bat not found; skipping cache build"
+  exit 0
+else
+  echo "bat found; proceeding with cache build"
 fi
 
 echo "BUILDING BAT CACHE..."

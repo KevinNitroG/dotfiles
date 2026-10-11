@@ -6,8 +6,9 @@ export PATH="$HOME/.local/bin:${XDG_DATA_HOME:-$HOME/.local/share}/mise/shims:$P
 
 if ! command -v claude >/dev/null 2>&1; then
   echo 'claude cli not found; skipping plugin setup'
-  echo '  install it with: mise install'
   exit 0
+else
+  echo 'claude cli found; proceeding with plugin setup'
 fi
 
 failed=0
@@ -22,9 +23,7 @@ claude plugin install -y {{ . | quote }} || failed=1
 {{ end }}
 if [ "$failed" -ne 0 ]; then
   echo
-  echo '  !! some claude marketplaces/plugins failed; this does NOT fail the apply.'
-  echo '     Re-run them later with:'
-  echo '       chezmoi state delete-bucket --bucket=scriptState && chezmoi apply'
+  echo 'Some claude marketplaces/plugins failed.'
 fi
 
 exit 0

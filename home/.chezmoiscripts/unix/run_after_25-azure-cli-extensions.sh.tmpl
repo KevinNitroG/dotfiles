@@ -7,6 +7,8 @@ export PATH="$HOME/.local/bin:${XDG_DATA_HOME:-$HOME/.local/share}/mise/shims:$P
 if ! command -v az >/dev/null 2>&1; then
   echo 'az cli not found; skipping azure cli extension install'
   exit 0
+else
+  echo 'az cli found; proceeding with azure cli extension install'
 fi
 
 {{ range .azure.cliExtensions }}
