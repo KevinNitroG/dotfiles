@@ -1,7 +1,357 @@
 azure:
   cliExtensions:
+    # az extension list-available
     - name: containerapp
       allowPreview: true
-    - name: acr
-    - name: bicep
-    - name: ai
+    # - name: acat # Microsoft Azure Command-Line Tools Acat Extension.
+    #   allowPreview: true
+    # - name: account # Microsoft Azure Command-Line Tools SubscriptionClient Extension
+    # - name: acrcssc # Microsoft Azure Container Registry Container Secure Supply Chain (CSSC) Extension
+    #   allowPreview: true
+    # - name: acrquery # Microsoft Azure Command-Line Tools AcrQuery Extension
+    #   allowPreview: true
+    # - name: acrtransfer # Microsoft Azure Command-Line Tools Acrtransfer Extension
+    # - name: ad # Microsoft Azure Command-Line Tools DomainServicesResourceProvider Extension
+    # - name: aem # Manage Azure Enhanced Monitoring Extensions for SAP
+    # - name: ai-examples # Add AI powered examples to help content.
+    #   allowPreview: true
+    # - name: aimanager # Manage AI Manager resources, namespaces, and GPU-backed model deployments for Azure Kubernetes Service (AKS).
+    #   allowPreview: true
+    # - name: aks-agent # Provides an interactive AI-powered debugging tool for AKS
+    #   allowPreview: true
+    # - name: aks-preview # Provides a preview for upcoming AKS features
+    #   allowPreview: true
+    # - name: aksarc # Microsoft Azure Command-Line Tools HybridContainerService Extension
+    #   allowPreview: true
+    # - name: alb # Microsoft Azure Command-Line Tools ALB Extension.
+    #   allowPreview: true
+    # - name: alertsmanagement # Microsoft Azure Command-Line Tools AlertsManagementClient Extension
+    #   allowPreview: true
+    # - name: alias # Support for command aliases
+    #   allowPreview: true
+    # - name: amg # Microsoft Azure Command-Line Tools Azure Managed Grafana Extension
+    # - name: amlfs # Microsoft Azure Command-Line Tools Amlfs Extension.
+    # - name: aosm # Microsoft Azure Command-Line Tools Aosm Extension
+    #   allowPreview: true
+    # - name: apic-extension # Microsoft Azure Command-Line Tools ApicExtension Extension.
+    #   allowPreview: true
+    # - name: application-insights # Support for managing Application Insights components and querying metrics, events, and logs from such components.
+    #   allowPreview: true
+    # - name: appnet-preview # Azure CLI commands for working with Azure Kubernetes Application Network resources.
+    #   allowPreview: true
+    # - name: apr # Manage Azure Package Registry resources, repositories, packages, publications, and tasks.
+    #   allowPreview: true
+    # - name: arcappliance # Microsoft Azure Command-Line Tools Arcappliance Extension
+    # - name: arcdata # Tools for managing ArcData.
+    # - name: arcgateway # Microsoft Azure Command-Line Tools Arcgateway Extension.
+    #   allowPreview: true
+    # - name: aro # Microsoft Azure Command-Line Tools ARO Extension
+    #   allowPreview: true
+    # - name: artifact-signing # Microsoft Azure Command-Line Tools Artifact Signing Extension.
+    #   allowPreview: true
+    # - name: attestation # Microsoft Azure Command-Line Tools AttestationManagementClient Extension
+    #   allowPreview: true
+    # - name: authV2 # Microsoft Azure Command-Line Tools Authv2 Extension
+    # - name: automanage # Microsoft Azure Command-Line Tools Automanage Extension.
+    #   allowPreview: true
+    # - name: automation # Microsoft Azure Command-Line Tools AutomationClient Extension
+    #   allowPreview: true
+    # - name: azure-changesafety # Microsoft Azure Command-Line Tools ChangeSafety Extension.
+    #   allowPreview: true
+    # - name: azure-cli-ml # Microsoft Azure Command-Line Tools AzureML Command Module
+    # - name: azure-devops # Tools for managing Azure DevOps.
+    # - name: azure-firewall # Manage Azure Firewall resources.
+    # - name: azure-iot # The Azure IoT extension for Azure CLI.
+    #   allowPreview: true
+    # - name: azure-iot-ops # The Azure IoT Operations extension for Azure CLI.
+    # - name: azure-sphere # The Azure Sphere extension for Azure CLI.
+    # - name: azurelargeinstance # Microsoft Azure Command-Line Tools Azurelargeinstance Extension.
+    #   allowPreview: true
+    # - name: baremetal-infrastructure # Microsoft Azure Command-Line Tools BaremetalInfrastructure Extension.
+    #   allowPreview: true
+    # - name: bastion # Microsoft Azure Command-Line Tools Bastion Extension.
+    # - name: billing-benefits # Microsoft Azure Command-Line Tools BillingBenefits Extension.
+    #   allowPreview: true
+    # - name: blueprint # Microsoft Azure Command-Line Tools Blueprint Extension
+    #   allowPreview: true
+    # - name: carbon # Microsoft Azure Command-Line Tools Carbon Extension.
+    #   allowPreview: true
+    # - name: cdn # Microsoft Azure Command-Line Tools CDN and AFD Extension
+    #   allowPreview: true
+    # - name: change-analysis # Microsoft Azure Command-Line Tools ChangeAnalysis Extension.
+    #   allowPreview: true
+    # - name: chaos # Support for Azure Chaos Studio v2 workspaces, scenario configuration, and fault-injection run management.
+    #   allowPreview: true
+    # - name: cli-translator # Translate ARM template to executable Azure CLI scripts.
+    #   allowPreview: true
+    # - name: cloud-service # Microsoft Azure Command-Line Tools ComputeManagementClient Extension
+    # - name: cloudhsm # Microsoft Azure Command-Line Tools Cloudhsm Extension.
+    #   allowPreview: true
+    # - name: command-change # Microsoft Azure Command-Line Tools CommandChange Extension.
+    #   allowPreview: true
+    # - name: communication # Microsoft Azure Command-Line Tools CommunicationServiceManagementClient Extension
+    # - name: computelimit # Microsoft Azure Command-Line Tools Computelimit Extension.
+    # - name: computeschedule # Microsoft Azure Command-Line Tools Computeschedule Extension.
+    #   allowPreview: true
+    # - name: confcom # Microsoft Azure Command-Line Tools Confidential Container Security Policy Generator Extension
+    # - name: confidentialledger # Microsoft Azure Command-Line Tools ConfidentialLedger Extension
+    # - name: confluent # Microsoft Azure Command-Line Tools ConfluentManagementClient Extension
+    # - name: connectedk8s # Microsoft Azure Command-Line Tools Connectedk8s Extension
+    # - name: connectedmachine # Microsoft Azure Command-Line Tools ConnectedMachine Extension
+    # - name: connectedvmware # Microsoft Azure Command-Line Tools Connectedvmware Extension
+    # - name: content-understanding # Azure CLI extension for Azure Content Understanding.
+    #   allowPreview: true
+    # - name: cosmosdb-preview # Microsoft Azure Command-Line Tools Cosmosdb-preview Extension
+    # - name: costmanagement # Microsoft Azure Command-Line Tools CostManagementClient Extension
+    # - name: custom-providers # Microsoft Azure Command-Line Tools Custom Providers Extension
+    #   allowPreview: true
+    # - name: customlocation # Microsoft Azure Command-Line Tools Customlocation Extension
+    # - name: data-transfer # Microsoft Azure Command-Line Tools DataTransfer Extension.
+    #   allowPreview: true
+    # - name: databox # Microsoft Azure Command-Line Tools Databox Extension.
+    # - name: databricks # Microsoft Azure Command-Line Tools DatabricksClient Extension
+    # - name: datadog # Microsoft Azure Command-Line Tools Datadog Extension.
+    #   allowPreview: true
+    # - name: datafactory # Microsoft Azure Command-Line Tools DataFactoryManagementClient Extension
+    # - name: datamigration # Microsoft Azure Command-Line Tools DataMigrationManagementClient Extension
+    # - name: dataprotection # Microsoft Azure Command-Line Tools DataProtectionClient Extension
+    # - name: datashare # Microsoft Azure Command-Line Tools DataShareManagementClient Extension
+    #   allowPreview: true
+    # - name: dell # Support for managing Dell.Storage filesystem resources.
+    #   allowPreview: true
+    # - name: dependency-map # Microsoft Azure Command-Line Tools DependencyMap Extension.
+    #   allowPreview: true
+    # - name: deploy-to-azure # Deploy to Azure using Github Actions.
+    #   allowPreview: true
+    # - name: desktopvirtualization # Microsoft Azure Command-Line Tools Desktopvirtualization Extension.
+    # - name: dev-spaces # Dev Spaces provides a rapid, iterative Kubernetes development experience for teams.
+    # - name: devcenter # Microsoft Azure Command-Line Tools DevCenter Extension
+    # - name: discovery # Commands for managing Microsoft Discovery resources including bookshelves, workspaces, supercomputers, and tools.
+    # - name: diskpool # Microsoft Azure Command-Line Tools StoragePoolManagement Extension
+    #   allowPreview: true
+    # - name: dms-preview # Support for new Database Migration Service scenarios.
+    #   allowPreview: true
+    # - name: dnc # Microsoft Azure Command-Line Tools Dnc Extension.
+    #   allowPreview: true
+    # - name: dns-resolver # Microsoft Azure Command-Line Tools DnsResolverManagementClient Extension
+    # - name: documentdb # Microsoft Azure Command-Line Tools Documentdb Extension.
+    #   allowPreview: true
+    # - name: durabletask # Microsoft Azure Command-Line Tools Durabletask Extension.
+    #   allowPreview: true
+    # - name: dynatrace # Microsoft Azure Command-Line Tools Dynatrace Extension.
+    # - name: edge-action # Microsoft Azure Command-Line Tools Extension for Azure Front Door Edge Actions
+    #   allowPreview: true
+    # - name: edgeoperator # Microsoft Azure Command-Line Tools ALDO Extension
+    #   allowPreview: true
+    # - name: edgeorder # Microsoft Azure Command-Line Tools EdgeOrderManagementClient Extension
+    #   allowPreview: true
+    # - name: edgezones # Microsoft Azure Command-Line Tools Edgezones Extension.
+    #   allowPreview: true
+    # - name: elastic # Microsoft Azure Command-Line Tools MicrosoftElastic Extension
+    #   allowPreview: true
+    # - name: elastic-san # Microsoft Azure Command-Line Tools ElasticSan Extension.
+    # - name: eventgrid # Microsoft Azure Command-Line Tools EventGrid Command Module.
+    #   allowPreview: true
+    # - name: express-route-cross-connection # Microsoft Azure Command-Line Tools ExpressRouteCrossConnection Extension.
+    # - name: fileshare # Microsoft Azure Command-Line Tools Fileshare Extension.
+    # - name: firmwareanalysis # Microsoft Azure Command-Line Tools Firmwareanalysis Extension.
+    # - name: fleet # Microsoft Azure Command-Line Tools Fleet Extension
+    # - name: fluid-relay # Microsoft Azure Command-Line Tools FluidRelay Extension.
+    # - name: footprint # Microsoft Azure Command-Line Tools FootprintMonitoringManagementClient Extension
+    #   allowPreview: true
+    # - name: foundry-cost-control # Microsoft Azure Command-Line Tools -- Foundry Cost Control Extension.
+    #   allowPreview: true
+    # - name: front-door # Manage networking Front Doors.
+    # - name: functionapp # Additional commands for Azure Functions.
+    #   allowPreview: true
+    # - name: fzf # Microsoft Azure Command-Line Tools fzf Extension
+    #   allowPreview: true
+    # - name: gallery-service-artifact # Microsoft Azure Command-Line Tools GalleryServiceArtifact Extension.
+    #   allowPreview: true
+    # - name: graphservices # Microsoft Azure Command-Line Tools Graphservices Extension.
+    #   allowPreview: true
+    # - name: guestconfig # Microsoft Azure Command-Line Tools GuestConfigurationClient Extension
+    #   allowPreview: true
+    # - name: hack # Microsoft Azure Command-Line Tools Hack Extension
+    #   allowPreview: true
+    # - name: hardware-security-modules # Microsoft Azure Command-Line Tools AzureDedicatedHSMResourceProvider Extension
+    #   allowPreview: true
+    # - name: health-models # Support for managing Azure Monitor health models, including entities, signals, relationships, authentication settings, and discovery rules.
+    #   allowPreview: true
+    # - name: healthbot # Microsoft Azure Command-Line Tools HealthbotClient Extension
+    # - name: healthcareapis # Microsoft Azure Command-Line Tools HealthcareApisManagementClient Extension
+    # - name: horizondb # Microsoft Azure Command-Line Tools HorizonDB Extension
+    #   allowPreview: true
+    # - name: hpc-cache # Microsoft Azure Command-Line Tools StorageCache Extension
+    # - name: image-copy-extension # Support for copying managed vm images between regions
+    # - name: image-gallery # Support for Azure Image Gallery
+    #   allowPreview: true
+    # - name: import-export # Microsoft Azure Command-Line Tools StorageImportExport Extension
+    #   allowPreview: true
+    # - name: informatica # Microsoft Azure Command-Line Tools Informatica Extension.
+    #   allowPreview: true
+    # - name: init # Microsoft Azure Command-Line Tools Init Extension
+    #   allowPreview: true
+    # - name: interactive # Microsoft Azure Command-Line Interactive Shell
+    #   allowPreview: true
+    # - name: interconnect # Microsoft Azure Command-Line Tools Interconnect Extension.
+    #   allowPreview: true
+    # - name: internet-analyzer # Microsoft Azure Command-Line Tools Internet Analyzer Extension
+    #   allowPreview: true
+    # - name: ip-group # Microsoft Azure Command-Line Tools IpGroup Extension
+    # - name: k8s-configuration # Microsoft Azure Command-Line Tools K8s-configuration Extension
+    # - name: k8s-extension # Microsoft Azure Command-Line Tools K8s-extension Extension
+    # - name: k8s-runtime # Microsoft Azure Command-Line Tools K8sRuntime Extension.
+    # - name: keyvault-preview # Microsoft Azure Command-Line Tools Keyvault-preview Extension
+    #   allowPreview: true
+    # - name: kusto # Microsoft Azure Command-Line Tools KustoManagementClient Extension
+    # - name: load # Microsoft Azure Command-Line Tools Load Testing Extension.
+    # - name: log-analytics # Support for Azure Log Analytics query capabilities.
+    #   allowPreview: true
+    # - name: log-analytics-solution # Support for Azure Log Analytics Solution
+    # - name: logic # Microsoft Azure Command-Line Tools Logic Extension.
+    # - name: maintenance # Microsoft Azure Command-Line Tools MaintenanceManagementClient Extension
+    #   allowPreview: true
+    # - name: managedccfs # Microsoft Azure Command-Line Tools Managedccfs Extension.
+    #   allowPreview: true
+    # - name: managedcleanroom # Microsoft Azure Command-Line Tools Managedcleanroom Extension.
+    #   allowPreview: true
+    # - name: managednetworkfabric # Support for managednetworkfabric commands based on 2026-01-15-preview API version.
+    #   allowPreview: true
+    # - name: managementpartner # Support for Management Partner preview
+    # - name: mcc # Microsoft Connected Cache CLI Commands.
+    #   allowPreview: true
+    # - name: mdp # Microsoft Azure Command-Line Tools Mdp Extension.
+    # - name: mesh # Support for Microsoft Azure Service Fabric Mesh - Public Preview
+    #   allowPreview: true
+    # - name: microsoft-fabric # Microsoft Azure Command-Line Tools Microsoft Fabric Extension.
+    #   allowPreview: true
+    # - name: migrate # Support for Azure Migrate preview
+    #   allowPreview: true
+    # - name: mission # Microsoft Azure Command-Line Tools Mission Extension.
+    # - name: mixed-reality # Mixed Reality Azure CLI Extension.
+    #   allowPreview: true
+    # - name: ml # Microsoft Azure Command-Line Tools AzureMachineLearningWorkspaces Extension
+    # - name: mongo-db # Microsoft Azure Command-Line Tools MongoDb Extension.
+    #   allowPreview: true
+    # - name: monitor-control-service # Microsoft Azure Command-Line Tools MonitorClient Extension
+    # - name: monitor-pipeline-group # Microsoft Azure Command-Line Tools MonitorPipelineGroup Extension.
+    # - name: multicloud-connector # Microsoft Azure Command-Line Tools MulticloudConnector Extension.
+    # - name: napster # Microsoft Azure Command-Line Tools Napster Extension.
+    #   allowPreview: true
+    # - name: netappfiles-preview # Provides a preview for upcoming Azure NetApp Files (ANF) features.
+    #   allowPreview: true
+    # - name: network-analytics # Microsoft Azure Command-Line Tools NetworkAnalytics Extension.
+    #   allowPreview: true
+    # - name: networkcloud # Support for Azure Operator Nexus network cloud commands based on 2026-08-01-preview API version.
+    #   allowPreview: true
+    # - name: new-relic # Microsoft Azure Command-Line Tools NewRelic Extension.
+    # - name: next # Microsoft Azure Command-Line Tools Next Extension
+    #   allowPreview: true
+    # - name: nexusidentity # Microsoft Azure Command-Line Tools Nexusidentity Extension
+    #   allowPreview: true
+    # - name: nginx # Microsoft Azure Command-Line Tools Nginx Extension
+    # - name: notification-hub # Microsoft Azure Command-Line Tools Notification Hub Extension
+    #   allowPreview: true
+    # - name: nsp # Microsoft Azure Command-Line Tools Nsp Extension.
+    # - name: offazure # Microsoft Azure Command-Line Tools AzureMigrateV2 Extension
+    #   allowPreview: true
+    # - name: oracle-database # Microsoft Azure Command-Line Tools OracleDatabase Extension.
+    # - name: orbital # Microsoft Azure Command-Line Tools Orbital Extension.
+    # - name: palo-alto-networks # Microsoft Azure Command-Line Tools PaloAltoNetworks Extension.
+    # - name: partnercenter # Microsoft Azure CLI Extension for Partner Center
+    #   allowPreview: true
+    # - name: peering # Microsoft Azure Command-Line Tools PeeringManagementClient Extension
+    # - name: planetarycomputer # Microsoft Azure Command-Line Tools Planetary Computer Extension.
+    #   allowPreview: true
+    # - name: portal # Microsoft Azure Command-Line Tools Portal Extension
+    #   allowPreview: true
+    # - name: powerbidedicated # Microsoft Azure Command-Line Tools PowerBIDedicated Extension
+    #   allowPreview: true
+    # - name: prototype # Azure CLI extension for rapid prototype generation using AI agents and GitHub Copilot
+    #   allowPreview: true
+    # - name: providerhub # Microsoft Azure Command-Line Tools ProviderHub Extension
+    #   allowPreview: true
+    # - name: pscloud # Microsoft Azure Command-Line Tools Pscloud Extension.
+    # - name: purview # Microsoft Azure Command-Line Tools PurviewManagementClient Extension
+    #   allowPreview: true
+    # - name: quantum # Microsoft Azure Command-Line Tools Quantum Extension
+    #   allowPreview: true
+    # - name: qumulo # Microsoft Azure Command-Line Tools Qumulo Extension.
+    # - name: quota # Microsoft Azure Command-Line Tools AzureQuotaExtensionAPI Extension
+    # - name: rdbms-connect # Support for testing connection to Azure Database for MySQL & PostgreSQL servers.
+    # - name: redisenterprise # Microsoft Azure Command-Line Tools RedisEnterprise Extension.
+    #   allowPreview: true
+    # - name: relationship # Microsoft Azure Command-Line Tools Relationship Extension.
+    #   allowPreview: true
+    # - name: reservation # Microsoft Azure Command-Line Tools Reservation Extension
+    # - name: resource-graph # Support for querying Azure resources with Resource Graph.
+    # - name: resource-mover # Microsoft Azure Command-Line Tools ResourceMoverServiceAPI Extension
+    #   allowPreview: true
+    # - name: scenario-guide # Microsoft Azure Command-Line Tools Scenario Guidance Extension
+    #   allowPreview: true
+    # - name: scheduled-query # Microsoft Azure Command-Line Tools Scheduled_query Extension
+    #   allowPreview: true
+    # - name: scvmm # Microsoft Azure Command-Line Tools SCVMM Extension
+    # - name: self-help # Microsoft Azure Command-Line Tools SelfHelp Extension.
+    #   allowPreview: true
+    # - name: sentinel # Microsoft Azure Command-Line Tools Sentinel Extension.
+    #   allowPreview: true
+    # - name: serial-console # Microsoft Azure Command-Line Tools for Serial Console Extension
+    #   allowPreview: true
+    # - name: serviceconnector-passwordless # Microsoft Azure Command-Line Tools Serviceconnector-passwordless Extension
+    # - name: servicegroup # Microsoft Azure Command-Line Tools ServiceGroup Extension.
+    #   allowPreview: true
+    # - name: sftp # Secure access to Azure Storage blob data via SFTP with SSH certificates.
+    #   allowPreview: true
+    # - name: site # Microsoft Azure Command-Line Tools Site Extension.
+    #   allowPreview: true
+    # - name: site-recovery # Microsoft Azure Command-Line Tools SiteRecovery Extension.
+    #   allowPreview: true
+    # - name: spring # Microsoft Azure Command-Line Tools spring Extension
+    # - name: ssh # SSH into Azure VMs using RBAC and AAD OpenSSH Certificates
+    # - name: stack-hci # Microsoft Azure Command-Line Tools AzureStackHCIClient Extension
+    # - name: stack-hci-vm # Microsoft Azure Command-Line Tools Stack-HCi-VM Extension
+    # - name: standbypool # Microsoft Azure Command-Line Tools Standbypool Extension.
+    # - name: staticwebapp # Microsoft Azure Command-Line Tools Staticwebapp Extension
+    #   allowPreview: true
+    # - name: storage-actions # Microsoft Azure Command-Line Tools StorageActions Extension.
+    # - name: storage-blob-preview # Microsoft Azure Command-Line Tools Storage-blob-preview Extension
+    #   allowPreview: true
+    # - name: storage-discovery # Microsoft Azure Command-Line Tools StorageDiscovery Extension.
+    # - name: storage-mover # Microsoft Azure Command-Line Tools StorageMover Extension.
+    # - name: storage-preview # Provides a preview for upcoming storage features.
+    #   allowPreview: true
+    # - name: storagesync # Microsoft Azure Command-Line Tools MicrosoftStorageSync Extension
+    # - name: stream-analytics # Microsoft Azure Command-Line Tools StreamAnalyticsManagementClient Extension
+    # - name: subscription # Microsoft Azure Command-Line Tools Subscription  Extension.
+    #   allowPreview: true
+    # - name: support # Microsoft Azure Command-Line Tools Support Extension
+    # - name: terraform # Microsoft Azure Command-Line Tools Terraform Extension.
+    #   allowPreview: true
+    # - name: timeseriesinsights # Microsoft Azure Command-Line Tools TimeSeriesInsightsClient Extension
+    #   allowPreview: true
+    # - name: traffic-collector # Microsoft Azure Command-Line Tools TrafficCollector Extension.
+    # - name: trustedsigning # Microsoft Azure Command-Line Tools Trustedsigning Extension.
+    #   allowPreview: true
+    # - name: vi # Microsoft Azure Command-Line Tools for Video Indexer
+    #   allowPreview: true
+    # - name: virtual-network-manager # Microsoft Azure Command-Line Tools NetworkManagementClient Extension
+    # - name: virtual-network-tap # Manage virtual network taps (VTAP).
+    #   allowPreview: true
+    # - name: virtual-wan # Manage virtual WAN, hubs, VPN gateways and VPN sites.
+    # - name: vm-repair # Auto repair commands to fix VMs.
+    # - name: vme # Microsoft Azure Command-Line Tools Vme Extension
+    #   allowPreview: true
+    # - name: vmware # Azure VMware Solution commands.
+    # - name: webapp # Additional commands for Azure AppService.
+    #   allowPreview: true
+    # - name: webpubsub # Microsoft Azure Command-Line Tools Webpubsub Extension
+    # - name: workload-manager # Microsoft Azure Command-Line Tools Workload Manager Extension
+    #   allowPreview: true
+    # - name: workload-orchestration # Microsoft Azure Command-Line Tools WorkloadOperations Extension.
+    # - name: workload-orchestration-preview # Microsoft Azure Command-Line Tools WorkloadOrchestration Preview Extension.
+    #   allowPreview: true
+    # - name: workloads # Microsoft Azure Command-Line Tools Workloads Extension.
+    # - name: zones # Microsoft Azure Command-Line Tools Zones Extension
+    #   allowPreview: true
