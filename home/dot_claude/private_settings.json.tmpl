@@ -55,10 +55,12 @@
     "command": "node \"{{ .chezmoi.homeDir }}/.claude/statusline-command.mjs\""
   },
   "enabledPlugins": {
-    "gopls-lsp@claude-plugins-official": true,
-    "typescript-lsp@claude-plugins-official": true,
-    "claude-code-wakatime@wakatime": true,
-    "pyright-lsp@claude-plugins-official": true
+    "gopls-lsp@claude-plugins-official": false,
+    "typescript-lsp@claude-plugins-official": false,
+    "claude-code-wakatime@wakatime": false,
+    "pyright-lsp@claude-plugins-official": false,
+    "lua-lsp@claude-plugins-official": false,
+    "jdtls-lsp@claude-plugins-official": false
   },
   "extraKnownMarketplaces": {
     "wakatime": {
@@ -74,5 +76,8 @@
   "preferredNotifChannel": "auto",
   "remoteControlAtStartup": false,
   "inputNeededNotifEnabled": true,
-  "agentPushNotifEnabled": true
+  "agentPushNotifEnabled": true,
+  "env": {
+    "ENABLE_LSP_TOOL": "1"
+  }
 }

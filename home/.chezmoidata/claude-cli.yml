@@ -7,6 +7,8 @@ claudeCli:
     - gopls-lsp@claude-plugins-official
     - typescript-lsp@claude-plugins-official
     - pyright-lsp@claude-plugins-official
+    - lua-lsp@claude-plugins-official
+    - jdtls-lsp@claude-plugins-official
     - claude-code-wakatime@wakatime
     - catppuccin@claude-themes
   statusline:
