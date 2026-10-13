@@ -23,5 +23,7 @@ skills:
       name: skill-creator
     - source: juliusbrussee/caveman
       name: caveman
+    - source: juliusbrussee/caveman
+      name: caveman-compress
     - source: mattpocock/skills
       name: grilling
