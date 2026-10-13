@@ -13,7 +13,6 @@ const fg = (hex) => {
 };
 const COLOR = {
   ok: fg(PALETTE.blue),
-  warn: fg(PALETTE.red),
   limits: fg(PALETTE.teal),
   cwd: fg(PALETTE.lavender),
   dim: fg(PALETTE.overlay1),
@@ -21,14 +20,30 @@ const COLOR = {
 const SEGMENTS = 10;
 const FILLED = "●";
 const EMPTY = "○";
+const USAGE_THRESHOLDS = {{ $s.usageThresholds | toJson }};
+const USAGE_BASE = {{ $s.usageBase | toJson }};
+
+function usageColor(pct) {
+  const hit = USAGE_THRESHOLDS.find((t) => pct >= t.at);
+  return fg(PALETTE[hit ? hit.color : USAGE_BASE]);
+}
 
 function formatTimeRemaining(resetTimestamp) {
   const now = Math.floor(Date.now() / 1000);
   const secondsLeft = resetTimestamp - now;
   if (secondsLeft <= 0) return "now";
-  const hours = Math.floor(secondsLeft / 3600);
+  const days = Math.floor(secondsLeft / 86400);
+  const hours = Math.floor((secondsLeft % 86400) / 3600);
   const minutes = Math.floor((secondsLeft % 3600) / 60);
+  if (days > 0) return `${days}d ${hours}h`;
   return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
+}
+
+function buildLimit(label, window) {
+  const pct = window?.used_percentage;
+  if (pct == null) return null;
+  const reset = window.resets_at ? ` (${formatTimeRemaining(window.resets_at)})` : "";
+  return `${usageColor(pct)}${label}: ${Math.round(pct)}%${reset}${RESET}`;
 }
 
 function buildContextSegment(input) {
@@ -46,7 +61,7 @@ function buildContextSegment(input) {
 
   const tokensK = Math.floor(totalInput / 1000);
   const maxK = Math.floor(ctxSize / 1000);
-  const color = ctxInt > 60 ? COLOR.warn : COLOR.ok;
+  const color = usageColor(ctxInt);
 
   return `${color}${bar} ${tokensK}k/${maxK}k (${ctxInt}% used)${RESET}`;
 }
@@ -70,21 +85,14 @@ function buildModelSegment(input) {
 
 function buildSuffix(input) {
   let suffix = "";
-  const fiveHourPct = input.rate_limits?.five_hour?.used_percentage;
-  const sevenDayPct = input.rate_limits?.seven_day?.used_percentage;
-  const fiveHourReset = input.rate_limits?.five_hour?.resets_at;
-  const sevenDayReset = input.rate_limits?.seven_day?.resets_at;
+  const limits = [
+    buildLimit("5h", input.rate_limits?.five_hour),
+    buildLimit("7d", input.rate_limits?.seven_day),
+  ].filter(Boolean);
 
-  if (fiveHourPct != null || sevenDayPct != null) {
-    suffix += ` ${COLOR.dim}•${RESET} ${COLOR.limits}[`;
-    if (fiveHourPct != null) {
-      suffix += `5h: ${Math.round(fiveHourPct)}% (${formatTimeRemaining(fiveHourReset)})`;
-    }
-    if (sevenDayPct != null) {
-      if (fiveHourPct != null) suffix += " | ";
-      suffix += `7d: ${Math.round(sevenDayPct)}%`;
-    }
-    suffix += `]${RESET}`;
+  if (limits.length) {
+    const sep = ` ${COLOR.limits}|${RESET} `;
+    suffix += ` ${COLOR.dim}•${RESET} ${COLOR.limits}[${limits.join(sep)}${COLOR.limits}]${RESET}`;
   }
 
   const cwd = input.cwd;

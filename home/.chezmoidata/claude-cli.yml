@@ -16,6 +16,16 @@ claudeCli:
       sonnet: blue
       haiku: green
       unknown: red
+    usageBase: blue
+    usageThresholds:
+      - at: 90
+        color: red
+      - at: 80
+        color: maroon
+      - at: 70
+        color: peach
+      - at: 50
+        color: yellow
     effortColors:
       low: yellow
       medium: green
