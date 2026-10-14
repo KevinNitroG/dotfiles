@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# week: {{ div (now | unixEpoch) 604800 }}
+set -uo pipefail
+target="$HOME/.oh-my-zsh"
+repo="https://github.com/ohmyzsh/ohmyzsh.git"
+if [ ! -d "$target/.git" ]; then
+  backup="$(mktemp -d)" || exit 0
+  [ -d "$target/custom" ] && mv "$target/custom" "$backup/custom"
+  rm -rf "$target"
+  if git clone --depth 1 "$repo" "$target" 2>/dev/null && [ -d "$backup/custom" ]; then
+    cp -r "$backup/custom/." "$target/custom/"
+  elif [ -d "$backup/custom" ]; then
+    mkdir -p "$target"
+    mv "$backup/custom" "$target/custom"
+  fi
+  rm -rf "$backup"
+fi
+[ -f "$target/oh-my-zsh.sh" ] || exit 0
+git -C "$target" pull --ff-only 2>/dev/null || exit 0
