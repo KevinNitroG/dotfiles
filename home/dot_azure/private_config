@@ -1,0 +1,6 @@
+[cloud]
+name = AzureCloud
+
+[core]
+collect_telemetry = false
+output = table
