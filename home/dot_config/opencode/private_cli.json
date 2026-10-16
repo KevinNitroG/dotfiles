@@ -4,9 +4,7 @@
     "name": "catppuccin",
     "mode": "system"
   },
-  "plugins": [
-    "oh-my-opencode-slim"
-  ],
+  "plugins": ["oh-my-opencode-slim"],
   "diffs": {
     "wrap": "word",
     "view": "auto"
@@ -17,11 +15,14 @@
     "thinking": "show",
     "grouping": "auto",
     "image_preview": true,
-    "permissions": "prompt"
+    "permissions": "prompt",
+    "markdown": "rendered",
+    "verbosity": "high"
   },
   "animations": true,
   "tabs": {
-    "enabled": true
+    "enabled": true,
+    "mode": "on"
   },
   "prompt": {
     "paste": "compact",

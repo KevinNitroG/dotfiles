@@ -31,7 +31,9 @@ add_skill() {
 }
 
 {{ range .skills.skillsCli -}}
-add_skill {{ .source | quote }} {{ index . "name" | default "" | quote }}{{ range (index . "agents" | default $.skills.agents) }} {{ . | quote }}{{ end }}
+if [ ! -d "{{ .source }}" ]; then
+  add_skill {{ .source | quote }} {{ index . "name" | default "" | quote }}{{ range (index . "agents" | default $.skills.agents) }} {{ . | quote }}{{ end }}
+fi
 {{ end }}
 if [ "$failed" -ne 0 ]; then
   echo
