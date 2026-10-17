@@ -42,7 +42,7 @@ function formatTimeRemaining(resetTimestamp) {
 function buildLimit(label, window) {
   const pct = window?.used_percentage;
   if (pct == null) return null;
-  const reset = window.resets_at ? ` (${formatTimeRemaining(window.resets_at)})` : "";
+  const reset = window.resets_at ? ` - ${formatTimeRemaining(window.resets_at)}` : "";
   return `${usageColor(pct)}${label}: ${Math.round(pct)}%${reset}${RESET}`;
 }
 
