@@ -24,13 +24,7 @@
       "model": "opencode/hy3-free",
     },
   },
-  "plugins": [
-    "@wakatime/opencode-wakatime",
-    "@tarquinen/opencode-dcp@latest",
-    {
-      "package": "opencode-pty/v2",
-    },
-  ],
+  "plugins": ["@wakatime/opencode-wakatime", "@tarquinen/opencode-dcp@latest"],
   "permissions": [
     {
       "action": "websearch",
