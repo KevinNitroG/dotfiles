@@ -2,9 +2,9 @@
   "$schema": "https://opencode.ai/config.json",
   "shell": "zsh",
   "model": "opencode/muse-spark-1.3-contributor-free",
-  "autoupdate": false,
+  "update": "disable",
   "default_agent": "build",
-  "agent": {
+  "agents": {
     "compaction": {
       "model": "opencode/muse-spark-1.3-contributor-free",
     },
@@ -15,27 +15,34 @@
       "model": "opencode/muse-spark-1.3-contributor-free",
     },
     "general": {
-      "disable": true,
+      "disabled": true,
     },
     "explore": {
-      "disable": true,
+      "disabled": true,
     },
     "title": {
       "model": "opencode/hy3-free",
     },
   },
-  "plugin": [
+  "plugins": [
     "@wakatime/opencode-wakatime",
     "@tarquinen/opencode-dcp@latest",
     {
       "package": "opencode-pty/v2",
     },
-    "oh-my-opencode-slim",
   ],
-  "permission": {
-    "websearch": "allow",
-    "webfetch": "allow",
-  },
+  "permissions": [
+    {
+      "action": "websearch",
+      "effect": "allow",
+      "resource": "*",
+    },
+    {
+      "action": "webfetch",
+      "effect": "allow",
+      "resource": "*",
+    },
+  ],
   "mcp": {
     "servers": {
       "chrome-devtools": {
