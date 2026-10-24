@@ -70,8 +70,13 @@ hl.unbind("F10")
 hl.unbind("F11")
 hl.unbind("F12")
 
+-- Scratchpad moved from S to ` (HyDE binds these in key_binds.lua)
+hl.unbind("SUPER + S")
+hl.unbind("SUPER + SHIFT + S")
+hl.unbind("SUPER + ALT + S")
+
 -- Wayscriber: Annotate Screen
-hl.bind("ALT + D", function()
+hl.bind("SUPER + CTRL + SHIFT + D", function()
 	hl.exec_cmd("pkill -SIGUSR1 wayscriber || hyde-shell app -- wayscriber --daemon")
 end)
 
@@ -85,6 +90,12 @@ hl.window_rule({
 	match = { class = "^(google-chrome|brave-browser)$" },
 	workspace = "1 silent",
 	opacity = "1 override 1 override 1",
+})
+
+hl.window_rule({
+	name = "chromium-bitwarden",
+	match = { class = "^(.*nngceckbapebfimnlniiiahkandclblb.*)$" }, -- Bitwarden extension
+	float = true,
 })
 
 hl.window_rule({
@@ -146,16 +157,28 @@ hl.window_rule({
 
 hl.window_rule({
 	name = "reader-opacity",
-	match = { initial_class = "^(org\\.pwmt\\.zathura)" },
+	match = { initial_class = [[^org\.pwmt\.zathura$]] },
 	opacity = "1 override 1 override 1",
 })
 
 hl.window_rule({
 	name = "obsidian",
-	match = { class = "^(md\\.Obsidian)$" },
+	match = {
+		class = [[^md\.obsidian\.Obsidian$]],
+	},
 	opacity = "1 override 1 override 1",
 	workspace = "3 silent",
 	fullscreen = true,
+})
+
+hl.window_rule({
+	name = "obsidian-setting",
+	match = {
+		class = [[^md\.obsidian\.Obsidian$]],
+		initial_title = "^((Settings|Community plugins) - .*)$",
+	},
+	float = true,
+	fullscreen = false,
 })
 
 hl.window_rule({
@@ -194,6 +217,10 @@ hl.bind("SUPER + O", function()
 end)
 
 hl.bind("SUPER + BackSpace", hl.dsp.exec_cmd(hyde.sh.session.logout.launcher()))
+
+hl.bind("SUPER + grave", hl.dsp.workspace.toggle_special())
+hl.bind("SUPER + SHIFT + grave", hl.dsp.window.move({ workspace = "special" }))
+hl.bind("SUPER + ALT + grave", hl.dsp.window.move({ workspace = "special", follow = false }))
 
 hl.bind("ALT + CONTROL_R", hl.dsp.exec_cmd(hyde.sh.waybar("--hide")))
 
