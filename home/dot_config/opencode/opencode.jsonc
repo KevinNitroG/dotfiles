@@ -78,7 +78,7 @@
         "headers": {
           "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}",
         },
-        "disabled": false,
+        "disabled": true,
       },
       "ddg-search": {
         "type": "local",
