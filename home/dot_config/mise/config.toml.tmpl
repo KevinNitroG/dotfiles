@@ -10,28 +10,14 @@ nix = "https://github.com/mise-plugins/mise-nix.git"
 python = "3.13.12"
 pnpm = "latest"
 terraform = "latest"
-cmctl = "latest"
 "npm:typescript" = "latest"
 "npm:ctx7" = "latest"
 "npm:skills" = "latest"
-"go:gotest.tools/gotestsum" = "latest"
 "go:github.com/dolmen-go/docker-list-context" = "latest"
-"github:felangga/chiko" = "latest"
-"github:cloudnative-pg/cloudnative-pg" = "latest"
-"github:rcieri/glab-tui" = "latest"
-"github:huseyinbabal/taws" = "latest"
 
 [tools."github:wakatime/wakatime-cli"]
 version = "latest"
 rename_exe = "wakatime-cli"
-
-[tools."github:grafana/alloy"]
-version = "latest"
-rename_exe = "alloy"
-
-[tools."github:grafana/mcp-grafana"]
-version = "0.11.6"
-asset_pattern = "mcp-grafana_{{ "{{" }}os(macos='Darwin', linux='Linux', windows='Windows'){{ "}}" }}_{{ "{{" }}arch(x64='x86_64', arm64='arm64'){{ "}}" }}.*"
 
 [settings]
 idiomatic_version_file_enable_tools = ["dotnet"]

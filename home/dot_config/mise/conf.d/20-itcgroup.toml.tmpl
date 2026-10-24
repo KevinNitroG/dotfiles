@@ -1,6 +1,7 @@
 {{- if eq .osFamily "ubuntu" }}
 [tools]
 aws-cli = { version = "latest", symlink_bins = "true" }
+"github:huseyinbabal/taws" = "latest"
 azure = { version = "latest", dependency_prereleases = "allow", with = ["pip"] }
 "github:matsest/lazyazure" = "latest"
 checkov = "latest"
@@ -8,5 +9,6 @@ tflint = "latest"
 trivy = "latest"
 "github:whiteducksoftware/azctx" = "latest"
 glab = "latest"
+"github:rcieri/glab-tui" = "latest"
 opentofu = "latest" # required by "glab opentofu" subcommand
 {{- end }}

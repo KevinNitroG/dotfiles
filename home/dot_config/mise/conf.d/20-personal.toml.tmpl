@@ -1,8 +1,30 @@
 [tools]
 "pipx:codecov-cli" = "latest"
-{{- if or (eq .osFamily "ubuntu") (eq .osFamily "fedora") }}
-"github:nickvanw/qbittorrent-tui" = "latest"
-{{- end }}
+"go:gotest.tools/gotestsum" = "latest"
+"github:felangga/chiko" = "latest"
+"github:cloudnative-pg/cloudnative-pg" = "latest"
+"github:rcieri/glab-tui" = "latest"
+"github:huseyinbabal/taws" = "latest"
+"websocat" = "latest"
+"aqua:zaghaghi/openapi-tui" = "latest"
+"github:jonas-grgt/ktea" = "latest"
+"github:jorgerojas26/lazysql" = "latest"
+"github:rustfs/cli" = "latest"
+flux2 = "latest"
+sops = "latest"
+cmctl = "latest"
+"github:grafana/alloy" = { version = "latest", rename_exe = "alloy" }
+"github:grafana/mcp-grafana" = { version = "0.11.6", asset_pattern = "mcp-grafana_{{ "{{" }}os(macos='Darwin', linux='Linux', windows='Windows'){{ "}}" }}_{{ "{{" }}arch(x64='x86_64', arm64='arm64'){{ "}}" }}.*" }
+
 {{- if eq .osFamily "ubuntu" }}
 "github:da-luce/astroterm" = "latest"
+"github:nickvanw/qbittorrent-tui" = "latest"
+kubecolor = "latest"
+helm = "latest"
+{{- end }}
+
+{{- if eq .osFamily "fedora" }}
+"github:nickvanw/qbittorrent-tui" = "latest"
+"gem:tmuxinator" = "latest"
+kubectl = "latest" # dnf only ships versioned kubernetesN.NN-client
 {{- end }}
