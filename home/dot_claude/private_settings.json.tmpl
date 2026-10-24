@@ -1,6 +1,9 @@
 {
   "$schema": "https://www.schemastore.org/claude-code-settings.json",
   "cleanupPeriodDays": 20,
+  "env": {
+    "ENABLE_LSP_TOOL": "1"
+  },
   "permissions": {
     "defaultMode": "acceptEdits"
   },
@@ -62,7 +65,8 @@
     "pyright-lsp@claude-plugins-official": false,
     "lua-lsp@claude-plugins-official": false,
     "jdtls-lsp@claude-plugins-official": false,
-    "catppuccin@claude-themes": true
+    "catppuccin@claude-themes": true,
+    "cc-plugin-telemetry@builtin": false
   },
   "extraKnownMarketplaces": {
     "wakatime": {
@@ -86,13 +90,10 @@
   },
   "effortLevel": "medium",
   "tui": "fullscreen",
-  "theme": "custom:catppuccin:catppuccin-mocha-ansi",
   "showThinkingSummaries": true,
+  "theme": "custom:catppuccin:catppuccin-mocha-ansi",
   "preferredNotifChannel": "auto",
   "remoteControlAtStartup": false,
   "inputNeededNotifEnabled": true,
-  "agentPushNotifEnabled": true,
-  "env": {
-    "ENABLE_LSP_TOOL": "1"
-  }
+  "agentPushNotifEnabled": true
 }
