@@ -62,7 +62,7 @@ jobs:
 
       - name: Assert ~/.ssh is untouched
         run: |
-          if [ -e "$HOME/.ssh/config" ] || [ -e "$HOME/.ssh/allowed_signers" ]; then
+          if [ -e "$HOME/.ssh/config" ]; then
             echo "::error::ephemeral must not manage ~/.ssh"
             ls -la "$HOME/.ssh"
             exit 1

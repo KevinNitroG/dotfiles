@@ -1,0 +1,10 @@
+{{- if and (ne .profile "ephemeral") .chezmoi.config.age.identities -}}
+{{ includeTemplate (printf "profiles/%s.yml.age" .profile) . | decrypt }}
+{{- else -}}
+gitName: ""
+gitEmail: ""
+signing: ""
+gpgKey: ""
+sshKey: ""
+ghUser: ""
+{{- end -}}

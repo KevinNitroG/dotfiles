@@ -25,7 +25,6 @@ home/                        === CHEZMOI SOURCE DIRECTORY ===
 ├── .chezmoi.toml.tmpl       generates ~/.config/chezmoi/chezmoi.toml at `init`
 ├── .chezmoidata/            static data merged into `.` for every template
 │   ├── global.yml           externalGitArgs
-│   ├── profiles.yml         profileDefs: one block per identity (see below)
 │   ├── catppuccin/*.toml    full palettes (latte/frappe/macchiato/mocha)
 │   ├── config/windows.yml   Windows env vars + optional-features lists
 │   └── pkgs/*.yml           arch-based.yml, ubuntu-based.yml, fedora.yml,
@@ -46,7 +45,7 @@ home/                        === CHEZMOI SOURCE DIRECTORY ===
 │       encrypted_private_{common,personal,<company>}.zsh.age
 ├── dot_config/              -> ~/.config/...
 ├── dot_local/bin/           -> ~/.local/bin/...
-├── dot_ssh/                 config.tmpl, allowed_signers.tmpl, *.pub
+├── dot_ssh/                 config.tmpl, config.d/{personal.conf,encrypted_*.conf.age}
 └── AppData/, Documents/     -> Windows-only targets
 ```
 
@@ -59,31 +58,41 @@ hyphens — `itcgroup`), or `ephemeral`.
 no personal ssh key, gpg key, `private/*.zsh` or git identity; it reaches GitHub
 with the *company* key because that is the only key it has.
 
-`home/.chezmoidata/profiles.yml` declares each profile once
-(`profileDefs.<name>`); that one block drives:
+`home/.chezmoitemplates/profiles/<name>.yml.age` declares each profile once,
+age-encrypted to all recipients. `.chezmoitemplates/profile.tmpl` decrypts only
+the active profile's file (empty defaults for `ephemeral` or when there is no
+age identity); `{{ includeTemplate "profile.tmpl" . | fromYaml }}` is how every
+template reads it. That one file drives (git identity and gh only; ssh is separate, see below):
 
 - the `[user]` / `[gpg]` / `[commit]` blocks at the bottom of
   `~/.config/git/config` — inline, no include file, no `includeIf`, no gitdir
   scoping
-- every `Host` block in `~/.ssh/config` (`sshHosts` is a **list** — a company
-  usually has its own git server plus github.com / gitlab.com) and the
-  `~/.ssh/allowed_signers` line
 - `~/.config/gh/hosts.yml` via `ghUser`; empty ⇒ file not managed
-- what `.chezmoiignore.tmpl` drops on machines that are not this profile
+- `ghUser` also feeds `authorized_keys` and the `[github]` git block
 
-Exception: age key path + recipient live in `$profileMeta` in
-`home/.chezmoi.toml.tmpl`, which runs before `.chezmoidata` is readable.
+ssh hosts are plain files in `home/dot_ssh/config.d/`, one per profile, pulled in
+by `Include config.d/*.conf`: `personal.conf` (plaintext) and
+`encrypted_private_<company>.conf.age`. `.chezmoiignore.tmpl` drops every other
+profile's file, and the company file also joins the no-age-identity block. List
+github.com / gitlab.com in a company file: it has no other key.
+
+Edit with `chezmoi decrypt` / `chezmoi encrypt` (`.nvim.lua` binds them) and
+re-encrypt with `chezmoi-encrypt-template.sh` when recipients change. Other
+profiles' names come from `knownProfiles` in `[data]`.
+
+Age key path + recipient live in `$profileMeta` in `home/.chezmoi.toml.tmpl`,
+which runs before any profile file is readable.
 
 GPG is deliberately **not** automated: only `personal` signs with gpg, the key
-is imported by hand (`docs/gpg.md`), `profiles.yml` carries only the public id.
+is imported by hand (`docs/gpg.md`), the profile file carries only the public id.
 
-New company = one `$profileMeta` entry + one `profiles.yml` block + one
-committed `.pub` + one encrypted `<name>.zsh.age`. See `docs/new-company.md`.
+New company = one `$profileMeta` entry + one encrypted `profiles/<name>.yml.age`
++ one encrypted `<name>.zsh.age`. See `docs/new-company.md`.
 
 #### `ephemeral` — the keyless guest identity
 
 Friend's box, throwaway VM, container, CI: **no age key, no ssh key, no git
-identity, no secrets**. Every `profileDefs.ephemeral` field is empty on purpose;
+identity, no secrets**. `profile.tmpl` returns empty defaults for it on purpose;
 `$profileMeta.ephemeral` has empty `key`/`recipient` (both loops skip empties) ⇒
 `.chezmoi.config.age.identities` is `[]` ⇒ the "SECRETS THAT NEED AN AGE
 IDENTITY" block drops every encrypted target.
@@ -122,7 +131,7 @@ on `home/**` changes). Reproduce locally in a container, don't reason about it.
 | Adding a whole new distro                    | `docs/support-new-os.md`                                              |
 | Fedora specifics / limitations               | `docs/fedora.md`                                                      |
 | mise tools                                   | `home/dot_config/mise/config.toml.tmpl` (edited directly)             |
-| Identities (git/ssh per profile)             | `home/.chezmoidata/profiles.yml`                                      |
+| Identities (git/ssh per profile)             | `home/.chezmoitemplates/profiles/*.yml.age` (encrypted)              |
 | age keys / recipients                        | `$profileMeta` in `home/.chezmoi.toml.tmpl`                           |
 | Install / bootstrap logic                    | `home/.chezmoiscripts/{linux,unix,windows}/`                          |
 | What gets skipped on which machine           | `home/.chezmoiignore.tmpl`                                            |
@@ -150,12 +159,12 @@ Data at `.`:
 - `.chezmoi.*` — built-ins (`os`, `arch`, `hostname`, `osRelease.id`,
   `homeDir`, …) plus `.chezmoi.config.age.*`
 - `[data]` from `.chezmoi.toml.tmpl`:
-  - identity — `profile`, `company` (`""` unless `isWork`), `isPersonal` /
+  - identity — `profile`, `knownProfiles`, `company` (`""` unless `isWork`), `isPersonal` /
     `isWork` / `isEphemeral` (mutually exclusive)
   - platform — `osId`, `osFamily`, `isWsl`, `isGui`, `isLaptop`, `useHyde`
   - theme — `theme`, `catppuccinFlavor`, `catppuccinAccentColor`,
     `terminalFontSize`, `opacity`, `transparent`
-- `.chezmoidata/**` — merged by top-level key: `.pkgs.*`, `.profileDefs.*`,
+- `.chezmoidata/**` — merged by top-level key: `.pkgs.*`,
   `.config.windows.*`, `.externalGitArgs`
 
 Key discriminators:

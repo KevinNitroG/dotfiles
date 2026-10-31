@@ -43,6 +43,7 @@
 
 {{ if not .chezmoi.config.age.identities }}
 
+{{ if .isWork }}.ssh/config.d/{{ .profile }}.conf{{ end }}
 .npmrc
 .wakatime.cfg
 .udemy_enroller/settings.yaml
@@ -364,23 +365,23 @@ AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/**
 ##########################################
 # PER-PROFILE FILES
 #
-# Never ship a secrets file or a public key for a profile this machine is not.
+# Never ship a secrets file for a profile this machine is not.
 # The git identity needs no entry here: it is rendered straight into
 # ~/.config/git/config from the active profile.
-# Adding a company = add it to profiles.yml; this loop picks it up.
+# Adding a company = add it to $profileMeta; this loop picks it up.
 
-{{ range $name, $def := .profileDefs }}
+{{ range $name := .knownProfiles }}
 {{ if ne $name $.profile }}
 .config/zsh/private/{{ $name }}.zsh
 .config/mise/conf.d/20-{{ $name }}.toml
-{{ if $def.sshKey }}.ssh/{{ base $def.sshKey }}.pub{{ end }}
+.ssh/config.d/{{ $name }}.conf
 {{ end }}
 {{ end }}
 
 {{/* No GitHub account for this identity => let `gh auth login` write its own
      hosts.yml instead of managing an empty one. config.yml is agnostic and
      always ships. */}}
-{{ if not (index .profileDefs .profile).ghUser }}
+{{ if not (includeTemplate "profile.tmpl" . | fromYaml).ghUser }}
 .config/gh/hosts.yml
 AppData/Roaming/GitHub CLI/hosts.yml
 .ssh/authorized_keys

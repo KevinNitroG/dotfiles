@@ -92,7 +92,7 @@
 | `isGui`    | auto; false on WSL, containers, headless                     |
 | `isLaptop` | auto; adds power management                                  |
 
-- Identities → `home/.chezmoidata/profiles.yml`, one block each ([new company](./docs/new-company.md)).
+- Identities → `home/.chezmoitemplates/profiles/<name>.yml.age`, one encrypted file each ([new company](./docs/new-company.md)).
 - Packages → `home/.chezmoidata/pkgs/`, split `common`/`personal`/`work`/`laptop` × `cli`/`gui`.
 - Repo map → [AGENTS.md](./AGENTS.md).
 
@@ -238,8 +238,7 @@ chezmoi init --promptDefaults --promptChoice profile=[company]
 `personal` → **GPG**, companies → **SSH**, `ephemeral` → none. One identity per
 machine, so every repo signs the same way.
 
-- SSH: needs only the key; `~/.ssh/allowed_signers` is generated.
-  Check: `git log --show-signature -1`.
+- SSH: needs only the private key.
 - GPG: keys imported **by hand** → [docs/gpg.md](./docs/gpg.md).
 
 ---

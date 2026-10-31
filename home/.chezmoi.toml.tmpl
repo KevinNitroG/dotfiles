@@ -96,9 +96,9 @@
 {{/* ONE identity per machine. A company machine is a company machine: it does
      not carry the personal git identity, the personal ssh key or any personal
      secret. Its own GitHub account, if it has one, is declared in that
-     profile's own block in .chezmoidata/profiles.yml.
+     profile's own encrypted .chezmoitemplates/profiles/<name>.yml.age.
      promptChoice rejects unknown names, so a typo cannot reach [data] and fail
-     later in `index .profileDefs $profile`. The stored value is checked first,
+     later when the profile file is read. The stored value is checked first,
      or a since-removed company would make the default invalid and init would
      refuse to start. */}}
 {{ $stored := dig "profile" "personal" . }}
@@ -174,6 +174,7 @@ progress = "auto" # "true" forces a progress bar, which needs a TTY and aborts i
 
 [data]
 profile = {{ $profile | quote }}
+knownProfiles = [ {{ $knownProfiles | quoteList | join ", " }} ]
 company = {{ $company | quote }}
 isWork = {{ $isWork }}
 isPersonal = {{ $isPersonal }}

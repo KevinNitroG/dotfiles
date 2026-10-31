@@ -2,17 +2,17 @@
 
 Only `personal` signs with GPG; companies use their SSH key ([ssh.md](./ssh.md)),
 `ephemeral` signs nothing. The key is **imported by hand** — nothing here
-imports, trusts or installs a private key. `profiles.yml` carries only the
+imports, trusts or installs a private key. The encrypted profile file carries only the
 public `gpgKey` id, which lands in the IDENTITY block of `~/.config/git/config`.
 
 Key from Bitwarden.
 
 | | |
 | --- | --- |
-| long key id | `071E9CD8A2D41057` — this is `gpgKey` in `profiles.yml`, what git signs with |
+| long key id | `071E9CD8A2D41057` — this is `gpgKey` in `profiles/personal.yml.age`, what git signs with |
 | fingerprint | `780EDBE72B368638D3DA4691071E9CD8A2D41057` — for `--edit-key` / `trusted-key`, recorded here only |
 
-The fingerprint is **not** in `profiles.yml`: nothing renders from it any more
+The fingerprint is **not** in the profile file: nothing renders from it any more
 now that the key is imported by hand, and a value no template reads is a value
 that silently goes stale.
 
@@ -94,5 +94,5 @@ git commit --allow-empty -m 'test: signing'
 git log --show-signature -1
 ```
 
-`gpgKey` in `home/.chezmoidata/profiles.yml` must match the long key id shown
+`gpgKey` in `home/.chezmoitemplates/profiles/personal.yml.age` must match the long key id shown
 above, or git signs with nothing.

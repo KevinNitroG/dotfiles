@@ -5,7 +5,7 @@
      apply dies. Both repos are public, so https is the safe fallback. The key
      lands in ~/.ssh only if chezmoi decrypted it, i.e. never without an age
      identity. */}}
-{{- $p := index .profileDefs .profile }}
+{{- $p := includeTemplate "profile.tmpl" . | fromYaml }}
 {{- $gh := "https://github.com/" }}
 {{- if and $p.sshKey (lstat (replace "~" .chezmoi.homeDir $p.sshKey)) }}
 {{-   $gh = "git@github.com:" }}

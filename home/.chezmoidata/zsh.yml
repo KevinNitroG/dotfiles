@@ -54,6 +54,7 @@ zsh:
 
       work:
         itcgroup:
+          - direnv
           - glab
           - dotnet
           - aws

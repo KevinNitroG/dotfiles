@@ -2,12 +2,13 @@
 ;
 ; IDENTITY
 ; Generated at the bottom of this file from the one profile this machine
-; carries (home/.chezmoidata/profiles.yml).
+; carries (encrypted in home/.chezmoitemplates/profiles/).
 
 [include]
   path = ~/.config/delta/catppuccin.gitconfig
 
-{{- $ghUser := (index .profileDefs .profile).ghUser }}
+{{- $p := includeTemplate "profile.tmpl" . | fromYaml }}
+{{- $ghUser := $p.ghUser }}
 {{- if $ghUser }}
 [github]
   user = {{ $ghUser }}
@@ -166,13 +167,12 @@
 ; ---------------------------------------------------------------------------
 ; IDENTITY
 ;
-; GENERATED from profileDefs.{{ .profile }} in home/.chezmoidata/profiles.yml.
+; GENERATED from the encrypted profiles/{{ .profile }}.yml.age.
 ; One machine, one identity — no gitdir scoping, no per-profile include file.
 ; Every repo on this machine commits as this identity; to override it for a
 ; single repo, set user.name/user.email in that repo's own .git/config.
 ;
 ; gpg keys are imported by hand — see docs/gpg.md. Nothing here installs one.
-{{- $p := index .profileDefs .profile }}
 
 {{- if $p.gitName }}
 
@@ -186,13 +186,10 @@
   format = openpgp
   program = gpg
 {{- else if eq $p.signing "ssh" }}
-  signingkey = {{ $p.sshKey }}.pub
+  signingkey = {{ $p.sshKey }}
 
 [gpg]
   format = ssh
-
-[gpg "ssh"]
-  allowedSignersFile = ~/.ssh/allowed_signers
 {{- end }}
 {{- end }}
 

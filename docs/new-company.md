@@ -66,30 +66,58 @@ recipient.
 > `recipient`, skipped by both loops) and `$knownProfiles` deliberately sorts
 > it last, after `personal` and the companies.
 
-## 4. Profile definition
+## 4. Profile file
 
-In `home/.chezmoidata/profiles.yml`:
+Write the profile as plaintext YAML somewhere outside the repo, then encrypt it
+for every recipient into `.chezmoitemplates/`:
 
 ```yaml
-  acmecorp:
-    gitName: Your Name
-    gitEmail: you@acmecorp.com
-    signing: ssh
-    gpgKey: ""
-    sshKey: ~/.ssh/id_ed25519_acmecorp
-    ghUser: "" # company GitHub account, "" if none
-    sshHosts:
-      - name: acmecorp # `git clone acmecorp:team/repo.git`
-        hostName: gitlab.acmecorp.com
-        user: your.name
-      - name: github.com
-        hostName: github.com
-        user: git
+gitName: Your Name
+gitEmail: you@acmecorp.com
+signing: ssh
+gpgKey: ""
+sshKey: ~/.ssh/id_ed25519_acmecorp # git signing
+ghUser: "" # company GitHub account, "" if none
 ```
 
-Drives `~/.config/git/acmecorp`, every `Host` block in `~/.ssh/config`, the
-`allowed_signers` line, `~/.config/gh/hosts.yml`, and what
-`.chezmoiignore.tmpl` drops on machines that are not this profile.
+```sh
+chezmoi-encrypt-template.sh ./acmecorp.yml profiles/acmecorp.yml.age
+shred -u ./acmecorp.yml
+```
+
+Edit later with `chezmoi decrypt` / `chezmoi encrypt` (the repo's `.nvim.lua`
+binds them to `<localleader>d` / `<localleader>e`).
+
+Only the active profile's file is decrypted, so no machine reads another
+profile's data. It drives `~/.config/git/config`, `~/.config/gh/hosts.yml` and
+`authorized_keys`.
+
+## 5. SSH hosts
+
+A plain ssh_config file, encrypted. It is a normal file in `config.d/`, so
+write it with real ssh syntax:
+
+```sh
+cd ~/.local/share/chezmoi/home
+$EDITOR /tmp/acmecorp.conf
+chezmoi encrypt < /tmp/acmecorp.conf \
+  > dot_ssh/config.d/encrypted_private_acmecorp.conf.age
+shred -u /tmp/acmecorp.conf
+```
+
+```sshconfig
+Host acmecorp
+  HostName gitlab.acmecorp.com
+  User your.name
+  IdentityFile ~/.ssh/id_ed25519_acmecorp
+  IdentitiesOnly yes
+
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519_acmecorp
+  IdentitiesOnly yes
+```
 
 **List every forge this identity uses**, public ones included. An `acmecorp`
 machine has no personal key on it, so `github.com` must appear here or GitHub
@@ -97,28 +125,31 @@ is unreachable from it — and the key you register on GitHub is the *company*
 key. Same for `gitlab.com`. Leave `ghUser` empty if there is no company GitHub
 account; `hosts.yml` is then not managed and `gh auth login` writes its own.
 
-## 5. Source files
+The file is already dropped on every other profile by the loop in
+`.chezmoiignore.tmpl`. Its target `.ssh/config.d/acmecorp.conf` must also be
+in the "SECRETS THAT NEED AN AGE IDENTITY" block — the `{{ if .isWork }}` entry
+there covers any company.
 
-Two files. The git identity needs none — it is rendered straight into
-`~/.config/git/config` from the block you just added.
+## 6. Secrets file
+
+The git identity and ssh hosts need no source file; they come from step 4.
 
 ```sh
 cd ~/.local/share/chezmoi/home
-
-cp ~/.ssh/id_ed25519_acmecorp.pub dot_ssh/id_ed25519_acmecorp.pub
 
 printf '# %s secrets\n' acmecorp \
   | chezmoi encrypt \
   > dot_config/zsh/private_private/encrypted_private_acmecorp.zsh.age
 ```
 
-The second is encrypted. `.config/zsh/private/**` is already listed in the
-"SECRETS THAT NEED AN AGE IDENTITY" block of `home/.chezmoiignore.tmpl`, so
-this one is covered — but **any encrypted file you add outside that glob needs
-its own target path there**. chezmoi decrypts while rendering, so a single
-file no key can open aborts the whole `chezmoi apply`, not just that file.
+`.config/zsh/private/**` is already listed in the "SECRETS THAT NEED AN AGE
+IDENTITY" block of `home/.chezmoiignore.tmpl`, so this one is covered — but
+**any encrypted file you add outside that glob needs its own target path
+there**. chezmoi decrypts while rendering, so a single file no key can open
+aborts the whole `chezmoi apply`, not just that file. Files under
+`.chezmoitemplates/` are not targets and need no entry.
 
-## 6. Packages (optional)
+## 7. Packages (optional)
 
 Company tooling goes in the `work` category of
 `home/.chezmoidata/pkgs/{arch-based,ubuntu-based,fedora}.yml`, installed on any
@@ -126,7 +157,7 @@ machine with *a* company profile. mise tools go directly in
 `home/dot_config/mise/config.toml.tmpl`, gated with `{{ if .isWork }}`.
 Split `work` into `work.<id>` only if two companies ever need different sets.
 
-## 7. Re-init
+## 8. Re-init
 
 `~/.config/chezmoi/chezmoi.toml` is only generated at init time:
 
@@ -154,7 +185,7 @@ mkdir -p ~/projects/acmecorp && cd ~/projects/acmecorp
 git init t && cd t && git config user.email     # -> you@acmecorp.com
 ```
 
-## 8. Re-encrypt existing secrets
+## 9. Re-encrypt existing secrets
 
 Existing files are still readable only by the old recipients:
 
@@ -164,15 +195,16 @@ chezmoi re-add          # every .age file should show as changed
 git diff --stat
 ```
 
-`re-add` skips `.chezmoitemplates/` — redo those with the helper in the
-[README](../README.md#-encrypted-files).
+`re-add` skips `.chezmoitemplates/` — redo `profiles/*.yml.age` with the helper
+in the [README](../README.md#-encrypted-files): `chezmoi decrypt` each to a
+temp file, then `chezmoi-encrypt-template.sh`.
 
-## 9. Back up the keys
+## 10. Back up the keys
 
 Into Bitwarden, **before** you need them:
 
 - `age: acmecorp` — `~/.config/age/acmecorp-key.txt`
-- `ssh: acmecorp` — `~/.ssh/id_ed25519_acmecorp` (and the `.pub`)
+- `ssh: acmecorp` — `~/.ssh/id_ed25519_acmecorp`
 
 A rebuild should need nothing but Bitwarden and this repo.
 
@@ -196,8 +228,9 @@ A rebuild should need nothing but Bitwarden and this repo.
 
 ## Leaving a company
 
-1. Remove the block from `profiles.yml` and the entry from `$profileMeta`.
-2. Delete `dot_ssh/id_ed25519_acmecorp.pub` and
+1. Remove the entry from `$profileMeta`.
+2. Delete `.chezmoitemplates/profiles/acmecorp.yml.age`,
+   `dot_ssh/config.d/encrypted_private_acmecorp.conf.age` and
    `dot_config/zsh/private_private/encrypted_private_acmecorp.zsh.age`.
 3. `chezmoi init && chezmoi apply` — pick another profile; removed files are
    cleaned up.

@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=https://www.schemastore.org/github-cli-hosts.json
-{{ $ghUser := (index .profileDefs .profile).ghUser -}}
+{{ $ghUser := (includeTemplate "profile.tmpl" . | fromYaml).ghUser -}}
 github.com:
   git_protocol: ssh
   users:
