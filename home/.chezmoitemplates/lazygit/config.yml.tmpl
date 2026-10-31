@@ -1,5 +1,6 @@
 {{- $palette := index .catppuccin.palettes .catppuccinFlavor -}}
 # reference from https://github.com/scottmckendry/Windots/blob/main/lazygit/config.yml
+# yaml-language-server: $schema=https://raw.githubusercontent.com/jesseduffield/lazygit/master/schema/config.json
 notARepository: skip
 disableStartupPopups: true
 update:
@@ -9,6 +10,7 @@ gui:
   nerdFontsVersion: '3'
   border: rounded
   mouseEvents: true
+  scrollHeight: 5
   # use catppuccin macchiato yellow - https://github.com/catppuccin/lazygit/blob/main/themes/macchiato/yellow.yml
   theme:
     activeBorderColor:
