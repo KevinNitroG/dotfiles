@@ -4,7 +4,6 @@
     "name": "catppuccin",
     "mode": "system"
   },
-  "plugins": ["oh-my-opencode-slim"],
   "diffs": {
     "wrap": "word",
     "view": "auto"
