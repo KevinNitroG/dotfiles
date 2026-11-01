@@ -3,3 +3,4 @@ ui:
   hideFooter: true
   icons: nerd-fonts-full
   sideBySide: true
+  theme: catppuccin_mocha
