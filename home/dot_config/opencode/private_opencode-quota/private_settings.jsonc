@@ -1,0 +1,21 @@
+// OpenCode Quota settings: only the ones you changed. A missing key uses its default.
+// Every setting and its default: https://github.com/slkiser/opencode-quota/blob/main/docs/readme/configuration.md
+// Edit it by hand or ask your agent; OpenCode Quota keeps your comments when it saves.
+{
+  "version": 6,
+  "system": {
+    "oldCommands": false
+  },
+  "statusLine": {
+    "home": true,
+    "detail": "one"
+  },
+  "collapsed": {
+    "show": false
+  },
+  "providers": {
+    "pricing": {
+      "autoRefreshDays": 1
+    }
+  }
+}

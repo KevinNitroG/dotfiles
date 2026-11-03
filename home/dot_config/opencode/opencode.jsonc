@@ -31,7 +31,11 @@
       // "model": "opencode/deepseek-v4.1-flash-free"
     },
   },
-  "plugins": ["@wakatime/opencode-wakatime", "@tarquinen/opencode-dcp@latest"],
+  "plugins": [
+    "@wakatime/opencode-wakatime",
+    "@tarquinen/opencode-dcp@latest",
+    "@slkiser/opencode-quota",
+  ],
   "permissions": [
     {
       "action": "websearch",
