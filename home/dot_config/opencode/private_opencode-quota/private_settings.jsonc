@@ -8,7 +8,14 @@
   },
   "statusLine": {
     "home": true,
-    "detail": "one"
+    "detail": "one",
+    "providerOrder": [
+      "openai",
+      "opencode",
+      "copilot",
+      "openrouter",
+      "opencode-go"
+    ]
   },
   "collapsed": {
     "show": false

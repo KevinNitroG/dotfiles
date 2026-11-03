@@ -9,7 +9,7 @@
     "view": "auto"
   },
   "session": {
-    "sidebar": "hide",
+    "sidebar": "auto",
     "scrollbar": true,
     "thinking": "show",
     "grouping": "auto",
