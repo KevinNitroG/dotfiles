@@ -1,13 +1,13 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "shell": "zsh",
-  "model": "openai/gpt-6.1-terra-fast",
+  "model": "openai/gpt-6.1-terra",
   // "model": "opencode/deepseek-v4.1-flash-free"
   "update": "disable",
   "default_agent": "build",
   "agents": {
     "compaction": {
-      "model": "openai/gpt-6-luna-fast",
+      "model": "openai/gpt-6-luna",
       // "model": "opencode/deepseek-v4.1-flash-free"
     },
     "build": {
@@ -19,21 +19,21 @@
       // "model": "opencode/mimo-v2.6-flash-free"
     },
     "general": {
-      "model": "openai/gpt-6.1-terra-fast",
+      "model": "openai/gpt-6.1-terra",
       // "model": "opencode/mimo-v2.6-flash-free"
     },
     "explore": {
-      "model": "openai/gpt-6-luna-fast",
+      "model": "openai/gpt-6-luna",
       // "model": "opencode/deepseek-v4.1-flash-free"
     },
     "title": {
-      "model": "openai/gpt-5.6-luna-fast",
+      "model": "openai/gpt-5.6-luna",
       // "model": "opencode/deepseek-v4.1-flash-free"
     },
   },
   "plugins": [
     "@wakatime/opencode-wakatime",
-    "@tarquinen/opencode-dcp@latest",
+    // "@tarquinen/opencode-dcp@latest",
     "@slkiser/opencode-quota",
   ],
   "websearch": {
