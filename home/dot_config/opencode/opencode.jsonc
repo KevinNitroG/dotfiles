@@ -1,27 +1,34 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "shell": "zsh",
-  "model": "opencode/muse-spark-1.3-contributor-free",
+  "model": "openai/gpt-6.1-terra",
+  // "model": "opencode/deepseek-v4.1-flash-free"
   "update": "disable",
   "default_agent": "build",
   "agents": {
     "compaction": {
-      "model": "opencode/muse-spark-1.3-contributor-free",
+      "model": "openai/gpt-6-luna-fast",
+      // "model": "opencode/deepseek-v4.1-flash-free"
     },
     "build": {
-      "model": "opencode/muse-spark-1.3-contributor-free",
+      "model": "openai/gpt-6.1-terra",
+      // "model": "opencode/mimo-v2.6-flash-free"
     },
     "plan": {
-      "model": "opencode/muse-spark-1.3-contributor-free",
+      "model": "openai/gpt-6.1-terra",
+      // "model": "opencode/mimo-v2.6-flash-free"
     },
     "general": {
-      "disabled": true,
+      "model": "openai/gpt-6.1-terra-fast",
+      // "model": "opencode/mimo-v2.6-flash-free"
     },
     "explore": {
-      "disabled": true,
+      "model": "openai/gpt-6-luna-fast",
+      // "model": "opencode/deepseek-v4.1-flash-free"
     },
     "title": {
-      "model": "opencode/hy3-free",
+      "model": "openai/gpt-5.6-luna-fast",
+      // "model": "opencode/deepseek-v4.1-flash-free"
     },
   },
   "plugins": ["@wakatime/opencode-wakatime", "@tarquinen/opencode-dcp@latest"],
@@ -78,7 +85,7 @@
         "headers": {
           "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}",
         },
-        "disabled": false,
+        "disabled": true,
       },
       "ddg-search": {
         "type": "local",
