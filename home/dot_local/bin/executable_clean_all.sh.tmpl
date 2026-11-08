@@ -115,7 +115,7 @@ fi
 
 # 3. SPECIFIC CACHES & DIRECTORIES
 
-{{- $goplsCache := "" -}}
+{{ $goplsCache := "" -}}
 {{ if eq .osId "darwin" -}}
   {{ $goplsCache = "$HOME/Library/Caches/gopls" -}}
 {{ else -}}
@@ -127,7 +127,7 @@ if [ -d "{{- $goplsCache -}}" ]; then
   rm -rf "{{- $goplsCache -}}/"*
 fi
 
-{{- $helmCache := "" -}}
+{{ $helmCache := "" -}}
 {{ if eq .osId "darwin" -}}
   {{ $helmCache = "$HOME/Library/Caches/helm" -}}
 {{ else -}}
@@ -151,7 +151,7 @@ if [ -d "$HOME/.gradle/caches" ]; then
   find "$HOME/.gradle/caches" -type d -name "modules-2" -prune -o -type f -mtime +120 -exec rm -f {} + 2>/dev/null || true
 fi
 
-{{- $vscodeCache := "" -}}
+{{ $vscodeCache := "" -}}
 {{ if eq .osId "darwin" -}}
   {{ $vscodeCache = "$HOME/Library/Application Support/Code/CachedData" -}}
 {{ else -}}
