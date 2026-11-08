@@ -33,7 +33,7 @@
   },
   "plugins": [
     "@wakatime/opencode-wakatime",
-    // "@tarquinen/opencode-dcp@latest",
+    "@tarquinen/opencode-dcp@latest",
     "@slkiser/opencode-quota",
   ],
   "websearch": {
@@ -51,6 +51,9 @@
       "resource": "*",
     },
   ],
+  "experimental": {
+    "subagent_depth": 3,
+  },
   "mcp": {
     "servers": {
       "chrome-devtools": {
