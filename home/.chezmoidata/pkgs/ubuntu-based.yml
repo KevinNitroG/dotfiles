@@ -93,6 +93,7 @@ pkgs:
         - universal-ctags
         - xh
         - zoxide
+        - rclone
 
         # yazi (from the upstream apt repo declared in aptRepos above)
         - yazi
@@ -103,8 +104,6 @@ pkgs:
         - imagemagick # Font / HEIC / JPEG XL preview (>= 7.1.1)
         - poppler-utils # PDF preview
         - resvg # SVG preview
-        # fd-find, ripgrep, fzf, jq and zoxide are listed above; nerd fonts are
-        # GUI-only and unpackaged (nerd fonts are not in the archive)
 
         # Git / forge
         - git-delta
@@ -145,7 +144,9 @@ pkgs:
 
         # Network
         - dnsutils
-        - rclone
+        - nmap
+        - tcpdump
+        - traceroute
 
         # Misc runtime deps
         - bc

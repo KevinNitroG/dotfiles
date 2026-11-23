@@ -129,7 +129,6 @@ pkgs:
         - ffmpegthumbnailer
         - ImageMagick # Font / HEIC / JPEG XL preview (7.1.2 here)
         - poppler-utils # PDF preview
-        # nerd fonts are GUI-only and unpackaged on Fedora, exactly as on Ubuntu
 
         # Git / forge
         - gh
