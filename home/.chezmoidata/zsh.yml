@@ -67,7 +67,8 @@ zsh:
     post:
       - zsh-256color
       - zsh-autosuggestions
-      - zsh-syntax-highlighting
+      # - zsh-syntax-highlighting
+      - zsh-patina
       - history-substring-search
       - fancy-ctrl-z
       - fzf
