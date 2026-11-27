@@ -48,3 +48,8 @@ zstyle ':fzf-tab:complete:cd:*' popup-pad 30 0
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always --icons=always $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'eza -1 --color=always --icons=always $realpath'
 # zstyle ':autocomplete:tab:*' fzf-completion yes
+
+autoload -U select-word-style
+select-word-style bash
+
+export WORDCHARS='.-'
