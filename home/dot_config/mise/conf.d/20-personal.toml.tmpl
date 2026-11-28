@@ -15,6 +15,7 @@ sops = "latest"
 cmctl = "latest"
 "github:grafana/alloy" = { version = "latest", rename_exe = "alloy" }
 "github:grafana/mcp-grafana" = { version = "0.11.6", asset_pattern = "mcp-grafana_{{ "{{" }}os(macos='Darwin', linux='Linux', windows='Windows'){{ "}}" }}_{{ "{{" }}arch(x64='x86_64', arm64='arm64'){{ "}}" }}.*" }
+"github:dgunzy/flux9s" = "latest"
 
 {{- if eq .osFamily "ubuntu" }}
 "github:da-luce/astroterm" = "latest"

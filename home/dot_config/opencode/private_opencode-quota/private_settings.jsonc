@@ -24,5 +24,10 @@
     "pricing": {
       "autoRefreshDays": 1
     }
+  },
+  "toast": {
+    "seconds": 5,
+    "afterReply": "off",
+    "afterCompaction": false
   }
 }

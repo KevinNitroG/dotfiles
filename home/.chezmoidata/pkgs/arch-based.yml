@@ -103,6 +103,7 @@ pkgs:
         - npm
         - rust
         - uv
+        - zig
         # - pnpm
         # - pyenv
         # - python-pip
